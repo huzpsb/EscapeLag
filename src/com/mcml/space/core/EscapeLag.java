@@ -250,7 +250,7 @@ public class EscapeLag extends JavaPlugin implements Listener {
 						while (itpet.hasNext()) {
 							MonitorRecord thispet = (MonitorRecord) itpet.next();
 							sender.sendMessage(
-									"§b|--§a" + thispet.getName() + " , §c" + thispet.getTotalTime() / 1000000000 + "秒");
+									"§b|--§a" + thispet.getName() + " , §c" + thispet.getTotalTime() / 1000000 + "秒");
 						}
 					}
 					if (args[1].equalsIgnoreCase("command")) {
@@ -266,7 +266,7 @@ public class EscapeLag extends JavaPlugin implements Listener {
 						while (itpct.hasNext()) {
 							MonitorRecord thispet = (MonitorRecord) itpct.next();
 							sender.sendMessage(
-									"§b|--§a" + thispet.getName() + " , §c" + thispet.getTotalTime() / 1000000000 + "秒");
+									"§b|--§a" + thispet.getName() + " , §c" + thispet.getTotalTime() / 1000000 + "秒");
 						}
 					}
 					if (args[1].equalsIgnoreCase("task")) {
@@ -279,7 +279,7 @@ public class EscapeLag extends JavaPlugin implements Listener {
 						sender.sendMessage("§a监听器名字,§c耗时总量");
 						MonitorRecord plugintasktime = MonitorUtils.getTaskTimingsByPlugin(plugin);
 						sender.sendMessage(
-								"§b|--§a" + plugintasktime.getName() + " , §c" + plugintasktime.getTotalTime() / 1000000000 + "秒");
+								"§b|--§a" + plugintasktime.getName() + " , §c" + plugintasktime.getTotalTime() / 1000000 + "秒");
 					}
 					if (args[1].equalsIgnoreCase("topall")) {
 						if (args.length == 2) {

@@ -4,7 +4,7 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerJoinEvent;
 
-import com.mcml.space.config.ConfigOptimize;
+import com.mcml.space.config.ConfigFunction;
 
 public class MonitorEnabler implements Listener{
 	private boolean hasEnabled = false;
@@ -12,7 +12,7 @@ public class MonitorEnabler implements Listener{
 	@EventHandler
 	public void JoinEnableMonitor(PlayerJoinEvent event){
 		if(hasEnabled == false){
-			if(ConfigOptimize.Monitorenable){
+			if(ConfigFunction.Monitorenable){
 				MonitorUtils.enable();
 			}
 			hasEnabled = true;

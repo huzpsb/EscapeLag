@@ -5,6 +5,18 @@ import java.util.List;
 import com.mcml.space.util.Configurable;
 
 public abstract class ConfigFunction extends Configurable {
+	@Node(path = "Monitor.enable")
+    public static boolean Monitorenable = false;
+	
+	@Node(path = "Monitor.ThreadLagWarning")
+    public static boolean MonitorThreadLagWarning = true;
+	
+	@Node(path = "Monitor.PluginLagWarning.enable")
+    public static boolean MonitorPluginLagWarningenable = true;
+	
+	@Node(path = "Monitor.PluginLagWarning.Period")
+    public static long MonitorPluginLagWarningPeriod = 1000L;
+	
 	@Node(path = "PluginErrorMessageBlocker.enable")
 	public static boolean PluginErrorMessageBlockerenable = true;
 	

@@ -11,7 +11,7 @@ import org.bukkit.plugin.EventExecutor;
 import org.bukkit.plugin.Plugin;
 import org.bukkit.plugin.RegisteredListener;
 
-import com.mcml.space.config.ConfigOptimize;
+import com.mcml.space.config.ConfigFunction;
 import com.mcml.space.monitor.MonitorUtils;
 import com.mcml.space.util.AzureAPI;
 import com.mcml.space.util.Reflection;
@@ -94,8 +94,8 @@ public class EventExecutorInjector extends AbstractInjector implements EventExec
 				AsyncCountTimer.cancel();
 				long endTime = System.nanoTime();
 				long executeTime = endTime - startTime;
-				if(ConfigOptimize.MonitorPluginLagWarningenable){
-					if(executeTime/1000000 > ConfigOptimize.MonitorPluginLagWarningPeriod && this.getPlugin().getName().equalsIgnoreCase("EscapeLag") == false){
+				if(ConfigFunction.MonitorPluginLagWarningenable){
+					if(executeTime/1000000 > ConfigFunction.MonitorPluginLagWarningPeriod && this.getPlugin().getName().equalsIgnoreCase("EscapeLag") == false){
 						AzureAPI.log("警告！服务器主线程陷入停顿超过配置设定值！因为插件" + this.getPlugin().getName() + " 执行了一次耗时 " + executeTime/1000000 + " 毫秒的位于 " + listener.getClass().getName() + " 的监听器 " + e.getEventName() + " 的操作！");
 					}
 				}

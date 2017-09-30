@@ -5,7 +5,7 @@ import java.util.TimerTask;
 
 import org.bukkit.Bukkit;
 
-import com.mcml.space.config.ConfigOptimize;
+import com.mcml.space.config.ConfigFunction;
 import com.mcml.space.core.EscapeLag;
 
 public class TPSAndThread implements Runnable{
@@ -37,7 +37,7 @@ public class TPSAndThread implements Runnable{
 	
 	public void run(){
 		if(System.currentTimeMillis() - ServerTime >= 1000){
-			if(ConfigOptimize.Monitorenable == true&&ConfigOptimize.MonitorThreadLagWarning){
+			if(ConfigFunction.Monitorenable == true&&ConfigFunction.MonitorThreadLagWarning){
 				AzureAPI.log("警告！服务器主线程陷入停顿超过1秒！这可能是有其他插件进行网络操作、出现死循环或耗时操作所致！");
 			}
 		}

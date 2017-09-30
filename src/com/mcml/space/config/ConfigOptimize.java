@@ -4,19 +4,7 @@ import java.util.List;
 
 import com.mcml.space.util.Configurable;
 
-public abstract class ConfigOptimize extends Configurable {
-	@Node(path = "Monitor.enable")
-    public static boolean Monitorenable = true;
-	
-	@Node(path = "Monitor.ThreadLagWarning")
-    public static boolean MonitorThreadLagWarning = true;
-	
-	@Node(path = "Monitor.PluginLagWarning.enable")
-    public static boolean MonitorPluginLagWarningenable = true;
-	
-	@Node(path = "Monitor.PluginLagWarning.Period")
-    public static long MonitorPluginLagWarningPeriod = 1000L;
-	
+public abstract class ConfigOptimize extends Configurable {	
 	@Node(path = "EntityClear.enable")
     public static boolean EntityClearenable = true;
 	
