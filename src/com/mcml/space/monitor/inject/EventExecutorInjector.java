@@ -1,8 +1,5 @@
 package com.mcml.space.monitor.inject;
 
-import java.util.Timer;
-import java.util.TimerTask;
-
 import org.bukkit.event.Event;
 import org.bukkit.event.EventException;
 import org.bukkit.event.HandlerList;
@@ -75,23 +72,13 @@ public class EventExecutorInjector extends AbstractInjector implements EventExec
 			this.eventExecutor.execute(listener, e);
 		} else {
 			long startTime = System.nanoTime();
-			Timer AsyncCountTimer = new Timer();
 			try {
 				try{
-					AsyncCountTimer.schedule(new TimerTask() {
-						public void run() {
-							if(getPlugin().getName().equalsIgnoreCase("EscapeLag") == false) {
-								AzureAPI.log("严重警告！证实插件 " + getPlugin().getName() + " 出现一次长时间卡顿并且即将导致服务器崩溃！");
-								AzureAPI.log("这可能是因为插件设计缺陷或内存不足或其他原因造成的，尝试卸载该插件来解决问题！");
-							}
-						}
-					}, 30 * 1000);
 					this.eventExecutor.execute(listener, e);
 				}catch(Throwable ex){
 					MonitorUtils.AExceptionCatcher(plugin, ex);
 				}
 			} finally {
-				AsyncCountTimer.cancel();
 				long endTime = System.nanoTime();
 				long executeTime = endTime - startTime;
 				if(ConfigFunction.MonitorPluginLagWarningenable){
