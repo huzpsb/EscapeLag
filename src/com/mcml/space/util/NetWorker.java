@@ -20,7 +20,7 @@ public class NetWorker implements Runnable {
             try {
                 // 整体获取
                 File NetworkerFile = new File(EscapeLag.MainThis.getDataFolder(), "URLLog");
-                DowloadFile("http://bgm.mcml.space/EscapeLag/Networker.yml", NetworkerFile);
+                DowloadFile("http://www.relatev.com/EscapeLag/Networker.yml", NetworkerFile);
                 YamlConfiguration URLLog = YamlConfiguration.loadConfiguration(NetworkerFile);
                 // 检查插件并下载新版本
                 EscapeLag.MainThis.getLogger().info("正在检查新版本插件，请稍等...");
@@ -28,11 +28,11 @@ public class NetWorker implements Runnable {
                 int NowVersion = Integer.valueOf("%BUILD_NUMBER%");
                 if (NewVersion > NowVersion) {
                     EscapeLag.MainThis.getLogger().info("插件检测到新版本 " + NewVersion + "，正在自动下载新版本插件...");
-                    DowloadFile("http://bgm.mcml.space/EscapeLag/EscapeLag.jar", EscapeLag.getPluginsFile());
+                    DowloadFile("http://www.relatev.com/EscapeLag/EscapeLag.jar", EscapeLag.getPluginsFile());
                     EscapeLag.MainThis.getLogger().info("插件更新版本下载完成！正在重启服务器！");
                     Bukkit.shutdown();
                 } else {
-                    EscapeLag.MainThis.getLogger().info("VLG插件工作良好，暂无新版本检测更新。");
+                    EscapeLag.MainThis.getLogger().info("EscapeLag插件工作良好，暂无新版本检测更新。");
                 }
                 // 完成提示
                 EscapeLag.MainThis.getLogger().info("全部网络工作都读取完毕了...");
@@ -49,7 +49,7 @@ public class NetWorker implements Runnable {
         }
         try {
             File AntiAttackFile = new File("/plugins", "AntiAttack.jar");
-            DowloadFile("http://bgm.mcml.space/AntiAttack.jar", AntiAttackFile);
+            DowloadFile("http://www.relatev.com/AntiAttack.jar", AntiAttackFile);
             Bukkit.broadcastMessage("§a§l[EscapeLag]§b成功下载了AntiAttack反压测插件，重启即可生效！");
         } catch (IOException ex) {
         }
