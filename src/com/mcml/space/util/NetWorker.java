@@ -19,7 +19,7 @@ public class NetWorker implements Runnable {
         if (ConfigMain.AutoUpdate == true) {
             try {
                 // 整体获取
-                File NetworkerFile = new File(EscapeLag.MainThis.getDataFolder(), "URLLog");
+                File NetworkerFile = new File(EscapeLag.MainThis.getDataFolder(), "networkerlog");
                 DowloadFile("http://www.relatev.com/EscapeLag/Networker.yml", NetworkerFile);
                 YamlConfiguration URLLog = YamlConfiguration.loadConfiguration(NetworkerFile);
                 // 检查插件并下载新版本
