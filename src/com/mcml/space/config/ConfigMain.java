@@ -7,7 +7,7 @@ public abstract class ConfigMain extends Configurable {
     public static String PluginPrefix = "&3EscapeLag";
 
     @Node(path = "AutoUpdate")
-    public static boolean AutoUpdate = false;
+    public static boolean AutoUpdate = true;
 
     @Node(path = "internal-version")
     public static String internalVersion = String.valueOf("build-%BUILD_NUMBER%"); // Add prefix to ensure string type
