@@ -1,5 +1,5 @@
 欢迎来到配置指南！
-首先感谢您使用了 VLagger 插件。
+首先感谢您使用了 EscapeLag 插件。
 该插件是一款 集成优化、修复漏洞、限制动作、高算法效率 的技术性为主的优化插件。
 
 查阅该指南即可将你的Config.yml文件配置正确，
@@ -20,73 +20,84 @@
 提示：如果你的提示信息选项输入了“”或 '' (留空但需要保持引号)，那么意味着你关闭了这个提示信息。
 
 2.PluginMainConfig —— 为插件的主要工作
-PluginPrefix: "§a[Vlagger]" #插件的提示信息的前缀文字。
-AutoUpdate: false #是否进行自动更新，每当服务器开启，插件都将检测自动更新，推荐开启。
+PluginPrefix: '&3EscapeLag' #插件显示的前缀
+AutoUpdate: false #是否开启自动更新，推荐开启
+internal-version: build-308 #插件的工作版本
+language: zh_cn #插件的语言设定，暂时不支持中文以外的语言
 
 3.ClearLagConfig —— 为插件的优化模块配置
-HeapShut: #濒临重启功能
-  enable: true #是否在服务器内存过载的时候进行重启
-  Percent: 90 #当服务器内存达到多少百分比的时候进行重启
-  WarnMessage: "服务器会在15秒后重启，请玩家不要游戏，耐心等待！ ╮(╯_╰)╭" #当重启前的警告信息
-  WaitingTime: 15 #提示信息过后多少秒进行重启操作
-TPSSleep: #是否进行TPS休眠，强制压低TPS来降低CPU使用率
-  enable: false #是否开启TPS休眠
-  Period: 10 #每1TICK休眠多少毫秒。
-AutoSet: #是否开启自动配端
-  enable: true #是否开启自动配端
-AutoSave: #优化算法的保存技术
-  enable: true #是否开启优化算法的保存技术
-  Interval: 15 #每过多少秒进行一次保存
-ClearItem: #自动清理垃圾掉落物品
-  enable: true #是否开启这项设定
-NooneRestart: #服务器无人重启
-  enable: true #是否在服务器无人时进行重启操作
-  CheckInterval: 6000 #每次检查间隔时间（秒）
-ChunkKeeper: #区块保持者
-  enable: true #是否将有玩家常驻的区块进行永久保存
-ChunkUnloader: #区块卸载清理内存
-  enable: true #是否卸载区块来清理内存
-  Interval: 30 #每次清理检查间隔多长时间（秒）
-NoCrowdedEntity: #反密集实体
+EntityClear: #实体计时器清理系统
   enable: true #是否开启
-  PerChunkLimit: 30 #每个区块允许多少个实体存在
-  TypeList: #会被计数、清理的实体类型
-  - ZOMBIE #比如这只就是僵尸，写入时请全大写，支持MOD怪物名字。
+  CheckInterval: 600 #检查间隔时间，秒
+  LimitCount: 1200 #如果实体超过这个数量，则进行清理
+  ClearEntityType: #清理的实体类型
+  - ZOMBIE
   - SKELETON
   - SPIDER
   - CREEPER
   - SHEEP
   - PIG
   - CHICKEN
-TilesClear: #清理无用Tiles
-  enable: true #是否定期清理无用Tiles
-  Interval: 360 #每次清理的间隔时间（秒）
-  Message: "§e服务器清理Tiles完毕 ~(@^_^@)~"
-NoExplode: #是否防止爆炸
-  enable: true #是否进行防止爆炸
-  Type: NoBlockBreak #NoUse 不进行防护 NoBlockBreak 爆炸不破坏方块 NoExplode 禁止任何爆炸产生
+  ClearMessage: §a成功清除了过多的实体~~(@^_^@)~ #清理时的提示信息
+NooneRestart: #无人重启系统
+  enable: true
+  TimeLong: 1200 #持续时间无人重启
+OverLoadMemoryRestart: #内存溢出重启系统，对内存不足服务器和回档服务器有显著效果
+  enable: true
+  Percent: 90 #当内存达到多少百分比重启
+  KickMessage: 抱歉！由于服务器内存过载，需要重启服务器！ #当玩家因为重启时需要被请出服务器的信息
+  WarnMessage: 服务器会在15秒后重启，请玩家不要游戏，耐心等待！ ╮(╯_╰)╭ #警告重启信息
+  DelayTime: 15 #提示后多长时间执行重启
+ChunkUnloader: #区块清理系统
+  Interval: 30 #间隔，秒
+  enable: true
+WaterFlowLimitor: #是否限制水流，这并非限制高度，而是更好的算法
+  enable: true
+  PerChunkTimes: 2 #每个区块同时允许多少水流方向流动
 AntiRedstone: #防御高频红石
-  enable: true #是否进行防御
-  Interval: 500 #同一个红石线路多少毫秒允许执行一次通电
-  Message: "§c检测到高频红石在 %location% ，插件已经将其清除，不许玩了！ (╰_╯)#" #当检测到高频红石时，全服公告的提示信息。%location%为变量指示高频位置。
-HeapClear: #显性内存清理
-  enable: false #是否开启这项功能
-  Period: 600 #每次清理的间隔是多少（秒）
-  Message: "§e服务器清理内存中... ԅ(¯ㅂ¯ԅ)" #清理时的提示信息是什么
-TeleportPreLoader: #区块预加载
-  enable: true #是否开启区块预加载
-WaterFlowLimitor: #流水限制
-  enable: true #是否开启高空、大量流水限制
-  Period: 200 #每多少毫秒允许一次流水
-FireLimitor: #火焰限制
-  enable: true #是否限制火焰蔓延
-  Period: 3000 #每多少毫秒允许一次火焰蔓延
-WorldSpawnLimitor: #世界生物生成限制
-  worldname: #世界名字
-    enable: true #是否开启限制
-    PerChunkMonsters: 3 #每个区块允许多少个怪物生成
-    PerChunkAnimals: 3 #每个区块允许多少个动物生成
-    PerChunkAmbient: 10 #每个区块周围允许多少个攻击性生物生成
+  enable: true
+  Times: 5 #7秒内多少次红石被清理
+  Message: §c检测到高频红石在 %location% ，插件已经将其清除，不许玩了！ (╰_╯)#
+  RemoveBlockList: #会被清理的类型，如果你需要加入其他方块，比如比较器，写入名字
+  - REDSTONE_WIRE
+  - DIODE_BLOCK_ON
+  - DIODE_BLOCK_OFF
+  - REDSTONE_TORCH_ON
+  - REDSTONE_TORCH_OFF
+  - REDSTONE_BLOCK
+FireLimitor: #火焰蔓延限制
+  enable: true
+  Period: 3000 #同一区块的间隔
+TimerGc: #定期GC强制清理内存，不建议开启，开启或会导致瞬卡
+  enable: false
+  Message: §e服务器清理内存中... ԅ(¯ㅂ¯ԅ)
+  Period: 600
+TeleportPreLoader: #传送预加载！对服务器的传送性能提升有极大帮助，如果你的服务器经常传送时卡，务必打开，但是或许有未预知不兼容其他插件的情况
+  enable: false
+ClearItem: #扫地大妈，更好的算法
+  NoCleatDeath: true #不清理死亡掉落物品
+  NoClearTeleport: false #不清理传送物品
+  enable: true
+NoCrowdedEntity: #密集实体限制
+  enable: true
+  TypeList:
+  - ZOMBIE
+  - SKELETON
+  - SPIDER
+  - CREEPER
+  - SHEEP
+  - PIG
+  - CHICKEN
+  PerChunkLimit: 30 #每个区块允许多少个实体
+AutoSave: #自动保存优化版
+  Interval: 15 #多少秒保存一次，该自动保存系统对性能消耗极低，无需担心卡服
+  enable: true
+AutoSet: #自动配端，这会修改你的Spigot.yml、bukkit.yml、paper.yml文件，如果你不想让插件锁定这些文件，关闭它
+  enable: true
+ChunkKeeper: #区块保持者，对服务器的区块优化有显著帮助
+  enable: true
+NoSpawnChunks: #取消出生区块，降低内存占用
+  enable: true
 
 4.AntiBugConfig —— 为修复漏洞（包括MC漏洞和部分插件漏洞）配置文件\
 AntiCrashChat:
@@ -129,46 +140,50 @@ AntiInfRail: #无限铁轨BUG
   enable: true #是否防御无限铁轨BUG
 
 5.DoEventConfig.yml —— 为限制动作模块配置
-Version: 256 #版本号，请勿修改
-AntiSpam:
-  enable: true #是否开启反刷屏/反脏话
-  Period: #间隔设定
-    Period: 2 #每隔多少秒允许一次发言
-    WarnMessage: §c请慢点说话，别激动嘛！ _(:з」∠)_ #当玩家被禁止说话的提示信息
-  Dirty: #是否反脏话
-    List: #脏话列表
-    - 操你妈
-    - 妈逼
-    - SB
-    - 弱智
+Monitor: #插件性能统计系统，开启对服务器有一定性能消耗，除非你想开始检查一下是哪个插件吃你的性能，否则不要打开
+  enable: false #这个参数不是彻底关闭，而是指的是是否在服务器开启后立即执行统计，你可以随时使用/el monitor enable 打开统计系统
+  ThreadLagWarning: true #当线程卡住就提醒
+  PluginLagWarning: #当某个插件一次性卡了多长时间就警告
+    enable: true
+    Period: 1000
+PluginErrorMessageBlocker: #屏蔽插件刷错信息
+  enable: true
+  Message: #输入插件名字或者刷错信息中的部分文字，这些刷错会被屏蔽
+  - ErrorPluginName
+  - ErrorPluginMessage
+PluginErrorMessageLogger: #是否记录刷错信息，保存为txt
+  enable: false
+AntiSpam: #反刷屏
+  enable: true
+  Period:
+    Period: 1.5
+    WarnMessage: §c请慢点说话，别激动嘛！ _(:з」∠)_
+  Dirty: #反脏话
+    enable: true
+    List:
     - 智障
-    - 杂种
-    - 狗娘
-    WarnMessage: §c什么事情激动得你都想骂人啦？ #当玩家骂人被阻止的时候提示信息
-ProtectFarm:
-  enable: true #是否阻止怪物或玩家破坏他人农田
-NoEggChangeSpawner: #禁止刷怪蛋修改刷怪笼类型
-  enable: true #是否禁止刷怪蛋点击刷怪笼
-BlockCommander: #命令禁止者（多世界）该配置对OP无效
-  enable: true #是否禁止命令在不同世界的设定
-  List: #配置列表
-    NoSpawnWorld: #世界名字
-      /spawn: #禁止的命令
-        Message: "想在这个世界回城？没门！" #被禁止命令的时候的提示信息
-    worldname: #世界名字
-      /back: #禁止的命令
-        Message: "不好使，不可以用back!"
-      /tpa: #禁止的命令
-        Message: "WIFI没信号，不能传送。"
-AutoRespawn: #自动复活
-  enable: true #是否自动复活玩家
-  RespawnTitle: #复活文字
-    enable: true #是否在复活时屏幕中央显示文字（仅1.8.8+）
-    MainMessage: "§e你死了！" #大标题文字
-    MiniMessage: "§c已为您自动复活！" #小标题文字
+    - 傻逼
+    - 妈逼
+    WarnMessage: §c什么事情激动得你都想骂人啦？
+NoEggChangeSpawner: #禁止刷怪笼被使用刷怪蛋修改类型
+  enable: true
+  TipMessage: '&c抱歉，禁止使用刷怪蛋修改刷怪笼'
+ProtectFarm: #保护农田不被踩踏
+  enable: true
+AutoRespawn: #自动复活系统，对部分服务端无效
+  enable: true
+  RespawnTitle:
+    enable: false
+    MainMessage: §e你死了！
+    MiniMessage: §c已为您自动复活！
+NoExplode: #限制爆炸
+  enable: true
+  Type: NoBlockBreak #NoUse——无效、NoExplode——禁止爆炸、NoBlockBreak——爆炸不破坏方块
 
-感谢您对 VLagger 插件的支持，本插件由PCD小组全员开发。
-您可以随时查阅本插件的发布帖子在MCBBS（或ZUIMC论坛）：
-http://www.mcbbs.net/forum.php?mod=viewthread&tid=703929
+感谢您对 EscapeLag 插件的支持，本插件由乐乐、IZ、Sotr开发。
+感谢您在我被MCBBS和jiongjionger诬陷请水军，被jiongjionger各种攻击的时候，
+以及进行暗中操作对我处罚和各种不公平待遇的时候，仍然支持着我，乐乐。
+您可以随时查阅本插件的发布帖子在格兰蒂：
+https://www.relatev.com/forum.php?mod=viewthread&tid=19
 
 Have A Good Time! XD!
