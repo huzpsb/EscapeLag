@@ -24,7 +24,7 @@ public class ChunkUnloader implements Listener {
 	@EventHandler
 	public void onWorldLoad(WorldInitEvent event) {
 		if(ConfigOptimize.chunkUnloader == true) {
-			World world = event.getWorld();
+			final World world = event.getWorld();
 			Bukkit.getScheduler().runTaskTimer(EscapeLag.MainThis, new Runnable() {
 				public void run() {
 					Chunk[] loadedChunks = world.getLoadedChunks();
