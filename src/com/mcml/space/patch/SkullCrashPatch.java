@@ -16,6 +16,9 @@ import com.mcml.space.util.VersionLevel.Version;
 import static com.mcml.space.config.ConfigPatch.noSkullCrash;
 
 public class SkullCrashPatch implements Listener, PluginExtends {
+	
+	// @author jiongjionger,Vlele
+	
     public static void init(JavaPlugin plugin) {
         if (VersionLevel.isHigherEquals(Version.MINECRAFT_1_9_R1)) return;
         

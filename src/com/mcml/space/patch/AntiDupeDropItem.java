@@ -16,6 +16,8 @@ import com.mcml.space.util.VersionLevel.Version;
 
 public class AntiDupeDropItem implements Listener {
 	
+	// @author jiongjionger,Vlele
+	
 	public static void init(){
 		if(VersionLevel.get() == Version.MINECRAFT_1_7_R4 && VersionLevel.isForge()){
 			AzureAPI.log("警告！您的服务器是 1.7.10 的Mod 服务端，因此关闭了假死刷物品的补丁!");
