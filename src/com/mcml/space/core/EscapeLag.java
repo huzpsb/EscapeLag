@@ -42,6 +42,7 @@ import com.mcml.space.optimize.ItemClear;
 import com.mcml.space.optimize.NoCrowdEntity;
 import com.mcml.space.optimize.NoSpawnChunks;
 import com.mcml.space.optimize.OverloadRestart;
+import com.mcml.space.optimize.TPSSleep;
 import com.mcml.space.optimize.TeleportPreLoader;
 import com.mcml.space.optimize.TimerGarbageCollect;
 import com.mcml.space.optimize.WaterFlowLimitor;
@@ -135,6 +136,7 @@ public class EscapeLag extends JavaPlugin implements Listener {
 		Bukkit.getPluginManager().registerEvents(new AntiLongStringCrash(), this);
 		Bukkit.getPluginManager().registerEvents(new TeleportPreLoader(), this);
 		Bukkit.getPluginManager().registerEvents(new MonitorEnabler(), this);
+		TPSSleep.init();
 		RespawnAction.init(this);
 		EmptyRestart.init(this);
 		CheatBookBlocker.init(this);
@@ -749,18 +751,18 @@ public class EscapeLag extends JavaPlugin implements Listener {
 			if (backupBukkitFile.exists() == false) {
 				backupBukkitFile.createNewFile();
 				bukkit.save(backupBukkitFile);
+				if (heapmb <= 6000) {
+					bukkit.set("chunk-gc.period-in-ticks", 300);
+				} else {
+					bukkit.set("chunk-gc.period-in-ticks", 500);
+				}
+				bukkit.set("chunk-gc.load-threshold", 400);
+				if (heapmb <= 4000) {
+					bukkit.set("ticks-per.monster-spawns", 2);
+				}
+				bukkit.set("EscapeLag.Changed", "如果Config的AutoSet开启，该参数会被改变。");
+				bukkit.save(BukkitFile);
 			}
-			if (heapmb <= 6000) {
-				bukkit.set("chunk-gc.period-in-ticks", 300);
-			} else {
-				bukkit.set("chunk-gc.period-in-ticks", 500);
-			}
-			bukkit.set("chunk-gc.load-threshold", 400);
-			if (heapmb <= 4000) {
-				bukkit.set("ticks-per.monster-spawns", 2);
-			}
-			bukkit.set("EscapeLag.Changed", "如果Config的AutoSet开启，该参数会被改变。");
-			bukkit.save(BukkitFile);
 		}
 		File SpigotFile = new File("spigot.yml");
 		if (SpigotFile.exists()) {
@@ -769,44 +771,44 @@ public class EscapeLag extends JavaPlugin implements Listener {
 			if (backupSpigotFile.exists() == false) {
 				backupSpigotFile.createNewFile();
 				spigot.save(backupSpigotFile);
+				if (heapmb <= 2000) {
+					spigot.set("settings.save-user-cache-on-stop-only", true);
+				}
+				if (heapmb >= 6000) {
+					spigot.set("settings.user-cache-size", 5000);
+				}
+				if (heapmb >= 8000) {
+					spigot.set("world-settings.default.view-distance", 4);
+				} else if (heapmb >= 4000) {
+					spigot.set("world-settings.default.view-distance", 3);
+				} else {
+					spigot.set("world-settings.default.view-distance", 2);
+				}
+				if (heapmb <= 4000) {
+					spigot.set("world-settings.default.chunks-per-tick", 150);
+				} else {
+					spigot.set("world-settings.default.chunks-per-tick", 350);
+				}
+				if (heapmb <= 4000) {
+					spigot.set("world-settings.default.max-tick-time.tile", 10);
+					spigot.set("world-settings.default.max-tick-time.entity", 20);
+				} else {
+					spigot.set("world-settings.default.max-tick-time.tile", 20);
+					spigot.set("world-settings.default.max-tick-time.entity", 30);
+				}
+				spigot.set("world-settings.default.entity-activation-range.animals", 12);
+				spigot.set("world-settings.default.entity-activation-range.monsters", 24);
+				spigot.set("world-settings.default.entity-activation-range.misc", 2);
+				spigot.set("world-settings.default.entity-tracking-range.other", 48);
+				spigot.set("world-settings.default.random-light-updates", false);
+				if (heapmb <= 4000) {
+					spigot.set("world-settings.default.save-structure-info", false);
+				}
+				spigot.set("world-settings.default.max-entity-collisions", 2);
+				spigot.set("world-settings.default.max-tnt-per-tick", 20);
+				spigot.set("EscapeLag.Changed", "如果Config的AutoSet开启，该参数会被改变。");
+				spigot.save(SpigotFile);
 			}
-			if (heapmb <= 2000) {
-				spigot.set("settings.save-user-cache-on-stop-only", true);
-			}
-			if (heapmb >= 6000) {
-				spigot.set("settings.user-cache-size", 5000);
-			}
-			if (heapmb >= 8000) {
-				spigot.set("world-settings.default.view-distance", 4);
-			} else if (heapmb >= 4000) {
-				spigot.set("world-settings.default.view-distance", 3);
-			} else {
-				spigot.set("world-settings.default.view-distance", 2);
-			}
-			if (heapmb <= 4000) {
-				spigot.set("world-settings.default.chunks-per-tick", 150);
-			} else {
-				spigot.set("world-settings.default.chunks-per-tick", 350);
-			}
-			if (heapmb <= 4000) {
-				spigot.set("world-settings.default.max-tick-time.tile", 10);
-				spigot.set("world-settings.default.max-tick-time.entity", 20);
-			} else {
-				spigot.set("world-settings.default.max-tick-time.tile", 20);
-				spigot.set("world-settings.default.max-tick-time.entity", 30);
-			}
-			spigot.set("world-settings.default.entity-activation-range.animals", 12);
-			spigot.set("world-settings.default.entity-activation-range.monsters", 24);
-			spigot.set("world-settings.default.entity-activation-range.misc", 2);
-			spigot.set("world-settings.default.entity-tracking-range.other", 48);
-			spigot.set("world-settings.default.random-light-updates", false);
-			if (heapmb <= 4000) {
-				spigot.set("world-settings.default.save-structure-info", false);
-			}
-			spigot.set("world-settings.default.max-entity-collisions", 2);
-			spigot.set("world-settings.default.max-tnt-per-tick", 20);
-			spigot.set("EscapeLag.Changed", "如果Config的AutoSet开启，该参数会被改变。");
-			spigot.save(SpigotFile);
 		}
 		File PaperFile = new File("paper.yml");
 		if (PaperFile.exists()) {
@@ -815,17 +817,17 @@ public class EscapeLag extends JavaPlugin implements Listener {
 			if (backupPaperFile.exists() == false) {
 				backupPaperFile.createNewFile();
 				paper.save(backupPaperFile);
+				paper.set("world-settings.default.keep-spawn-loaded", false);
+				paper.set("world-settings.default.optimize-explosions", true);
+				paper.set("world-settings.default.fast-drain.lava", true);
+				paper.set("world-settings.default.fast-drain.water", true);
+				paper.set("world-settings.default.use-async-lighting", true);
+				if (heapmb <= 6000) {
+					paper.set("world-settings.default.tick-next-tick-list-cap", 8000);
+				}
+				paper.set("world-settings.default.tick-next-tick-list-cap-ignores-redstone", true);
+				paper.save(PaperFile);
 			}
-			paper.set("world-settings.default.keep-spawn-loaded", false);
-			paper.set("world-settings.default.optimize-explosions", true);
-			paper.set("world-settings.default.fast-drain.lava", true);
-			paper.set("world-settings.default.fast-drain.water", true);
-			paper.set("world-settings.default.use-async-lighting", true);
-			if (heapmb <= 6000) {
-				paper.set("world-settings.default.tick-next-tick-list-cap", 8000);
-			}
-			paper.set("world-settings.default.tick-next-tick-list-cap-ignores-redstone", true);
-			paper.save(PaperFile);
 		}
 		if (BukkitFile.exists()) {
 			FileConfiguration bukkit = AzureAPI.loadOrCreateFile(BukkitFile);

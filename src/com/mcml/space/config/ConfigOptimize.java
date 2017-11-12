@@ -5,6 +5,12 @@ import java.util.List;
 import com.mcml.space.util.Configurable;
 
 public abstract class ConfigOptimize extends Configurable {	
+	@Node(path = "TPSSleep.NoOneFreeze.enable")
+    public static boolean TPSSleepNoOneFreezeenable = true;
+	
+	@Node(path = "TPSSleep.SleepMode")
+    public static String TPSSleepSleepMode = "AutoSleep";
+	
 	@Node(path = "EntityClear.enable")
     public static boolean EntityClearenable = true;
 	
