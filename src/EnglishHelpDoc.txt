@@ -1,0 +1,102 @@
+Welcome to the configuration guide!
+First of all, thank you for using the EscapeLag plugin.
+The plug-in is a technical optimization plug-in optimized by integrating, repairing vulnerabilities, restricting actions, and high algorithmic efficiency.
+Consult this guide to configure your Config.yml file correctly,
+If you have questions or Bug feedback in configuration or use, please contact QQ 1207223090 to get help.
+It's important to note that the plug in of the server for the first time may restart your server once,
+This is not a plug-in that causes the server to crash, but rather a plug-in restart to apply the value saved by the plug-in.
+Wish you have a good time ~!
+1. prepare server
+Unlike other plug-ins, this plug-in automatically matches server code to generate configuration.
+No need to worry about garbled questions. Your editor also follows the configuration encoding rules.
+In order to automatically restart the server, please set up the auto restart script for your server.
+If your server is a web page panel manipulation server, you don't have to worry about that.
+If your server is VPS, add the self restart script in the startup server script.
+If you do not join the self restart script, please refer to the post: XXXXXXXXXX
+Note: if you enter the message options "or" (blank but need to maintain, then quotes) means that you close this message.
+2.PluginMainConfig -- the main work for plug ins
+The prefix PluginPrefix:'&amp;3EscapeLag'# plug-in display
+AutoUpdate: false # whether to open the automatic updates, Recommended Opening
+Internal-version: build-308 # plug-in version of the work
+Language: zh_cn # plugin language setting, currently supports: zh_cn Chinese, en_GB English
+3.ClearLagConfig -- configure the plug-in optimization module
+EntityClear: # real timer cleaning system
+Enable: true # is open
+CheckInterval: 600 # check interval seconds
+LimitCount: 1200 # if the entity exceeds this amount, then clean up
+ClearEntityType: # cleaning entity type
+- ZOMBIE
+- SKELETON
+- SPIDER
+- CREEPER
+- SHEEP
+- PIG
+- CHICKEN
+ClearMessage: a successfully cleared too many entities (@^_^@) message ~ ~ ~ # when cleaning
+NooneRestart: # unmanned restart system
+Enable: true
+TimeLong: 1200 # duration no restart
+OverLoadMemoryRestart: # memory overflow and restart the system, has significant effect on the memory server and file server
+Enable: true
+Percent: 90 # when the percentage of memory to restart
+KickMessage: sorry! Because the server memory is overloaded, you need to restart the server! When the game player # restart because the server information needs to be invited
+WarnMessage: server will restart in 15 seconds, please players do not play, waiting patiently! "(like _ person) with # warning information to restart
+DelayTime: 15 # tip long after the resumption of the implementation
+ChunkUnloader: # block cleaning system
+Interval: 30 # interval seconds
+Enable: true
+WaterFlowLimitor: # whether to restrict the flow of water, this is not the height limit, but a better algorithm
+Enable: true
+PerChunkTimes: 2 # each block also allows many flow direction
+AntiRedstone: # Redstone defense high frequency
+Enable: true
+How many times have #7 been cleaned up in Times: 5 seconds?
+Message: C detected a high frequency Redstone in%location%, the plugin has been removed, are not allowed to play! (person like _) #
+Type RemoveBlockList: # will be cleaned up, if you need to add other blocks, such as comparator, write the name
+- REDSTONE_WIRE
+- DIODE_BLOCK_ON
+- DIODE_BLOCK_OFF
+- REDSTONE_TORCH_ON
+- REDSTONE_TORCH_OFF
+- REDSTONE_BLOCK
+FireLimitor: # Limited flame spread
+Enable: true
+Period: 3000 # the same block interval
+TimerGc: GC # regularly forced to clean up memory, not open, open or will lead to instant card
+Enable: false
+Message: e server memory up... ('s's)
+Period: 600
+TeleportPreLoader: # transfer pre loading! It is very helpful to improve the performance of the server. If your server sends cards regularly, you must open it, but there may be unforeseen situations that are not compatible with other plug-ins
+Enable: false
+ClearItem: # sweeping Boyle, a better algorithm
+NoCleatDeath: true # not clean up the death loot
+NoClearTeleport: false # not clean up the transfer of items
+Enable: true
+NoCrowdedEntity: # intensive physical restrictions
+Enable: true
+TypeList:
+- ZOMBIE
+- SKELETON
+- SPIDER
+- CREEPER
+- SHEEP
+- PIG
+- CHICKEN
+PerChunkLimit: 30 # each block allows the number of entities
+The optimization version automatically saved AutoSave: #
+Interval: 15 # how many seconds to save time, the system automatically saved on the performance of consumption is very low, there is no need to worry about the card clothing
+Enable: true
+AutoSet: # automatic distribution terminal, this will modify your Spigot.yml, bukkit.yml, paper.yml file, if you don't want to lock the plug-in file, close it
+Enable: true
+ChunkKeeper: # block holder, contribute to the server block optimization
+Enable: true
+NoSpawnChunks: # cancel birth block, reducing memory usage
+Enable: true
+TPSSleep: #TPS pause
+NoOneFreeze: # is on the server when no one allows the server to reduce the power consumption of dormancy
+Enable: true
+SleepMode: AutoSleep #AutoSleep: NoUse: smooth Caton, do not open this function, fill in the number of milliseconds specified: forced dormancy
+4.AntiBugConfig - to fix vulnerabilities (including MC vulnerabilities and plug-in vulnerabilities) configuration file \ \
+AntiCrashChat:
+Enable: true is # defense collapse service code
+SpecialStringWarnMessage: C prohibited the use of clothing clothing fried collapse code! The letter # hints when the interception of the game player

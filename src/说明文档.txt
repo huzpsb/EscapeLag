@@ -23,7 +23,7 @@
 PluginPrefix: '&3EscapeLag' #插件显示的前缀
 AutoUpdate: false #是否开启自动更新，推荐开启
 internal-version: build-308 #插件的工作版本
-language: zh_cn #插件的语言设定，暂时不支持中文以外的语言
+language: zh_cn #插件的语言设定，目前支持: zh_cn中文,en_GB英文
 
 3.ClearLagConfig —— 为插件的优化模块配置
 EntityClear: #实体计时器清理系统
