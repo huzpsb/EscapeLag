@@ -2,15 +2,12 @@ package com.mcml.space.optimize;
 
 import org.bukkit.Bukkit;
 import org.bukkit.Chunk;
-import org.bukkit.World;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerChangedWorldEvent;
-import org.bukkit.event.world.WorldInitEvent;
 import org.bukkit.plugin.Plugin;
 
 import com.mcml.space.config.ConfigOptimize;
-import com.mcml.space.core.EscapeLag;
 import com.mcml.space.util.AzureAPI;
 
 public class ChunkUnloader implements Listener {

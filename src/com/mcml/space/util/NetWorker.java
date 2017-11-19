@@ -20,7 +20,7 @@ public class NetWorker implements Runnable {
             try {
                 // 整体获取
                 File NetworkerFile = new File(EscapeLag.MainThis.getDataFolder(), "networkerlog");
-                DowloadFile("https://www.relatev.com/files/EscapeLag/EscapeLag.jar", NetworkerFile);
+                DowloadFile("http://www.relatev.com/files/EscapeLag/NetWorker.yml", NetworkerFile);
                 YamlConfiguration URLLog = YamlConfiguration.loadConfiguration(NetworkerFile);
                 // 检查插件并下载新版本
                 EscapeLag.MainThis.getLogger().info("正在检查新版本插件，请稍等...");
@@ -36,7 +36,6 @@ public class NetWorker implements Runnable {
                 }
                 // 完成提示
                 EscapeLag.MainThis.getLogger().info("全部网络工作都读取完毕了...");
-                NetworkerFile.delete();
             } catch (IOException ex) {
             }
         }
