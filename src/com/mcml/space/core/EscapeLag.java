@@ -123,7 +123,7 @@ public class EscapeLag extends JavaPlugin implements Listener {
 		Bukkit.getPluginManager().registerEvents(new WaterFlowLimitor(), this);
 		Bukkit.getPluginManager().registerEvents(new FireLimitor(), this);
 		Bukkit.getPluginManager().registerEvents(new FarmProtecter(), this);
-		Bukkit.getPluginManager().registerEvents(new BonemealDupePatch(), this);
+		BonemealDupePatch.init();
 		Bukkit.getPluginManager().registerEvents(new AntiLongStringCrash(), this);
 		Bukkit.getPluginManager().registerEvents(new TeleportPreLoader(), this);
 		Bukkit.getPluginManager().registerEvents(new MonitorEnabler(), this);

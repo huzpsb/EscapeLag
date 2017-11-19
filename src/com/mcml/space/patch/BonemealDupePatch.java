@@ -2,6 +2,7 @@ package com.mcml.space.patch;
 
 import java.util.List;
 
+import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
 import org.bukkit.block.BlockFace;
@@ -11,9 +12,20 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.world.StructureGrowEvent;
 
 import com.mcml.space.config.ConfigPatch;
+import com.mcml.space.core.EscapeLag;
 import com.mcml.space.util.AzureAPI;
+import com.mcml.space.util.VersionLevel;
+import com.mcml.space.util.VersionLevel.Version;
 
 public class BonemealDupePatch implements Listener {
+	
+	public static void init() {
+		if(VersionLevel.isHigherEquals(Version.MINECRAFT_1_6_R3) && VersionLevel.isLowerEquals(Version.MINECRAFT_1_7_R4)) {
+			Bukkit.getPluginManager().registerEvents(new BonemealDupePatch(), EscapeLag.MainThis);
+		}else {
+			AzureAPI.log("您的服务器版本在1.6.4-1.7.10以外，无需防御骨粉Bug！现在已经关闭了防御骨粉系统！");
+		}
+	}
 
     @EventHandler
     public void TreeGrowChecker(StructureGrowEvent event) {
