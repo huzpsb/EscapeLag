@@ -18,6 +18,9 @@ public class BonemealDupePatch implements Listener {
     @EventHandler
     public void TreeGrowChecker(StructureGrowEvent event) {
         if (ConfigPatch.safetyBonemeal) {
+        	if(event.isFromBonemeal() == false) {
+        		return;
+        	}
         	List<BlockState> blocks = event.getBlocks();
         	int bs = blocks.size();
         	for(int i = 0;i<bs;i++){
