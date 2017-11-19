@@ -21,7 +21,9 @@ public class ChunkUnloader implements Listener {
 		AzureAPI.log("区块卸载系统现在运行...");
 	}
 	
-	@EventHandler
+	/*被证实过于卡服！
+	 * 
+	 * @EventHandler
 	public void onWorldLoad(WorldInitEvent event) {
 		if(ConfigOptimize.chunkUnloader == true) {
 			final World world = event.getWorld();
@@ -42,6 +44,7 @@ public class ChunkUnloader implements Listener {
 			}, 0, ConfigOptimize.ChunkUnloaderInterval);
 		}
 	}
+	*/
 
 	@EventHandler
 	public void LeaveWorldCheck(PlayerChangedWorldEvent event) {

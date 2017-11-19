@@ -106,7 +106,7 @@ public class CommandInjector extends AbstractMultipleInjector implements TabExec
 				long endTime = System.nanoTime();
 				long useTime = endTime - startTime;
 				if(ConfigFunction.MonitorPluginLagWarningenable){
-					if(useTime/1000000 > ConfigFunction.MonitorPluginLagWarningPeriod && this.getPlugin().getName().equalsIgnoreCase("EscapeLag") == false){
+					if(useTime/1000000 > ConfigFunction.MonitorPluginLagWarningPeriod){
 						AzureAPI.log("警告！服务器主线程陷入停顿超过配置设定值！因为插件" + this.getPlugin().getName() + " 执行了一次耗时 " + useTime/1000000 + " 毫秒的 " + command.getName() + " 指令操作！");
 					}
 				}

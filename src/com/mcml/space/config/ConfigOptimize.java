@@ -9,7 +9,7 @@ public abstract class ConfigOptimize extends Configurable {
     public static boolean TPSSleepNoOneFreezeenable = true;
 	
 	@Node(path = "TPSSleep.SleepMode")
-    public static String TPSSleepSleepMode = "AutoSleep";
+    public static String TPSSleepSleepMode = "NoUse";
 	
 	@Node(path = "EntityClear.enable")
     public static boolean EntityClearenable = true;

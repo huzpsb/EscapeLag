@@ -6,7 +6,7 @@ import com.mcml.space.util.Configurable;
 
 public abstract class ConfigFunction extends Configurable {
 	@Node(path = "Monitor.enable")
-    public static boolean Monitorenable = false;
+    public static boolean Monitorenable = true;
 	
 	@Node(path = "Monitor.ThreadLagWarning")
     public static boolean MonitorThreadLagWarning = true;
