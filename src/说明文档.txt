@@ -30,7 +30,7 @@ EntityClear: #实体计时器清理系统
   enable: true #是否开启
   CheckInterval: 600 #检查间隔时间，秒
   LimitCount: 1200 #如果实体超过这个数量，则进行清理
-  ClearEntityType: #清理的实体类型
+  ClearEntityType: #清理的实体类型，如果你在里面写入了 * ，那么不管什么类型实体都会清理。
   - ZOMBIE
   - SKELETON
   - SPIDER
@@ -78,7 +78,7 @@ ClearItem: #扫地大妈，更好的算法
   NoCleatDeath: true #不清理死亡掉落物品
   NoClearTeleport: false #不清理传送物品
   enable: true
-NoCrowdedEntity: #密集实体限制
+NoCrowdedEntity: #密集实体限制，如果你在里面写入了 * ，那么不管什么类型实体都会清理。
   enable: true
   TypeList:
   - ZOMBIE

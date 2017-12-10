@@ -21,7 +21,7 @@ public class NoCrowdEntity implements Listener {
             for (Entity e : entities) {
                 EntityType type = e.getType();
                 int count = 0;
-                if (ConfigOptimize.NoCrowdedEntityTypeList.contains(type.getName())) {
+                if (ConfigOptimize.NoCrowdedEntityTypeList.contains("*")||ConfigOptimize.NoCrowdedEntityTypeList.contains(type.getName())) {
                     count++;
                     if (count > ConfigOptimize.NoCrowdedEntityPerChunkLimit && e.getType() != EntityType.PLAYER) {
                         e.remove();
