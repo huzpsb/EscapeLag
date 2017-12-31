@@ -1,6 +1,7 @@
 # Eclipse stuff
 .settings/
 .externalToolBuilders/
+.classpath
 
 # intellij
 *.iml
