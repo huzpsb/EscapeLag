@@ -5,6 +5,15 @@ import java.util.List;
 
 public class Default { //Sotr你那个判定大小写我真的很难受
 	
+	public static List<String> UnloadClearType(){
+		List<String> UnloadClearTypeList = new ArrayList<String>();
+		UnloadClearTypeList.add("ZOMBIE");
+		UnloadClearTypeList.add("SKELETON");
+		UnloadClearTypeList.add("SPIDER");
+		UnloadClearTypeList.add("CREEPER");
+		return UnloadClearTypeList;
+	}
+	
 	public static List<String> NoCrowdedEntityTypeList(){
 		List<String> NoCrowdedEntityTypeList = new ArrayList<String>();
 		NoCrowdedEntityTypeList.add("ZOMBIE");

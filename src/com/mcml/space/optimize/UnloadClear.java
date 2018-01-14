@@ -16,27 +16,31 @@ import com.google.common.collect.Lists;
 import com.mcml.space.config.ConfigOptimize;
 import com.mcml.space.util.Utils;
 
-public class ItemClear implements Listener {
+public class UnloadClear implements Listener {
 	public static ArrayList<Chunk> DeathChunk = Lists.newArrayList();
 
 	@EventHandler
 	public void ChunkloadClear(ChunkUnloadEvent event) {
-		if (ConfigOptimize.ClearItemenable != true) {
+		if (ConfigOptimize.UnloadClearenable != true) {
 			return;
 		}
 		Chunk chunk = event.getChunk();
+		boolean noclearitemchunk = false;
 		int dcs = DeathChunk.size();
 		for (int i = 0; i < dcs; i++) {
 			Chunk deathchunk = DeathChunk.get(i);
 			if (Utils.isSameChunk(chunk, deathchunk)) {
 				DeathChunk.remove(chunk);
-				return;
+				noclearitemchunk = true;
 			}
 		}
 		Entity[] entities = chunk.getEntities();
 		for (int i = 0; i < entities.length; i++) {
 			Entity ent = entities[i];
-			if (ent.getType() == EntityType.DROPPED_ITEM) {
+			if (ent.getType() == EntityType.DROPPED_ITEM && noclearitemchunk == false) {
+				ent.remove();
+			}
+			if(ConfigOptimize.UnloadCleartype.contains(ent.getType().name())||ConfigOptimize.UnloadCleartype.contains("*")) {
 				ent.remove();
 			}
 		}
@@ -44,7 +48,7 @@ public class ItemClear implements Listener {
 
 	@EventHandler
 	public void DeathNoClear(PlayerDeathEvent event) {
-		if (ConfigOptimize.ClearItemNoCleatDeath != true) {
+		if (ConfigOptimize.UnloadClearDROPPED_ITEMNoCleatDeath != true) {
 			return;
 		}
 		Player player = event.getEntity();
@@ -54,7 +58,7 @@ public class ItemClear implements Listener {
 
 	@EventHandler
 	public void TeleportNoClear(PlayerTeleportEvent event) {
-		if (ConfigOptimize.ClearItemNoClearTeleport != true) {
+		if (ConfigOptimize.UnloadClearDROPPED_ITEMNoClearTeleport != true) {
 			return;
 		}
 		Player player = event.getPlayer();

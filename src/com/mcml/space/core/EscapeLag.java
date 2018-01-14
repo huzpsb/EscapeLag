@@ -30,7 +30,7 @@ import com.mcml.space.optimize.AutoSave;
 import com.mcml.space.optimize.ChunkKeeper;
 import com.mcml.space.optimize.EmptyRestart;
 import com.mcml.space.optimize.FireLimitor;
-import com.mcml.space.optimize.ItemClear;
+import com.mcml.space.optimize.UnloadClear;
 import com.mcml.space.optimize.NoCrowdEntity;
 import com.mcml.space.optimize.NoSpawnChunks;
 import com.mcml.space.optimize.OverloadRestart;
@@ -111,7 +111,7 @@ public class EscapeLag extends JavaPlugin implements Listener {
 		Bukkit.getPluginManager().registerEvents(new AntiSpam(), this);
 		ExplosionController.init(this);
 		Bukkit.getPluginManager().registerEvents(new AntiRedstone(), this);
-		Bukkit.getPluginManager().registerEvents(new ItemClear(), this);
+		Bukkit.getPluginManager().registerEvents(new UnloadClear(), this);
 		Bukkit.getPluginManager().registerEvents(new NoSpawnChunks(), this);
 		Bukkit.getPluginManager().registerEvents(new AntiInfRail(), this);
 		Bukkit.getPluginManager().registerEvents(new AutoSave(), this);

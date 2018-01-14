@@ -69,11 +69,11 @@ public abstract class ConfigOptimize extends Configurable {
     @Node(path = "TimerGc.Period")
     public static long TimerGcPeriod = 600;
 
-    @Node(path = "ClearItem.NoCleatDeath")
-    public static boolean ClearItemNoCleatDeath = true;
+    @Node(path = "UnloadClear.DROPPED_ITEM.NoCleatDeath")
+    public static boolean UnloadClearDROPPED_ITEMNoCleatDeath = true;
     
-    @Node(path = "ClearItem.NoClearTeleport")
-    public static boolean ClearItemNoClearTeleport = false;
+    @Node(path = "UnloadClear.DROPPED_ITEM.NoClearTeleport")
+    public static boolean UnloadClearDROPPED_ITEMNoClearTeleport = false;
     
     @Node(path = "NoCrowdedEntity.enable")
     public static boolean NoCrowdedEntityenable = true;
@@ -111,7 +111,7 @@ public abstract class ConfigOptimize extends Configurable {
     @Node(path = "AutoSave.enable")
     public static boolean AutoSaveenable = true;
     
-    @Node(path = "ClearItem.enable")
+    @Node(path = "UnloadClear.DROPPED_ITEM.enable")
     public static boolean ClearItemenable = true;
     
     @Node(path = "ChunkKeeper.enable")
@@ -122,4 +122,10 @@ public abstract class ConfigOptimize extends Configurable {
     
     @Node(path = "NoSpawnChunks.enable")
     public static boolean noSpawnChunks = true;
+    
+    @Node(path = "UnloadClear.enable")
+    public static boolean UnloadClearenable = true;
+    
+    @Node(path = "UnloadClear.type")
+    public static List<String> UnloadCleartype = Default.UnloadClearType();
 }
