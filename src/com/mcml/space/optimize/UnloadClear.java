@@ -37,7 +37,7 @@ public class UnloadClear implements Listener {
 		Entity[] entities = chunk.getEntities();
 		for (int i = 0; i < entities.length; i++) {
 			Entity ent = entities[i];
-			if (ent.getType() == EntityType.DROPPED_ITEM && noclearitemchunk == false) {
+			if (ent.getType() == EntityType.DROPPED_ITEM && noclearitemchunk == false && ConfigOptimize.UnloadClearDROPPED_ITEMenable) {
 				ent.remove();
 			}
 			if(ConfigOptimize.UnloadCleartype.contains(ent.getType().name())||ConfigOptimize.UnloadCleartype.contains("*")) {

@@ -112,7 +112,7 @@ public abstract class ConfigOptimize extends Configurable {
     public static boolean AutoSaveenable = true;
     
     @Node(path = "UnloadClear.DROPPED_ITEM.enable")
-    public static boolean ClearItemenable = true;
+    public static boolean UnloadClearDROPPED_ITEMenable = true;
     
     @Node(path = "ChunkKeeper.enable")
     public static boolean ChunkKeeperenable = true;
