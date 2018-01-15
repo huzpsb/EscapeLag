@@ -32,6 +32,7 @@ public class UnloadClear implements Listener {
 			if (Utils.isSameChunk(chunk, deathchunk)) {
 				DeathChunk.remove(chunk);
 				noclearitemchunk = true;
+				break;
 			}
 		}
 		Entity[] entities = chunk.getEntities();
