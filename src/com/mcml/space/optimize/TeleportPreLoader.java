@@ -28,7 +28,7 @@ public class TeleportPreLoader implements Listener {
 	public void TeleportLoader(final PlayerTeleportEvent event) {
 		if (ConfigOptimize.TeleportPreLoaderenable == true) {
 			final Player player = event.getPlayer();
-			if (canPreload(event.getFrom(), event.getTo(), player) == false) {
+			if (shouldReload(event.getFrom(), event.getTo(), player) == false) {
 				event.setCancelled(true);
 			}
 			if (player.getVehicle() != null) {
@@ -151,9 +151,10 @@ public class TeleportPreLoader implements Listener {
 		}
 	}
 
-	private boolean canPreload(Location from, Location to, Player player) {
-		if (from.getWorld() != to.getWorld())
+	private boolean shouldReload(Location from, Location to, Player player) {
+		if (from.getWorld() != to.getWorld()) {
 			return true;
+		}
 		Vector fvec = from.toVector();
 		Vector tvec = to.toVector();
 		double distance = fvec.distance(tvec);
