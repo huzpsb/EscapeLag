@@ -1,6 +1,5 @@
 package com.mcml.space.patch;
 
-import org.bukkit.Bukkit;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
@@ -22,8 +21,8 @@ import java.util.Map.Entry;
  */
 public class CheatBookBlocker implements Listener, PluginExtends {
     public static void init(JavaPlugin plugin) {
-        Bukkit.getPluginManager().registerEvents(new CheatBookBlocker(), plugin);
-        AzureAPI.log("书与笔修复模块已启用");
+        //Bukkit.getPluginManager().registerEvents(new CheatBookBlocker(), plugin);
+        AzureAPI.log("书与笔修复模块被临时禁用");
     }
     
     @EventHandler(priority = EventPriority.MONITOR, ignoreCancelled = true)
