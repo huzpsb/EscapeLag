@@ -48,6 +48,7 @@ import com.mcml.space.patch.AntiInfSuagr;
 import com.mcml.space.patch.AntiLongStringCrash;
 import com.mcml.space.patch.AntiNetherHopperInfItem;
 import com.mcml.space.patch.AntiPortalInfItem;
+import com.mcml.space.patch.AntiWEcalc;
 import com.mcml.space.patch.BonemealDupePatch;
 import com.mcml.space.patch.CheatBookBlocker;
 import com.mcml.space.patch.DupeLoginPatch;
@@ -133,6 +134,7 @@ public class EscapeLag extends JavaPlugin implements Listener {
 		CheatBookBlocker.init(this);
 		OverloadRestart.init(this);
 		SkullCrashPatch.init(this);
+		AntiWEcalc.init();
 
 		if (VersionLevel.isHigherEquals(Version.MINECRAFT_1_12_R1)) {
 			if (Bukkit.getPluginManager().isPluginEnabled("ProtocolLib")) {
