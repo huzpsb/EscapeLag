@@ -1,5 +1,6 @@
 package com.mcml.space.Command;
 
+import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -21,6 +22,7 @@ import com.mcml.space.monitor.MonitorUtils;
 import com.mcml.space.optimize.ChunkKeeper;
 import com.mcml.space.optimize.ChunkUnloader;
 import com.mcml.space.optimize.OverloadRestart;
+import com.mcml.space.util.HeapDumper;
 import com.mcml.space.util.NetWorker;
 import com.mcml.space.util.Perms;
 import com.mcml.space.util.TPSAndThread;
@@ -63,7 +65,7 @@ public class PluginCommand {
 					}
 					if (args[1].equalsIgnoreCase("download")) {
 						sender.sendMessage("§e操作开始执行中...");
-						Bukkit.getScheduler().runTaskAsynchronously(EscapeLag.MainThis, new Runnable() {
+						Bukkit.getScheduler().runTaskAsynchronously(EscapeLag.PluginMain, new Runnable() {
 							@Override
 							public void run() {
 								NetWorker.DownloadAntiAttack();
@@ -483,18 +485,23 @@ public class PluginCommand {
 					}
 					if (args[1].equalsIgnoreCase("clearheap")) {
 						System.gc();
-						System.runFinalization();
 						sender.sendMessage("§6内存清理完毕！");
 					}
 					if (args[1].equalsIgnoreCase("heapshut")) {
-						Bukkit.getScheduler().runTask(EscapeLag.MainThis, new OverloadRestart());
-						sender.sendMessage("§6成功检测一次内存濒临重启！");
+						Bukkit.getScheduler().runTask(EscapeLag.PluginMain, new OverloadRestart());
+						sender.sendMessage("§6成功检测一次内存濒临重启！若未发出重启提醒则意味着内存仍然充足不至于崩溃！");
 					}
 					if (args[1].equalsIgnoreCase("chunkunloadlog")) {
 						sender.sendMessage("§a截止到目前，插件已经卸载了" + ChunkUnloader.ChunkUnloaderTimes + "个无用区块");
 					}
 					if (args[1].equalsIgnoreCase("dump")) {
-						sender.sendMessage("§a开始 dump 内存堆！这可能会花费一些时间！");
+						sender.sendMessage("§a开始 dump 内存堆！这可能会花费一些时间并导致服务器卡住！");
+						File dumpedFile = new File(EscapeLag.PluginMain.getDataFolder(),"heap.hprof");
+						if(dumpedFile.exists()) {
+							dumpedFile.delete();
+						}
+						HeapDumper.dumpHeap(dumpedFile);
+						sender.sendMessage("§adump已经完成，储存为: " + dumpedFile);
 					}
 				}
 				if (args[0].equalsIgnoreCase("autosave")) {

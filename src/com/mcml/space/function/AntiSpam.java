@@ -27,7 +27,7 @@ public class AntiSpam implements Listener, QuitReactor {
 		timeRecord = Maps.newHashMap();
 		AzurePlayerList.bind(this);
 
-		Bukkit.getScheduler().runTaskTimer(EscapeLag.MainThis, new Runnable() {
+		Bukkit.getScheduler().runTaskTimer(EscapeLag.PluginMain, new Runnable() {
 			@Override
 			public void run() {
 				timeRecord.clear();

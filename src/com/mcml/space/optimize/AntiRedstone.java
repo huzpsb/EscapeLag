@@ -20,7 +20,7 @@ public class AntiRedstone implements Listener {
     private HashMap<Location,Integer> CheckedTimes = new HashMap<Location, Integer>();
 
     public AntiRedstone(){
-        Bukkit.getScheduler().runTaskTimer(EscapeLag.MainThis, new Runnable(){
+        Bukkit.getScheduler().runTaskTimer(EscapeLag.PluginMain, new Runnable(){
             @Override
             public void run(){
                 CheckedTimes.clear();
@@ -43,7 +43,7 @@ public class AntiRedstone implements Listener {
 
             if(CheckedTimes.get(loc) > ConfigOptimize.AntiRedstoneTimes){
                 if(ConfigOptimize.AntiRedstoneRemoveBlockList.contains(block.getType().name())){
-					Bukkit.getScheduler().runTaskLater(EscapeLag.MainThis,new Runnable(){
+					Bukkit.getScheduler().runTaskLater(EscapeLag.PluginMain,new Runnable(){
 						public void run(){
 							block.setType(Material.AIR);
 						}

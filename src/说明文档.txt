@@ -44,7 +44,7 @@ NooneRestart: #无人重启系统
   TimeLong: 1200 #持续时间无人重启
 OverLoadMemoryRestart: #内存溢出重启系统，对内存不足服务器和回档服务器有显著效果
   enable: true
-  Percent: 90 #当内存达到多少百分比重启
+  HeapMBLeft: 130 #当内存还剩下多少MB的时候重启
   KickMessage: 抱歉！由于服务器内存过载，需要重启服务器！ #当玩家因为重启时需要被请出服务器的信息
   WarnMessage: 服务器会在15秒后重启，请玩家不要游戏，耐心等待！ ╮(╯_╰)╭ #警告重启信息
   DelayTime: 15 #提示后多长时间执行重启

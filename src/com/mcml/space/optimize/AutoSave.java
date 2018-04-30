@@ -27,7 +27,7 @@ public class AutoSave implements Listener {
             return;
         }
         final Player p = e.getPlayer();
-        TaskId.put(p, Bukkit.getScheduler().scheduleSyncRepeatingTask(EscapeLag.MainThis, new Runnable() {
+        TaskId.put(p, Bukkit.getScheduler().scheduleSyncRepeatingTask(EscapeLag.PluginMain, new Runnable() {
 
             @Override
             public void run() {

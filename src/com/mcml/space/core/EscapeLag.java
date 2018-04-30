@@ -53,7 +53,6 @@ import com.mcml.space.patch.BonemealDupePatch;
 import com.mcml.space.patch.CheatBookBlocker;
 import com.mcml.space.patch.DupeLoginPatch;
 import com.mcml.space.patch.RPGItemPatch;
-import com.mcml.space.patch.RecipeDupePatch;
 import com.mcml.space.patch.SkullCrashPatch;
 import com.mcml.space.util.AzureAPI;
 import com.mcml.space.util.AzureAPI.Coord;
@@ -63,10 +62,9 @@ import com.mcml.space.util.NetWorker;
 import com.mcml.space.util.Perms;
 import com.mcml.space.util.TPSAndThread;
 import com.mcml.space.util.VersionLevel;
-import com.mcml.space.util.VersionLevel.Version;
 
 public class EscapeLag extends JavaPlugin implements Listener {
-	public static EscapeLag MainThis;
+	public static EscapeLag PluginMain;
 	public static Coord<File, FileConfiguration> configOptimize;
 	public static Coord<File, FileConfiguration> configPatch;
 	public static Coord<File, FileConfiguration> configMain;
@@ -74,7 +72,7 @@ public class EscapeLag extends JavaPlugin implements Listener {
 
 	@Override
 	public void onEnable() {
-		MainThis = this;
+		PluginMain = this;
 		AzureAPI.bind(this);
 		trySetupConfig();
 
@@ -136,16 +134,6 @@ public class EscapeLag extends JavaPlugin implements Listener {
 		SkullCrashPatch.init(this);
 		AntiWEcalc.init();
 
-		if (VersionLevel.isHigherEquals(Version.MINECRAFT_1_12_R1)) {
-			if (Bukkit.getPluginManager().isPluginEnabled("ProtocolLib")) {
-				Bukkit.getPluginManager().registerEvents(new RecipeDupePatch(), this);
-				AzureAPI.log("自动合成修复模块已启用");
-			} else {
-				AzureAPI.warn("检测到您正使用 1.12 版本的服务端, 但未安装 ProtocolLib 前置插件");
-				AzureAPI.warn("这将导致某些重要的防护功能不可用, 强烈建议您安装 ProtocolLib 并重启服务端");
-			}
-		}
-
 		ChunkKeeper.ChunkKeeperofTask();
 
 		TimerGarbageCollect.init(this);
@@ -175,25 +163,25 @@ public class EscapeLag extends JavaPlugin implements Listener {
 		try {
 			setupConfig();
 		} catch (IllegalArgumentException | IllegalAccessException e) {
-			AzureAPI.fatal("初始化配置文件时出错", EscapeLag.MainThis);
+			AzureAPI.fatal("初始化配置文件时出错", EscapeLag.PluginMain);
 			e.printStackTrace();
 		}
 	}
 
 	private static void setupConfig() throws IllegalArgumentException, IllegalAccessException {
-		EscapeLag.MainThis.saveResource("说明文档.txt", true);
-		EscapeLag.MainThis.saveResource("EnglishHelpDoc.txt", true);
+		EscapeLag.PluginMain.saveResource("说明文档.txt", true);
+		EscapeLag.PluginMain.saveResource("EnglishHelpDoc.txt", true);
 
-		File pluginMainConfigFile = new File(EscapeLag.MainThis.getDataFolder(), "PluginMainConfig.yml");
+		File pluginMainConfigFile = new File(EscapeLag.PluginMain.getDataFolder(), "PluginMainConfig.yml");
 		configMain = AzureAPI.wrapCoord(pluginMainConfigFile, AzureAPI.loadOrCreateFile(pluginMainConfigFile));
 
-		File clearLagConfig = new File(EscapeLag.MainThis.getDataFolder(), "ClearLagConfig.yml");
+		File clearLagConfig = new File(EscapeLag.PluginMain.getDataFolder(), "ClearLagConfig.yml");
 		configOptimize = AzureAPI.wrapCoord(clearLagConfig, AzureAPI.loadOrCreateFile(clearLagConfig));
 
-		File antiBugConfig = new File(EscapeLag.MainThis.getDataFolder(), "AntiBugConfig.yml");
+		File antiBugConfig = new File(EscapeLag.PluginMain.getDataFolder(), "AntiBugConfig.yml");
 		configPatch = AzureAPI.wrapCoord(antiBugConfig, AzureAPI.loadOrCreateFile(antiBugConfig));
 
-		File doEventConfig = new File(EscapeLag.MainThis.getDataFolder(), "DoEventConfig.yml");
+		File doEventConfig = new File(EscapeLag.PluginMain.getDataFolder(), "DoEventConfig.yml");
 		configFunction = AzureAPI.wrapCoord(doEventConfig, AzureAPI.loadOrCreateFile(doEventConfig));
 
 		try {
@@ -341,6 +329,6 @@ public class EscapeLag extends JavaPlugin implements Listener {
 	}
 
 	public static File getPluginsFile() {
-		return EscapeLag.MainThis.getFile();
+		return EscapeLag.PluginMain.getFile();
 	}
 }

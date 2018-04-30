@@ -13,9 +13,6 @@ public abstract class ConfigPatch extends Configurable {
 	@Locale
 	@Node(path = "AntiWEcalc.WarnMessage")
     public static String AntiWEcalcWarnMessage = "§a§l[EscapeLag]§c禁止利用WE bug炸服! =.=";
-	
-    @Node(path = "patches.auto-recipe-dupe")
-    public static boolean autoRecipePatch = true;
 
     @Node(path = "AntiBoneBug.enable")
     public static boolean safetyBonemeal = true;

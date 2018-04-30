@@ -87,8 +87,8 @@ public abstract class ConfigOptimize extends Configurable {
     @Node(path = "AntiRedstone.Message")
     public static String AntiRedstoneMessage = "§c检测到高频红石在 %location% ，插件已经将其清除，不许玩了！ (╰_╯)#";
     
-    @Node(path = "OverLoadMemoryRestart.Percent")
-    public static int OverLoadMemoryRestartPercent = 90;
+    @Node(path = "OverLoadMemoryRestart.HeapMBLefted")
+    public static int OverLoadMemoryRestartHeapMBLefted = 130;
 	
 	@Node(path = "OverLoadMemoryRestart.KickMessage")
     public static String OverLoadMemoryRestartKickMessage = "抱歉！由于服务器内存过载，需要重启服务器！";

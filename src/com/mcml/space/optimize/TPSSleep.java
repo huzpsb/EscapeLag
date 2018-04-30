@@ -12,7 +12,7 @@ public class TPSSleep {
 	public static int ShouldWaitSecondToManager = 0;
 
 	public static void init() {
-		Bukkit.getScheduler().runTaskTimer(EscapeLag.MainThis, new Runnable() {
+		Bukkit.getScheduler().runTaskTimer(EscapeLag.PluginMain, new Runnable() {
 			public void run() {
 				if (ConfigOptimize.TPSSleepNoOneFreezeenable == true && AzurePlayerList.size() == 0) {
 					try {
@@ -34,7 +34,7 @@ public class TPSSleep {
 				}
 			}
 		}, 1, 1);
-		Bukkit.getScheduler().runTaskTimerAsynchronously(EscapeLag.MainThis, new Runnable() {
+		Bukkit.getScheduler().runTaskTimerAsynchronously(EscapeLag.PluginMain, new Runnable() {
 			public void run() {
 				if(ShouldWaitSecondToManager > 0) {
 					ShouldWaitSecondToManager = ShouldWaitSecondToManager - 1;

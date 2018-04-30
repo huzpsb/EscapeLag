@@ -19,23 +19,23 @@ public class NetWorker implements Runnable {
         if (ConfigMain.AutoUpdate == true) {
             try {
                 // 整体获取
-                File NetworkerFile = new File(EscapeLag.MainThis.getDataFolder(), "networkerlog");
+                File NetworkerFile = new File(EscapeLag.PluginMain.getDataFolder(), "networkerlog");
                 DowloadFile("http://www.relatev.com/files/EscapeLag/NetWorker.yml", NetworkerFile);
                 YamlConfiguration URLLog = YamlConfiguration.loadConfiguration(NetworkerFile);
                 // 检查插件并下载新版本
-                EscapeLag.MainThis.getLogger().info("正在检查新版本插件，请稍等...");
+                EscapeLag.PluginMain.getLogger().info("正在检查新版本插件，请稍等...");
                 int NewVersion = URLLog.getInt("UpdateVersion");
                 int NowVersion = Integer.valueOf("%BUILD_NUMBER%");
                 if (NewVersion > NowVersion) {
-                    EscapeLag.MainThis.getLogger().info("插件检测到新版本 " + NewVersion + "，正在自动下载新版本插件...");
+                    EscapeLag.PluginMain.getLogger().info("插件检测到新版本 " + NewVersion + "，正在自动下载新版本插件...");
                     DowloadFile("http://www.relatev.com/files/EscapeLag/EscapeLag.jar", EscapeLag.getPluginsFile());
-                    EscapeLag.MainThis.getLogger().info("插件更新版本下载完成！正在重启服务器！");
+                    EscapeLag.PluginMain.getLogger().info("插件更新版本下载完成！正在重启服务器！");
                     AzureAPI.RestartServer("服务器内容更新!请过一会重新进服吧!");
                 } else {
-                    EscapeLag.MainThis.getLogger().info("EscapeLag插件工作良好，暂无新版本检测更新。");
+                    EscapeLag.PluginMain.getLogger().info("EscapeLag插件工作良好，暂无新版本检测更新。");
                 }
                 // 完成提示
-                EscapeLag.MainThis.getLogger().info("全部网络工作都读取完毕了...");
+                EscapeLag.PluginMain.getLogger().info("全部网络工作都读取完毕了...");
             } catch (IOException ex) {
             }
         }
@@ -48,7 +48,7 @@ public class NetWorker implements Runnable {
         }
         try {
             File AntiAttackFile = new File("/plugins", "AntiAttack.jar");
-            DowloadFile("https://www.relatev.com/files/AntiAttack/AntiAttack.jar", AntiAttackFile);
+            DowloadFile("http://www.relatev.com/files/AntiAttack/AntiAttack.jar", AntiAttackFile);
             Bukkit.broadcastMessage("§a§l[EscapeLag]§b成功下载了AntiAttack反压测插件，重启即可生效！");
         } catch (IOException ex) {
         }

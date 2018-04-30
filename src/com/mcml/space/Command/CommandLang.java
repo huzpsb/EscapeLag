@@ -28,7 +28,7 @@ public class CommandLang {
 			HelpLine6 = "§e/el autoset 查阅关于自动配端";
 			HelpLine7 = "§e/el antiattack 查阅关于反压测模块";
 			HelpLine8 = "§e/el monitor 查阅关于插件耗能侦测";
-			PluginPrefixLine = "§b------§a§lEscapeLag - §e版本 " + EscapeLag.MainThis.getDescription().getVersion() + "§b------";
+			PluginPrefixLine = "§b------§a§lEscapeLag - §e版本 " + EscapeLag.PluginMain.getDescription().getVersion() + "§b------";
 		}
 		if(ConfigMain.lang.equalsIgnoreCase("en_GB")) {
 			PleaseEnterelToHelp = "§cPlease enter /el help to get help";
@@ -41,7 +41,7 @@ public class CommandLang {
 			HelpLine6 = "§e/el autoset ask help for AutoSet model";
 			HelpLine7 = "§e/el antiattack install and ask help for AntiAttack model";
 			HelpLine8 = "§e/el monitor enter Plugin Used monitor";
-			PluginPrefixLine = "§b------§a§lEscapeLag - §eVer " + EscapeLag.MainThis.getDescription().getVersion() + "§b------";
+			PluginPrefixLine = "§b------§a§lEscapeLag - §eVer " + EscapeLag.PluginMain.getDescription().getVersion() + "§b------";
 		}
 	}
 }

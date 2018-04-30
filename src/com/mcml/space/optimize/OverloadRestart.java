@@ -19,13 +19,11 @@ public class OverloadRestart implements Runnable, PluginExtends {
         AzureAPI.log("超负荷重启模块已启动");
     }
     
-    // TODO 这个类以后还可以添加更多重启检测 不要重命名
-    
     @Override
     public void run() {
         if (ConfigOptimize.OverLoadMemoryRestartenable && isMemoryOverload()) {
             AzureAPI.bc(ConfigOptimize.OverLoadMemoryRestartWarnMessage);
-            Bukkit.getServer().getScheduler().runTaskLater(EscapeLag.MainThis, new Runnable() {
+            Bukkit.getServer().getScheduler().runTaskLater(EscapeLag.PluginMain, new Runnable() {
                 @Override
                 public void run() {
                     AzureAPI.RestartServer(ConfigOptimize.OverLoadMemoryRestartKickMessage);
@@ -36,7 +34,7 @@ public class OverloadRestart implements Runnable, PluginExtends {
     
     public static boolean isMemoryOverload() {
         Runtime run = Runtime.getRuntime();
-        return run.totalMemory() - run.freeMemory() > run.maxMemory() / 100 * ConfigOptimize.OverLoadMemoryRestartPercent;
+        return run.totalMemory() - run.maxMemory() + run.freeMemory() < ConfigOptimize.OverLoadMemoryRestartHeapMBLefted;
     }
     
 }

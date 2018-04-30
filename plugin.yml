@@ -1,4 +1,4 @@
-name: EscapeLag
+name: EscapeLag-testing
 main: com.mcml.space.core.EscapeLag
 version: Build-tester
 softdepend: [ProtocolLib, AntiAttack, Essentials, RPG Items, RPGItems]

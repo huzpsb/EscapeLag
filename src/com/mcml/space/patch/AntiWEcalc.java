@@ -13,7 +13,7 @@ public class AntiWEcalc implements Listener {
 	public static void init() {
 		if (Bukkit.getPluginManager().getPlugin("WorldEdit") != null && ConfigPatch.AntiWEcalcenable) {
 			AzureAPI.log("已经启用WEcalc命令炸服Bug!");
-			Bukkit.getPluginManager().registerEvents(new AntiWEcalc(), EscapeLag.MainThis);
+			Bukkit.getPluginManager().registerEvents(new AntiWEcalc(), EscapeLag.PluginMain);
 		}
 	}
 

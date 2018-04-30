@@ -16,7 +16,7 @@ public class TPSAndThread implements Runnable{
 	
 	
 	public TPSAndThread(){
-		Bukkit.getScheduler().runTaskTimer(EscapeLag.MainThis, new Runnable(){
+		Bukkit.getScheduler().runTaskTimer(EscapeLag.PluginMain, new Runnable(){
 			public void run(){
 				ServerTime = System.currentTimeMillis();
 				ServerTick++;
