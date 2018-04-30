@@ -34,7 +34,7 @@ public class OverloadRestart implements Runnable, PluginExtends {
     
     public static boolean isMemoryOverload() {
         Runtime run = Runtime.getRuntime();
-        return run.totalMemory() - run.maxMemory() + run.freeMemory() < ConfigOptimize.OverLoadMemoryRestartHeapMBLefted;
+        return run.maxMemory() - run.totalMemory() + run.freeMemory() < ConfigOptimize.OverLoadMemoryRestartHeapMBLefted;
     }
     
 }

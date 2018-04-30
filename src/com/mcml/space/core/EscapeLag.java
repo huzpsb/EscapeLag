@@ -316,8 +316,12 @@ public class EscapeLag extends JavaPlugin implements Listener {
 			if (bukkit.getInt("EscapeLag.SetStep") == 0) {
 				bukkit.set("EscapeLag.SetStep", 1);
 				bukkit.save(BukkitFile);
-				AzureAPI.log("成功改动服务器配端，正在重启来启用它.");
-				AzureAPI.RestartServer("配端完成，正在重启中！");
+				Bukkit.getScheduler().runTaskLater(EscapeLag.PluginMain, new Runnable() {
+					public void run() {
+						AzureAPI.log("成功改动服务器配端，正在重启来启用它.");
+						AzureAPI.RestartServer("配端完成，正在重启中！");
+					}
+				}, 1);
 			}
 		}
 	}
