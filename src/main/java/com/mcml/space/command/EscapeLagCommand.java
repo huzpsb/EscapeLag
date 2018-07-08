@@ -1,4 +1,4 @@
-package com.mcml.space.Command;
+package com.mcml.space.command;
 
 import java.io.File;
 import java.io.IOException;

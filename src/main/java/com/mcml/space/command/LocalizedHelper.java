@@ -1,4 +1,4 @@
-package com.mcml.space.Command;
+package com.mcml.space.command;
 
 import com.mcml.space.config.ConfigMain;
 import com.mcml.space.core.EscapeLag;

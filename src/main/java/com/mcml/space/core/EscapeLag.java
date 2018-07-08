@@ -12,8 +12,8 @@ import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.event.Listener;
 import org.bukkit.plugin.java.JavaPlugin;
 
-import com.mcml.space.Command.LocalizedHelper;
-import com.mcml.space.Command.EscapeLagCommand;
+import com.mcml.space.command.EscapeLagCommand;
+import com.mcml.space.command.LocalizedHelper;
 import com.mcml.space.config.ConfigFunction;
 import com.mcml.space.config.ConfigMain;
 import com.mcml.space.config.ConfigOptimize;
