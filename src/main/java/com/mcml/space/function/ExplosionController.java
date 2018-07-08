@@ -25,17 +25,17 @@ import static com.mcml.space.config.ConfigFunction.explodeControlType;
  */
 public class ExplosionController implements PluginExtends {
     public static void init(JavaPlugin plugin) {
-        Bukkit.getPluginManager().registerEvents(new ExplosionController.EntityDetector(), plugin);
+        Bukkit.getPluginManager().registerEvents(new EntityDetector(), plugin);
         
         if (VersionLevel.isHigherEquals(Version.MINECRAFT_1_8_R2)) {
-            Bukkit.getPluginManager().registerEvents(new ExplosionController.BlockDetector(), plugin);
+            Bukkit.getPluginManager().registerEvents(new BlockDetector(), plugin);
         }
         
         AzureAPI.log("爆炸控制模块已启动");
     }
     
     // since 1.8.3
-    public static class BlockDetector implements Listener {
+    private static class BlockDetector implements Listener {
         @EventHandler(priority = EventPriority.MONITOR, ignoreCancelled = true)
         public void onExplode(BlockExplodeEvent evt) {
             handleExplode(evt, evt.blockList());
@@ -43,9 +43,7 @@ public class ExplosionController implements PluginExtends {
     }
     
     // since 1.4.6
-    public static class EntityDetector implements Listener {
-        
-        
+    private static class EntityDetector implements Listener {
         @EventHandler(priority = EventPriority.MONITOR, ignoreCancelled = true)
         public void onExplode(EntityExplodeEvent evt) {
             handleExplode(evt, evt.blockList());

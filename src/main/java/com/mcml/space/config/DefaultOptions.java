@@ -7,7 +7,7 @@ import java.util.List;
 import static org.bukkit.entity.EntityType.*;
 import static org.bukkit.Material.*;
 
-public class DefaultConfigurableLists {
+public class DefaultOptions {
     
     static class TypedList extends ArrayList<String> implements List<String> {
         private static final long serialVersionUID = 1L;

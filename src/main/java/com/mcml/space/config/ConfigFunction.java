@@ -21,7 +21,7 @@ public abstract class ConfigFunction extends Configurable {
 	public static boolean PluginErrorMessageBlockerenable = true;
 	
 	@Node(path = "PluginErrorMessageBlocker.Message")
-	public static List<String> PluginErrorMessageBlockerMessage = DefaultConfigurableLists.blockedErrorMessages();
+	public static List<String> PluginErrorMessageBlockerMessage = DefaultOptions.blockedErrorMessages();
 	
 	@Node(path = "PluginErrorMessageLogger.enable")
 	public static boolean PluginErrorMessageLoggerenable = false;
@@ -40,7 +40,7 @@ public abstract class ConfigFunction extends Configurable {
     public static boolean enableAntiDirty = true;
 
 	@Node(path = "AntiSpam.Dirty.List")
-	public static List<String> AntiSpamDirtyList = DefaultConfigurableLists.spamMessages();
+	public static List<String> AntiSpamDirtyList = DefaultOptions.spamMessages();
 
 	@Node(path = "NoEggChangeSpawner.enable")
 	public static boolean preventSpawnerModify = true;
