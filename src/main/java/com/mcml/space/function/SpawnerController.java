@@ -22,13 +22,15 @@ import static com.mcml.space.config.ConfigFunction.messagePreventSpawnerModify;
  */
 public class SpawnerController implements Listener, PluginExtends {
     public static void init(JavaPlugin plugin) {
+        if (!preventSpawnerModify) return;
+        
         Bukkit.getPluginManager().registerEvents(new SpawnerController(), plugin);
         AzureAPI.log("刷怪笼控制模块已启动");
     }
     
     @EventHandler(priority = EventPriority.MONITOR, ignoreCancelled = true)
     public void onModify(PlayerInteractEvent evt) {
-        if (!preventSpawnerModify || evt.getItem() == null || evt.getAction() != Action.RIGHT_CLICK_BLOCK) return;
+        if (evt.getItem() == null || evt.getAction() != Action.RIGHT_CLICK_BLOCK) return;
         
         Player player = evt.getPlayer();
         if (Perms.has(player)) return;
