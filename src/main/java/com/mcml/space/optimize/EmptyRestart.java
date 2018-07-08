@@ -33,7 +33,7 @@ public class EmptyRestart implements Listener, PluginExtends {
             restartTaskId = Bukkit.getScheduler().runTaskLater(EscapeLag.PluginMain, new Runnable(){
                 @Override
                 public void run(){
-                    AzureAPI.RestartServer("服务器无人在线，开始重启...");
+                    AzureAPI.restartServer("服务器无人在线，开始重启...");
                 }
             }, AzureAPI.toTicks(TimeUnit.SECONDS, ConfigOptimize.emptyRestartDelay)).getTaskId();
         }

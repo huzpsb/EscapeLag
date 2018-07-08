@@ -120,7 +120,13 @@ public class VersionLevel {
         boolean thermos = bukkitVersion.contains("thermos") || bukkitVersion.contains("contigo");
         forge = thermos || bukkitVersion.contains("cauldron") || bukkitVersion.contains("mcpc") || bukkitVersion.contains("uranium");
         paper = bukkitVersion.contains("paper") || bukkitVersion.contains("taco") || bukkitVersion.contains("torch") || bukkitVersion.contains("akarin");
-        spigot = (paper ? true : forge || bukkitVersion.contains("spigot") || bukkitVersion.contains("hose") || bukkitVersion.contains("glowstone"));
+        
+        try {
+            Class.forName("org.spigotmc.RestartCommand");
+            spigot = true;
+        } catch (ClassNotFoundException ignored) {
+            spigot = false;
+        }
     }
     
     public static boolean isLowerThan(Version other) {
