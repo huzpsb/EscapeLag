@@ -1,0 +1,14 @@
+name: ${project.name}
+main: com.mcml.space.core.EscapeLag
+version: ${project.version}-b%BUILD_NUMBER%
+softdepend: [ProtocolLib, AntiAttack, Essentials, RPG Items, RPGItems]
+author: Vlvxingze
+authors: [IzzelAliz, Sotr]
+website: "https://github.com/Vlvxingze/EscapeLag"
+description: ${project.description}
+database: false
+
+commands:
+  el:
+    description: EscapeLag
+    usage: "/el help"
