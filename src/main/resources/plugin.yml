@@ -1,7 +1,7 @@
 name: ${project.name}
 main: com.mcml.space.core.EscapeLag
 version: ${project.version}-b%BUILD_NUMBER%
-softdepend: [ProtocolLib, AntiAttack, Essentials, RPG Items, RPGItems]
+softdepend: [ProtocolLib, AntiAttack, Essentials, RPG_Items, RPGItems]
 author: Vlvxingze
 authors: [IzzelAliz, Sotr]
 website: "https://github.com/Vlvxingze/EscapeLag"

@@ -14,7 +14,6 @@ public abstract class Perms {
     }
     
     public static void bind(Permission commonPerm) {
-        assert common == null;
         common = commonPerm;
     }
     

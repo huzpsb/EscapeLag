@@ -10,7 +10,7 @@ public class HeapDumper {
 
 	public static void dumpHeap(File file) {
 		if(MXBean == null) {
-			if(HeapDumper.init() == false) {
+			if(!HeapDumper.init()) {
 				AzureAPI.log("Dump内存堆失败!");
 				return;
 			}
@@ -19,12 +19,9 @@ public class HeapDumper {
 			Method method = Class.forName("com.sun.management.HotSpotDiagnosticMXBean").getMethod("dumpHeap",
 					new Class[] { String.class, Boolean.TYPE });
 			method.invoke(MXBean, new Object[] { file.toString(), true });
-		} catch (RuntimeException rex) {
+		} catch (Exception rex) {
 			AzureAPI.log("Dump内存堆失败!");
 			AzureAPI.log(rex.toString());
-		} catch (Exception ex) {
-			AzureAPI.log("Dump内存堆失败!");
-			AzureAPI.log(ex.toString());
 		}
 	}
 
@@ -35,13 +32,9 @@ public class HeapDumper {
 			MXBean = ManagementFactory.newPlatformMXBeanProxy(server, "com.sun.management:type=HotSpotDiagnostic",
 					clazz);
 			return true;
-		} catch (RuntimeException rex) {
+		} catch (Exception rex) {
 			AzureAPI.log("无法初始化Dump内存堆系统!");
 			AzureAPI.log(rex.toString());
-			return false;
-		} catch (Exception ex) {
-			AzureAPI.log("无法初始化Dump内存堆系统!");
-			AzureAPI.log(ex.toString());
 			return false;
 		}
 	}
