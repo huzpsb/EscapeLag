@@ -294,6 +294,13 @@ public abstract class AzureAPI<K, V> {
             org.spigotmc.RestartCommand.restart();
         } else {
             AzureAPI.log("请重启您的服务器");
+            PlayerList.forEach(new Predicate<Player>() {
+                @Override
+                public boolean apply(Player player) {
+                    player.kickPlayer(loggerPrefix + message);
+                    return true;
+                }
+            });
             Bukkit.shutdown();
         }
     }
