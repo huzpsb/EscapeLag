@@ -23,6 +23,8 @@ import org.bukkit.entity.Player;
 import org.bukkit.permissions.Permission;
 import org.bukkit.plugin.java.JavaPlugin;
 
+import com.google.common.base.Function;
+import com.google.common.base.Predicate;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Sets;
 
@@ -201,7 +203,11 @@ public abstract class AzureAPI<K, V> {
     }
 
     public static Set<String> newCaseInsensitiveSet() {
-        return Sets.newSetFromMap(new CaseInsensitiveMap<Boolean>());
+        return newCaseInsensitiveSet(false);
+    }
+    
+    public static Set<String> newCaseInsensitiveSet(boolean concurrent) {
+        return Sets.newSetFromMap(AzureAPI.<Boolean>newCaseInsensitiveMap(concurrent));
     }
     
     public static <E> List<E> matchElements(List<E> list, int start) {
@@ -275,14 +281,15 @@ public abstract class AzureAPI<K, V> {
         return YamlConfiguration.loadConfiguration(file);
     }
 
-    public static void RestartServer(String message){
+    public static void RestartServer(final String message){
 		AzureAPI.log("开始以理由 " + message +"重启服务器...");
-		List<Player> players = AzurePlayerList.players();
-		List<Player> RestartList = new ArrayList<Player>();
-		RestartList.addAll(players);
-		for(Player player : RestartList){
-			player.kickPlayer(loggerPrefix + message);
-		}
+		PlayerList.forEach(new Predicate<Player>() {
+            @Override
+            public boolean apply(Player player) {
+                player.kickPlayer(loggerPrefix + message);
+                return true;
+            }
+        });
         Bukkit.shutdown();
     }
     

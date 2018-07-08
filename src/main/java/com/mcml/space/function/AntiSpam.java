@@ -17,7 +17,7 @@ import com.google.common.collect.Maps;
 import com.mcml.space.config.ConfigFunction;
 import com.mcml.space.core.EscapeLag;
 import com.mcml.space.util.AzureAPI;
-import com.mcml.space.util.AzurePlayerList;
+import com.mcml.space.util.PlayerList;
 import com.mcml.space.util.QuitReactor;
 
 public class AntiSpam implements Listener, QuitReactor {
@@ -25,7 +25,7 @@ public class AntiSpam implements Listener, QuitReactor {
 
 	public AntiSpam() {
 		timeRecord = Maps.newHashMap();
-		AzurePlayerList.bind(this);
+		PlayerList.bind(this);
 
 		Bukkit.getScheduler().runTaskTimer(EscapeLag.PluginMain, new Runnable() {
 			@Override

@@ -9,7 +9,7 @@ import org.bukkit.plugin.java.JavaPlugin;
 
 import com.mcml.space.config.ConfigPatch;
 import com.mcml.space.util.AzureAPI;
-import com.mcml.space.util.AzurePlayerList;
+import com.mcml.space.util.PlayerList;
 import com.mcml.space.util.PluginExtends;
 
 /**
@@ -24,7 +24,7 @@ public class DupeLoginPatch implements Listener, PluginExtends {
     @EventHandler(priority = EventPriority.LOWEST)
     public void onLogin(AsyncPlayerPreLoginEvent evt) {
         if (ConfigPatch.fixDupeOnline) {
-            if (AzurePlayerList.contains(evt.getName())) {
+            if (PlayerList.contains(evt.getName())) {
                 evt.setLoginResult(AsyncPlayerPreLoginEvent.Result.KICK_OTHER);
                 evt.setKickMessage(ConfigPatch.messageKickDupeOnline);
             }

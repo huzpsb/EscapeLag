@@ -9,9 +9,10 @@ import org.bukkit.entity.Entity;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
 
+import com.google.common.base.Predicate;
 import com.mcml.space.config.ConfigOptimize;
 import com.mcml.space.util.AzureAPI;
-import com.mcml.space.util.AzurePlayerList;
+import com.mcml.space.util.PlayerList;
 
 public class EntityClear implements Runnable{
 
@@ -20,7 +21,7 @@ public class EntityClear implements Runnable{
 		if(ConfigOptimize.EntityClearenable){
 			int count = 0;
 			List<World> worlds = Bukkit.getWorlds();
-			List<LivingEntity> allents = new ArrayList<LivingEntity>();
+			final List<LivingEntity> allents = new ArrayList<LivingEntity>();
 			int ws = worlds.size();
 			for(int i = 0;i<ws;i++){
 				World world = worlds.get(i);
@@ -35,19 +36,20 @@ public class EntityClear implements Runnable{
 				}
 			}
 			if(count > ConfigOptimize.EntityClearLimitCount){
-				List<Player> players = AzurePlayerList.players();
-				int ps = players.size();
-				for(int i = 0;i<ps;i++){
-					Player player = players.get(i);
-					List<Entity> nents = player.getNearbyEntities(10, 10, 10);
-					int ls = nents.size();
-					for(int ii = 0;ii<ls;ii++){
-						Entity le = nents.get(ii);
-						if(allents.contains(le)){
-							allents.remove(le);
-						}
-					}
-				}
+	            PlayerList.forEach(new Predicate<Player>() {
+	                @Override
+	                public boolean apply(Player player) {
+	                    List<Entity> nents = player.getNearbyEntities(10, 10, 10);
+	                    int ls = nents.size();
+	                    for(int ii = 0;ii<ls;ii++){
+	                        Entity le = nents.get(ii);
+	                        if(allents.contains(le)){
+	                            allents.remove(le);
+	                        }
+	                    }
+	                    return true;
+	                }
+	            });
 				int aes = allents.size();
 				AzureAPI.bc(ConfigOptimize.EntityClearClearMessage);
 				for(int ii = 0;ii<aes;ii++){

@@ -13,7 +13,7 @@ import org.bukkit.plugin.java.JavaPlugin;
 import com.mcml.space.config.ConfigOptimize;
 import com.mcml.space.core.EscapeLag;
 import com.mcml.space.util.AzureAPI;
-import com.mcml.space.util.AzurePlayerList;
+import com.mcml.space.util.PlayerList;
 import com.mcml.space.util.PluginExtends;
 
 /**
@@ -29,7 +29,7 @@ public class EmptyRestart implements Listener, PluginExtends {
 
     @EventHandler(priority = EventPriority.MONITOR)
     public void preparRestart(PlayerQuitEvent evt){
-        if(AzurePlayerList.isEmpty() && ConfigOptimize.emptyRestart && restartTaskId == -1){
+        if(PlayerList.isEmpty() && ConfigOptimize.emptyRestart && restartTaskId == -1){
             restartTaskId = Bukkit.getScheduler().runTaskLater(EscapeLag.PluginMain, new Runnable(){
                 @Override
                 public void run(){

@@ -56,7 +56,7 @@ import com.mcml.space.patch.RPGItemPatch;
 import com.mcml.space.patch.SkullCrashPatch;
 import com.mcml.space.util.AzureAPI;
 import com.mcml.space.util.AzureAPI.Coord;
-import com.mcml.space.util.AzurePlayerList;
+import com.mcml.space.util.PlayerList;
 import com.mcml.space.util.Configurable;
 import com.mcml.space.util.NetWorker;
 import com.mcml.space.util.Perms;
@@ -86,7 +86,7 @@ public class EscapeLag extends JavaPlugin implements Listener {
 
 		AzureAPI.log("Setup modules..");
 
-		AzurePlayerList.bind(this);
+		PlayerList.bind(this);
 
 		if (ConfigOptimize.AutoSetenable == true) {
 			try {
@@ -95,7 +95,7 @@ public class EscapeLag extends JavaPlugin implements Listener {
 			}
 		}
 
-		AzurePlayerList.bind(new UpgradeNotifier());
+		PlayerList.bind(new UpgradeNotifier());
 
 		Perms.bind("EscapeLag.Admin");
 

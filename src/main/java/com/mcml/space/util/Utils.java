@@ -24,8 +24,7 @@ import com.mcml.space.util.AzureAPI.Coord;
 import com.mcml.space.util.AzureAPI.Coord3;
 
 public class Utils {
-	@SuppressWarnings("all")
-	public static ArrayList<Map.Entry<Plugin, Long>> sortMap(Map map) {
+	public static ArrayList<Map.Entry<Plugin, Long>> sortMap(Map<Plugin, Long> map) {
 		List<Map.Entry<Plugin, Long>> entries = new ArrayList<Map.Entry<Plugin, Long>>(map.entrySet());
 		Collections.sort(entries, new Comparator<Map.Entry<Plugin, Long>>() {
 			public int compare(Map.Entry<Plugin, Long> obj1, Map.Entry<Plugin, Long> obj2) {

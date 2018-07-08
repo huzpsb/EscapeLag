@@ -4,7 +4,7 @@ import org.bukkit.Bukkit;
 
 import com.mcml.space.config.ConfigOptimize;
 import com.mcml.space.core.EscapeLag;
-import com.mcml.space.util.AzurePlayerList;
+import com.mcml.space.util.PlayerList;
 import com.mcml.space.util.TPSAndThread;
 
 public class TPSSleep {
@@ -14,7 +14,7 @@ public class TPSSleep {
 	public static void init() {
 		Bukkit.getScheduler().runTaskTimer(EscapeLag.PluginMain, new Runnable() {
 			public void run() {
-				if (ConfigOptimize.TPSSleepNoOneFreezeenable == true && AzurePlayerList.size() == 0) {
+				if (ConfigOptimize.TPSSleepNoOneFreezeenable == true && PlayerList.size() == 0) {
 					try {
 						Thread.sleep(TPSSleep.getTargetSleepTime(5));
 					} catch (InterruptedException e) {

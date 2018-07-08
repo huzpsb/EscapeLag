@@ -1,26 +1,26 @@
 package com.mcml.space.patch;
 
-import java.util.List;
-
 import org.bukkit.entity.Player;
 
+import com.google.common.base.Predicate;
 import com.mcml.space.config.ConfigPatch;
-import com.mcml.space.util.AzurePlayerList;
+import com.mcml.space.util.PlayerList;
 
 public class AntiFakeDeath implements Runnable{
 
     @Override
     public void run() {
         if(ConfigPatch.noFakedeath){
-            List<Player> players = AzurePlayerList.players();
-            int ps = players.size();
-            for(int i = 0;i<ps;i++){
-                Player player = players.get(i);
-                if(player.getHealth() <= 0 && !player.isDead()){
-                    player.setHealth(0.0);
-                    player.kickPlayer(ConfigPatch.messageFakedeath);
+            PlayerList.forEach(new Predicate<Player>() {
+                @Override
+                public boolean apply(Player player) {
+                    if(player.getHealth() <= 0 && !player.isDead()){
+                        player.setHealth(0.0);
+                        player.kickPlayer(ConfigPatch.messageFakedeath);
+                    }
+                    return true;
                 }
-            }
+            });
         }
     }
 }
