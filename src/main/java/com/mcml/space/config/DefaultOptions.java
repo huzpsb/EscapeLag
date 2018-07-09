@@ -29,7 +29,7 @@ public class DefaultOptions {
 		     .from(SKELETON)
 		     .from(SPIDER)
 		     .from(CREEPER);
-		return Collections.unmodifiableList(types); // TODO This should be much faster when we switch to koloboke!
+		return types; // TODO This should be much faster when we switch to koloboke!
 	}
 	
 	public static List<String> slackEntityTypes() {
@@ -41,14 +41,14 @@ public class DefaultOptions {
              .from(SHEEP)
              .from(PIG)
              .from(CHICKEN);
-		return Collections.unmodifiableList(types);
+		return types;
 	}
 	
 	public static List<String> blockedErrorMessages() {
 	    TypedList messages = TypedList.create();
 	    messages.from("ErrorPluginName")
 	            .from("ErrorPluginMessage");
-		return Collections.unmodifiableList(messages);
+		return messages;
 	}
 	
 	public static List<String> EntityClearClearEntityType() {
@@ -60,7 +60,7 @@ public class DefaultOptions {
              .from(SHEEP)
              .from(PIG)
              .from(CHICKEN);
-		return Collections.unmodifiableList(types);
+		return types;
 	}
 	
 	public static List<String> redstoneRemovalMaterialType() {
@@ -71,7 +71,7 @@ public class DefaultOptions {
              .from(REDSTONE_TORCH_ON)
              .from(REDSTONE_TORCH_OFF)
              .from(REDSTONE_BLOCK);
-        return Collections.unmodifiableList(types);
+        return types;
 	}
 	
 	public static List<String> spamMessages() {
@@ -79,7 +79,7 @@ public class DefaultOptions {
         messages.from("智障")
                 .from("傻逼")
                 .from("妈逼");
-		return Collections.unmodifiableList(messages);
+		return messages;
 	}
 
 }
