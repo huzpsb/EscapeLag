@@ -44,7 +44,7 @@ public class PlayerList implements Listener {
         QUIT_REACTORS.add(reactor);
     }
 
-    @EventHandler(priority = EventPriority.MONITOR)
+    @EventHandler(priority = EventPriority.LOWEST)
     public void onJoin(PlayerJoinEvent evt) {
         Player player = evt.getPlayer();
         if (!player.isOnline()) return;
