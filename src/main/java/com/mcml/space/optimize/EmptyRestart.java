@@ -29,7 +29,7 @@ public class EmptyRestart implements Listener, PluginExtends {
 
     @EventHandler(priority = EventPriority.MONITOR)
     public void preparRestart(PlayerQuitEvent evt){
-        if(PlayerList.isEmpty() && ConfigOptimize.emptyRestart && restartTaskId == -1){
+        if(ConfigOptimize.emptyRestart && restartTaskId == -1 && PlayerList.isEmpty()){
             restartTaskId = Bukkit.getScheduler().runTaskLater(EscapeLag.plugin, new Runnable(){
                 @Override
                 public void run(){
@@ -42,8 +42,7 @@ public class EmptyRestart implements Listener, PluginExtends {
     @EventHandler(priority = EventPriority.LOWEST)
     public void cancelRestart(PlayerJoinEvent evt){
         if(ConfigOptimize.emptyRestart) {
-            Bukkit.getScheduler().cancelTask(restartTaskId);
-            restartTaskId = -1;
+            if (restartTaskId != -1) Bukkit.getScheduler().cancelTask(restartTaskId);
         }
     }
     
