@@ -27,7 +27,7 @@ public class AntiSpam implements Listener, QuitReactor {
 		timeRecord = Maps.newHashMap();
 		PlayerList.bind(this);
 
-		Bukkit.getScheduler().runTaskTimer(EscapeLag.PluginMain, new Runnable() {
+		Bukkit.getScheduler().runTaskTimer(EscapeLag.plugin, new Runnable() {
 			@Override
 			public void run() {
 				timeRecord.clear();

@@ -31,14 +31,14 @@ public class ChunkKeeper implements Listener {
     }
 
     public static void ChunkKeeperofTask() {
-        Bukkit.getScheduler().scheduleSyncRepeatingTask(EscapeLag.PluginMain, new Runnable() {
+        Bukkit.getScheduler().scheduleSyncRepeatingTask(EscapeLag.plugin, new Runnable() {
 
             @Override
             public void run() {
                 ChunkKeeper.ChunkTimes.clear();
             }
         }, 60 * 60 * 20, 60 * 60 * 20);
-        Bukkit.getScheduler().scheduleSyncRepeatingTask(EscapeLag.PluginMain, new Runnable() {
+        Bukkit.getScheduler().scheduleSyncRepeatingTask(EscapeLag.plugin, new Runnable() {
 
             @Override
             public void run() {

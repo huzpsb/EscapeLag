@@ -87,7 +87,7 @@ public class MonitorUtils {
 			}
 		}
 		if (ConfigFunction.PluginErrorMessageLoggerenable == true) {
-			File LoggerFile = new File(EscapeLag.PluginMain.getDataFolder(), "PluginErrorLogger.txt");
+			File LoggerFile = new File(EscapeLag.plugin.getDataFolder(), "PluginErrorLogger.txt");
 			if(LoggerFile.exists() == false) {
 				try {
 					LoggerFile.createNewFile();

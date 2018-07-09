@@ -21,7 +21,7 @@ public class BonemealDupePatch implements Listener {
 	
 	public static void init() {
 		if(VersionLevel.isHigherEquals(Version.MINECRAFT_1_6_R3) && VersionLevel.isLowerEquals(Version.MINECRAFT_1_7_R4)) {
-			Bukkit.getPluginManager().registerEvents(new BonemealDupePatch(), EscapeLag.PluginMain);
+			Bukkit.getPluginManager().registerEvents(new BonemealDupePatch(), EscapeLag.plugin);
 		}else {
 			AzureAPI.log("您的服务器版本在1.6.4-1.7.10以外，无需防御骨粉Bug！现在已经关闭了防御骨粉系统！");
 		}

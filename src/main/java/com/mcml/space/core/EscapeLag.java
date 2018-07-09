@@ -60,11 +60,11 @@ import com.mcml.space.util.PlayerList;
 import com.mcml.space.util.Configurable;
 import com.mcml.space.util.NetWorker;
 import com.mcml.space.util.Perms;
-import com.mcml.space.util.TPSAndThread;
+import com.mcml.space.util.Ticker;
 import com.mcml.space.util.VersionLevel;
 
 public class EscapeLag extends JavaPlugin implements Listener {
-	public static EscapeLag PluginMain;
+	public static EscapeLag plugin;
 	public static Coord<File, FileConfiguration> configOptimize;
 	public static Coord<File, FileConfiguration> configPatch;
 	public static Coord<File, FileConfiguration> configMain;
@@ -72,7 +72,7 @@ public class EscapeLag extends JavaPlugin implements Listener {
 
 	@Override
 	public void onEnable() {
-		PluginMain = this;
+		plugin = this;
 		AzureAPI.bind(this);
 		trySetupConfig();
 
@@ -139,7 +139,7 @@ public class EscapeLag extends JavaPlugin implements Listener {
 		if (ConfigMain.AutoUpdate)
 			Bukkit.getScheduler().runTaskAsynchronously(this, new NetWorker());
 		Bukkit.getScheduler().runTaskTimer(this, new AntiFakeDeath(), 7 * 20, 7 * 20);
-		Bukkit.getScheduler().runTaskTimerAsynchronously(this, new TPSAndThread(), 1, 1);
+		Ticker.init();
 
 		AzureAPI.log("EscapeLag has been installed successfully!");
 		AzureAPI.log("乐乐感谢您的使用——有建议务必反馈，QQ1207223090");
@@ -162,25 +162,25 @@ public class EscapeLag extends JavaPlugin implements Listener {
 		try {
 			setupConfig();
 		} catch (IllegalArgumentException | IllegalAccessException e) {
-			AzureAPI.fatal("初始化配置文件时出错", EscapeLag.PluginMain);
+			AzureAPI.fatal("初始化配置文件时出错", EscapeLag.plugin);
 			e.printStackTrace();
 		}
 	}
 
 	private static void setupConfig() throws IllegalArgumentException, IllegalAccessException {
-		EscapeLag.PluginMain.saveResource("documents/Guide-中文.txt", true);
-		EscapeLag.PluginMain.saveResource("documents/Guide-english.txt", true);
+		EscapeLag.plugin.saveResource("documents/Guide-中文.txt", true);
+		EscapeLag.plugin.saveResource("documents/Guide-english.txt", true);
 
-		File pluginMainConfigFile = new File(EscapeLag.PluginMain.getDataFolder(), "PluginMainConfig.yml");
+		File pluginMainConfigFile = new File(EscapeLag.plugin.getDataFolder(), "PluginMainConfig.yml");
 		configMain = AzureAPI.wrapCoord(pluginMainConfigFile, AzureAPI.loadOrCreateFile(pluginMainConfigFile));
 
-		File clearLagConfig = new File(EscapeLag.PluginMain.getDataFolder(), "ClearLagConfig.yml");
+		File clearLagConfig = new File(EscapeLag.plugin.getDataFolder(), "ClearLagConfig.yml");
 		configOptimize = AzureAPI.wrapCoord(clearLagConfig, AzureAPI.loadOrCreateFile(clearLagConfig));
 
-		File antiBugConfig = new File(EscapeLag.PluginMain.getDataFolder(), "AntiBugConfig.yml");
+		File antiBugConfig = new File(EscapeLag.plugin.getDataFolder(), "AntiBugConfig.yml");
 		configPatch = AzureAPI.wrapCoord(antiBugConfig, AzureAPI.loadOrCreateFile(antiBugConfig));
 
-		File doEventConfig = new File(EscapeLag.PluginMain.getDataFolder(), "DoEventConfig.yml");
+		File doEventConfig = new File(EscapeLag.plugin.getDataFolder(), "DoEventConfig.yml");
 		configFunction = AzureAPI.wrapCoord(doEventConfig, AzureAPI.loadOrCreateFile(doEventConfig));
 
 		try {
@@ -315,7 +315,7 @@ public class EscapeLag extends JavaPlugin implements Listener {
 			if (bukkit.getInt("EscapeLag.SetStep") == 0) {
 				bukkit.set("EscapeLag.SetStep", 1);
 				bukkit.save(BukkitFile);
-				Bukkit.getScheduler().runTaskLater(EscapeLag.PluginMain, new Runnable() {
+				Bukkit.getScheduler().runTaskLater(EscapeLag.plugin, new Runnable() {
 					public void run() {
 						AzureAPI.log("成功改动服务器配端，正在重启来启用它.");
 						AzureAPI.restartServer("配端完成，正在重启中！");
@@ -332,6 +332,6 @@ public class EscapeLag extends JavaPlugin implements Listener {
 	}
 
 	public static File getPluginsFile() {
-		return EscapeLag.PluginMain.getFile();
+		return EscapeLag.plugin.getFile();
 	}
 }

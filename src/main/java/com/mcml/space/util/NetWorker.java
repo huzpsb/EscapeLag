@@ -19,23 +19,23 @@ public class NetWorker implements Runnable {
         if (ConfigMain.AutoUpdate == true) {
             try {
                 // 整体获取
-                File NetworkerFile = new File(EscapeLag.PluginMain.getDataFolder(), "networkerlog");
+                File NetworkerFile = new File(EscapeLag.plugin.getDataFolder(), "networkerlog");
                 DowloadFile("http://www.relatev.com/files/EscapeLag/NetWorker.yml", NetworkerFile);
                 YamlConfiguration URLLog = YamlConfiguration.loadConfiguration(NetworkerFile);
                 // 检查插件并下载新版本
-                EscapeLag.PluginMain.getLogger().info("正在检查新版本插件，请稍等...");
+                EscapeLag.plugin.getLogger().info("正在检查新版本插件，请稍等...");
                 int NewVersion = URLLog.getInt("UpdateVersion");
                 int NowVersion = Integer.valueOf("%BUILD_NUMBER%");
                 if (NewVersion > NowVersion) {
-                    EscapeLag.PluginMain.getLogger().info("插件检测到新版本 " + NewVersion + "，正在自动下载新版本插件...");
+                    EscapeLag.plugin.getLogger().info("插件检测到新版本 " + NewVersion + "，正在自动下载新版本插件...");
                     DowloadFile("http://www.relatev.com/files/EscapeLag/EscapeLag.jar", EscapeLag.getPluginsFile());
-                    EscapeLag.PluginMain.getLogger().info("插件更新版本下载完成！正在重启服务器！");
+                    EscapeLag.plugin.getLogger().info("插件更新版本下载完成！正在重启服务器！");
                     AzureAPI.restartServer("服务器内容更新!请过一会重新进服吧!");
                 } else {
-                    EscapeLag.PluginMain.getLogger().info("EscapeLag插件工作良好，暂无新版本检测更新。");
+                    EscapeLag.plugin.getLogger().info("EscapeLag插件工作良好，暂无新版本检测更新。");
                 }
                 // 完成提示
-                EscapeLag.PluginMain.getLogger().info("全部网络工作都读取完毕了...");
+                EscapeLag.plugin.getLogger().info("全部网络工作都读取完毕了...");
             } catch (IOException | NumberFormatException ex) {
             }
         }

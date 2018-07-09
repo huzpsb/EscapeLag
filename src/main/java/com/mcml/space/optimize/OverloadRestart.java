@@ -23,7 +23,7 @@ public class OverloadRestart implements Runnable, PluginExtends {
     public void run() {
         if (ConfigOptimize.OverLoadMemoryRestartenable && isMemoryOverload()) {
             AzureAPI.bc(ConfigOptimize.OverLoadMemoryRestartWarnMessage);
-            Bukkit.getServer().getScheduler().runTaskLater(EscapeLag.PluginMain, new Runnable() {
+            Bukkit.getServer().getScheduler().runTaskLater(EscapeLag.plugin, new Runnable() {
                 @Override
                 public void run() {
                     AzureAPI.restartServer(ConfigOptimize.OverLoadMemoryRestartKickMessage);

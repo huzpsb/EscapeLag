@@ -1,6 +1,7 @@
 package com.mcml.space.optimize;
 
 import java.util.HashMap;
+import java.util.concurrent.TimeUnit;
 
 import org.apache.commons.lang.StringUtils;
 import org.bukkit.Bukkit;
@@ -16,16 +17,15 @@ import com.mcml.space.core.EscapeLag;
 import com.mcml.space.util.AzureAPI;
 
 public class AntiRedstone implements Listener {
-
     private HashMap<Location,Integer> CheckedTimes = new HashMap<Location, Integer>();
 
     public AntiRedstone(){
-        Bukkit.getScheduler().runTaskTimer(EscapeLag.PluginMain, new Runnable(){
+        Bukkit.getScheduler().runTaskTimer(EscapeLag.plugin, new Runnable(){
             @Override
             public void run(){
                 CheckedTimes.clear();
             }
-        }, 7 * 20, 7 * 20);
+        }, 0L, AzureAPI.toTicks(TimeUnit.SECONDS, 7));
     }
 
     @EventHandler
@@ -43,7 +43,7 @@ public class AntiRedstone implements Listener {
 
             if(CheckedTimes.get(loc) > ConfigOptimize.AntiRedstoneTimes){
                 if(ConfigOptimize.AntiRedstoneRemoveBlockList.contains(block.getType().name())){
-					Bukkit.getScheduler().runTaskLater(EscapeLag.PluginMain,new Runnable(){
+					Bukkit.getScheduler().runTaskLater(EscapeLag.plugin,new Runnable(){
 						public void run(){
 							block.setType(Material.AIR);
 						}

@@ -25,7 +25,7 @@ import com.mcml.space.optimize.OverloadRestart;
 import com.mcml.space.util.HeapDumper;
 import com.mcml.space.util.NetWorker;
 import com.mcml.space.util.Perms;
-import com.mcml.space.util.TPSAndThread;
+import com.mcml.space.util.Ticker;
 import com.mcml.space.util.Utils;
 
 public class EscapeLagCommand {
@@ -65,7 +65,7 @@ public class EscapeLagCommand {
 					}
 					if (args[1].equalsIgnoreCase("download")) {
 						sender.sendMessage("§e操作开始执行中...");
-						Bukkit.getScheduler().runTaskAsynchronously(EscapeLag.PluginMain, new Runnable() {
+						Bukkit.getScheduler().runTaskAsynchronously(EscapeLag.plugin, new Runnable() {
 							@Override
 							public void run() {
 								NetWorker.DownloadAntiAttack();
@@ -488,7 +488,7 @@ public class EscapeLagCommand {
 						sender.sendMessage("§6内存清理完毕！");
 					}
 					if (args[1].equalsIgnoreCase("heapshut")) {
-						Bukkit.getScheduler().runTask(EscapeLag.PluginMain, new OverloadRestart());
+						Bukkit.getScheduler().runTask(EscapeLag.plugin, new OverloadRestart());
 						sender.sendMessage("§6成功检测一次内存濒临重启！若未发出重启提醒则意味着内存仍然充足不至于崩溃！");
 					}
 					if (args[1].equalsIgnoreCase("chunkunloadlog")) {
@@ -496,7 +496,7 @@ public class EscapeLagCommand {
 					}
 					if (args[1].equalsIgnoreCase("dump")) {
 						sender.sendMessage("§a开始 dump 内存堆！这可能会花费一些时间并导致服务器卡住！");
-						File dumpedFile = new File(EscapeLag.PluginMain.getDataFolder(),"heap.hprof");
+						File dumpedFile = new File(EscapeLag.plugin.getDataFolder(),"heap.hprof");
 						if(dumpedFile.exists()) {
 							dumpedFile.delete();
 						}
@@ -533,7 +533,7 @@ public class EscapeLagCommand {
 						}
 					}
 					if (args[1].equalsIgnoreCase("tps")) {
-						sender.sendMessage("§e目前服务器的TPS是 " + TPSAndThread.getTPS());
+						sender.sendMessage("§e目前服务器的TPS是 " + Ticker.getRealTimeTPS());
 					}
 				}
 				if (args[0].equalsIgnoreCase("reload")) {

@@ -18,7 +18,7 @@ public class WorldSpawnLimiter implements Listener {
             world.setMonsterSpawnLimit(config.getInt("WorldSpawnLimitor." + world.getName() + ".PerChunkMonsters"));
             world.setAnimalSpawnLimit(config.getInt("WorldSpawnLimitor." + world.getName() + ".PerChunkAnimals"));
             world.setAmbientSpawnLimit(config.getInt("WorldSpawnLimitor." + world.getName() + ".PerChunkAmbient"));
-            EscapeLag.PluginMain.getLogger().info("已为世界 " + world.getName() + " 设定了生物刷新速率~");
+            EscapeLag.plugin.getLogger().info("已为世界 " + world.getName() + " 设定了生物刷新速率~");
         }
     }
 }
