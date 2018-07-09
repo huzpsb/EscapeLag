@@ -79,7 +79,7 @@ public class Ticker {
         return Bukkit.getTPS()[0];
     }
     
-    public static double getRealTimeTPS(){
+    public static int getRealTimeTPS(){
         return realTimeTicks;
     }
 }

@@ -34,7 +34,7 @@ import com.mcml.space.optimize.UnloadClear;
 import com.mcml.space.optimize.NoCrowdEntity;
 import com.mcml.space.optimize.NoSpawnChunks;
 import com.mcml.space.optimize.OverloadRestart;
-import com.mcml.space.optimize.TPSSleep;
+import com.mcml.space.optimize.TickSleep;
 import com.mcml.space.optimize.TeleportPreLoader;
 import com.mcml.space.optimize.TimerGarbageCollect;
 import com.mcml.space.optimize.WaterFlowLimitor;
@@ -125,7 +125,7 @@ public class EscapeLag extends JavaPlugin implements Listener {
 		Bukkit.getPluginManager().registerEvents(new AntiLongStringCrash(), this);
 		Bukkit.getPluginManager().registerEvents(new TeleportPreLoader(), this);
 		Bukkit.getPluginManager().registerEvents(new MonitorEnabler(), this);
-		TPSSleep.init();
+		TickSleep.init();
 		RespawnAction.init(this);
 		EmptyRestart.init(this);
 		CheatBookBlocker.init(this);
