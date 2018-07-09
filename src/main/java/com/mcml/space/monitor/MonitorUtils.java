@@ -8,6 +8,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
+import java.util.Set;
 
 import org.bukkit.Bukkit;
 import org.bukkit.command.Command;
@@ -43,42 +44,40 @@ public class MonitorUtils {
 
 	public static void AExceptionCatcher(Plugin plugin, Throwable ex) {
 		StackTraceElement[] exstes = ex.getStackTrace();
-		StackTraceElement[] Causestes = ex.getCause().getStackTrace();
+		StackTraceElement[] Causestes = ex.getCause() == null ? new StackTraceElement[0] :  ex.getCause().getStackTrace();
 		int exstesl = exstes.length;
 		int Causestesl = Causestes.length;
 		for (int i = 0; i < exstesl; i++) {
 			StackTraceElement thisexste = exstes[i];
 			String thisexstestring = thisexste.toString();
-			if (thisexstestring.contains("com.mcml.space.monitor") == false) {
-				if (ConfigFunction.PluginErrorMessageBlockerenable == true) {
-					List<String> thisexstestringMessageList = ConfigFunction.PluginErrorMessageBlockerMessage;
-					int mls = thisexstestringMessageList.size();
-					for (int ii = 0; ii < mls; ii++) {
-						if (thisexstestring.contains(thisexstestringMessageList.get(ii)) == false) {
-							AzureAPI.log("警告！插件 " + plugin.getName() + " 出错，刷错信息为：");
-							System.out.println(thisexstestring);
-							AzureAPI.log("错误原因：" + ex.getCause().toString());
-							for (int iii = 0; iii < Causestesl; iii++) {
-								StackTraceElement thisCauseste = Causestes[i];
-								String thisCausestestring = thisCauseste.toString();
-								if (thisCausestestring.contains("com.mcml.space.monitor") == false) {
-									if (ConfigFunction.PluginErrorMessageBlockerenable == true) {
-										List<String> thisCausestestringMessageList = ConfigFunction.PluginErrorMessageBlockerMessage;
-										int tcssmls = thisCausestestringMessageList.size();
-										for (int iiii = 0; iiii < tcssmls; iiii++) {
-											if (thisCausestestring.contains(thisCausestestringMessageList.get(ii)) == false) {
-												System.out.println(thisCausestestring);
-											}
-										}
-									}
-								} else {
-									if (plugin.getName().equalsIgnoreCase("EscapeLag")) {
-										System.out.println(thisCauseste.toString());
-									}
-								}
-							}
-						}
-					}
+			if (!thisexstestring.contains("com.mcml.space.monitor")) {
+				if (ConfigFunction.PluginErrorMessageBlockerenable) {
+					Set<String> thisexstestringMessageList = ConfigFunction.PluginErrorMessageBlockerMessage;
+					for (String each : thisexstestringMessageList) {
+					    if (thisexstestring.contains(each)) {
+                            AzureAPI.log("警告！插件 " + plugin.getName() + " 出错，刷错信息为：");
+                            System.out.println(thisexstestring);
+                            AzureAPI.log("错误原因：" + ex.getCause().toString());
+                            for (int iii = 0; iii < Causestesl; iii++) {
+                                StackTraceElement thisCauseste = Causestes[i];
+                                String thisCausestestring = thisCauseste.toString();
+                                if (!thisCausestestring.contains("com.mcml.space.monitor")) {
+                                    if (ConfigFunction.PluginErrorMessageBlockerenable) {
+                                        Set<String> thisCausestestringMessageList = ConfigFunction.PluginErrorMessageBlockerMessage;
+                                        for (String cause : thisCausestestringMessageList) {
+                                            if (!thisCausestestring.contains(cause)) {
+                                                System.out.println(thisCausestestring);
+                                            }
+                                        }
+                                    }
+                                } else {
+                                    if (plugin.getName().equalsIgnoreCase("EscapeLag")) {
+                                        System.out.println(thisCauseste.toString());
+                                    }
+                                }
+                            }
+                        }
+                    }
 				}
 			} else {
 				if (plugin.getName().equalsIgnoreCase("EscapeLag")) {
@@ -105,14 +104,13 @@ public class MonitorUtils {
 				String stestring = ste.toString();
 				if (stestring.contains("com.mcml.space.monitor") == false) {
 					if (ConfigFunction.PluginErrorMessageBlockerenable == true) {
-						List<String> MessageList = ConfigFunction.PluginErrorMessageBlockerMessage;
-						int mls = MessageList.size();
-						for (int ii = 0; ii < mls; ii++) {
-							if (stestring.contains(MessageList.get(ii)) == false) {
-								LastTxT = Utils.readTxtFile(LoggerFile);
-								Utils.ChangeTxtFileAndSave(LastTxT, stestring, LoggerFile);
-							}
-						}
+						Set<String> MessageList = ConfigFunction.PluginErrorMessageBlockerMessage;
+                        for (String each : MessageList) {
+                            if (!stestring.contains(each)) {
+                                LastTxT = Utils.readTxtFile(LoggerFile);
+                                Utils.ChangeTxtFileAndSave(LastTxT, stestring, LoggerFile);
+                            }
+                        }
 					}
 				} else {
 					if (plugin.getName().equalsIgnoreCase("EscapeLag")) {
@@ -128,13 +126,12 @@ public class MonitorUtils {
 				String stestring = ste.toString();
 				if (stestring.contains("com.mcml.space.monitor") == false) {
 					if (ConfigFunction.PluginErrorMessageBlockerenable == true) {
-						List<String> MessageList = ConfigFunction.PluginErrorMessageBlockerMessage;
-						int mls = MessageList.size();
-						for (int ii = 0; ii < mls; ii++) {
-							if (stestring.contains(MessageList.get(ii)) == false) {
-								LastTxT = Utils.readTxtFile(LoggerFile);
-								Utils.ChangeTxtFileAndSave(LastTxT, stestring, LoggerFile);
-							}
+						Set<String> MessageList = ConfigFunction.PluginErrorMessageBlockerMessage;
+						for (String each : MessageList) {
+						    if (!stestring.contains(each)) {
+                                LastTxT = Utils.readTxtFile(LoggerFile);
+                                Utils.ChangeTxtFileAndSave(LastTxT, stestring, LoggerFile);
+                            }
 						}
 					}
 				} else {

@@ -29,7 +29,7 @@ public class EntityClear implements Runnable{
 				int ls = lents.size();
 				for(int ii = 0;ii<ls;ii++){
 					LivingEntity le = lents.get(ii);
-					if(ConfigOptimize.EntityClearClearEntityType.contains("*") ||ConfigOptimize.EntityClearClearEntityType.contains(le.getType().name())){
+					if(ConfigOptimize.EntityClearEntityType.contains("*") ||ConfigOptimize.EntityClearEntityType.contains(le.getType().name())){
 						allents.add(le);
 						count = count + lents.size();
 					}

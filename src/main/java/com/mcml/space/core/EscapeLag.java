@@ -107,7 +107,7 @@ public class EscapeLag extends JavaPlugin implements Listener {
 		Bukkit.getPluginManager().registerEvents(new AntiCrashSign(), this);
 		Bukkit.getPluginManager().registerEvents(new AntiSpam(), this);
 		ExplosionController.init(this);
-		Bukkit.getPluginManager().registerEvents(new AntiRedstone(), this);
+		AntiRedstone.init(plugin);
 		Bukkit.getPluginManager().registerEvents(new UnloadClear(), this);
 		Bukkit.getPluginManager().registerEvents(new NoSpawnChunks(), this);
 		Bukkit.getPluginManager().registerEvents(new AntiInfRail(), this);

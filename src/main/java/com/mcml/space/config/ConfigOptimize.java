@@ -1,8 +1,9 @@
 package com.mcml.space.config;
 
-import java.util.List;
+import java.util.Set;
 
 import com.mcml.space.util.Configurable;
+import com.mcml.space.util.Configurable.hash;
 
 public abstract class ConfigOptimize extends Configurable {	
 	@Node(path = "TPSSleep.NoOneFreeze.enable")
@@ -21,7 +22,7 @@ public abstract class ConfigOptimize extends Configurable {
     public static int EntityClearLimitCount = 1200;
 	
 	@Node(path = "EntityClear.ClearEntityType")
-    public static List<String> EntityClearClearEntityType = DefaultOptions.EntityClearClearEntityType();
+    public static @hash Set<String> EntityClearEntityType = DefaultOptions.EntityClearEntityTypes();
 	
 	@Node(path = "EntityClear.ClearMessage")
     public static String EntityClearClearMessage = "§a成功清除了过多的实体~~(@^_^@)~";
@@ -79,7 +80,7 @@ public abstract class ConfigOptimize extends Configurable {
     public static boolean NoCrowdedEntityenable = true;
     
     @Node(path = "NoCrowdedEntity.TypeList")
-    public static List<String> NoCrowdedEntityTypeList = DefaultOptions.slackEntityTypes();
+    public static @hash Set<String> NoCrowdedEntityTypeList = DefaultOptions.slackEntityTypes();
     
     @Node(path = "NoCrowdedEntity.PerChunkLimit")
     public static int NoCrowdedEntityPerChunkLimit = 30;
@@ -94,7 +95,7 @@ public abstract class ConfigOptimize extends Configurable {
     public static String OverLoadMemoryRestartKickMessage = "抱歉！由于服务器内存过载，需要重启服务器！";
     
     @Node(path = "AntiRedstone.RemoveBlockList")
-    public static List<String> AntiRedstoneRemoveBlockList = DefaultOptions.redstoneRemovalMaterialType();
+    public static @hash Set<String> AntiRedstoneRemoveBlockList = DefaultOptions.redstoneRemovalMaterialTypes();
     
     @Node(path = "AutoSave.Interval")
     public static long AutoSaveInterval = 15;
@@ -127,5 +128,5 @@ public abstract class ConfigOptimize extends Configurable {
     public static boolean UnloadClearenable = true;
     
     @Node(path = "UnloadClear.type")
-    public static List<String> UnloadCleartype = DefaultOptions.unloadClearEntityTypes();
+    public static @hash Set<String> UnloadCleartype = DefaultOptions.unloadClearEntityTypes();
 }

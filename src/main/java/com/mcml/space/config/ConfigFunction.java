@@ -1,6 +1,6 @@
 package com.mcml.space.config;
 
-import java.util.List;
+import java.util.Set;
 
 import com.mcml.space.util.Configurable;
 
@@ -21,7 +21,7 @@ public abstract class ConfigFunction extends Configurable {
 	public static boolean PluginErrorMessageBlockerenable = true;
 	
 	@Node(path = "PluginErrorMessageBlocker.Message")
-	public static List<String> PluginErrorMessageBlockerMessage = DefaultOptions.blockedErrorMessages();
+	public static @hash Set<String> PluginErrorMessageBlockerMessage = DefaultOptions.blockedErrorMessages();
 	
 	@Node(path = "PluginErrorMessageLogger.enable")
 	public static boolean PluginErrorMessageLoggerenable = false;
@@ -40,7 +40,7 @@ public abstract class ConfigFunction extends Configurable {
     public static boolean enableAntiDirty = true;
 
 	@Node(path = "AntiSpam.Dirty.List")
-	public static List<String> AntiSpamDirtyList = DefaultOptions.spamMessages();
+	public static @hash Set<String> AntiSpamDirtyList = DefaultOptions.spamMessages();
 
 	@Node(path = "NoEggChangeSpawner.enable")
 	public static boolean preventSpawnerModify = true;
