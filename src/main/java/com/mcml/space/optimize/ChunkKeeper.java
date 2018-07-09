@@ -21,7 +21,7 @@ import com.mcml.space.util.AzureAPI;
 import com.mcml.space.util.PlayerList;
 
 public class ChunkKeeper implements Listener {
-    public static Set<ChunkCoord> keepLoadedChunks = Sets.newSetFromMap(new WeakHashMap<ChunkCoord, Boolean>());
+    public final static Set<ChunkCoord> keepLoadedChunks = Sets.newSetFromMap(new WeakHashMap<ChunkCoord, Boolean>());
     
     public static void init(Plugin plugin) {
         if (!ConfigOptimize.ChunkKeeperenable) return;
