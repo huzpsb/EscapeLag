@@ -16,7 +16,7 @@ public class OverloadRestart implements Runnable, PluginExtends {
     public static void init(JavaPlugin plugin) {
         Bukkit.getScheduler().runTaskTimer(plugin, new OverloadRestart(), 7 * 20, 7 * 20);
         
-        AzureAPI.log("超负荷重启模块已启动");
+        AzureAPI.log("超负荷控制模块已启动");
     }
     
     @Override
@@ -26,7 +26,7 @@ public class OverloadRestart implements Runnable, PluginExtends {
             Bukkit.getServer().getScheduler().runTaskLater(EscapeLag.plugin, new Runnable() {
                 @Override
                 public void run() {
-                    AzureAPI.restartServer(ConfigOptimize.OverLoadMemoryRestartKickMessage);
+                    if (!AzureAPI.restartServer(ConfigOptimize.OverLoadMemoryRestartKickMessage)) TimerGarbageCollect.collectGarbage();
                 }
             }, ConfigOptimize.OverLoadMemoryRestartDelayTime * 20);
         }
