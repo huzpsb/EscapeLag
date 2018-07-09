@@ -16,30 +16,32 @@ import static com.mcml.space.config.ConfigOptimize.timerGC;
 /**
  * @author Vlvxingze, SotrForgotten
  */
-public class TimerGarbageCollect implements Runnable, PluginExtends {
+public class TimerGarbageCollect implements PluginExtends {
     public static void init(JavaPlugin plugin) {
+        if(!timerGC) return;
+        
         long ticks = AzureAPI.toTicks(TimeUnit.SECONDS, ConfigOptimize.TimerGcPeriod);
-        Bukkit.getScheduler().runTaskTimer(plugin, new TimerGarbageCollect(), ticks, ticks);
+        Bukkit.getScheduler().runTaskTimer(plugin, new Runnable() {
+            @Override
+            public void run() {
+                long mark = System.currentTimeMillis();
+                long released = collectGarbage();
+                long duration = System.currentTimeMillis() - mark;
+                
+                if(!StringUtils.isBlank(TimerGcMessage)) {
+                    String message = StringUtils.replace(TimerGcMessage, "%gc_released_memory%", String.valueOf(released) + " MB");
+                    message = StringUtils.replace(message, "%gc_cost_time%", String.valueOf(duration) + " ms");
+                    AzureAPI.log(message);
+                }
+            }
+        }, ticks, ticks);
+        
         AzureAPI.log("内存释放模块已启用");
     }
-
-    @Override
-    public void run() {
-        if(!timerGC) return;
-
-        long mark = System.nanoTime();
-        long released = collectGarbage();
-        long duration = TimeUnit.NANOSECONDS.toMillis(System.nanoTime() - mark);
-
-        if(!StringUtils.isBlank(TimerGcMessage)) {
-            String m = StringUtils.replace(TimerGcMessage, "%gc_released_memory%", String.valueOf(released));
-            m = StringUtils.replace(m, "%gc_cost_time%", String.valueOf(duration) + "ms");
-            AzureAPI.log(m);
-        }
-    }
-
+    
     public static long collectGarbage() {
         long before = Runtime.getRuntime().totalMemory();
+        System.runFinalization();
         System.gc();
         return (before - Runtime.getRuntime().totalMemory()) / 1024 / 1024; // to mb
     }

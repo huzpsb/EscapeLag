@@ -4,7 +4,7 @@ import com.mcml.space.util.Configurable;
 
 public abstract class ConfigMain extends Configurable {
     @Node(path = "PluginPrefix")
-    public static String PluginPrefix = "&3EscapeLag";
+    public static String PluginPrefix = "&bE&3scape&bL&3ag";
 
     @Node(path = "AutoUpdate")
     public static boolean AutoUpdate = true;
