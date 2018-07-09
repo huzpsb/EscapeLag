@@ -2,59 +2,63 @@ package com.mcml.space.optimize;
 
 import org.bukkit.Bukkit;
 import org.bukkit.Chunk;
+import org.bukkit.Location;
+import org.bukkit.World;
+import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
+import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
-import org.bukkit.event.player.PlayerChangedWorldEvent;
+import org.bukkit.event.player.PlayerTeleportEvent;
 import org.bukkit.plugin.Plugin;
 
 import com.mcml.space.config.ConfigOptimize;
 import com.mcml.space.util.AzureAPI;
 
 public class ChunkUnloader implements Listener {
-	public static int ChunkUnloaderTimes;
+	public static long totalUnloadedChunks;
 
 	public static void init(Plugin JavaPlugin) {
+	    if (!ConfigOptimize.chunkUnloader) return;
+	    
 		Bukkit.getPluginManager().registerEvents(new ChunkUnloader(), JavaPlugin);
 		AzureAPI.log("区块卸载系统现在运行...");
 	}
 	
-	/*被证实过于卡服！
-	 * 
-	 * @EventHandler
-	public void onWorldLoad(WorldInitEvent event) {
-		if(ConfigOptimize.chunkUnloader == true) {
-			final World world = event.getWorld();
-			Bukkit.getScheduler().runTaskTimer(EscapeLag.MainThis, new Runnable() {
-				public void run() {
-					Chunk[] loadedChunks = world.getLoadedChunks();
-			        int lcl = loadedChunks.length;
-			        for(int ii=0;ii<lcl;ii++){
-			            Chunk chunk = loadedChunks[ii];
-			            if(world.isChunkInUse(chunk.getX(),chunk.getZ())==false){
-			                if(chunk.isLoaded() == true & ChunkKeeper.ShouldKeepList.contains(chunk)==false){
-			                    chunk.unload();
-			                    ChunkUnloaderTimes++;
-			                }
-			            }
-			        }
-				}
-			}, 0, ConfigOptimize.ChunkUnloaderInterval);
-		}
+	@EventHandler(priority = EventPriority.HIGHEST, ignoreCancelled = true)
+	public void teleport(PlayerTeleportEvent evt) {
+        Player player = evt.getPlayer();
+        Location from = evt.getFrom();
+        World world = from.getWorld();
+        
+        if (world.getPlayers().isEmpty()) {
+            for (Chunk each : world.getLoadedChunks()) {
+                each.unload();
+                totalUnloadedChunks++;
+            }
+        } else {
+            unloadChunksAt(from, player);
+        }
 	}
-	*/
-
-	@EventHandler
-	public void LeaveWorldCheck(PlayerChangedWorldEvent event) {
-		if (ConfigOptimize.chunkUnloader == true && event.getFrom().getPlayers().isEmpty()) {
-			Chunk[] loadedChunks = event.getFrom().getLoadedChunks();
-			int lcl = loadedChunks.length;
-			for (int i = 0; i < lcl; i++) {
-				Chunk chunk = loadedChunks[i];
-				if (chunk.isLoaded() == true & ChunkKeeper.ShouldKeepList.contains(chunk) == false) {
-					chunk.unload();
-					ChunkUnloaderTimes++;
-				}
-			}
-		}
+	
+	public static void unloadChunksAt(Location from, Player player) {
+	    World world = from.getWorld();
+	    
+        int view = AzureAPI.viewDistanceBlock(player);
+        int edgeX = from.getBlockX() + view;
+        int edgeZ = from.getBlockZ() + view;
+        
+        for (int x = from.getBlockX() - view; x <= edgeX; x = x + 16) {
+            for (int z = from.getBlockZ() - view; z <= edgeZ; z = z + 16) {
+                int chunkX = x >> 4;
+                int chunkZ = z >> 4;
+                Chunk chunk = world.getChunkAt(chunkX, chunkZ);
+                
+                if (ChunkKeeper.ShouldKeepList.contains(chunk)) continue;
+                if (world.isChunkInUse(chunkX, chunkZ)) {
+                    chunk.unload();
+                    totalUnloadedChunks++;
+                }
+            }
+        }
 	}
 }

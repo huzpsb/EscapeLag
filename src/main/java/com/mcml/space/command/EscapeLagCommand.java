@@ -492,7 +492,7 @@ public class EscapeLagCommand {
 						sender.sendMessage("§6成功检测一次内存濒临重启！若未发出重启提醒则意味着内存仍然充足不至于崩溃！");
 					}
 					if (args[1].equalsIgnoreCase("chunkunloadlog")) {
-						sender.sendMessage("§a截止到目前，插件已经卸载了" + ChunkUnloader.ChunkUnloaderTimes + "个无用区块");
+						sender.sendMessage("§a截止到目前，插件已经卸载了" + ChunkUnloader.totalUnloadedChunks + "个无用区块");
 					}
 					if (args[1].equalsIgnoreCase("dump")) {
 						sender.sendMessage("§a开始 dump 内存堆！这可能会花费一些时间并导致服务器卡住！");
