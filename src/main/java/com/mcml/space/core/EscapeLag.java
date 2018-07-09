@@ -103,7 +103,6 @@ public class EscapeLag extends JavaPlugin implements Listener {
 		Bukkit.getPluginManager().registerEvents(new AntiPortalInfItem(), this);
 		Bukkit.getPluginManager().registerEvents(new AntiNetherHopperInfItem(), this);
 		RPGItemPatch.init(this);
-		Bukkit.getPluginManager().registerEvents(new ChunkKeeper(), this);
 		Bukkit.getPluginManager().registerEvents(new NoCrowdEntity(), this);
 		Bukkit.getPluginManager().registerEvents(new AntiCrashSign(), this);
 		Bukkit.getPluginManager().registerEvents(new AntiSpam(), this);
@@ -133,7 +132,7 @@ public class EscapeLag extends JavaPlugin implements Listener {
 		SkullCrashPatch.init(this);
 		AntiWEcalc.init();
 
-		ChunkKeeper.ChunkKeeperofTask();
+		ChunkKeeper.init(this);
 
 		TimerGarbageCollect.init(this);
 		if (ConfigMain.AutoUpdate)

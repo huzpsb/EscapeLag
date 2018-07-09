@@ -27,6 +27,10 @@ import com.google.common.base.Predicate;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Sets;
 
+import lombok.AllArgsConstructor;
+import lombok.EqualsAndHashCode;
+import lombok.Getter;
+
 /**
  * @author SotrForgotten, Vlvxingze
  */
@@ -34,7 +38,21 @@ public abstract class AzureAPI<K, V> {
     private static String loggerPrefix = "";
     private static final int bukkitVDChunk = (Bukkit.getViewDistance() * 2) ^ 2 + 1;
     private static final int bukkitVDBlock = Bukkit.getViewDistance() * 16;
+    
+    public static ChunkCoord wrapCoord(int chunkX, int chunkZ) {
+        return new ChunkCoord(chunkX, chunkZ);
+    }
+
+    @Getter
+    @EqualsAndHashCode
+    @AllArgsConstructor
+    public static class ChunkCoord {
+        final int chunkX;
+        final int chunkZ;
+    }
+    
     public static void bind(JavaPlugin bind) {
+        ;
     }
 
     public static int viewDistance(final Player player) {
@@ -147,50 +165,23 @@ public abstract class AzureAPI<K, V> {
         return new Coord<K, V>(key, value);
     }
 
+    @Getter
+    @AllArgsConstructor
     public static class Coord<K, V> {
-        final K k;
-        final V v;
-        
-        public Coord(K key, V value) {
-            k = key;
-            v = value;
-        }
-        
-        public K getKey() {
-            return k;
-        }
-        
-        public V getValue() {
-            return v;
-        }
+        final K key;
+        final V value;
     }
     
     public static <K, V, E> Coord3<K, V, E> wrapCoord(K key, V value, E extra) {
         return new Coord3<K, V, E>(key, value, extra);
     }
     
+    @Getter
+    @AllArgsConstructor
     public static class Coord3<K, V, E> {
-        final K k;
-        final V v;
-        final E e;
-        
-        public Coord3(K key, V value, E extra) {
-            k = key;
-            v = value;
-            e = extra;
-        }
-        
-        public K getKey() {
-            return k;
-        }
-        
-        public V getValue() {
-            return v;
-        }
-        
-        public E getExtra() {
-            return e;
-        }
+        final K key;
+        final V value;
+        final E extra;
     }
     
     public static <E> Map<String, E> newCaseInsensitiveMap() {

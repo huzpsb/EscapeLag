@@ -15,6 +15,7 @@ import org.bukkit.util.Vector;
 
 import com.mcml.space.config.ConfigOptimize;
 import com.mcml.space.core.EscapeLag;
+import com.mcml.space.util.AzureAPI.ChunkCoord;
 import com.mcml.space.util.AzureAPI.Coord;
 import com.mcml.space.util.Utils;
 
@@ -41,7 +42,7 @@ public class TeleportPreLoader implements Listener {
 			if (isPreLoading == false) {
 				event.setCancelled(true);
 				final int thistpid = nowteleportid;
-				final List<Coord<Integer, Integer>> chunks = Utils.getShouldUseChunks(event.getTo());
+				final List<ChunkCoord> chunks = Utils.getShouldUseChunks(event.getTo());
 				final int cs = chunks.size();
 				if (nowint.get(thistpid) == null) {
 					nowint.put(thistpid, 0);
@@ -53,8 +54,8 @@ public class TeleportPreLoader implements Listener {
 					public void run() {
 						nowint.put(thistpid, nowint.get(thistpid) + cs / 10);
 						for (int i = nowint.get(thistpid) - cs / 10; i < nowint.get(thistpid); i++) {
-							Coord<Integer, Integer> coord = chunks.get(i);
-							world.loadChunk(coord.getKey(), coord.getValue());
+						    ChunkCoord coord = chunks.get(i);
+							world.loadChunk(coord.getChunkX(), coord.getChunkZ());
 						}
 					}
 				}, 1);
@@ -63,8 +64,8 @@ public class TeleportPreLoader implements Listener {
 					public void run() {
 						nowint.put(thistpid, nowint.get(thistpid) + cs / 10);
 						for (int i = nowint.get(thistpid) - cs / 10; i < nowint.get(thistpid); i++) {
-							Coord<Integer, Integer> coord = chunks.get(i);
-							world.loadChunk(coord.getKey(), coord.getValue());
+						    ChunkCoord coord = chunks.get(i);
+							world.loadChunk(coord.getChunkX(), coord.getChunkZ());
 						}
 					}
 				}, 2);
@@ -73,8 +74,8 @@ public class TeleportPreLoader implements Listener {
 					public void run() {
 						nowint.put(thistpid, nowint.get(thistpid) + cs / 10);
 						for (int i = nowint.get(thistpid) - cs / 10; i < nowint.get(thistpid); i++) {
-							Coord<Integer, Integer> coord = chunks.get(i);
-							world.loadChunk(coord.getKey(), coord.getValue());
+						    ChunkCoord coord = chunks.get(i);
+							world.loadChunk(coord.getChunkX(), coord.getChunkZ());
 						}
 					}
 				}, 3);
@@ -83,8 +84,8 @@ public class TeleportPreLoader implements Listener {
 					public void run() {
 						nowint.put(thistpid, nowint.get(thistpid) + cs / 10);
 						for (int i = nowint.get(thistpid) - cs / 10; i < nowint.get(thistpid); i++) {
-							Coord<Integer, Integer> coord = chunks.get(i);
-							world.loadChunk(coord.getKey(), coord.getValue());
+						    ChunkCoord coord = chunks.get(i);
+							world.loadChunk(coord.getChunkX(), coord.getChunkZ());
 						}
 					}
 				}, 4);
@@ -93,8 +94,8 @@ public class TeleportPreLoader implements Listener {
 					public void run() {
 						nowint.put(thistpid, nowint.get(thistpid) + cs / 10);
 						for (int i = nowint.get(thistpid) - cs / 10; i < nowint.get(thistpid); i++) {
-							Coord<Integer, Integer> coord = chunks.get(i);
-							world.loadChunk(coord.getKey(), coord.getValue());
+						    ChunkCoord coord = chunks.get(i);
+							world.loadChunk(coord.getChunkX(), coord.getChunkZ());
 						}
 					}
 				}, 5);
@@ -103,8 +104,8 @@ public class TeleportPreLoader implements Listener {
 					public void run() {
 						nowint.put(thistpid, nowint.get(thistpid) + cs / 10);
 						for (int i = nowint.get(thistpid) - cs / 10; i < nowint.get(thistpid); i++) {
-							Coord<Integer, Integer> coord = chunks.get(i);
-							world.loadChunk(coord.getKey(), coord.getValue());
+						    ChunkCoord coord = chunks.get(i);
+							world.loadChunk(coord.getChunkX(), coord.getChunkZ());
 						}
 					}
 				}, 6);
@@ -113,8 +114,8 @@ public class TeleportPreLoader implements Listener {
 					public void run() {
 						nowint.put(thistpid, nowint.get(thistpid) + cs / 10);
 						for (int i = nowint.get(thistpid) - cs / 10; i < nowint.get(thistpid); i++) {
-							Coord<Integer, Integer> coord = chunks.get(i);
-							world.loadChunk(coord.getKey(), coord.getValue());
+						    ChunkCoord coord = chunks.get(i);
+							world.loadChunk(coord.getChunkX(), coord.getChunkZ());
 						}
 					}
 				}, 7);
@@ -123,8 +124,8 @@ public class TeleportPreLoader implements Listener {
 					public void run() {
 						nowint.put(thistpid, nowint.get(thistpid) + cs / 10);
 						for (int i = nowint.get(thistpid) - cs / 10; i < nowint.get(thistpid); i++) {
-							Coord<Integer, Integer> coord = chunks.get(i);
-							world.loadChunk(coord.getKey(), coord.getValue());
+						    ChunkCoord coord = chunks.get(i);
+							world.loadChunk(coord.getChunkX(), coord.getChunkZ());
 						}
 					}
 				}, 8);
@@ -133,8 +134,8 @@ public class TeleportPreLoader implements Listener {
 					public void run() {
 						nowint.put(thistpid, nowint.get(thistpid) + cs / 10);
 						for (int i = nowint.get(thistpid) - cs / 10; i < nowint.get(thistpid); i++) {
-							Coord<Integer, Integer> coord = chunks.get(i);
-							world.loadChunk(coord.getKey(), coord.getValue());
+						    ChunkCoord coord = chunks.get(i);
+							world.loadChunk(coord.getChunkX(), coord.getChunkZ());
 						}
 					}
 				}, 9);

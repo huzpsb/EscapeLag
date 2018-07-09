@@ -20,7 +20,7 @@ import org.bukkit.World;
 import org.bukkit.plugin.Plugin;
 
 import com.google.common.collect.Lists;
-import com.mcml.space.util.AzureAPI.Coord;
+import com.mcml.space.util.AzureAPI.ChunkCoord;
 import com.mcml.space.util.AzureAPI.Coord3;
 
 public class Utils {
@@ -34,8 +34,8 @@ public class Utils {
 		return (ArrayList<Entry<Plugin, Long>>) entries;
 	}
 
-	public static List<Coord<Integer, Integer>> getShouldUseChunks(Location loc) {
-		List<Coord<Integer, Integer>> chunks = Lists.newArrayList();
+	public static List<ChunkCoord> getShouldUseChunks(Location loc) {
+		List<ChunkCoord> chunks = Lists.newArrayList();
 		int vd = Bukkit.getViewDistance();
 		int hvd = vd / 2;
 		for (int i = loc.getChunk().getX() - hvd; i <= loc.getChunk().getX() + hvd; i++) {

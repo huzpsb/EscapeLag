@@ -53,7 +53,7 @@ public class ChunkUnloader implements Listener {
                 int chunkZ = z >> 4;
                 Chunk chunk = world.getChunkAt(chunkX, chunkZ);
                 
-                if (ChunkKeeper.ShouldKeepList.contains(chunk)) continue;
+                if (ChunkKeeper.keepLoadedChunks.contains(AzureAPI.wrapCoord(chunkX, chunkZ))) continue;
                 if (world.isChunkInUse(chunkX, chunkZ)) {
                     chunk.unload();
                     totalUnloadedChunks++;

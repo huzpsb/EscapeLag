@@ -22,11 +22,13 @@ import com.mcml.space.monitor.MonitorUtils;
 import com.mcml.space.optimize.ChunkKeeper;
 import com.mcml.space.optimize.ChunkUnloader;
 import com.mcml.space.optimize.OverloadRestart;
+import com.mcml.space.util.AzureAPI;
 import com.mcml.space.util.HeapDumper;
 import com.mcml.space.util.NetWorker;
 import com.mcml.space.util.Perms;
 import com.mcml.space.util.Ticker;
 import com.mcml.space.util.Utils;
+import com.mcml.space.util.AzureAPI.ChunkCoord;
 
 public class EscapeLagCommand {
 	public static boolean processCommand(CommandSender sender, Command cmd, String label, String[] args) {
@@ -444,26 +446,27 @@ public class EscapeLagCommand {
 						return true;
 					}
 					if (args[1].equalsIgnoreCase("list")) {
-						sender.sendMessage("§e目前以及被保存的区块列表:" + ChunkKeeper.ShouldKeepList);
+						sender.sendMessage("§e目前以及被保存的区块列表:" + ChunkKeeper.keepLoadedChunks);
 					}
 					if (args[1].equalsIgnoreCase("addthis")) {
 						Player p = (Player) sender;
 						Chunk chunk = p.getLocation().getChunk();
-						ChunkKeeper.ShouldKeepList.add(chunk);
+						ChunkKeeper.keepLoadedChunks.add(AzureAPI.wrapCoord(chunk.getX(), chunk.getZ()));
 						sender.sendMessage("§e成功将你所在区块加入保持列表");
 					}
 					if (args[1].equalsIgnoreCase("removethis")) {
 						Player p = (Player) sender;
 						Chunk chunk = p.getLocation().getChunk();
-						if (ChunkKeeper.ShouldKeepList.contains(chunk)) {
-							ChunkKeeper.ShouldKeepList.remove(chunk);
+						ChunkCoord coord = AzureAPI.wrapCoord(chunk.getX(), chunk.getZ());
+						if (ChunkKeeper.keepLoadedChunks.contains(coord)) {
+							ChunkKeeper.keepLoadedChunks.remove(coord);
 							sender.sendMessage("§e成功将所在区块从保持列表中删除");
 						} else {
 							sender.sendMessage("§e失败将所在区块从保持列表中删除，因为该区块不在保持列表中。");
 						}
 					}
 					if (args[1].equalsIgnoreCase("clear")) {
-						ChunkKeeper.ShouldKeepList.clear();
+						ChunkKeeper.keepLoadedChunks.clear();
 						sender.sendMessage("§e已经清空所有在保持列表的区块。");
 					}
 				}
