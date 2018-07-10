@@ -6,6 +6,7 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerDropItemEvent;
+import org.bukkit.plugin.Plugin;
 
 import com.mcml.space.config.ConfigPatch;
 import com.mcml.space.core.EscapeLag;
@@ -18,7 +19,9 @@ public class AntiDupeDropItem implements Listener {
 	
 	// @author jiongjionger,Vlele
 	
-	public static void init(){
+	public static void init(Plugin plugin) {
+	    if (!ConfigPatch.fixDupeDropItem) return;
+	    
 		if(VersionLevel.get() == Version.MINECRAFT_1_7_R4 && VersionLevel.isForge()){
 			AzureAPI.log("警告！您的服务器是 1.7.10 的Mod 服务端，因此关闭了假死刷物品的补丁!");
 		}else{
@@ -28,9 +31,7 @@ public class AntiDupeDropItem implements Listener {
     
     @EventHandler(priority = EventPriority.LOWEST)
     public void onDrop(PlayerDropItemEvent evt) {
-        if(ConfigPatch.fixDupeDropItem){
-            Player player = evt.getPlayer();
-            if (PlayerList.contains(player) && player.isDead()) evt.setCancelled(true);
-        }
+        Player player = evt.getPlayer();
+        if (PlayerList.contains(player) && player.isDead()) evt.setCancelled(true);
     }
 }
