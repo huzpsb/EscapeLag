@@ -9,8 +9,13 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.world.StructureGrowEvent;
 import org.bukkit.plugin.Plugin;
 
+import com.mcml.space.util.VersionLevel;
+import com.mcml.space.util.VersionLevel.Version;
+
 public class BonemealDupePatch implements Listener {
 	public static void init(Plugin plugin) {
+	    if (VersionLevel.isLowerThan(Version.MINECRAFT_1_6_R3) || VersionLevel.isHigherThan(Version.MINECRAFT_1_7_R4)) return;
+	    
 		Bukkit.getPluginManager().registerEvents(new BonemealDupePatch(), plugin);
 	}
 	
