@@ -98,27 +98,27 @@ public class EscapeLagCommand {
 						return true;
 					}
 					if (args[1].equalsIgnoreCase("list")) {
-						sender.sendMessage("§e目前以及被保存的区块列表:" + ChunkKeeper.keepLoadedChunks);
+						sender.sendMessage("§e目前以及被保存的区块列表:" + ChunkKeeper.KEEP_LOADED_CHUNKS);
 					}
 					if (args[1].equalsIgnoreCase("addthis")) {
 						Player p = (Player) sender;
 						Chunk chunk = p.getLocation().getChunk();
-						ChunkKeeper.keepLoadedChunks.add(AzureAPI.wrapCoord(chunk.getX(), chunk.getZ()));
+						ChunkKeeper.KEEP_LOADED_CHUNKS.add(AzureAPI.wrapCoord(chunk.getX(), chunk.getZ()));
 						sender.sendMessage("§e成功将你所在区块加入保持列表");
 					}
 					if (args[1].equalsIgnoreCase("removethis")) {
 						Player p = (Player) sender;
 						Chunk chunk = p.getLocation().getChunk();
 						ChunkCoord coord = AzureAPI.wrapCoord(chunk.getX(), chunk.getZ());
-						if (ChunkKeeper.keepLoadedChunks.contains(coord)) {
-							ChunkKeeper.keepLoadedChunks.remove(coord);
+						if (ChunkKeeper.KEEP_LOADED_CHUNKS.contains(coord)) {
+							ChunkKeeper.KEEP_LOADED_CHUNKS.remove(coord);
 							sender.sendMessage("§e成功将所在区块从保持列表中删除");
 						} else {
 							sender.sendMessage("§e失败将所在区块从保持列表中删除，因为该区块不在保持列表中。");
 						}
 					}
 					if (args[1].equalsIgnoreCase("clear")) {
-						ChunkKeeper.keepLoadedChunks.clear();
+						ChunkKeeper.KEEP_LOADED_CHUNKS.clear();
 						sender.sendMessage("§e已经清空所有在保持列表的区块。");
 					}
 				}

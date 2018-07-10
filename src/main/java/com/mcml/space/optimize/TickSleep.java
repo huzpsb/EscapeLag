@@ -8,7 +8,7 @@ import com.mcml.space.util.PlayerList;
 import com.mcml.space.util.Ticker;
 
 public class TickSleep {
-    public static volatile long sleepMillis = 20;
+    private static volatile long sleepMillis = 20;
     
     public static void init(Plugin plugin) {
         if (ConfigOptimize.TPSSleepNoOneFreezeenable || !ConfigOptimize.TPSSleepSleepMode.equalsIgnoreCase("NoUse"))

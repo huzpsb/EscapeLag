@@ -1,35 +1,44 @@
 package com.mcml.space.function;
 
+import org.bukkit.Bukkit;
 import org.bukkit.Material;
-import org.bukkit.block.Block;
 import org.bukkit.entity.EntityType;
+import org.bukkit.event.Cancellable;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.Action;
 import org.bukkit.event.entity.EntityInteractEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
+import org.bukkit.plugin.java.JavaPlugin;
 
 import com.mcml.space.config.ConfigFunction;
 
-public class FarmProtecter implements Listener {
-    @EventHandler(priority = EventPriority.HIGHEST, ignoreCancelled = true)
-    public void EntityFarmChecker(EntityInteractEvent event){
-        if(!ConfigFunction.ProtectFarmenable || event.getEntityType() == EntityType.PLAYER) return; // TODO 细分实体与玩家
+public class FarmProtection {
+    public static void init(JavaPlugin plugin) {
+        if(!ConfigFunction.ProtectFarmenable) return;
         
-        Block block = event.getBlock();
-        if(block.getType() == Material.SOIL || block.getType() == Material.CROPS){
-            event.setCancelled(true);
+        if (ConfigFunction.ProtectFarmOnlyPlayer) Bukkit.getPluginManager().registerEvents(new EntityDetector(), plugin);
+        Bukkit.getPluginManager().registerEvents(new PlayerDetector(), plugin);
+    }
+    
+    private static class EntityDetector implements Listener {
+        @EventHandler(priority = EventPriority.HIGH, ignoreCancelled = true)
+        public void onEntity(EntityInteractEvent evt) {
+            if(evt.getEntityType() == EntityType.PLAYER) return;
+            handleInteract(evt, evt.getBlock().getType());
         }
     }
     
-    @EventHandler(priority = EventPriority.HIGHEST, ignoreCancelled = true)
-    public void PlayerFarmChecker(PlayerInteractEvent event){
-        if(!ConfigFunction.ProtectFarmenable || event.getAction() != Action.PHYSICAL) return;
-        
-        Block block = event.getClickedBlock();
-        if(block.getType() == Material.SOIL || block.getType() == Material.CROPS){
-            event.setCancelled(true);
+    private static class PlayerDetector implements Listener {
+        @EventHandler(priority = EventPriority.HIGH, ignoreCancelled = true)
+        public void onPlayer(PlayerInteractEvent evt){
+            if(evt.getAction() != Action.PHYSICAL) return;
+            handleInteract(evt, evt.getClickedBlock().getType());
         }
+    }
+    
+    private static void handleInteract(Cancellable evt, Material material) {
+        if (material == Material.SOIL) evt.setCancelled(true);
     }
 }

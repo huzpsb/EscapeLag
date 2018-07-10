@@ -21,7 +21,7 @@ import com.mcml.space.util.AzureAPI;
 import com.mcml.space.util.PlayerList;
 
 public class ChunkKeeper implements Listener {
-    public final static Set<ChunkCoord> keepLoadedChunks = Sets.newSetFromMap(new WeakHashMap<ChunkCoord, Boolean>());
+    public final static Set<ChunkCoord> KEEP_LOADED_CHUNKS = Sets.newSetFromMap(new WeakHashMap<ChunkCoord, Boolean>());
     
     public static void init(Plugin plugin) {
         if (!ConfigOptimize.ChunkKeeperenable) return;
@@ -33,7 +33,7 @@ public class ChunkKeeper implements Listener {
                     @Override
                     public boolean apply(Player player) {
                         Chunk chunk = player.getLocation().getChunk();
-                        keepLoadedChunks.add(AzureAPI.wrapCoord(chunk.getX(), chunk.getZ()));
+                        KEEP_LOADED_CHUNKS.add(AzureAPI.wrapCoord(chunk.getX(), chunk.getZ()));
                         return true;
                     }
                 });
@@ -46,7 +46,7 @@ public class ChunkKeeper implements Listener {
     @EventHandler(priority = EventPriority.LOWEST, ignoreCancelled = true)
     public void onChunkUnload(ChunkUnloadEvent event) {
         Chunk chunk = event.getChunk();
-        if (ConfigOptimize.ChunkKeeperenable && keepLoadedChunks.contains(AzureAPI.wrapCoord(chunk.getX(), chunk.getZ()))) {
+        if (KEEP_LOADED_CHUNKS.contains(AzureAPI.wrapCoord(chunk.getX(), chunk.getZ()))) {
             event.setCancelled(true);
         }
     }

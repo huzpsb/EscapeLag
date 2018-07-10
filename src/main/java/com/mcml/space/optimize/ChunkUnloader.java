@@ -8,10 +8,12 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
+import org.bukkit.event.player.PlayerQuitEvent;
 import org.bukkit.event.player.PlayerTeleportEvent;
 import org.bukkit.plugin.Plugin;
 
 import com.mcml.space.config.ConfigOptimize;
+import com.mcml.space.core.EscapeLag;
 import com.mcml.space.util.AzureAPI;
 
 public class ChunkUnloader implements Listener {
@@ -25,19 +27,30 @@ public class ChunkUnloader implements Listener {
 	}
 	
 	@EventHandler(priority = EventPriority.HIGHEST, ignoreCancelled = true)
-	public void teleport(PlayerTeleportEvent evt) {
-        Player player = evt.getPlayer();
-        Location from = evt.getFrom();
-        World world = from.getWorld();
-        
-        if (world.getPlayers().isEmpty()) {
-            for (Chunk each : world.getLoadedChunks()) {
-                each.unload();
-                totalUnloadedChunks++;
+	public void onTeleport(PlayerTeleportEvent evt) {
+	    handleWorldChunks(evt.getFrom(), evt.getPlayer(), 0);
+	}
+	
+	@EventHandler
+    public void onQuit(PlayerQuitEvent evt) {
+        handleWorldChunks(evt.getPlayer().getLocation(), evt.getPlayer(), 1); // In case disconnect post to main thread
+    }
+	
+	private static void handleWorldChunks(final Location from, final Player player, int delayedTicks) {
+	    Bukkit.getScheduler().runTaskLater(EscapeLag.plugin, new Runnable() {
+            @Override
+            public void run() {
+                World world = from.getWorld();
+                if (world.getPlayers().isEmpty()) {
+                    for (Chunk each : world.getLoadedChunks()) {
+                        each.unload();
+                        totalUnloadedChunks++;
+                    }
+                } else {
+                    unloadChunksAt(from, player);
+                }
             }
-        } else {
-            unloadChunksAt(from, player);
-        }
+        }, delayedTicks);
 	}
 	
 	public static void unloadChunksAt(Location from, Player player) {
@@ -53,7 +66,7 @@ public class ChunkUnloader implements Listener {
                 int chunkZ = z >> 4;
                 Chunk chunk = world.getChunkAt(chunkX, chunkZ);
                 
-                if (ChunkKeeper.keepLoadedChunks.contains(AzureAPI.wrapCoord(chunkX, chunkZ))) continue;
+                if (ChunkKeeper.KEEP_LOADED_CHUNKS.contains(AzureAPI.wrapCoord(chunkX, chunkZ))) continue;
                 if (world.isChunkInUse(chunkX, chunkZ)) {
                     chunk.unload();
                     totalUnloadedChunks++;

@@ -51,6 +51,9 @@ public abstract class ConfigFunction extends Configurable {
 
 	@Node(path = "ProtectFarm.enable")
 	public static boolean ProtectFarmenable = true;
+	
+	@Node(path = "ProtectFarm.onlyPlayer")
+    public static boolean ProtectFarmOnlyPlayer = false;
 
 	@Locale
 	@Node(path = "AntiSpam.Dirty.WarnMessage")
