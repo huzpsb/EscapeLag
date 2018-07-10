@@ -6,16 +6,21 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerEditBookEvent;
+import org.bukkit.inventory.ItemFlag;
 import org.bukkit.inventory.meta.BookMeta;
 import org.bukkit.plugin.java.JavaPlugin;
 
+import com.google.common.base.Strings;
 import com.mcml.space.util.AzureAPI;
 import com.mcml.space.util.PluginExtends;
 
 import static com.mcml.space.config.ConfigPatch.messageCheatBook;
 import static com.mcml.space.config.ConfigPatch.noCheatBook;
 
+import java.util.List;
+import java.util.Map;
 import java.util.Map.Entry;
+import java.util.Set;
 
 /**
  * @author SotrForgotten
@@ -35,44 +40,32 @@ public class CheatBookBlocker implements Listener, PluginExtends {
         if (prev.equals(meta)) return;
         
         // Illegally modify lore
-        if (prev.hasLore()) {
-            if (!meta.hasLore() || !prev.getLore().equals(meta.getLore())) {
-                meta.setLore(prev.getLore());
-            }
-        } else if (meta.hasLore()) {
+        List<String> lore = prev.getLore();
+        if (lore == null || lore.isEmpty()) {
             meta.setLore(null);
+        } else if (!lore.equals(meta.getLore())) {
+            meta.setLore(lore);
         }
         
         // Illegally modify enchants
-        if (prev.hasEnchants()) {
-            if (!meta.hasEnchants()) {
-                addEnchantFrom(prev, meta);
-            } else if (!prev.getLore().equals(meta.getLore())) {
-                clearEnchant(meta);
-                addEnchantFrom(prev, meta);
-            }
-        } else if (meta.hasEnchants()) {
+        Map<Enchantment, Integer> enchants = prev.getEnchants();
+        if (enchants == null || enchants.isEmpty()) {
             clearEnchant(meta);
+        } else if (!enchants.equals(meta.getEnchants())) {
+            clearEnchant(meta);
+            addEnchantFrom(prev, meta);
         }
         
-        // They cannot change title by edit it!
-        if (prev.hasTitle()) {
-            if (!meta.hasTitle() || !prev.getTitle().equals(meta.getTitle())) {
-                meta.setTitle(prev.getTitle());
-            }
-        } else if (meta.hasTitle()) {
-            meta.setTitle(null);
+        // Illegally modify item flags
+        Set<ItemFlag> itemFlags = prev.getItemFlags();
+        if (itemFlags == null || itemFlags.isEmpty()) {
+            meta.removeItemFlags(ItemFlag.values());
+        } else if (!itemFlags.equals(meta.getItemFlags())) {
+            meta.removeItemFlags(ItemFlag.values());
+            meta.addItemFlags(itemFlags.toArray(new ItemFlag[0]));
         }
-        
-        // Book and quill doesn't has a generation!
-        if (meta.getGeneration() != null) meta.setGeneration(null);
-        
-        // Book and quill doesn't has an author!
-        if (meta.getAuthor() != null) meta.setAuthor(null);
         
         evt.setNewBookMeta(meta);
-        
-        AzureAPI.log(evt.getPlayer(), messageCheatBook);
     }
     
     public static BookMeta clearEnchant(BookMeta meta) {
