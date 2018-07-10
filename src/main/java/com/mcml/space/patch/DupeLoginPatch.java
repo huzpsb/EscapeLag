@@ -17,18 +17,17 @@ import com.mcml.space.util.PluginExtends;
  */
 public class DupeLoginPatch implements Listener, PluginExtends {
     public static void init(JavaPlugin plugin) {
-        Bukkit.getPluginManager().registerEvents(new DupeLoginPatch(), plugin); // TODO 开关从配置文件移过来
+        if (!ConfigPatch.fixDupeOnline) return;
+        
+        Bukkit.getPluginManager().registerEvents(new DupeLoginPatch(), plugin);
         AzureAPI.log("多重在线修复模块已启用");
     }
 
     @EventHandler(priority = EventPriority.LOWEST)
     public void onLogin(AsyncPlayerPreLoginEvent evt) {
-        if (ConfigPatch.fixDupeOnline) {
-            if (PlayerList.contains(evt.getName())) {
-                evt.setLoginResult(AsyncPlayerPreLoginEvent.Result.KICK_OTHER);
-                evt.setKickMessage(ConfigPatch.messageKickDupeOnline);
-            }
+        if (PlayerList.contains(evt.getName())) {
+            evt.setLoginResult(AsyncPlayerPreLoginEvent.Result.KICK_OTHER);
+            evt.setKickMessage(ConfigPatch.messageKickDupeOnline);
         }
     }
-    
 }

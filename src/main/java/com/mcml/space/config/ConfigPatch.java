@@ -11,9 +11,6 @@ public abstract class ConfigPatch extends Configurable {
 	@Node(path = "AntiWEcalc.WarnMessage")
     public static String AntiWEcalcWarnMessage = "§a§l[EscapeLag]§c禁止利用WE bug炸服! =.=";
 
-    @Node(path = "AntiBoneBug.enable")
-    public static boolean safetyBonemeal = true;
-
     @Locale
     @Node(path = "AntiBoneBug.WarnMessage") 
     public static String messageBonemeal = "§c严禁卡树苗催熟BUG！";
