@@ -24,7 +24,6 @@ import com.mcml.space.function.FarmProtecter;
 import com.mcml.space.function.RespawnAction;
 import com.mcml.space.function.SpawnerController;
 import com.mcml.space.function.UpgradeNotifier;
-import com.mcml.space.monitor.MonitorEnabler;
 import com.mcml.space.optimize.AntiRedstone;
 import com.mcml.space.optimize.AutoSave;
 import com.mcml.space.optimize.ChunkKeeper;
@@ -123,7 +122,6 @@ public class EscapeLag extends JavaPlugin implements Listener {
 		BonemealDupePatch.init();
 		Bukkit.getPluginManager().registerEvents(new AntiLongStringCrash(), this);
 		Bukkit.getPluginManager().registerEvents(new TeleportPreLoader(), this);
-		Bukkit.getPluginManager().registerEvents(new MonitorEnabler(), this);
 		TickSleep.init();
 		RespawnAction.init(this);
 		EmptyRestart.init(this);
