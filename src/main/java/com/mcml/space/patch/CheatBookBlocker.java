@@ -1,5 +1,6 @@
 package com.mcml.space.patch;
 
+import org.bukkit.Bukkit;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
@@ -21,11 +22,11 @@ import java.util.Map.Entry;
  */
 public class CheatBookBlocker implements Listener, PluginExtends {
     public static void init(JavaPlugin plugin) {
-        //Bukkit.getPluginManager().registerEvents(new CheatBookBlocker(), plugin);
+        Bukkit.getPluginManager().registerEvents(new CheatBookBlocker(), plugin);
         AzureAPI.log("书与笔修复模块被临时禁用");
     }
     
-    @EventHandler(priority = EventPriority.MONITOR, ignoreCancelled = true)
+    @EventHandler(priority = EventPriority.LOWEST, ignoreCancelled = true)
     public void onBookEdit(PlayerEditBookEvent evt) {
         if (!noCheatBook) return;
         
@@ -55,9 +56,12 @@ public class CheatBookBlocker implements Listener, PluginExtends {
         }
         
         // They cannot change title by edit it!
-        String title = prev.getTitle();
-        if (!title.equals(meta.getTitle())) {
-            meta.setTitle(title);
+        if (prev.hasTitle()) {
+            if (!meta.hasTitle() || !prev.getTitle().equals(meta.getTitle())) {
+                meta.setTitle(prev.getTitle());
+            }
+        } else if (meta.hasTitle()) {
+            meta.setTitle(null);
         }
         
         // Book and quill doesn't has a generation!
