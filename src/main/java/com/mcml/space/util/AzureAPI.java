@@ -42,6 +42,16 @@ public abstract class AzureAPI {
     public static ChunkCoord wrapCoord(int chunkX, int chunkZ) {
         return new ChunkCoord(chunkX, chunkZ);
     }
+    
+    private static Thread serverThread;
+    
+    public static Thread getMainThread() {
+        if (serverThread != null) return serverThread;
+        for (Thread t : Thread.getAllStackTraces().keySet()) {
+            if (t.getName().equals("Server thread")) return (serverThread = t);
+        }
+        throw new AssertionError("Cannot find main thread!");
+    }
 
     @Getter
     @EqualsAndHashCode
