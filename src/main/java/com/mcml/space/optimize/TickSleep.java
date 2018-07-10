@@ -1,18 +1,18 @@
 package com.mcml.space.optimize;
 
 import org.bukkit.Bukkit;
+import org.bukkit.plugin.Plugin;
 
 import com.mcml.space.config.ConfigOptimize;
-import com.mcml.space.core.EscapeLag;
 import com.mcml.space.util.PlayerList;
 import com.mcml.space.util.Ticker;
 
 public class TickSleep {
     public static volatile long sleepMillis = 20;
     
-    public static void init() {
+    public static void init(Plugin plugin) {
         if (ConfigOptimize.TPSSleepNoOneFreezeenable || !ConfigOptimize.TPSSleepSleepMode.equalsIgnoreCase("NoUse"))
-            Bukkit.getScheduler().runTaskTimer(EscapeLag.plugin, new Runnable() {
+            Bukkit.getScheduler().runTaskTimer(plugin, new Runnable() {
                 public void run() {
                     try {
                         if (ConfigOptimize.TPSSleepNoOneFreezeenable && PlayerList.isEmpty()) {
@@ -29,7 +29,7 @@ public class TickSleep {
             }, 1L, 1L);
         
         if (ConfigOptimize.TPSSleepSleepMode.equalsIgnoreCase("AutoSleep"))
-            Bukkit.getScheduler().runTaskTimerAsynchronously(EscapeLag.plugin, new Runnable() {
+            Bukkit.getScheduler().runTaskTimerAsynchronously(plugin, new Runnable() {
                 public void run() {
                     if (sleepMillis < 20) {
                         if (sleepMillis - 1 < Ticker.getRealTimeTPS()) {

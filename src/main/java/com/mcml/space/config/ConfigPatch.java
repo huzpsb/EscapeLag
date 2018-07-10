@@ -7,9 +7,6 @@ import com.mcml.space.util.VersionLevel;
 import com.mcml.space.util.VersionLevel.Version;
 
 public abstract class ConfigPatch extends Configurable {
-	@Node(path = "AntiWEcalc.enable")
-    public static boolean AntiWEcalcenable = true;
-	
 	@Locale
 	@Node(path = "AntiWEcalc.WarnMessage")
     public static String AntiWEcalcWarnMessage = "§a§l[EscapeLag]§c禁止利用WE bug炸服! =.=";
