@@ -52,7 +52,6 @@ import com.mcml.space.patch.BonemealDupePatch;
 import com.mcml.space.patch.CheatBookBlocker;
 import com.mcml.space.patch.DupeLoginPatch;
 import com.mcml.space.patch.RPGItemPatch;
-import com.mcml.space.patch.SkullCrashPatch;
 import com.mcml.space.util.AzureAPI;
 import com.mcml.space.util.AzureAPI.Coord;
 import com.mcml.space.util.PlayerList;
@@ -127,7 +126,6 @@ public class EscapeLag extends JavaPlugin implements Listener {
 		EmptyRestart.init(this);
 		CheatBookBlocker.init(this);
 		OverloadRestart.init(this);
-		SkullCrashPatch.init(this);
 		CalculationAbusePatch.init(this);
 
 		ChunkKeeper.init(this);

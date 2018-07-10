@@ -21,6 +21,11 @@ public class CalculationAbusePatch implements Listener {
         Bukkit.getPluginManager().registerEvents(new CalculationAbusePatch(), plugin);
 	}
 	
+	/**
+	 * Fyi. https://github.com/sk89q/WorldEdit/commit/23d6fa7579566b0d92697548afc6a1e27c455a2f
+	 * @param worldeditVersion
+	 * @return
+	 */
 	public static boolean hasCalculationPerms(String worldeditVersion) {
 	    // versions above 6.1.1-SNAPSHOT is fixed
 	    try {
