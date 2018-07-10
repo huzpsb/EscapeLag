@@ -34,7 +34,7 @@ import lombok.Getter;
 /**
  * @author SotrForgotten, Vlvxingze
  */
-public abstract class AzureAPI<K, V> {
+public abstract class AzureAPI {
     private static String loggerPrefix = "";
     private static final int bukkitVDChunk = (Bukkit.getViewDistance() * 2) ^ 2 + 1;
     private static final int bukkitVDBlock = Bukkit.getViewDistance() * 16;

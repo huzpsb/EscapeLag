@@ -95,10 +95,6 @@ public abstract class ConfigPatch extends Configurable {
     public static String AntiCrashSignWarnMessage = "§c您输入的内容太长了！";
 
     @Locale
-    @Node(path = "AntiPortalInfItem.WarnMessage")
-    public static String AntiPortalInfItemWarnMessage = "§c抱歉！禁止矿车通过地狱门防止作弊！";
-
-    @Locale
     @Node(path = "AntiInfItem.ClickcWarnMessage")
     public static String AntiInfItemClickcWarnMessage = "§c警告！不允许使用负数物品！";
 
