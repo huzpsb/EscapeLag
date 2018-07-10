@@ -39,10 +39,6 @@ public abstract class ConfigPatch extends Configurable {
     @Node(path = "NoDoubleOnline.KickMessage")
     public static String messageKickDupeOnline = "抱歉，服务器中您已经在线了。ԅ(¯ㅂ¯ԅ)";
 
-    @Locale
-    @Node(path = "AntiCheatBook.WarnMessage")
-    public static String messageCheatBook = "§c严禁利用超级书Bug！";
-
     @Node(path = "AntiBedExplode.enable")
     public static boolean noBedExplore = true;
 

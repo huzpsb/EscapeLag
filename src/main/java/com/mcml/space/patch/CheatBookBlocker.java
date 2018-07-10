@@ -10,11 +10,9 @@ import org.bukkit.inventory.ItemFlag;
 import org.bukkit.inventory.meta.BookMeta;
 import org.bukkit.plugin.java.JavaPlugin;
 
-import com.google.common.base.Strings;
 import com.mcml.space.util.AzureAPI;
 import com.mcml.space.util.PluginExtends;
 
-import static com.mcml.space.config.ConfigPatch.messageCheatBook;
 import static com.mcml.space.config.ConfigPatch.noCheatBook;
 
 import java.util.List;
@@ -27,14 +25,14 @@ import java.util.Set;
  */
 public class CheatBookBlocker implements Listener, PluginExtends {
     public static void init(JavaPlugin plugin) {
+        if (!noCheatBook) return;
+        
         Bukkit.getPluginManager().registerEvents(new CheatBookBlocker(), plugin);
-        AzureAPI.log("书与笔修复模块被临时禁用");
+        AzureAPI.log("书与笔修复模块已启用");
     }
     
     @EventHandler(priority = EventPriority.LOWEST, ignoreCancelled = true)
     public void onBookEdit(PlayerEditBookEvent evt) {
-        if (!noCheatBook) return;
-        
         BookMeta prev = evt.getPreviousBookMeta();
         BookMeta meta = evt.getNewBookMeta();
         if (prev.equals(meta)) return;
