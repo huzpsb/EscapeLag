@@ -51,7 +51,7 @@ import com.mcml.space.patch.CalculationAbusePatch;
 import com.mcml.space.patch.BonemealDupePatch;
 import com.mcml.space.patch.CheatBookBlocker;
 import com.mcml.space.patch.DupeLoginPatch;
-import com.mcml.space.patch.RPGItemPatch;
+import com.mcml.space.patch.NegativeItemPatch;
 import com.mcml.space.util.AzureAPI;
 import com.mcml.space.util.AzureAPI.Coord;
 import com.mcml.space.util.PlayerList;
@@ -100,7 +100,7 @@ public class EscapeLag extends JavaPlugin implements Listener {
 		Bukkit.getPluginManager().registerEvents(new AntiInfItem(), this);
 		Bukkit.getPluginManager().registerEvents(new AntiPortalInfItem(), this);
 		Bukkit.getPluginManager().registerEvents(new AntiNetherHopperInfItem(), this);
-		RPGItemPatch.init(this);
+		NegativeItemPatch.init(this);
 		Bukkit.getPluginManager().registerEvents(new NoCrowdEntity(), this);
 		Bukkit.getPluginManager().registerEvents(new AntiCrashSign(), this);
 		Bukkit.getPluginManager().registerEvents(new AntiSpam(), this);

@@ -16,16 +16,19 @@ import static com.mcml.space.config.ConfigPatch.fixRPGItemInfItem;
 /**
  * @author Vlvxingze
  */
-public class RPGItemPatch implements Listener, PluginExtends {
+public class NegativeItemPatch implements Listener, PluginExtends {
     public static void init(JavaPlugin plugin) {
-        if (!fixRPGItemInfItem || (!ConfigPatch.forceRPGItemPatch && !Bukkit.getPluginManager().isPluginEnabled("RPGItems") && !Bukkit.getPluginManager().isPluginEnabled("RPG_Items"))) return;
+        if (!fixRPGItemInfItem && !Bukkit.getPluginManager().isPluginEnabled("RPGItems") && !Bukkit.getPluginManager().isPluginEnabled("RPG_Items")) return;
         
-        Bukkit.getPluginManager().registerEvents(new RPGItemPatch(), plugin);
+        Bukkit.getPluginManager().registerEvents(new NegativeItemPatch(), plugin);
         AzureAPI.log("RPGItem 修复模块已启用");
     }
 
     @EventHandler(priority = EventPriority.MONITOR, ignoreCancelled = true)
     public void onPickup(PlayerPickupItemEvent evt) {
-        if (evt.getRemaining() <= 0) evt.getItem().remove();
+        if (evt.getRemaining() <= 0) {
+            if (ConfigPatch.forceRPGItemPatch) evt.getItem().remove();
+            evt.setCancelled(true);
+        }
     }
 }
