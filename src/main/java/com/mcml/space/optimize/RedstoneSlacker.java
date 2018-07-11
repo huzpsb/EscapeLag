@@ -18,7 +18,7 @@ import com.mcml.space.config.ConfigOptimize;
 import com.mcml.space.core.EscapeLag;
 import com.mcml.space.util.AzureAPI;
 
-public class SlackRedstone implements Listener {
+public class RedstoneSlacker implements Listener {
     private final static HashMap<Location, Integer> CHECKED_TIMES = Maps.newHashMap();
 
     public static void init(Plugin plugin){
@@ -31,7 +31,7 @@ public class SlackRedstone implements Listener {
             }
         }, 0L, AzureAPI.toTicks(TimeUnit.SECONDS, 7));
         
-        Bukkit.getPluginManager().registerEvents(new SlackRedstone(), plugin);
+        Bukkit.getPluginManager().registerEvents(new RedstoneSlacker(), plugin);
     }
 
     @EventHandler
