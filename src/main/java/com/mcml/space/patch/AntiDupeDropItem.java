@@ -22,7 +22,7 @@ public class AntiDupeDropItem implements Listener {
 	public static void init(Plugin plugin) {
 	    if (!ConfigPatch.fixDupeDropItem) return;
 	    
-		if(VersionLevel.get() == Version.MINECRAFT_1_7_R4 && VersionLevel.isForge()){
+		if(VersionLevel.equals(Version.MINECRAFT_1_7_R4) && VersionLevel.isForge()){
 			AzureAPI.log("警告！您的服务器是 1.7.10 的Mod 服务端，因此关闭了假死刷物品的补丁!");
 		}else{
 			Bukkit.getPluginManager().registerEvents(new AntiDupeDropItem(), EscapeLag.plugin);

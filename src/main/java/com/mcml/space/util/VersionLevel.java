@@ -10,13 +10,14 @@ public class VersionLevel {
     private static boolean paper;
     private static boolean spigot;
     private static boolean forge;
+    private static String rawVersion;
     
-    public static final Version get() {
-        return level;
+    public static final String get() {
+        return rawVersion;
     }
     
     private static Version check() {
-        String version = Bukkit.getServer().getVersion();
+        String version = rawVersion = Bukkit.getServer().getVersion();
         checkType(version);
         
         if (version.contains("1.12")) {
