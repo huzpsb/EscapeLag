@@ -18,7 +18,7 @@ import static com.mcml.space.config.ConfigPatch.fixRPGItemInfItem;
  */
 public class NegativeItemPatch implements Listener, PluginExtends {
     public static void init(JavaPlugin plugin) {
-        if (!fixRPGItemInfItem || (!Bukkit.getPluginManager().isPluginEnabled("RPGItems") && !Bukkit.getPluginManager().isPluginEnabled("RPG_Items"))) return;
+        if (!fixRPGItemInfItem && !Bukkit.getPluginManager().isPluginEnabled("RPGItems") && !Bukkit.getPluginManager().isPluginEnabled("RPG_Items")) return;
         
         Bukkit.getPluginManager().registerEvents(new NegativeItemPatch(), plugin);
         AzureAPI.log("RPGItem 修复模块已启用");
