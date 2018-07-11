@@ -18,7 +18,7 @@ public class NetherHopperDupePatch implements Listener {
         if (!ConfigPatch.fixNetherHopperInfItem) return;
         
         Bukkit.getPluginManager().registerEvents(new NetherHopperDupePatch(), plugin);
-        AzureAPI.log("区块卸载系统现在运行...");
+        AzureAPI.log("地狱漏斗防护模块已开启");
     }
     
     @EventHandler(priority = EventPriority.LOWEST, ignoreCancelled = true)
