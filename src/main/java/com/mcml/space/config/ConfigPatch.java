@@ -58,6 +58,9 @@ public abstract class ConfigPatch extends Configurable {
 
     @Node(path = "AntiNetherHopperInfItem.enable")
     public static boolean fixNetherHopperInfItem = true;
+    
+    @Node(path = "patches.vaildate-actions.enable")
+    public static boolean enableVaildateActions = true;
 
     @Node(path = "AntiPortalInfItem.enable")
     public static boolean fixPortalInfItem = true;
