@@ -45,8 +45,8 @@ import com.mcml.space.patch.AntiInfItem;
 import com.mcml.space.patch.AntiInfRail;
 import com.mcml.space.patch.CancelledPlacementPatch;
 import com.mcml.space.patch.AntiLongStringCrash;
-import com.mcml.space.patch.AntiNetherHopperInfItem;
-import com.mcml.space.patch.MinecartPortalPatch;
+import com.mcml.space.patch.NetherHopperDupePatch;
+import com.mcml.space.patch.ContainerPortalPatch;
 import com.mcml.space.patch.CalculationAbusePatch;
 import com.mcml.space.patch.BonemealDupePatch;
 import com.mcml.space.patch.CheatBookBlocker;
@@ -99,8 +99,8 @@ public class EscapeLag extends JavaPlugin implements Listener {
 		Perms.bind("EscapeLag.Admin");
 
 		Bukkit.getPluginManager().registerEvents(new AntiInfItem(), this);
-		MinecartPortalPatch.init(this);
-		Bukkit.getPluginManager().registerEvents(new AntiNetherHopperInfItem(), this);
+		ContainerPortalPatch.init(this);
+		NetherHopperDupePatch.init(this);
 		NegativeItemPatch.init(this);
 		Bukkit.getPluginManager().registerEvents(new NoCrowdEntity(), this);
 		Bukkit.getPluginManager().registerEvents(new AntiCrashSign(), this);

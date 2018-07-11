@@ -17,24 +17,24 @@ import com.google.common.collect.Sets;
 import com.mcml.space.config.ConfigPatch;
 import com.mcml.space.core.EscapeLag;
 
-public class MinecartPortalPatch implements Listener {
-    private final static Set<InventoryHolder> MINECART_INV = Sets.newSetFromMap(new java.util.IdentityHashMap<InventoryHolder, Boolean>(4));
+public class ContainerPortalPatch implements Listener {
+    private final static Set<InventoryHolder> CONTAINER_INV = Sets.newSetFromMap(new java.util.IdentityHashMap<InventoryHolder, Boolean>(4));
     
     public static void init(JavaPlugin plugin) {
         if(!ConfigPatch.fixPortalInfItem) return;
-        Bukkit.getPluginManager().registerEvents(new MinecartPortalPatch(), plugin);
+        Bukkit.getPluginManager().registerEvents(new ContainerPortalPatch(), plugin);
     }
     
     @EventHandler(priority = EventPriority.LOWEST, ignoreCancelled = true)
     public void onPortal(final EntityPortalEvent evt) {
         EntityType type = evt.getEntityType();
-        if (type == EntityType.MINECART_CHEST || type == EntityType.MINECART_FURNACE || type == EntityType.MINECART_HOPPER) {
-            if (!handleMinecart((InventoryHolder) evt.getEntity())) return;
+        if (hasInventory(type)) {
+            if (!handleContainer((InventoryHolder) evt.getEntity())) return;
             
             Bukkit.getScheduler().runTask(EscapeLag.plugin, new Runnable() {
                 @Override
                 public void run() {
-                    MINECART_INV.remove((InventoryHolder) evt.getEntity());
+                    CONTAINER_INV.remove((InventoryHolder) evt.getEntity());
                     evt.getEntity().teleport(evt.getTo(), TeleportCause.NETHER_PORTAL); 
                 }
             });
@@ -44,14 +44,27 @@ public class MinecartPortalPatch implements Listener {
     
     @EventHandler(priority = EventPriority.LOWEST, ignoreCancelled = true)
     public void onPortal(InventoryOpenEvent evt) {
-        if (MINECART_INV.contains(evt.getInventory().getHolder())) {
+        if (CONTAINER_INV.contains(evt.getInventory().getHolder())) {
             evt.setCancelled(true);
         }
     }
     
-    private static boolean handleMinecart(InventoryHolder holder) {
+    private static boolean hasInventory(EntityType type) {
+        switch (type) {
+            case MINECART_CHEST:
+            case MINECART_FURNACE:
+            case MINECART_HOPPER:
+            case VILLAGER:
+            case HORSE:
+                return true;
+            default:
+                return false;
+        }
+    }
+    
+    private static boolean handleContainer(InventoryHolder holder) {
         if (holder.getInventory().getContents() == null) return false; // Skip empty minecarts
-        MINECART_INV.add(holder);
+        CONTAINER_INV.add(holder);
         for (HumanEntity player : holder.getInventory().getViewers()) {
             player.closeInventory();
         }
