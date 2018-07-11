@@ -33,7 +33,7 @@ public class FireSpreadSlacker implements Listener {
     }
     
     @EventHandler(priority = EventPriority.LOWEST, ignoreCancelled = true)
-    public void WhenFireLimitor(BlockIgniteEvent event) {
+    public void onSpread(BlockIgniteEvent event) {
         if (event.getCause() != IgniteCause.SPREAD) return;
         
         Chunk chunk = event.getBlock().getChunk();
