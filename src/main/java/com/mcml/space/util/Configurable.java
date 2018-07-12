@@ -8,8 +8,6 @@ import java.lang.annotation.RetentionPolicy;
 import java.lang.reflect.Field;
 import java.lang.reflect.Modifier;
 import java.util.List;
-import java.util.Set;
-
 import org.bukkit.configuration.file.FileConfiguration;
 
 import com.google.common.collect.Lists;

@@ -13,7 +13,7 @@ public class WorldSpawnLimiter implements Listener {
     @EventHandler
     public void WorldSeterLimitor(WorldInitEvent event) {
         World world = event.getWorld();
-        FileConfiguration config = EscapeLag.configOptimize.getValue();
+        FileConfiguration config = EscapeLag.configurations.get("ClearLagConfig.yml").getKey();
         if (config.getBoolean("WorldSpawnLimitor." + world.getName() + ".enable")) {
             world.setMonsterSpawnLimit(config.getInt("WorldSpawnLimitor." + world.getName() + ".PerChunkMonsters"));
             world.setAnimalSpawnLimit(config.getInt("WorldSpawnLimitor." + world.getName() + ".PerChunkAnimals"));

@@ -28,7 +28,7 @@ public class NetWorker implements Runnable {
                 int NowVersion = Integer.valueOf("%BUILD_NUMBER%");
                 if (NewVersion > NowVersion) {
                     EscapeLag.plugin.getLogger().info("插件检测到新版本 " + NewVersion + "，正在自动下载新版本插件...");
-                    DowloadFile("http://www.relatev.com/files/EscapeLag/EscapeLag.jar", EscapeLag.getPluginsFile());
+                    DowloadFile("http://www.relatev.com/files/EscapeLag/EscapeLag.jar", EscapeLag.getPluginFile());
                     EscapeLag.plugin.getLogger().info("插件更新版本下载完成！正在重启服务器！");
                     AzureAPI.restartServer("服务器内容更新!请过一会重新进服吧!");
                 } else {

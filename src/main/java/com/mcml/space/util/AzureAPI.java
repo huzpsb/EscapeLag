@@ -26,6 +26,7 @@ import org.bukkit.plugin.java.JavaPlugin;
 import com.google.common.base.Predicate;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Sets;
+import com.mcml.space.core.EscapeLag;
 
 import lombok.AllArgsConstructor;
 import lombok.EqualsAndHashCode;
@@ -59,10 +60,6 @@ public abstract class AzureAPI {
     public static class ChunkCoord {
         final int chunkX;
         final int chunkZ;
-    }
-    
-    public static void bind(JavaPlugin bind) {
-        ;
     }
 
     public static int viewDistance(final Player player) {
@@ -98,12 +95,8 @@ public abstract class AzureAPI {
     }
     
     public static void fatal(final String prefix, final String context, final JavaPlugin plugin) {
-        Bukkit.getScheduler().runTaskTimer(plugin, new Runnable(){
-        	@Override
-            public void run(){
-        		Bukkit.getLogger().severe(prefix + context);
-        	}
-        }, 0L, TimeUnit.SECONDS.toMillis(30));
+        Bukkit.getLogger().severe(prefix + context);
+        Bukkit.getPluginManager().disablePlugin(plugin);
     }
     
     public static boolean isBlank(final String s) {
@@ -276,6 +269,7 @@ public abstract class AzureAPI {
             try {
                 file.createNewFile();
             } catch (IOException ex) {
+                AzureAPI.fatal("Cannot save configuration ( " + file.getName() + " ), file blocked?", EscapeLag.plugin);
             }
         }
         return YamlConfiguration.loadConfiguration(file);
