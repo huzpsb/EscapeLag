@@ -64,6 +64,8 @@ import com.mcml.space.util.Perms;
 import com.mcml.space.util.Ticker;
 import com.mcml.space.util.VersionLevel;
 
+import lombok.SneakyThrows;
+
 public class EscapeLag extends JavaPlugin {
     public static EscapeLag plugin;
     
@@ -87,6 +89,7 @@ public class EscapeLag extends JavaPlugin {
         Ticker.init(this);
         PlayerList.bind(this);
         Perms.bind(GLOBAL_PERMS);
+        EscapeLag.AutoSetServer();
         
         AzureAPI.log("EscapeLag —— 新一代的优化/稳定插件");
         AzureAPI.log("~(@^_^@)~ 玩的开心！~");
@@ -98,13 +101,6 @@ public class EscapeLag extends JavaPlugin {
         
         AzureAPI.log("Setup modules..");
         bindCoreModules();
-        
-        if (ConfigOptimize.AutoSetenable) {
-            try {
-                EscapeLag.AutoSetServer();
-            } catch (IOException | InterruptedException e) {
-            }
-        }
         
         AzureAPI.log("EscapeLag has been installed successfully!");
         AzureAPI.log("乐乐感谢您的使用——有建议务必反馈，QQ1207223090");
@@ -221,7 +217,10 @@ public class EscapeLag extends JavaPlugin {
         }
     }
     
-    public static void AutoSetServer() throws IOException, InterruptedException {
+    @SneakyThrows
+    public static void AutoSetServer() {
+        if (!ConfigOptimize.AutoSetenable) return;
+        
         long heapmb = Runtime.getRuntime().maxMemory() / 1024 / 1024;
         File BukkitFile = new File("bukkit.yml");
         if (BukkitFile.exists()) {
