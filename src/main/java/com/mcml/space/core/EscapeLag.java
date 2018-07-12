@@ -4,8 +4,6 @@ import java.io.File;
 import java.io.IOException;
 import java.util.List;
 import java.util.Map;
-import java.util.Map.Entry;
-
 import org.apache.commons.lang.StringUtils;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
@@ -74,9 +72,9 @@ public class EscapeLag extends JavaPlugin {
     public final static String CONFIG_OPTIMIZE = "ClearLagConfig.yml";
     public final static String CONFIG_FUNCTION = "DoEventConfig.yml";
     
-    public final static Map<String, Coord3<File, FileConfiguration, Class<?>>> configurations = Maps.newHashMap(); // File name as key
+    public final static Map<String, Coord3<File, FileConfiguration, Class<? extends Configurable>>> configurations = Maps.newHashMap(); // File name as key
     
-    public final static String GLOBAL_PERMS = "escapeLag.admin";
+    public final static String GLOBAL_PERMS = "escapelag.admin";
     
     @Override
     public void onEnable() {
@@ -101,7 +99,7 @@ public class EscapeLag extends JavaPlugin {
         AzureAPI.log("Setup modules..");
         bindCoreModules();
         
-        if (ConfigOptimize.AutoSetenable == true) {
+        if (ConfigOptimize.AutoSetenable) {
             try {
                 EscapeLag.AutoSetServer();
             } catch (IOException | InterruptedException e) {
@@ -118,8 +116,10 @@ public class EscapeLag extends JavaPlugin {
     }
     
     public void clearModules() {
+        AzureAPI.log("Uninstall modules..");
         HandlerList.unregisterAll(this);
         Bukkit.getScheduler().cancelTasks(this);
+        bindCoreModules();
     }
     
     public void bindCoreModules() {
@@ -187,9 +187,10 @@ public class EscapeLag extends JavaPlugin {
         return false;
     }
     
-    private void configsFile(String file, Class<?> provider) {
-        File configuration = new File(this.getDataFolder(), file);
-        configurations.put(file, AzureAPI.<File, FileConfiguration, Class<?>>wrapCoord(configuration, AzureAPI.loadOrCreateFile(configuration), provider));
+    private File configsFile(String name, Class<? extends Configurable> provider) {
+        File configFile = new File(this.getDataFolder(), name);
+        configurations.put(name, AzureAPI.<File, FileConfiguration, Class<? extends Configurable>>wrapCoord(configFile, AzureAPI.loadOrCreateFile(configFile), provider));
+        return configFile;
     }
     
     public void setupConfigs() {
@@ -197,24 +198,28 @@ public class EscapeLag extends JavaPlugin {
         if (StringUtils.startsWithIgnoreCase(ConfigMain.lang, "zh_")) locale = "中文";
         EscapeLag.plugin.saveResource("documents/Guide-" + locale + ".txt", true);
         
-        configurations.clear();
-        configsFile(CONFIG_MAIN, ConfigMain.class);
-        configsFile(CONFIG_PATCH, ConfigPatch.class);
-        configsFile(CONFIG_OPTIMIZE, ConfigOptimize.class);
-        configsFile(CONFIG_FUNCTION, ConfigFunction.class);
+        setupConfig(CONFIG_MAIN, ConfigMain.class);
+        setupConfig(CONFIG_PATCH, ConfigPatch.class);
+        setupConfig(CONFIG_OPTIMIZE, ConfigOptimize.class);
+        setupConfig(CONFIG_FUNCTION, ConfigFunction.class);
+    }
+    
+    public void setupConfig(String configIdentifier, Class<? extends Configurable> provider) {
+        configurations.remove(configIdentifier);
+        File configFile = configsFile(configIdentifier, provider);
         
-        for (Entry<String, Coord3<File, FileConfiguration, Class<?>>> entry : configurations.entrySet()) {
-            try {
-                Configurable.restoreNodes(AzureAPI.wrapCoord(entry.getValue().getKey(), entry.getValue().getValue()), ConfigMain.class);
-            } catch (IllegalArgumentException | IllegalAccessException illegal) {
-                AzureAPI.fatal("Cannot setup configuration ( " + entry.getValue().getKey().getName() + " ), wrong format?", this);
-            } catch (IOException io) {
-                AzureAPI.fatal("Cannot load configuration ( " + entry.getValue().getKey().getName() + " ), file blocked?", this);
-            }
+        try {
+            Configurable.restoreNodes(AzureAPI.wrapCoord(configFile, AzureAPI.loadOrCreateFile(configFile)), provider);
+        } catch (IllegalArgumentException | IllegalAccessException illegal) {
+            AzureAPI.fatal("Cannot setup configuration ( " + configFile.getName() + " ), wrong format?", this);
+        } catch (IOException io) {
+            AzureAPI.fatal("Cannot load configuration ( " + configFile.getName() + " ), file blocked?", this);
         }
         
-        AzureAPI.setPrefix(ChatColor.translateAlternateColorCodes('&', ConfigMain.PluginPrefix) + ChatColor.RESET + " > ");
-        LocalizedHelper.init();
+        if (configIdentifier.equals(CONFIG_MAIN)) {
+            AzureAPI.setPrefix(ChatColor.translateAlternateColorCodes('&', ConfigMain.PluginPrefix) + ChatColor.RESET + " > ");
+            LocalizedHelper.init();
+        }
     }
     
     public static void AutoSetServer() throws IOException, InterruptedException {
