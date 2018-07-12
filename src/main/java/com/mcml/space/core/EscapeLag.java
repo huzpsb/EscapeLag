@@ -80,6 +80,7 @@ public class EscapeLag extends JavaPlugin implements Listener {
         plugin = this;
         
         setupConfigs();
+        Perms.bind("escapeLag.admin");
         
         AzureAPI.log("EscapeLag —— 新一代的优化/稳定插件");
         AzureAPI.log("~(@^_^@)~ 玩的开心！~");
@@ -101,8 +102,6 @@ public class EscapeLag extends JavaPlugin implements Listener {
         }
         
         PlayerList.bind(new UpgradeNotifier());
-        
-        Perms.bind("EscapeLag.Admin");
         
         Bukkit.getPluginManager().registerEvents(new AntiInfItem(), this);
         ContainerPortalPatch.init(this);
