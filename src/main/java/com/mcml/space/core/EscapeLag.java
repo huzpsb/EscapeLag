@@ -126,9 +126,10 @@ public class EscapeLag extends JavaPlugin {
         // Clears pervious
         PlayerList.clear();
         
-        // Reentrant binds
+        // Sudmodules
         PlayerList.bind(new UpgradeNotifier());
         
+        // Reentrant binds
         Bukkit.getPluginManager().registerEvents(new AntiInfItem(), this);
         ContainerPortalPatch.init(this);
         NetherHopperDupePatch.init(this);
@@ -158,13 +159,12 @@ public class EscapeLag extends JavaPlugin {
         CheatBookBlocker.init(this);
         OverloadRestart.init(this);
         CalculationAbusePatch.init(this);
-        AutoRecipePatch.init(this);
-        
         ChunkKeeper.init(this);
-        
         TimerGarbageCollect.init(this);
         AntiFakeDeath.init(this);
         NoSpawnChunks.init(this);
+        
+        if (Bukkit.getPluginManager().isPluginEnabled("ProtocolLib")) AutoRecipePatch.init(this);
         
         if (ConfigMain.AutoUpdate) Bukkit.getScheduler().runTaskAsynchronously(this, new NetWorker());
     }

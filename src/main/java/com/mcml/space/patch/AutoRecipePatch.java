@@ -2,13 +2,16 @@ package com.mcml.space.patch;
 
 import java.util.Set;
 
-import org.bukkit.Bukkit;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.inventory.InventoryCloseEvent;
 import org.bukkit.event.player.PlayerPickupItemEvent;
 import org.bukkit.plugin.Plugin;
+import com.comphenix.protocol.PacketType.Play;
+import com.comphenix.protocol.ProtocolLibrary;
+import com.comphenix.protocol.events.PacketAdapter;
+import com.comphenix.protocol.events.PacketEvent;
 import com.google.common.collect.Sets;
 import com.mcml.space.util.AzureAPI;
 import com.mcml.space.util.PluginExtends;
@@ -18,11 +21,11 @@ public class AutoRecipePatch implements Listener, PluginExtends {
     public static final Set<String> RECIPE_KEEPERS = Sets.newHashSet();
     
     public static void init(Plugin plugin) {
-        if (!VersionLevel.rawVersion().contains("(MC: 1.12)") || !Bukkit.getPluginManager().isPluginEnabled("ProtocolLib")) return;
+        if (!VersionLevel.rawVersion().contains("(MC: 1.12)")) return;
         
-        com.comphenix.protocol.ProtocolLibrary.getProtocolManager().addPacketListener(new com.comphenix.protocol.events.PacketAdapter(plugin, com.comphenix.protocol.PacketType.Play.Client.AUTO_RECIPE) {
+        ProtocolLibrary.getProtocolManager().addPacketListener(new PacketAdapter(plugin, Play.Client.AUTO_RECIPE) {
             @Override
-            public void onPacketReceiving(com.comphenix.protocol.events.PacketEvent evt) {
+            public void onPacketReceiving(PacketEvent evt) {
                 RECIPE_KEEPERS.add(evt.getPlayer().getName());
             }
         });
