@@ -57,7 +57,7 @@ import com.mcml.space.patch.DupeLoginPatch;
 import com.mcml.space.patch.NegativeItemPatch;
 import com.mcml.space.patch.AutoRecipePatch;
 import com.mcml.space.util.AzureAPI;
-import com.mcml.space.util.AzureAPI.Coord;
+import com.mcml.space.util.AzureAPI.Coord3;
 import com.mcml.space.util.PlayerList;
 import com.mcml.space.util.Configurable;
 import com.mcml.space.util.NetWorker;
@@ -67,7 +67,13 @@ import com.mcml.space.util.VersionLevel;
 
 public class EscapeLag extends JavaPlugin implements Listener {
     public static EscapeLag plugin;
-    public final static Map<String, Coord<FileConfiguration, Class<?>>> configurations = Maps.newHashMap(); // File name as key
+    
+    public final static String CONFIG_MAIN = "PluginMainConfig.yml";
+    public final static String CONFIG_PATCH = "AntiBugConfig.yml";
+    public final static String CONFIG_OPTIMIZE = "ClearLagConfig.yml";
+    public final static String CONFIG_FUNCTION = "DoEventConfig.yml";
+    
+    public final static Map<String, Coord3<File, FileConfiguration, Class<?>>> configurations = Maps.newHashMap(); // File name as key
     
     @Override
     public void onEnable() {
@@ -158,18 +164,18 @@ public class EscapeLag extends JavaPlugin implements Listener {
     
     @Override
     public boolean onCommand(CommandSender sender, Command cmd, String label, String[] args) {
-        if (label.equalsIgnoreCase("el")) {
+        if (label.equalsIgnoreCase("EL")) {
             return EscapeLagCommand.processCommand(sender, cmd, label, args);
         }
-        return true;
+        return false;
     }
     
     private void configsFile(String file, Class<?> provider) {
         File configuration = new File(this.getDataFolder(), file);
-        configurations.put(file, AzureAPI.<FileConfiguration, Class<?>>wrapCoord(AzureAPI.loadOrCreateFile(configuration), provider));
+        configurations.put(file, AzureAPI.<File, FileConfiguration, Class<?>>wrapCoord(configuration, AzureAPI.loadOrCreateFile(configuration), provider));
     }
     
-    private void setupConfigs() {
+    public void setupConfigs() {
         String locale = "english";
         if (StringUtils.startsWithIgnoreCase(ConfigMain.lang, "zh_")) locale = "中文";
         EscapeLag.plugin.saveResource("documents/" + locale + ".txt", true);
@@ -180,14 +186,13 @@ public class EscapeLag extends JavaPlugin implements Listener {
         configsFile("AntiBugConfig.yml", ConfigPatch.class);
         configsFile("DoEventConfig.yml", ConfigFunction.class);
         
-        for (Entry<String, Coord<FileConfiguration, Class<?>>> entry : configurations.entrySet()) {
-            File configuration = new File(this.getDataFolder(), entry.getKey());
+        for (Entry<String, Coord3<File, FileConfiguration, Class<?>>> entry : configurations.entrySet()) {
             try {
-                Configurable.restoreNodes(AzureAPI.wrapCoord(configuration, entry.getValue().getKey()), ConfigMain.class);
+                Configurable.restoreNodes(AzureAPI.wrapCoord(entry.getValue().getKey(), entry.getValue().getValue()), ConfigMain.class);
             } catch (IllegalArgumentException | IllegalAccessException illegal) {
-                AzureAPI.fatal("Cannot setup configuration ( " + configuration.getName() + " ), wrong format?", this);
+                AzureAPI.fatal("Cannot setup configuration ( " + entry.getValue().getKey().getName() + " ), wrong format?", this);
             } catch (IOException io) {
-                AzureAPI.fatal("Cannot load configuration ( " + configuration.getName() + " ), file blocked?", this);
+                AzureAPI.fatal("Cannot load configuration ( " + entry.getValue().getKey().getName() + " ), file blocked?", this);
             }
         }
         

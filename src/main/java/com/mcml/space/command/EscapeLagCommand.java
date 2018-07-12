@@ -38,10 +38,10 @@ public class EscapeLagCommand {
 					return true;
 				}
 				if (args[0].equalsIgnoreCase("updateon")) {
-					FileConfiguration MainConfig = EscapeLag.configMain.getValue();
+					FileConfiguration MainConfig = EscapeLag.configurations.get(EscapeLag.CONFIG_MAIN).getValue();
 					MainConfig.set("AutoUpdate", true);
 					try {
-						MainConfig.save(EscapeLag.configMain.getKey());
+						MainConfig.save(EscapeLag.configurations.get(EscapeLag.CONFIG_MAIN).getKey());
 					} catch (IOException ex) {
 					}
 					ConfigMain.AutoUpdate = true;
@@ -192,7 +192,7 @@ public class EscapeLagCommand {
 					}
 				}
 				if (args[0].equalsIgnoreCase("reload")) {
-					EscapeLag.trySetupConfig();
+					EscapeLag.plugin.setupConfigs();
 					sender.sendMessage("§a§l[EscapeLag]配置已经成功重载！");
 					return true;
 				}
