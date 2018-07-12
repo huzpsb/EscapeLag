@@ -181,10 +181,10 @@ public class EscapeLag extends JavaPlugin implements Listener {
         EscapeLag.plugin.saveResource("documents/" + locale + ".txt", true);
         
         configurations.clear();
-        configsFile("PluginMainConfig.yml", ConfigMain.class);
-        configsFile("ClearLagConfig.yml", ConfigOptimize.class);
-        configsFile("AntiBugConfig.yml", ConfigPatch.class);
-        configsFile("DoEventConfig.yml", ConfigFunction.class);
+        configsFile(CONFIG_MAIN, ConfigMain.class);
+        configsFile(CONFIG_PATCH, ConfigPatch.class);
+        configsFile(CONFIG_OPTIMIZE, ConfigOptimize.class);
+        configsFile(CONFIG_FUNCTION, ConfigFunction.class);
         
         for (Entry<String, Coord3<File, FileConfiguration, Class<?>>> entry : configurations.entrySet()) {
             try {
