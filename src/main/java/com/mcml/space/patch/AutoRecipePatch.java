@@ -22,7 +22,7 @@ public class AutoRecipePatch implements Listener, PluginExtends {
     public static final Set<String> RECIPE_KEEPERS = Sets.newHashSet();
     
     public static void init(Plugin plugin) {
-        if (!VersionLevel.get().contains("(MC: 1.12)") || !Bukkit.getPluginManager().isPluginEnabled("ProtocolLib")) return;
+        if (!VersionLevel.rawVersion().contains("(MC: 1.12)") || !Bukkit.getPluginManager().isPluginEnabled("ProtocolLib")) return;
         
         ProtocolLibrary.getProtocolManager().addPacketListener(new PacketAdapter(plugin, Play.Client.AUTO_RECIPE) {
             @Override

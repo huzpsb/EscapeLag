@@ -12,7 +12,11 @@ public class VersionLevel {
     private static boolean forge;
     private static String rawVersion;
     
-    public static final String get() {
+    public static final Version get() {
+        return level;
+    }
+    
+    public static final String rawVersion() {
         return rawVersion;
     }
     
