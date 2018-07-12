@@ -172,7 +172,7 @@ public class EscapeLag extends JavaPlugin {
     @Override
     public void onDisable() {
         AzureAPI.warn("Plugin has been disabled.");
-        AzureAPI.warn("Thanks for using :)");
+        AzureAPI.warn("Thanks for using !");
     }
     
     public static File getPluginFile() {
