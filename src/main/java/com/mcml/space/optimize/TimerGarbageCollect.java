@@ -4,6 +4,7 @@ import java.util.concurrent.TimeUnit;
 
 import org.apache.commons.lang.StringUtils;
 import org.bukkit.Bukkit;
+import org.bukkit.plugin.Plugin;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import com.mcml.space.config.ConfigOptimize;
@@ -17,7 +18,7 @@ import static com.mcml.space.config.ConfigOptimize.timerGC;
  * @author Vlvxingze, SotrForgotten
  */
 public class TimerGarbageCollect implements PluginExtends {
-    public static void init(JavaPlugin plugin) {
+    public static void init(Plugin plugin) {
         if(!timerGC) return;
         
         long ticks = AzureAPI.toTicks(TimeUnit.SECONDS, ConfigOptimize.TimerGcPeriod);

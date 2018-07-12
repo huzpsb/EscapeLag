@@ -11,7 +11,7 @@ import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.event.player.PlayerQuitEvent;
-import org.bukkit.plugin.java.JavaPlugin;
+import org.bukkit.plugin.Plugin;
 
 import com.google.common.base.Predicate;
 import com.google.common.collect.Lists;
@@ -31,7 +31,7 @@ public class PlayerList implements Listener {
         }
     }
     
-    public static void bind(JavaPlugin plugin) {
+    public static void bind(Plugin plugin) {
         assert plugin != null;
         Bukkit.getPluginManager().registerEvents(new PlayerList(), plugin);
     }
@@ -42,6 +42,11 @@ public class PlayerList implements Listener {
     
     public static void bind(QuitReactor reactor) {
         QUIT_REACTORS.add(reactor);
+    }
+    
+    public static void clear() {
+        JOIN_REACTORS.clear();
+        QUIT_REACTORS.clear();
     }
 
     @EventHandler(priority = EventPriority.LOWEST)

@@ -5,6 +5,7 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerPickupItemEvent;
+import org.bukkit.plugin.Plugin;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import com.mcml.space.config.ConfigPatch;
@@ -17,7 +18,7 @@ import static com.mcml.space.config.ConfigPatch.fixRPGItemInfItem;
  * @author Vlvxingze
  */
 public class NegativeItemPatch implements Listener, PluginExtends {
-    public static void init(JavaPlugin plugin) {
+    public static void init(Plugin plugin) {
         if (!fixRPGItemInfItem && !Bukkit.getPluginManager().isPluginEnabled("RPGItems") && !Bukkit.getPluginManager().isPluginEnabled("RPG_Items")) return;
         
         Bukkit.getPluginManager().registerEvents(new NegativeItemPatch(), plugin);

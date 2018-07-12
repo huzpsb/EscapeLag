@@ -2,6 +2,7 @@ package com.mcml.space.optimize;
 
 
 import org.bukkit.Bukkit;
+import org.bukkit.plugin.Plugin;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import com.mcml.space.config.ConfigOptimize;
@@ -13,7 +14,7 @@ import com.mcml.space.util.PluginExtends;
  * @author Vlvxingze, SotrForgotten
  */
 public class OverloadRestart implements Runnable, PluginExtends {
-    public static void init(JavaPlugin plugin) {
+    public static void init(Plugin plugin) {
         Bukkit.getScheduler().runTaskTimer(plugin, new OverloadRestart(), 7 * 20, 7 * 20);
         
         AzureAPI.log("超负荷控制模块已启动");

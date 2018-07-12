@@ -6,6 +6,7 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.entity.PlayerDeathEvent;
+import org.bukkit.plugin.Plugin;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import com.mcml.space.core.EscapeLag;
@@ -24,7 +25,7 @@ import static com.mcml.space.config.ConfigFunction.subtitleAutoRespawn;
  * @author Vlvxingze, SotrForgotten
  */
 public class RespawnAction implements Listener, PluginExtends {
-    public static void init(JavaPlugin plugin) {
+    public static void init(Plugin plugin) {
         if (!VersionLevel.isSpigot()) {
             AzureAPI.warn("非 Spigot 服务端不支持自动重生功能");
             return;

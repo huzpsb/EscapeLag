@@ -193,6 +193,8 @@ public class EscapeLagCommand {
 				}
 				if (args[0].equalsIgnoreCase("reload")) {
 					EscapeLag.plugin.setupConfigs();
+					EscapeLag.plugin.clearModules();
+					EscapeLag.plugin.bindCoreModules();
 					sender.sendMessage("§a§l[EscapeLag]配置已经成功重载！");
 					return true;
 				}

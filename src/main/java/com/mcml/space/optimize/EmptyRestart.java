@@ -7,6 +7,7 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.event.player.PlayerQuitEvent;
+import org.bukkit.plugin.Plugin;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import com.mcml.space.config.ConfigOptimize;
@@ -19,7 +20,7 @@ import com.mcml.space.util.PluginExtends;
  * @author Vlvxingze, SotrForgotten
  */
 public class EmptyRestart implements Listener, PluginExtends {
-    public static void init(JavaPlugin plugin) {
+    public static void init(Plugin plugin) {
         if (!ConfigOptimize.emptyRestart) return;
         
         Bukkit.getPluginManager().registerEvents(new EmptyRestart(), plugin);

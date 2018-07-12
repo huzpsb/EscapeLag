@@ -8,6 +8,7 @@ import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.inventory.InventoryCloseEvent;
 import org.bukkit.event.player.PlayerPickupItemEvent;
+import org.bukkit.plugin.Plugin;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import com.comphenix.protocol.PacketType.Play;
@@ -22,7 +23,7 @@ import com.mcml.space.util.VersionLevel;
 public class AutoRecipePatch implements Listener, PluginExtends {
     public static final Set<String> RECIPE_KEEPERS = Sets.newHashSet();
     
-    public static void init(JavaPlugin plugin) {
+    public static void init(Plugin plugin) {
         if (!VersionLevel.get().contains("(MC: 1.12)") || !Bukkit.getPluginManager().isPluginEnabled("ProtocolLib")) return;
         
         ProtocolLibrary.getProtocolManager().addPacketListener(new PacketAdapter(plugin, Play.Client.AUTO_RECIPE) {

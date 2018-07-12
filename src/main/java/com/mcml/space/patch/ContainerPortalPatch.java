@@ -11,6 +11,7 @@ import org.bukkit.event.entity.EntityPortalEvent;
 import org.bukkit.event.inventory.InventoryOpenEvent;
 import org.bukkit.event.player.PlayerTeleportEvent.TeleportCause;
 import org.bukkit.inventory.InventoryHolder;
+import org.bukkit.plugin.Plugin;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import com.google.common.collect.Sets;
@@ -20,7 +21,7 @@ import com.mcml.space.core.EscapeLag;
 public class ContainerPortalPatch implements Listener {
     private final static Set<InventoryHolder> CONTAINER_INV = Sets.newSetFromMap(new java.util.IdentityHashMap<InventoryHolder, Boolean>(4));
     
-    public static void init(JavaPlugin plugin) {
+    public static void init(Plugin plugin) {
         if(!ConfigPatch.fixPortalInfItem) return;
         Bukkit.getPluginManager().registerEvents(new ContainerPortalPatch(), plugin);
     }

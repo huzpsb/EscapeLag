@@ -8,6 +8,7 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerEditBookEvent;
 import org.bukkit.inventory.ItemFlag;
 import org.bukkit.inventory.meta.BookMeta;
+import org.bukkit.plugin.Plugin;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import com.mcml.space.util.AzureAPI;
@@ -24,7 +25,7 @@ import java.util.Set;
  * @author SotrForgotten
  */
 public class CheatBookBlocker implements Listener, PluginExtends {
-    public static void init(JavaPlugin plugin) {
+    public static void init(Plugin plugin) {
         if (!noCheatBook) return;
         
         Bukkit.getPluginManager().registerEvents(new CheatBookBlocker(), plugin);

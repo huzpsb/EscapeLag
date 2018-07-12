@@ -8,6 +8,7 @@ import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.Action;
 import org.bukkit.event.player.PlayerInteractEvent;
+import org.bukkit.plugin.Plugin;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import com.mcml.space.util.AzureAPI;
@@ -21,7 +22,7 @@ import static com.mcml.space.config.ConfigFunction.messagePreventSpawnerModify;
  * @author Vlvxingze, SotrForgotten
  */
 public class SpawnerController implements Listener, PluginExtends {
-    public static void init(JavaPlugin plugin) {
+    public static void init(Plugin plugin) {
         if (!preventSpawnerModify) return;
         
         Bukkit.getPluginManager().registerEvents(new SpawnerController(), plugin);

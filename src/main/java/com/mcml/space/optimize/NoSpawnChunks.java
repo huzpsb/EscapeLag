@@ -6,15 +6,14 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.world.WorldInitEvent;
-import org.bukkit.plugin.java.JavaPlugin;
-
+import org.bukkit.plugin.Plugin;
 import com.mcml.space.util.AzureAPI;
 
 
 import static com.mcml.space.config.ConfigOptimize.noSpawnChunks;
 
 public class NoSpawnChunks implements Listener {
-    public static void init(JavaPlugin plugin) {
+    public static void init(Plugin plugin) {
         if (!noSpawnChunks) return;
         Bukkit.getPluginManager().registerEvents(new NoSpawnChunks(), plugin);
     }

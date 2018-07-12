@@ -4,6 +4,7 @@ import java.util.Timer;
 import java.util.TimerTask;
 
 import org.bukkit.Bukkit;
+import org.bukkit.plugin.Plugin;
 
 import com.mcml.space.config.ConfigFunction;
 import com.mcml.space.core.EscapeLag;
@@ -29,8 +30,8 @@ public class Ticker {
      */
     private static volatile int realTimeTicks = 20;
     
-    public static void init() {
-        Bukkit.getScheduler().runTaskTimer(EscapeLag.plugin, new Runnable() {
+    public static void init(Plugin plugin) {
+        Bukkit.getScheduler().runTaskTimer(plugin, new Runnable() {
             @Override
             public void run() {
                 // update resources from main thread
@@ -39,8 +40,7 @@ public class Ticker {
             }
         }, 0L, 1L);
         
-        if (ConfigFunction.Monitorenable && ConfigFunction.MonitorThreadLagWarning)
-        Bukkit.getScheduler().runTaskTimerAsynchronously(EscapeLag.plugin, new Runnable() {
+        Bukkit.getScheduler().runTaskTimerAsynchronously(plugin, new Runnable() {
             @Override
             public void run(){
                 // to check and notify main thread hang

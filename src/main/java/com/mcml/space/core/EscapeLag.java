@@ -12,7 +12,9 @@ import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 import org.bukkit.configuration.file.FileConfiguration;
+import org.bukkit.event.HandlerList;
 import org.bukkit.event.Listener;
+import org.bukkit.plugin.Plugin;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import com.google.common.collect.Maps;
@@ -35,6 +37,7 @@ import com.mcml.space.optimize.EmptyRestart;
 import com.mcml.space.optimize.FireSpreadSlacker;
 import com.mcml.space.optimize.UnloadClear;
 import com.mcml.space.optimize.NoCrowdEntity;
+import com.mcml.space.optimize.NoSpawnChunks;
 import com.mcml.space.optimize.OverloadRestart;
 import com.mcml.space.optimize.TickSleep;
 import com.mcml.space.optimize.TeleportPreLoader;
@@ -65,7 +68,7 @@ import com.mcml.space.util.Perms;
 import com.mcml.space.util.Ticker;
 import com.mcml.space.util.VersionLevel;
 
-public class EscapeLag extends JavaPlugin implements Listener {
+public class EscapeLag extends JavaPlugin {
     public static EscapeLag plugin;
     
     public final static String CONFIG_MAIN = "PluginMainConfig.yml";
@@ -75,12 +78,19 @@ public class EscapeLag extends JavaPlugin implements Listener {
     
     public final static Map<String, Coord3<File, FileConfiguration, Class<?>>> configurations = Maps.newHashMap(); // File name as key
     
+    public final static String GLOBAL_PERMS = "escapeLag.admin";
+    
     @Override
     public void onEnable() {
         plugin = this;
         
         setupConfigs();
-        Perms.bind("escapeLag.admin");
+        clearModules();
+        
+        // Only once binds
+        Ticker.init(this);
+        PlayerList.bind(this);
+        Perms.bind(GLOBAL_PERMS);
         
         AzureAPI.log("EscapeLag —— 新一代的优化/稳定插件");
         AzureAPI.log("~(@^_^@)~ 玩的开心！~");
@@ -91,8 +101,7 @@ public class EscapeLag extends JavaPlugin implements Listener {
         AzureAPI.log("Level: " + VersionLevel.get() + "\n");
         
         AzureAPI.log("Setup modules..");
-        
-        PlayerList.bind(this);
+        bindCoreModules();
         
         if (ConfigOptimize.AutoSetenable == true) {
             try {
@@ -101,6 +110,25 @@ public class EscapeLag extends JavaPlugin implements Listener {
             }
         }
         
+        AzureAPI.log("EscapeLag has been installed successfully!");
+        AzureAPI.log("乐乐感谢您的使用——有建议务必反馈，QQ1207223090");
+        AzureAPI.log("您可以在插件根目录找到本插件的说明文档 说明文档.txt");
+        List<String> devs = getDescription().getAuthors();
+        AzureAPI.log("|||" + devs.get(0) + "/EscapeLag 合作作品.|||");
+        AzureAPI.log("|||" + AzureAPI.contactBetween(devs, 1, ", ") + " 合作开发.|||");
+        AzureAPI.log("§a您正在使用EscapeLag构建号 %BUILD_NUMBER%");
+    }
+    
+    public void clearModules() {
+        HandlerList.unregisterAll(this);
+        Bukkit.getScheduler().cancelTasks(this);
+    }
+    
+    public void bindCoreModules() {
+        // Clears pervious
+        PlayerList.clear();
+        
+        // Reentrant binds
         PlayerList.bind(new UpgradeNotifier());
         
         Bukkit.getPluginManager().registerEvents(new AntiInfItem(), this);
@@ -111,7 +139,7 @@ public class EscapeLag extends JavaPlugin implements Listener {
         Bukkit.getPluginManager().registerEvents(new AntiCrashSign(), this);
         Bukkit.getPluginManager().registerEvents(new AntiSpam(), this);
         ExplosionController.init(this);
-        RedstoneSlacker.init(plugin);
+        RedstoneSlacker.init(this);
         Bukkit.getPluginManager().registerEvents(new UnloadClear(), this);
         Bukkit.getPluginManager().registerEvents(new AntiInfRail(), this);
         Bukkit.getPluginManager().registerEvents(new AutoSave(), this);
@@ -137,18 +165,10 @@ public class EscapeLag extends JavaPlugin implements Listener {
         ChunkKeeper.init(this);
         
         TimerGarbageCollect.init(this);
-        if (ConfigMain.AutoUpdate)
-            Bukkit.getScheduler().runTaskAsynchronously(this, new NetWorker());
-        Bukkit.getScheduler().runTaskTimer(this, new AntiFakeDeath(), 7 * 20, 7 * 20);
-        Ticker.init();
+        AntiFakeDeath.init(this);
+        NoSpawnChunks.init(this);
         
-        AzureAPI.log("EscapeLag has been installed successfully!");
-        AzureAPI.log("乐乐感谢您的使用——有建议务必反馈，QQ1207223090");
-        AzureAPI.log("您可以在插件根目录找到本插件的说明文档 说明文档.txt");
-        List<String> devs = getDescription().getAuthors();
-        AzureAPI.log("|||" + devs.get(0) + "/EscapeLag 合作作品.|||");
-        AzureAPI.log("|||" + AzureAPI.contactBetween(devs, 1, ", ") + " 合作开发.|||");
-        AzureAPI.log("§a您正在使用EscapeLag构建号 %BUILD_NUMBER%");
+        if (ConfigMain.AutoUpdate) Bukkit.getScheduler().runTaskAsynchronously(this, new NetWorker());
     }
     
     @Override

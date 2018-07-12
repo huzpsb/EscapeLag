@@ -5,7 +5,7 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.AsyncPlayerPreLoginEvent;
-import org.bukkit.plugin.java.JavaPlugin;
+import org.bukkit.plugin.Plugin;
 
 import com.mcml.space.config.ConfigPatch;
 import com.mcml.space.util.AzureAPI;
@@ -16,7 +16,7 @@ import com.mcml.space.util.PluginExtends;
  * @author Vlvxingze, SotrForgotten
  */
 public class DupeLoginPatch implements Listener, PluginExtends {
-    public static void init(JavaPlugin plugin) {
+    public static void init(Plugin plugin) {
         if (!ConfigPatch.fixDupeOnline) return;
         
         Bukkit.getPluginManager().registerEvents(new DupeLoginPatch(), plugin);
