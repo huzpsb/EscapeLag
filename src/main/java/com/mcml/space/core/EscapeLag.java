@@ -119,7 +119,6 @@ public class EscapeLag extends JavaPlugin {
         AzureAPI.log("Uninstall modules..");
         HandlerList.unregisterAll(this);
         Bukkit.getScheduler().cancelTasks(this);
-        bindCoreModules();
     }
     
     public void bindCoreModules() {
