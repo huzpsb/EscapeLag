@@ -195,7 +195,7 @@ public class EscapeLag extends JavaPlugin {
     public void setupConfigs() {
         String locale = "english";
         if (StringUtils.startsWithIgnoreCase(ConfigMain.lang, "zh_")) locale = "中文";
-        EscapeLag.plugin.saveResource("documents/" + locale + ".txt", true);
+        EscapeLag.plugin.saveResource("documents/Guide-" + locale + ".txt", true);
         
         configurations.clear();
         configsFile(CONFIG_MAIN, ConfigMain.class);
