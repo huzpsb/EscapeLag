@@ -9,8 +9,6 @@ import org.bukkit.event.player.PlayerEditBookEvent;
 import org.bukkit.inventory.ItemFlag;
 import org.bukkit.inventory.meta.BookMeta;
 import org.bukkit.plugin.Plugin;
-import org.bukkit.plugin.java.JavaPlugin;
-
 import com.mcml.space.util.AzureAPI;
 import com.mcml.space.util.PluginExtends;
 

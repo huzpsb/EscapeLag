@@ -1,10 +1,7 @@
 package com.mcml.space.optimize;
 
-
 import org.bukkit.Bukkit;
 import org.bukkit.plugin.Plugin;
-import org.bukkit.plugin.java.JavaPlugin;
-
 import com.mcml.space.config.ConfigOptimize;
 import com.mcml.space.core.EscapeLag;
 import com.mcml.space.util.AzureAPI;

@@ -7,8 +7,6 @@ import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.entity.PlayerDeathEvent;
 import org.bukkit.plugin.Plugin;
-import org.bukkit.plugin.java.JavaPlugin;
-
 import com.mcml.space.core.EscapeLag;
 import com.mcml.space.util.AzureAPI;
 import com.mcml.space.util.PluginExtends;

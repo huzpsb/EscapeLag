@@ -5,8 +5,6 @@ import java.util.concurrent.TimeUnit;
 import org.apache.commons.lang.StringUtils;
 import org.bukkit.Bukkit;
 import org.bukkit.plugin.Plugin;
-import org.bukkit.plugin.java.JavaPlugin;
-
 import com.mcml.space.config.ConfigOptimize;
 import com.mcml.space.util.AzureAPI;
 import com.mcml.space.util.PluginExtends;

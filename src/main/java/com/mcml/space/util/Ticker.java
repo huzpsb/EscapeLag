@@ -6,9 +6,6 @@ import java.util.TimerTask;
 import org.bukkit.Bukkit;
 import org.bukkit.plugin.Plugin;
 
-import com.mcml.space.config.ConfigFunction;
-import com.mcml.space.core.EscapeLag;
-
 public class Ticker {
     /**
      * The realistic time in last tick, to diff with current time, volatile for instant view

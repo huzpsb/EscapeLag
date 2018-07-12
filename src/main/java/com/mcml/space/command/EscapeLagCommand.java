@@ -2,19 +2,12 @@ package com.mcml.space.command;
 
 import java.io.File;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Iterator;
-import java.util.Map;
-
 import org.bukkit.Bukkit;
 import org.bukkit.Chunk;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.entity.Player;
-import org.bukkit.plugin.Plugin;
-
 import com.mcml.space.config.ConfigMain;
 import com.mcml.space.core.EscapeLag;
 import com.mcml.space.optimize.ChunkKeeper;
@@ -25,7 +18,6 @@ import com.mcml.space.util.HeapDumper;
 import com.mcml.space.util.NetWorker;
 import com.mcml.space.util.Perms;
 import com.mcml.space.util.Ticker;
-import com.mcml.space.util.Utils;
 import com.mcml.space.util.AzureAPI.ChunkCoord;
 
 public class EscapeLagCommand {

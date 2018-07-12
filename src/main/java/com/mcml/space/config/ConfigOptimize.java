@@ -3,7 +3,6 @@ package com.mcml.space.config;
 import java.util.Set;
 
 import com.mcml.space.util.Configurable;
-import com.mcml.space.util.Configurable.hash;
 
 public abstract class ConfigOptimize extends Configurable {	
 	@Node(path = "TPSSleep.NoOneFreeze.enable")

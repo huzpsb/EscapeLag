@@ -12,8 +12,6 @@ import org.bukkit.event.inventory.InventoryOpenEvent;
 import org.bukkit.event.player.PlayerTeleportEvent.TeleportCause;
 import org.bukkit.inventory.InventoryHolder;
 import org.bukkit.plugin.Plugin;
-import org.bukkit.plugin.java.JavaPlugin;
-
 import com.google.common.collect.Sets;
 import com.mcml.space.config.ConfigPatch;
 import com.mcml.space.core.EscapeLag;

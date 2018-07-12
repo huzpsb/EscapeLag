@@ -16,7 +16,6 @@ import org.bukkit.util.Vector;
 import com.mcml.space.config.ConfigOptimize;
 import com.mcml.space.core.EscapeLag;
 import com.mcml.space.util.AzureAPI.ChunkCoord;
-import com.mcml.space.util.AzureAPI.Coord;
 import com.mcml.space.util.Utils;
 
 public class TeleportPreLoader implements Listener {
