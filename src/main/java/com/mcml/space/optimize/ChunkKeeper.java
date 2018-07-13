@@ -43,7 +43,7 @@ public class ChunkKeeper implements Listener {
         Bukkit.getPluginManager().registerEvents(new ChunkKeeper(), plugin);
     }
 
-    @EventHandler(priority = EventPriority.LOWEST, ignoreCancelled = true)
+    @EventHandler(priority = EventPriority.LOW, ignoreCancelled = true)
     public void onChunkUnload(ChunkUnloadEvent event) {
         Chunk chunk = event.getChunk();
         if (KEEP_LOADED_CHUNKS.contains(AzureAPI.wrapCoord(chunk.getX(), chunk.getZ()))) {

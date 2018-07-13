@@ -43,7 +43,7 @@ public class AntiSpam implements Listener, QuitReactor {
 		return System.currentTimeMillis() - lastChat.longValue() <= ConfigFunction.AntiSpamPeriodPeriod * 1000;
 	}
 
-	@EventHandler(priority = EventPriority.LOWEST, ignoreCancelled = true)
+	@EventHandler(priority = EventPriority.LOW, ignoreCancelled = true)
 	public void spamChecker(AsyncPlayerChatEvent evt) {
 		if (!ConfigFunction.AntiSpamenable)
 			return;
@@ -86,7 +86,7 @@ public class AntiSpam implements Listener, QuitReactor {
 		}
 	}
 
-	@EventHandler(priority = EventPriority.MONITOR, ignoreCancelled = true)
+	@EventHandler(ignoreCancelled = true)
 	public void checkDirty(AsyncPlayerChatEvent evt) {
 		if (ConfigFunction.AntiSpamenable && ConfigFunction.enableAntiDirty) {
 			Player player = evt.getPlayer();

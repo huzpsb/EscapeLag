@@ -32,7 +32,7 @@ public class FireSpreadSlacker implements Listener {
         }, 0L, AzureAPI.toTicks(TimeUnit.SECONDS, 90));
     }
     
-    @EventHandler(priority = EventPriority.LOWEST, ignoreCancelled = true)
+    @EventHandler(priority = EventPriority.LOW, ignoreCancelled = true)
     public void onSpread(BlockIgniteEvent event) {
         if (event.getCause() != IgniteCause.SPREAD) return;
         

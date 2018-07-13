@@ -25,7 +25,7 @@ public class SpawnerController implements Listener, PluginExtends {
         AzureAPI.log("刷怪笼控制模块已启动");
     }
     
-    @EventHandler(priority = EventPriority.MONITOR, ignoreCancelled = true)
+    @EventHandler(priority = EventPriority.LOW, ignoreCancelled = true)
     public void onModify(PlayerInteractEvent evt) {
         if (evt.getItem() == null || evt.getAction() != Action.RIGHT_CLICK_BLOCK) return;
         if (Perms.has(evt.getPlayer())) return;

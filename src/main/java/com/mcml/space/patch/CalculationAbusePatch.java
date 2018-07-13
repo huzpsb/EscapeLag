@@ -38,7 +38,7 @@ public class CalculationAbusePatch implements Listener {
         return false;
     }
 
-	@EventHandler(priority = EventPriority.HIGHEST, ignoreCancelled = true)
+	@EventHandler(priority = EventPriority.LOW, ignoreCancelled = true)
 	public void onCommand(PlayerCommandPreprocessEvent evt) {
 		String command = evt.getMessage();
 		if (!command.startsWith(CALC_LABEL) || AzureAPI.hasPerm(evt.getPlayer(), "worldedit.calc")) return;

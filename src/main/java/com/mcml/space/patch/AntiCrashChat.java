@@ -21,7 +21,7 @@ public class AntiCrashChat implements Listener{
         }
     }
 
-    @EventHandler(priority = EventPriority.HIGH)
+    @EventHandler(priority = EventPriority.HIGH, ignoreCancelled = true)
     public void ChatCheckCrash(AsyncPlayerChatEvent event){
         if (!ConfigPatch.noCrashChat) return;
         

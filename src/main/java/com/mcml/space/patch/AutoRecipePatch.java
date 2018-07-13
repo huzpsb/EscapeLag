@@ -33,12 +33,12 @@ public class AutoRecipePatch implements Listener, PluginExtends {
         AzureAPI.log("自动合成修复模块已启用");
     }
     
-    @EventHandler(priority = EventPriority.LOWEST, ignoreCancelled = true)
+    @EventHandler(priority = EventPriority.MONITOR, ignoreCancelled = true)
     public void onPickup(PlayerPickupItemEvent evt) {
         if (RECIPE_KEEPERS.contains(evt.getPlayer().getName())) evt.setCancelled(true);
     }
     
-    @EventHandler(priority = EventPriority.LOWEST, ignoreCancelled = true)
+    @EventHandler(priority = EventPriority.MONITOR, ignoreCancelled = true)
     public void onClose(InventoryCloseEvent evt) {
         RECIPE_KEEPERS.remove(evt.getPlayer().getName());
     }

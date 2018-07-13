@@ -9,7 +9,6 @@ import org.bukkit.event.world.WorldInitEvent;
 import org.bukkit.plugin.Plugin;
 import com.mcml.space.util.AzureAPI;
 
-
 import static com.mcml.space.config.ConfigOptimize.noSpawnChunks;
 
 public class NoSpawnChunks implements Listener {
@@ -18,7 +17,7 @@ public class NoSpawnChunks implements Listener {
         Bukkit.getPluginManager().registerEvents(new NoSpawnChunks(), plugin);
     }
     
-	@EventHandler(priority = EventPriority.MONITOR)
+	@EventHandler(priority = EventPriority.HIGHEST)
 	public void onWorldLoad(WorldInitEvent evt) {
         World world = evt.getWorld();
         world.setKeepSpawnInMemory(false);

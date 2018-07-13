@@ -22,7 +22,7 @@ public class FarmProtection {
     }
     
     private static class EntityDetector implements Listener {
-        @EventHandler(priority = EventPriority.HIGH, ignoreCancelled = true)
+        @EventHandler(priority = EventPriority.LOW, ignoreCancelled = true)
         public void onEntity(EntityInteractEvent evt) {
             if(evt.getEntityType() == EntityType.PLAYER) return;
             handleInteract(evt, evt.getBlock().getType());
@@ -30,7 +30,7 @@ public class FarmProtection {
     }
     
     private static class PlayerDetector implements Listener {
-        @EventHandler(priority = EventPriority.HIGH, ignoreCancelled = true)
+        @EventHandler(priority = EventPriority.LOW, ignoreCancelled = true)
         public void onPlayer(PlayerInteractEvent evt){
             if(evt.getAction() != Action.PHYSICAL) return;
             handleInteract(evt, evt.getClickedBlock().getType());

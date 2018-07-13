@@ -21,7 +21,7 @@ public class NetherHopperDupePatch implements Listener {
         AzureAPI.log("地狱漏斗防护模块已开启");
     }
     
-    @EventHandler(priority = EventPriority.LOWEST, ignoreCancelled = true)
+    @EventHandler(priority = EventPriority.LOW, ignoreCancelled = true)
     public void onHopper(InventoryMoveItemEvent evt) {
         if (!(evt.getInitiator().getHolder() instanceof Hopper) || !(evt.getSource().getHolder() instanceof Hopper)) return;
         Hopper to = (Hopper) evt.getInitiator().getHolder();

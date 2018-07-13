@@ -20,7 +20,7 @@ import com.google.common.collect.Lists;
  * @author Vlvxingze, SotrForgotten
  */
 public class PlayerList implements Listener {
-    private final static Set<String> PLAYER_NAMES = AzureAPI.newCaseInsensitiveSet();
+    private final static Set<String> PLAYER_NAMES = AzureAPI.newCaseInsensitiveSet(true);
     
     private final static List<JoinReactor> JOIN_REACTORS = Lists.newArrayList();
     private final static List<QuitReactor> QUIT_REACTORS = Lists.newArrayList();

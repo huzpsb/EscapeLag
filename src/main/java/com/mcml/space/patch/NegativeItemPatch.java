@@ -23,7 +23,7 @@ public class NegativeItemPatch implements Listener, PluginExtends {
         AzureAPI.log("RPGItem 修复模块已启用");
     }
 
-    @EventHandler(priority = EventPriority.MONITOR, ignoreCancelled = true)
+    @EventHandler(priority = EventPriority.HIGHEST, ignoreCancelled = true)
     public void onPickup(PlayerPickupItemEvent evt) {
         if (evt.getItem().getItemStack().getAmount() <= 0) {
             if (ConfigPatch.forceRPGItemPatch) evt.getItem().remove();

@@ -40,7 +40,7 @@ public class RedstoneSlacker implements Listener {
     private Location notifyLocation;
     
     // High priority for avoid dupe!
-    @EventHandler(priority = EventPriority.MONITOR, ignoreCancelled = true)
+    @EventHandler(priority = EventPriority.LOW, ignoreCancelled = true)
     public void onRedstone(BlockRedstoneEvent evt){
         if(evt.getOldCurrent() > evt.getNewCurrent()) return;
         

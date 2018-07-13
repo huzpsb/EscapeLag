@@ -39,7 +39,7 @@ public class AutoRespawn implements Listener, PluginExtends {
         AzureAPI.log("自动重生模块已启动");
     }
     
-    @EventHandler(priority = EventPriority.MONITOR)
+    @EventHandler(priority = EventPriority.HIGHEST)
     public void autoRespawn(PlayerDeathEvent evt) {
         final Player player = evt.getEntity();
         Bukkit.getScheduler().runTask(EscapeLag.plugin, new Runnable() {

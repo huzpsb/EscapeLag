@@ -20,7 +20,7 @@ public class RailsMachine implements Listener {
         Bukkit.getPluginManager().registerEvents(new RailsMachine(), EscapeLag.plugin);
     }
     
-    @EventHandler(priority = EventPriority.MONITOR, ignoreCancelled = true)
+    @EventHandler(priority = EventPriority.LOW, ignoreCancelled = true)
     public void onPhysics(BlockPhysicsEvent evt) {
         Block block = evt.getBlock();
         if (!canExploit(block.getType())) return;

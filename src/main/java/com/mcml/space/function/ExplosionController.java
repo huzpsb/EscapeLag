@@ -34,7 +34,7 @@ public class ExplosionController implements PluginExtends {
     
     // since 1.8.3
     private static class BlockDetector implements Listener {
-        @EventHandler(priority = EventPriority.MONITOR, ignoreCancelled = true)
+        @EventHandler(priority = EventPriority.LOW, ignoreCancelled = true)
         public void onExplode(BlockExplodeEvent evt) {
             handleExplode(evt, evt.blockList());
         }
@@ -42,7 +42,7 @@ public class ExplosionController implements PluginExtends {
     
     // since 1.4.6
     private static class EntityDetector implements Listener {
-        @EventHandler(priority = EventPriority.MONITOR, ignoreCancelled = true)
+        @EventHandler(priority = EventPriority.LOW, ignoreCancelled = true)
         public void onExplode(EntityExplodeEvent evt) {
             handleExplode(evt, evt.blockList());
         }
