@@ -75,7 +75,7 @@ public class ValidateActions implements Listener {
     public static void handlePlayerAction(Player player, Cancellable evt) {
         if (INV_KEEPERS.contains(player.getName())) {
             evt.setCancelled(true);
-            AzureAPI.bc("玩家 " + player.getName() + " 进行了不可能发生的动作，已取消并记录");
+            AzureAPI.warn("Player " + player.getName() + " acted action that impossible to happen (hack client?)");
         }
     }
 }
