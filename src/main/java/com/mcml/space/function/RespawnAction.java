@@ -44,8 +44,6 @@ public class RespawnAction implements Listener, PluginExtends {
                     if (sendTitleAutoRespawn) {
                         if(VersionLevel.isHigherEquals(Version.MINECRAFT_1_8_R2)){
                             player.sendTitle(titleAutoRespawn, subtitleAutoRespawn);
-                        }else{
-                            AzureAPI.log("错误！你不应该开启自动复活的title显示，无法显示！因为你的服务器版本低于1.8.4!");
                         }
                     }
                 }
