@@ -36,22 +36,20 @@ public class RespawnAction implements Listener, PluginExtends {
     public void autoRespawn(PlayerDeathEvent evt) {
         if (canAutoRespawn) {
             final Player player = evt.getEntity();
-            Bukkit.getScheduler().runTaskLater(EscapeLag.plugin, new Runnable() {
+            Bukkit.getScheduler().runTask(EscapeLag.plugin, new Runnable() {
                 @Override
                 @SuppressWarnings("all")
                 public void run() {
-                	if(VersionLevel.isSpigot()){
-                		player.spigot().respawn();
-                        if (sendTitleAutoRespawn) {
-                        	if(VersionLevel.isHigherEquals(Version.MINECRAFT_1_8_R2)){
-                        		player.sendTitle(titleAutoRespawn, subtitleAutoRespawn);
-                        	}else{
-                        		AzureAPI.log("错误！你不应该开启自动复活的title显示，无法显示！因为你的服务器版本低于1.8.4!");
-                        	}
+                    player.spigot().respawn();
+                    if (sendTitleAutoRespawn) {
+                        if(VersionLevel.isHigherEquals(Version.MINECRAFT_1_8_R2)){
+                            player.sendTitle(titleAutoRespawn, subtitleAutoRespawn);
+                        }else{
+                            AzureAPI.log("错误！你不应该开启自动复活的title显示，无法显示！因为你的服务器版本低于1.8.4!");
                         }
-                	}
+                    }
                 }
-            }, 1);
+            });
         }
     }
 }
