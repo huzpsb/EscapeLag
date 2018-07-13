@@ -9,7 +9,6 @@ import org.bukkit.event.entity.PlayerDeathEvent;
 import org.bukkit.plugin.Plugin;
 
 import com.mcml.space.config.ConfigFunction;
-import com.mcml.space.config.ConfigOptimize;
 import com.mcml.space.core.EscapeLag;
 import com.mcml.space.util.AzureAPI;
 import com.mcml.space.util.PluginExtends;
@@ -45,13 +44,12 @@ public class AutoRespawn implements Listener, PluginExtends {
         final Player player = evt.getEntity();
         Bukkit.getScheduler().runTask(EscapeLag.plugin, new Runnable() {
             @Override
-            @SuppressWarnings("all")
+            @SuppressWarnings("deprecation")
             public void run() {
                 player.spigot().respawn();
-                if (sendTitleAutoRespawn) {
-                    if(VersionLevel.isHigherEquals(Version.MINECRAFT_1_8_R2)){
-                        player.sendTitle(titleAutoRespawn, subtitleAutoRespawn);
-                    }
+                
+                if (sendTitleAutoRespawn && VersionLevel.isHigherEquals(Version.MINECRAFT_1_8_R2)) {
+                    player.sendTitle(titleAutoRespawn, subtitleAutoRespawn);
                 }
             }
         });
