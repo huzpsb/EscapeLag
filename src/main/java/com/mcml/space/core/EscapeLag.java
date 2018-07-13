@@ -89,7 +89,7 @@ public class EscapeLag extends JavaPlugin {
         Ticker.init(this);
         PlayerList.bind(this);
         Perms.bind(GLOBAL_PERMS);
-        EscapeLag.AutoSetServer();
+        EscapeLag.AutoSetServer(false);
         
         AzureAPI.log("EscapeLag —— 新一代的优化/稳定插件");
         AzureAPI.log("~(@^_^@)~ 玩的开心！~");
@@ -218,8 +218,8 @@ public class EscapeLag extends JavaPlugin {
     }
     
     @SneakyThrows
-    public static void AutoSetServer() {
-        if (!ConfigOptimize.AutoSetenable) return;
+    public static void AutoSetServer(boolean force) {
+        if (!force && !ConfigOptimize.AutoSetenable) return;
         
         long heapmb = Runtime.getRuntime().maxMemory() / 1024 / 1024;
         File BukkitFile = new File("bukkit.yml");

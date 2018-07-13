@@ -9,8 +9,8 @@ import com.mcml.space.core.EscapeLag;
 import lombok.SneakyThrows;
 
 public class SmartConfigs { // Not ready for use now
-    public static void init(Plugin plugin) {
-        if(!ConfigOptimize.AutoSetenable) return;
+    public static void init(Plugin plugin, boolean force) {
+        if(!force && !ConfigOptimize.AutoSetenable) return;
         
         File backupFolder = new File("backup_configurations");
         if (backupFolder.isDirectory()) backupFolder.delete();

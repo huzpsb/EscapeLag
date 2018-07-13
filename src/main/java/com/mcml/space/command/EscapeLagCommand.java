@@ -73,10 +73,7 @@ public class EscapeLagCommand {
 						return true;
 					}
 					if (args[1].equalsIgnoreCase("set")) {
-						try {
-							EscapeLag.AutoSetServer();
-						} catch (IOException | InterruptedException e) {
-						}
+					    EscapeLag.AutoSetServer(true);
 						sender.sendMessage("§a配端完成！重启服务器即可生效！");
 					}
 				}
