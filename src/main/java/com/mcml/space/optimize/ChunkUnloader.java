@@ -19,10 +19,24 @@ import com.mcml.space.util.AzureAPI;
 public class ChunkUnloader implements Listener {
 	public static long totalUnloadedChunks;
 
-	public static void init(Plugin JavaPlugin) {
+	public static void init(Plugin plugin) {
 	    if (!Optimizations.chunkUnloader) return;
 	    
-		Bukkit.getPluginManager().registerEvents(new ChunkUnloader(), JavaPlugin);
+	    Bukkit.getScheduler().runTaskLater(plugin, new Runnable() {
+            @Override
+            public void run() {
+                for (World world : Bukkit.getWorlds()) {
+                    for (Chunk chunk : world.getLoadedChunks())
+                    if (!world.isChunkInUse(chunk.getX(), chunk.getZ())) {
+                        if (chunk.unload(true)) totalUnloadedChunks++;
+                    }
+                }
+                
+                TimerGarbageCollect.collectGarbage();
+            }
+        }, 60);
+	    
+		Bukkit.getPluginManager().registerEvents(new ChunkUnloader(), plugin);
 		AzureAPI.log("区块卸载系统现在运行...");
 	}
 	

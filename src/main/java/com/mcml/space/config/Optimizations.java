@@ -123,9 +123,6 @@ public abstract class Optimizations extends Configurable {
     @Node(path = "ChunkUnloader.enable")
     public static boolean chunkUnloader = true;
     
-    @Node(path = "NoSpawnChunks.enable")
-    public static boolean noSpawnChunks = true;
-    
     @Node(path = "UnloadClear.enable")
     public static boolean UnloadClearenable = true;
     

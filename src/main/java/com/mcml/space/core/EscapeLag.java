@@ -33,7 +33,6 @@ import com.mcml.space.optimize.EmptyRestart;
 import com.mcml.space.optimize.FireSpreadSlacker;
 import com.mcml.space.optimize.UnloadClear;
 import com.mcml.space.optimize.NoCrowdEntity;
-import com.mcml.space.optimize.NoSpawnChunks;
 import com.mcml.space.optimize.OverloadRestart;
 import com.mcml.space.optimize.TickSleep;
 import com.mcml.space.optimize.TeleportPreLoader;
@@ -157,7 +156,6 @@ public class EscapeLag extends JavaPlugin {
         ChunkKeeper.init(this);
         TimerGarbageCollect.init(this);
         AntiFakeDeath.init(this);
-        NoSpawnChunks.init(this);
         
         if (Bukkit.getPluginManager().isPluginEnabled("ProtocolLib")) AutoRecipePatch.init(this);
         
