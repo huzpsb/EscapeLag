@@ -44,7 +44,7 @@ import com.mcml.space.patch.AntiCrashSign;
 import com.mcml.space.patch.AntiDupeDropItem;
 import com.mcml.space.patch.AntiFakeDeath;
 import com.mcml.space.patch.AntiInfItem;
-import com.mcml.space.patch.AntiInfRail;
+import com.mcml.space.patch.RailsMachine;
 import com.mcml.space.patch.CancelledPlacementPatch;
 import com.mcml.space.patch.AntiLongStringCrash;
 import com.mcml.space.patch.NetherHopperDupePatch;
@@ -135,7 +135,7 @@ public class EscapeLag extends JavaPlugin {
         ExplosionController.init(this);
         RedstoneSlacker.init(this);
         Bukkit.getPluginManager().registerEvents(new UnloadClear(), this);
-        Bukkit.getPluginManager().registerEvents(new AntiInfRail(), this);
+        RailsMachine.init(this);
         Bukkit.getPluginManager().registerEvents(new AutoSave(), this);
         DupeLoginPatch.init(this);
         SpawnerController.init(this);

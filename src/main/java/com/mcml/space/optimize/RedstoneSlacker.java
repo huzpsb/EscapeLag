@@ -9,6 +9,7 @@ import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
 import org.bukkit.event.EventHandler;
+import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.BlockRedstoneEvent;
 import org.bukkit.plugin.Plugin;
@@ -20,40 +21,56 @@ import com.mcml.space.util.AzureAPI;
 
 public class RedstoneSlacker implements Listener {
     private final static HashMap<Location, Integer> CHECKED_TIMES = Maps.newHashMap();
-
+    private static int maxCounts;
+    
     public static void init(Plugin plugin){
         if(!ConfigOptimize.AntiRedstoneenable) return;
         
         Bukkit.getScheduler().runTaskTimer(plugin, new Runnable(){
             @Override
-            public void run(){
+            public void run() {
                 CHECKED_TIMES.clear();
             }
-        }, 0L, AzureAPI.toTicks(TimeUnit.SECONDS, 7));
+        }, 0L, AzureAPI.toTicks(TimeUnit.SECONDS, ConfigOptimize.AntiRedstoneTimes));
+        maxCounts = ConfigOptimize.AntiRedstoneTimes * 4;
         
         Bukkit.getPluginManager().registerEvents(new RedstoneSlacker(), plugin);
     }
-
-    @EventHandler
-    public void CheckRedstone(BlockRedstoneEvent evt){
+    
+    private Location notifyLocation;
+    
+    // High priority for avoid dupe!
+    @EventHandler(priority = EventPriority.MONITOR, ignoreCancelled = true)
+    public void onRedstone(BlockRedstoneEvent evt){
         if(evt.getOldCurrent() > evt.getNewCurrent()) return;
         
         final Block block = evt.getBlock();
         Location location = block.getLocation();
         
         Integer times = CHECKED_TIMES.get(location);
-        CHECKED_TIMES.put(location, times == null ? (times = 1) : ++times);
-        if (times <= ConfigOptimize.AntiRedstoneTimes) return;
+        CHECKED_TIMES.put(location, times == null ? (times = 0) : ++times);
+        if (times <= maxCounts) return;
         
         if (ConfigOptimize.AntiRedstoneRemoveBlockList.contains(block.getType().name())){
-            Bukkit.getScheduler().runTask(EscapeLag.plugin, new Runnable(){
+            Bukkit.getScheduler().runTask(EscapeLag.plugin, new Runnable() {
                 public void run(){
-                    block.setType(Material.AIR);
+                    if (ConfigOptimize.dropRedstone) {
+                        block.breakNaturally();
+                    } else {
+                        block.setType(Material.AIR);
+                    }
                 }
             });
             
+            // Skip close locations
+            if (notifyLocation != null && notifyLocation.getWorld().equals(location.getWorld()) && notifyLocation.distance(location) <= 16) {
+                notifyLocation = location;
+                return;
+            }
+            
             String message = ConfigOptimize.AntiRedstoneMessage;
-            message = StringUtils.replace(message, "%location%", location.toString());
+            message = StringUtils.replace(message, "%location%",
+                    "(" + location.getWorld().getName() + ": " + location.getBlockX() + ", " + location.getBlockY() + ", " + location.getBlockZ() + ")");
             AzureAPI.bc(message);
         }
     }

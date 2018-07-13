@@ -47,8 +47,11 @@ public abstract class ConfigOptimize extends Configurable {
     @Node(path = "AntiRedstone.enable")
     public static boolean AntiRedstoneenable = true;
     
+    @Node(path = "AntiRedstone.drop-item")
+    public static boolean dropRedstone = true;
+    
     @Node(path = "AntiRedstone.Times")
-    public static long AntiRedstoneTimes = 5;
+    public static int AntiRedstoneTimes = 5;
     
     @Node(path = "FireLimitor.enable")
     public static boolean FireLimitorenable = true;
@@ -85,7 +88,7 @@ public abstract class ConfigOptimize extends Configurable {
     public static int NoCrowdedEntityPerChunkLimit = 30;
     
     @Node(path = "AntiRedstone.Message")
-    public static String AntiRedstoneMessage = "§c检测到高频红石在 %location% ，插件已经将其清除，不许玩了！ (╰_╯)#";
+    public static String AntiRedstoneMessage = "§c检测到高频红石在 %location% 附近，插件已经将其清除，不许玩了！ (╰_╯)#";
     
     @Node(path = "OverLoadMemoryRestart.HeapMBLefted")
     public static int OverLoadMemoryRestartHeapMBLefted = 130;
