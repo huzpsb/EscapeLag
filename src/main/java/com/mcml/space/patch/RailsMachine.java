@@ -44,7 +44,7 @@ public class RailsMachine implements Listener {
     
     @SuppressWarnings("deprecation")
     private static boolean canExploit(Material type) {
-        if (type.getId() != 171 /* Carpet */) return true;
+        if (type.getId() == 171 /* Carpet */) return true;
         switch (type) {
             case RAILS:
             case POWERED_RAIL:
@@ -58,7 +58,7 @@ public class RailsMachine implements Listener {
     
     @SuppressWarnings("deprecation")
     private static boolean isLayer(Material type) {
-        if (type.getId() != 165 /* Slime block */) return true;
+        if (type.getId() == 165 /* Slime block */) return true;
         switch (type) {
             case AIR:
                 
@@ -78,7 +78,7 @@ public class RailsMachine implements Listener {
     
     @SuppressWarnings("deprecation")
     private static boolean isOrigin(Material type) {
-        if (type.getId() != 165 /* Slime block */) return true;
+        if (type.getId() == 165 /* Slime block */) return true;
         switch (type) {
             case PUMPKIN:
             case JACK_O_LANTERN:
