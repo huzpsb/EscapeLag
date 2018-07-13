@@ -7,7 +7,7 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerCommandPreprocessEvent;
 import org.bukkit.plugin.Plugin;
 
-import com.mcml.space.config.ConfigPatch;
+import com.mcml.space.config.Patches;
 import com.mcml.space.util.AzureAPI;
 
 public class CalculationAbusePatch implements Listener {
@@ -43,7 +43,7 @@ public class CalculationAbusePatch implements Listener {
 		String command = evt.getMessage();
 		if (!command.startsWith(CALC_LABEL) || AzureAPI.hasPerm(evt.getPlayer(), "worldedit.calc")) return;
 		
-        evt.getPlayer().sendMessage(ConfigPatch.AntiWEcalcWarnMessage);
+        evt.getPlayer().sendMessage(Patches.AntiWEcalcWarnMessage);
         evt.setCancelled(true);
 	}
 }

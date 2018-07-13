@@ -8,8 +8,7 @@ import java.util.Set;
 import static org.bukkit.entity.EntityType.*;
 import static org.bukkit.Material.*;
 
-public class DefaultOptions {
-    
+public abstract class DefaultOptions {
     static class TypedList extends ArrayList<String> implements List<String> {
         private static final long serialVersionUID = 1L;
         

@@ -13,7 +13,7 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerTeleportEvent;
 import org.bukkit.util.Vector;
 
-import com.mcml.space.config.ConfigOptimize;
+import com.mcml.space.config.Optimizations;
 import com.mcml.space.core.EscapeLag;
 import com.mcml.space.util.AzureAPI.ChunkCoord;
 import com.mcml.space.util.Utils;
@@ -26,7 +26,7 @@ public class TeleportPreLoader implements Listener {
 
 	@EventHandler
 	public void TeleportLoader(final PlayerTeleportEvent event) {
-		if (ConfigOptimize.TeleportPreLoaderenable == true) {
+		if (Optimizations.TeleportPreLoaderenable == true) {
 			final Player player = event.getPlayer();
 			if (shouldReload(event.getFrom(), event.getTo(), player) == false) {
 				event.setCancelled(true);

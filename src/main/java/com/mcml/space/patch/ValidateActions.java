@@ -19,14 +19,14 @@ import org.bukkit.event.player.PlayerQuitEvent;
 import org.bukkit.plugin.Plugin;
 
 import com.google.common.collect.Sets;
-import com.mcml.space.config.ConfigPatch;
+import com.mcml.space.config.Patches;
 import com.mcml.space.util.AzureAPI;
 
 public class ValidateActions implements Listener {
     private final static Set<String> INV_KEEPERS = Sets.newHashSet(); // Handle this by nms is nice
     
     public static void init(Plugin plugin) {
-        if (!ConfigPatch.enableVaildateActions) return;
+        if (!Patches.enableVaildateActions) return;
         
         AzureAPI.log("动作效验模块已启用!");
         Bukkit.getPluginManager().registerEvents(new ValidateActions(), plugin);

@@ -3,14 +3,14 @@ package com.mcml.space.function;
 import org.bukkit.entity.Player;
 import org.bukkit.event.player.PlayerJoinEvent;
 
-import com.mcml.space.config.ConfigMain;
+import com.mcml.space.config.Core;
 import com.mcml.space.util.JoinReactor;
 import com.mcml.space.util.Perms;
 
 public class UpgradeNotifier implements JoinReactor {
     @Override
     public void react(PlayerJoinEvent evt) {
-        if(ConfigMain.AutoUpdate) return;
+        if(Core.AutoUpdate) return;
         
         Player player = evt.getPlayer();
         if(Perms.has(player)){

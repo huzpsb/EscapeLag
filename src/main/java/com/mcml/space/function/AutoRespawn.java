@@ -8,18 +8,18 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.entity.PlayerDeathEvent;
 import org.bukkit.plugin.Plugin;
 
-import com.mcml.space.config.ConfigFunction;
+import com.mcml.space.config.Features;
 import com.mcml.space.core.EscapeLag;
 import com.mcml.space.util.AzureAPI;
 import com.mcml.space.util.PluginExtends;
 import com.mcml.space.util.VersionLevel;
 import com.mcml.space.util.VersionLevel.Version;
 
-import static com.mcml.space.config.ConfigFunction.canAutoRespawn;
-import static com.mcml.space.config.ConfigFunction.sendTitleAutoRespawn;
-import static com.mcml.space.config.ConfigFunction.titleAutoRespawn;
+import static com.mcml.space.config.Features.canAutoRespawn;
+import static com.mcml.space.config.Features.sendTitleAutoRespawn;
+import static com.mcml.space.config.Features.titleAutoRespawn;
 
-import static com.mcml.space.config.ConfigFunction.subtitleAutoRespawn;
+import static com.mcml.space.config.Features.subtitleAutoRespawn;
 
 /**
  * @author Vlvxingze, SotrForgotten
@@ -30,8 +30,8 @@ public class AutoRespawn implements Listener, PluginExtends {
         
         if (!VersionLevel.isSpigot()) {
             AzureAPI.warn("Auto respawn feature only works with servers implemented Spigot API!");
-            ConfigFunction.canAutoRespawn = false;
-            EscapeLag.plugin.setupConfig(EscapeLag.CONFIG_FUNCTION, ConfigFunction.class);
+            Features.canAutoRespawn = false;
+            EscapeLag.plugin.setupConfig(EscapeLag.CONFIG_FUNCTION, Features.class);
             return;
         }
         

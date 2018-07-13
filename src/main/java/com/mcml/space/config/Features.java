@@ -4,7 +4,7 @@ import java.util.Set;
 
 import com.mcml.space.util.Configurable;
 
-public abstract class ConfigFunction extends Configurable {
+public abstract class Features extends Configurable {
 	@Node(path = "Monitor.enable")
     public static boolean Monitorenable = true;
 	

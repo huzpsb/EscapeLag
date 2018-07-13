@@ -8,7 +8,7 @@ import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.entity.Player;
-import com.mcml.space.config.ConfigMain;
+import com.mcml.space.config.Core;
 import com.mcml.space.core.EscapeLag;
 import com.mcml.space.optimize.ChunkKeeper;
 import com.mcml.space.optimize.ChunkUnloader;
@@ -36,7 +36,7 @@ public class EscapeLagCommand {
 						MainConfig.save(EscapeLag.configurations.get(EscapeLag.CONFIG_MAIN).getKey());
 					} catch (IOException ex) {
 					}
-					ConfigMain.AutoUpdate = true;
+					Core.AutoUpdate = true;
 					sender.sendMessage(LocalizedHelper.Sucesstoopenupdate);
 				}
 				if (args[0].equalsIgnoreCase("help")) {

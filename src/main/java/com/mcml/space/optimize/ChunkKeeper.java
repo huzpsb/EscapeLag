@@ -15,7 +15,7 @@ import org.bukkit.plugin.Plugin;
 
 import com.google.common.base.Predicate;
 import com.google.common.collect.Sets;
-import com.mcml.space.config.ConfigOptimize;
+import com.mcml.space.config.Optimizations;
 import com.mcml.space.util.AzureAPI.ChunkCoord;
 import com.mcml.space.util.AzureAPI;
 import com.mcml.space.util.PlayerList;
@@ -24,7 +24,7 @@ public class ChunkKeeper implements Listener {
     public final static Set<ChunkCoord> KEEP_LOADED_CHUNKS = Sets.newSetFromMap(new WeakHashMap<ChunkCoord, Boolean>());
     
     public static void init(Plugin plugin) {
-        if (!ConfigOptimize.ChunkKeeperenable) return;
+        if (!Optimizations.ChunkKeeperenable) return;
         
         Bukkit.getScheduler().scheduleSyncRepeatingTask(plugin, new Runnable() {
             @Override

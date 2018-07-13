@@ -6,11 +6,11 @@ import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerPickupItemEvent;
 import org.bukkit.plugin.Plugin;
-import com.mcml.space.config.ConfigPatch;
+import com.mcml.space.config.Patches;
 import com.mcml.space.util.AzureAPI;
 import com.mcml.space.util.PluginExtends;
 
-import static com.mcml.space.config.ConfigPatch.fixRPGItemInfItem;
+import static com.mcml.space.config.Patches.fixRPGItemInfItem;
 
 /**
  * @author Vlvxingze
@@ -26,7 +26,7 @@ public class NegativeItemPatch implements Listener, PluginExtends {
     @EventHandler(priority = EventPriority.HIGHEST, ignoreCancelled = true)
     public void onPickup(PlayerPickupItemEvent evt) {
         if (evt.getItem().getItemStack().getAmount() <= 0) {
-            if (ConfigPatch.forceRPGItemPatch) evt.getItem().remove();
+            if (Patches.forceRPGItemPatch) evt.getItem().remove();
             evt.setCancelled(true);
         }
     }

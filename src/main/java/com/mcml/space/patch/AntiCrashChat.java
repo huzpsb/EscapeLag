@@ -8,7 +8,7 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.player.AsyncPlayerChatEvent;
 import org.bukkit.plugin.Plugin;
 
-import com.mcml.space.config.ConfigPatch;
+import com.mcml.space.config.Patches;
 import com.mcml.space.util.AzureAPI;
 
 public class AntiCrashChat implements Listener{
@@ -23,18 +23,18 @@ public class AntiCrashChat implements Listener{
 
     @EventHandler(priority = EventPriority.HIGH, ignoreCancelled = true)
     public void ChatCheckCrash(AsyncPlayerChatEvent event){
-        if (!ConfigPatch.noCrashChat) return;
+        if (!Patches.noCrashChat) return;
         
         Player player = event.getPlayer();
         String message = event.getMessage();
         if(message.contains("İ")){
             event.setCancelled(true);
-            AzureAPI.log(player, ConfigPatch.AntiCrashChatSpecialStringWarnMessage);
+            AzureAPI.log(player, Patches.AntiCrashChatSpecialStringWarnMessage);
         }
         if(HasEss == true){
             if(message.contains("&")){
                 event.setCancelled(true);
-                AzureAPI.log(player, ConfigPatch.AntiCrashChatSpecialStringWarnMessage);
+                AzureAPI.log(player, Patches.AntiCrashChatSpecialStringWarnMessage);
             }
         }
     }

@@ -11,12 +11,12 @@ import org.bukkit.event.block.BlockBreakEvent;
 import org.bukkit.event.block.BlockPhysicsEvent;
 import org.bukkit.plugin.Plugin;
 
-import com.mcml.space.config.ConfigPatch;
+import com.mcml.space.config.Patches;
 import com.mcml.space.core.EscapeLag;
 
 public class RailsMachine implements Listener {
     public static void init(Plugin plugin) {
-        if (!ConfigPatch.fixInfRail) return;
+        if (!Patches.fixInfRail) return;
         Bukkit.getPluginManager().registerEvents(new RailsMachine(), EscapeLag.plugin);
     }
     

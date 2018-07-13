@@ -12,7 +12,7 @@ import com.mcml.space.util.AzureAPI;
 import com.mcml.space.util.Perms;
 import com.mcml.space.util.PluginExtends;
 
-import static com.mcml.space.config.ConfigFunction.preventSpawnerModify;
+import static com.mcml.space.config.Features.preventSpawnerModify;
 
 /**
  * @author Vlvxingze, SotrForgotten

@@ -11,11 +11,11 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.block.BlockPlaceEvent;
 import org.bukkit.plugin.Plugin;
 
-import com.mcml.space.config.ConfigPatch;
+import com.mcml.space.config.Patches;
 
 public class CancelledPlacementPatch implements Listener {
     public static void init(Plugin plugin) {
-        if (!ConfigPatch.AntiInfSuagrenable) return;
+        if (!Patches.AntiInfSuagrenable) return;
         Bukkit.getPluginManager().registerEvents(new CancelledPlacementPatch(), plugin);
     }
 	

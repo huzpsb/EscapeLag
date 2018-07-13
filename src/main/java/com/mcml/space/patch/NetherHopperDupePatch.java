@@ -9,13 +9,13 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.inventory.InventoryMoveItemEvent;
 import org.bukkit.plugin.Plugin;
 
-import com.mcml.space.config.ConfigPatch;
+import com.mcml.space.config.Patches;
 import com.mcml.space.util.AzureAPI;
 
 public class NetherHopperDupePatch implements Listener {
     
     public static void init(Plugin plugin) {
-        if (!ConfigPatch.fixNetherHopperInfItem) return;
+        if (!Patches.fixNetherHopperInfItem) return;
         
         Bukkit.getPluginManager().registerEvents(new NetherHopperDupePatch(), plugin);
         AzureAPI.log("地狱漏斗防护模块已开启");

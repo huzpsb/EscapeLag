@@ -15,7 +15,7 @@ import org.bukkit.event.block.BlockRedstoneEvent;
 import org.bukkit.plugin.Plugin;
 
 import com.google.common.collect.Maps;
-import com.mcml.space.config.ConfigOptimize;
+import com.mcml.space.config.Optimizations;
 import com.mcml.space.core.EscapeLag;
 import com.mcml.space.util.AzureAPI;
 
@@ -24,15 +24,15 @@ public class RedstoneSlacker implements Listener {
     private static int maxCounts;
     
     public static void init(Plugin plugin){
-        if(!ConfigOptimize.AntiRedstoneenable) return;
+        if(!Optimizations.AntiRedstoneenable) return;
         
         Bukkit.getScheduler().runTaskTimer(plugin, new Runnable(){
             @Override
             public void run() {
                 CHECKED_TIMES.clear();
             }
-        }, 0L, AzureAPI.toTicks(TimeUnit.SECONDS, ConfigOptimize.AntiRedstoneTimes));
-        maxCounts = ConfigOptimize.AntiRedstoneTimes * 4;
+        }, 0L, AzureAPI.toTicks(TimeUnit.SECONDS, Optimizations.AntiRedstoneTimes));
+        maxCounts = Optimizations.AntiRedstoneTimes * 4;
         
         Bukkit.getPluginManager().registerEvents(new RedstoneSlacker(), plugin);
     }
@@ -51,10 +51,10 @@ public class RedstoneSlacker implements Listener {
         CHECKED_TIMES.put(location, times == null ? (times = 0) : ++times);
         if (times <= maxCounts) return;
         
-        if (ConfigOptimize.AntiRedstoneRemoveBlockList.contains(block.getType().name())){
+        if (Optimizations.AntiRedstoneRemoveBlockList.contains(block.getType().name())){
             Bukkit.getScheduler().runTask(EscapeLag.plugin, new Runnable() {
                 public void run(){
-                    if (ConfigOptimize.dropRedstone) {
+                    if (Optimizations.dropRedstone) {
                         block.breakNaturally();
                     } else {
                         block.setType(Material.AIR);
@@ -68,7 +68,7 @@ public class RedstoneSlacker implements Listener {
                 return;
             }
             
-            String message = ConfigOptimize.AntiRedstoneMessage;
+            String message = Optimizations.AntiRedstoneMessage;
             message = StringUtils.replace(message, "%location%",
                     "(" + location.getWorld().getName() + ": " + location.getBlockX() + ", " + location.getBlockY() + ", " + location.getBlockZ() + ")");
             AzureAPI.bc(message);

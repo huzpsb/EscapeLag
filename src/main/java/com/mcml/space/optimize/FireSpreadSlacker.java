@@ -13,7 +13,7 @@ import org.bukkit.event.block.BlockIgniteEvent.IgniteCause;
 import org.bukkit.plugin.Plugin;
 
 import com.google.common.collect.Maps;
-import com.mcml.space.config.ConfigOptimize;
+import com.mcml.space.config.Optimizations;
 import com.mcml.space.util.AzureAPI;
 import com.mcml.space.util.AzureAPI.ChunkCoord;
 
@@ -21,7 +21,7 @@ public class FireSpreadSlacker implements Listener {
     private final static HashMap<ChunkCoord, Long> CHECKED_CHUNKS = Maps.newHashMap();
     
     public static void init(Plugin plugin) {
-        if (!ConfigOptimize.FireLimitorenable) return;
+        if (!Optimizations.FireLimitorenable) return;
         Bukkit.getPluginManager().registerEvents(new FireSpreadSlacker(), plugin);
         
         Bukkit.getScheduler().runTaskTimer(plugin, new Runnable() {
@@ -46,6 +46,6 @@ public class FireSpreadSlacker implements Listener {
             CHECKED_CHUNKS.put(coord, System.currentTimeMillis());
             return false;
         }
-        return checked.longValue() + ConfigOptimize.FireLimitorPeriod >= System.currentTimeMillis();
+        return checked.longValue() + Optimizations.FireLimitorPeriod >= System.currentTimeMillis();
     }
 }

@@ -12,7 +12,7 @@ import org.bukkit.plugin.Plugin;
 import com.mcml.space.util.AzureAPI;
 import com.mcml.space.util.PluginExtends;
 
-import static com.mcml.space.config.ConfigPatch.noCheatBook;
+import static com.mcml.space.config.Patches.noCheatBook;
 
 import java.util.List;
 import java.util.Map;

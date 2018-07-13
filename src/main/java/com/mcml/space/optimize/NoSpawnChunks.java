@@ -9,7 +9,7 @@ import org.bukkit.event.world.WorldInitEvent;
 import org.bukkit.plugin.Plugin;
 import com.mcml.space.util.AzureAPI;
 
-import static com.mcml.space.config.ConfigOptimize.noSpawnChunks;
+import static com.mcml.space.config.Optimizations.noSpawnChunks;
 
 public class NoSpawnChunks implements Listener {
     public static void init(Plugin plugin) {

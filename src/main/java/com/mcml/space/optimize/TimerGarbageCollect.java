@@ -5,12 +5,12 @@ import java.util.concurrent.TimeUnit;
 import org.apache.commons.lang.StringUtils;
 import org.bukkit.Bukkit;
 import org.bukkit.plugin.Plugin;
-import com.mcml.space.config.ConfigOptimize;
+import com.mcml.space.config.Optimizations;
 import com.mcml.space.util.AzureAPI;
 import com.mcml.space.util.PluginExtends;
 
-import static com.mcml.space.config.ConfigOptimize.TimerGcMessage;
-import static com.mcml.space.config.ConfigOptimize.timerGC;
+import static com.mcml.space.config.Optimizations.TimerGcMessage;
+import static com.mcml.space.config.Optimizations.timerGC;
 
 /**
  * @author Vlvxingze, SotrForgotten
@@ -19,7 +19,7 @@ public class TimerGarbageCollect implements PluginExtends {
     public static void init(Plugin plugin) {
         if(!timerGC) return;
         
-        long ticks = AzureAPI.toTicks(TimeUnit.SECONDS, ConfigOptimize.TimerGcPeriod);
+        long ticks = AzureAPI.toTicks(TimeUnit.SECONDS, Optimizations.TimerGcPeriod);
         Bukkit.getScheduler().runTaskTimer(plugin, new Runnable() {
             @Override
             public void run() {

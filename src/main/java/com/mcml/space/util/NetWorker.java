@@ -7,7 +7,7 @@ import java.net.URL;
 import org.bukkit.Bukkit;
 import org.bukkit.configuration.file.YamlConfiguration;
 
-import com.mcml.space.config.ConfigMain;
+import com.mcml.space.config.Core;
 import com.mcml.space.core.EscapeLag;
 
 /**
@@ -16,7 +16,7 @@ import com.mcml.space.core.EscapeLag;
 public class NetWorker implements Runnable {
 
     public static void CheckAndDownloadPlugin() {
-        if (ConfigMain.AutoUpdate == true) {
+        if (Core.AutoUpdate == true) {
             try {
                 // 整体获取
                 File NetworkerFile = new File(EscapeLag.plugin.getDataFolder(), "networkerlog");

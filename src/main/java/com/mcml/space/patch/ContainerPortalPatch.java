@@ -13,14 +13,14 @@ import org.bukkit.event.player.PlayerTeleportEvent.TeleportCause;
 import org.bukkit.inventory.InventoryHolder;
 import org.bukkit.plugin.Plugin;
 import com.google.common.collect.Sets;
-import com.mcml.space.config.ConfigPatch;
+import com.mcml.space.config.Patches;
 import com.mcml.space.core.EscapeLag;
 
 public class ContainerPortalPatch implements Listener {
     private final static Set<InventoryHolder> CONTAINER_INV = Sets.newSetFromMap(new java.util.IdentityHashMap<InventoryHolder, Boolean>(4));
     
     public static void init(Plugin plugin) {
-        if(!ConfigPatch.fixPortalInfItem) return;
+        if(!Patches.fixPortalInfItem) return;
         Bukkit.getPluginManager().registerEvents(new ContainerPortalPatch(), plugin);
     }
     

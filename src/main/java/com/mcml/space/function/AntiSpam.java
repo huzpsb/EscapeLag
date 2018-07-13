@@ -14,7 +14,7 @@ import org.bukkit.event.player.AsyncPlayerChatEvent;
 import org.bukkit.event.player.PlayerQuitEvent;
 
 import com.google.common.collect.Maps;
-import com.mcml.space.config.ConfigFunction;
+import com.mcml.space.config.Features;
 import com.mcml.space.core.EscapeLag;
 import com.mcml.space.util.AzureAPI;
 import com.mcml.space.util.PlayerList;
@@ -40,12 +40,12 @@ public class AntiSpam implements Listener, QuitReactor {
 		if (lastChat == null)
 			return false;
 
-		return System.currentTimeMillis() - lastChat.longValue() <= ConfigFunction.AntiSpamPeriodPeriod * 1000;
+		return System.currentTimeMillis() - lastChat.longValue() <= Features.AntiSpamPeriodPeriod * 1000;
 	}
 
 	@EventHandler(priority = EventPriority.LOW, ignoreCancelled = true)
 	public void spamChecker(AsyncPlayerChatEvent evt) {
-		if (!ConfigFunction.AntiSpamenable)
+		if (!Features.AntiSpamenable)
 			return;
 
 		Player player = evt.getPlayer();
@@ -56,7 +56,7 @@ public class AntiSpam implements Listener, QuitReactor {
 		long now = System.currentTimeMillis();
 		if (isSpamming(player, now)) {
 			evt.setCancelled(true);
-			AzureAPI.log(player, ConfigFunction.AntiSpamPeriodWarnMessage);
+			AzureAPI.log(player, Features.AntiSpamPeriodWarnMessage);
 		} else {
 			timeRecord.put(player, now);
 		}
@@ -64,14 +64,14 @@ public class AntiSpam implements Listener, QuitReactor {
 
 	@EventHandler
 	public void checkSign(SignChangeEvent event) {
-		if (ConfigFunction.AntiSpamenable && ConfigFunction.enableAntiDirty) {
+		if (Features.AntiSpamenable && Features.enableAntiDirty) {
 			String[] lines = event.getLines();
 			for (String line : lines) {
 				Player player = event.getPlayer();
 				if (AzureAPI.hasPerm(player, "EscapeLag.bypass.Spam")) {
 					return;
 				}
-				for (String each : ConfigFunction.AntiSpamDirtyList) {
+				for (String each : Features.AntiSpamDirtyList) {
 					boolean deny = true;
 					for (char c : each.toLowerCase().toCharArray()) {
 						if (!StringUtils.contains(line, c))
@@ -79,7 +79,7 @@ public class AntiSpam implements Listener, QuitReactor {
 					}
 					if (deny) {
 						event.setCancelled(true);
-						AzureAPI.log(player, ConfigFunction.AntiSpamDirtyWarnMessage);
+						AzureAPI.log(player, Features.AntiSpamDirtyWarnMessage);
 					}
 				}
 			}
@@ -88,14 +88,14 @@ public class AntiSpam implements Listener, QuitReactor {
 
 	@EventHandler(ignoreCancelled = true)
 	public void checkDirty(AsyncPlayerChatEvent evt) {
-		if (ConfigFunction.AntiSpamenable && ConfigFunction.enableAntiDirty) {
+		if (Features.AntiSpamenable && Features.enableAntiDirty) {
 			Player player = evt.getPlayer();
 			String message = evt.getMessage().toLowerCase();
 			if (AzureAPI.hasPerm(player, "EscapeLag.bypass.Spam")) {
 				return;
 			}
 
-			for (String each : ConfigFunction.AntiSpamDirtyList) {
+			for (String each : Features.AntiSpamDirtyList) {
 				boolean deny = true;
 				for (char c : each.toLowerCase().toCharArray()) {
 					if (!StringUtils.contains(message, c))
@@ -103,7 +103,7 @@ public class AntiSpam implements Listener, QuitReactor {
 				}
 				if (deny) {
 					evt.setCancelled(true);
-					AzureAPI.log(player, ConfigFunction.AntiSpamDirtyWarnMessage);
+					AzureAPI.log(player, Features.AntiSpamDirtyWarnMessage);
 				}
 			}
 		}

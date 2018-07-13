@@ -11,13 +11,13 @@ import org.bukkit.event.block.Action;
 import org.bukkit.event.entity.EntityInteractEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.plugin.Plugin;
-import com.mcml.space.config.ConfigFunction;
+import com.mcml.space.config.Features;
 
 public class FarmProtection {
     public static void init(Plugin plugin) {
-        if(!ConfigFunction.ProtectFarmenable) return;
+        if(!Features.ProtectFarmenable) return;
         
-        if (ConfigFunction.ProtectFarmOnlyPlayer) Bukkit.getPluginManager().registerEvents(new EntityDetector(), plugin);
+        if (Features.ProtectFarmOnlyPlayer) Bukkit.getPluginManager().registerEvents(new EntityDetector(), plugin);
         Bukkit.getPluginManager().registerEvents(new PlayerDetector(), plugin);
     }
     

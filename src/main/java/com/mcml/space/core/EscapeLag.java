@@ -16,10 +16,10 @@ import org.bukkit.plugin.java.JavaPlugin;
 import com.google.common.collect.Maps;
 import com.mcml.space.command.EscapeLagCommand;
 import com.mcml.space.command.LocalizedHelper;
-import com.mcml.space.config.ConfigFunction;
-import com.mcml.space.config.ConfigMain;
-import com.mcml.space.config.ConfigOptimize;
-import com.mcml.space.config.ConfigPatch;
+import com.mcml.space.config.Features;
+import com.mcml.space.config.Core;
+import com.mcml.space.config.Optimizations;
+import com.mcml.space.config.Patches;
 import com.mcml.space.function.AntiSpam;
 import com.mcml.space.function.ExplosionController;
 import com.mcml.space.function.FarmProtection;
@@ -161,7 +161,7 @@ public class EscapeLag extends JavaPlugin {
         
         if (Bukkit.getPluginManager().isPluginEnabled("ProtocolLib")) AutoRecipePatch.init(this);
         
-        if (ConfigMain.AutoUpdate) Bukkit.getScheduler().runTaskAsynchronously(this, new NetWorker());
+        if (Core.AutoUpdate) Bukkit.getScheduler().runTaskAsynchronously(this, new NetWorker());
     }
     
     @Override
@@ -190,13 +190,13 @@ public class EscapeLag extends JavaPlugin {
     
     public void setupConfigs() {
         String locale = "english";
-        if (StringUtils.startsWithIgnoreCase(ConfigMain.lang, "zh_")) locale = "中文";
+        if (StringUtils.startsWithIgnoreCase(Core.lang, "zh_")) locale = "中文";
         EscapeLag.plugin.saveResource("documents/Guide-" + locale + ".txt", true);
         
-        setupConfig(CONFIG_MAIN, ConfigMain.class);
-        setupConfig(CONFIG_PATCH, ConfigPatch.class);
-        setupConfig(CONFIG_OPTIMIZE, ConfigOptimize.class);
-        setupConfig(CONFIG_FUNCTION, ConfigFunction.class);
+        setupConfig(CONFIG_MAIN, Core.class);
+        setupConfig(CONFIG_PATCH, Patches.class);
+        setupConfig(CONFIG_OPTIMIZE, Optimizations.class);
+        setupConfig(CONFIG_FUNCTION, Features.class);
     }
     
     public void setupConfig(String configIdentifier, Class<? extends Configurable> provider) {
@@ -212,14 +212,14 @@ public class EscapeLag extends JavaPlugin {
         }
         
         if (configIdentifier.equals(CONFIG_MAIN)) {
-            AzureAPI.setPrefix(ChatColor.translateAlternateColorCodes('&', ConfigMain.PluginPrefix) + ChatColor.RESET + " > ");
+            AzureAPI.setPrefix(ChatColor.translateAlternateColorCodes('&', Core.PluginPrefix) + ChatColor.RESET + " > ");
             LocalizedHelper.init();
         }
     }
     
     @SneakyThrows
     public static void AutoSetServer(boolean force) {
-        if (!force && !ConfigOptimize.AutoSetenable) return;
+        if (!force && !Optimizations.AutoSetenable) return;
         
         long heapmb = Runtime.getRuntime().maxMemory() / 1024 / 1024;
         File BukkitFile = new File("bukkit.yml");

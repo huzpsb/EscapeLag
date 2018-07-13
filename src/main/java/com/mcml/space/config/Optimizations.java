@@ -4,7 +4,7 @@ import java.util.Set;
 
 import com.mcml.space.util.Configurable;
 
-public abstract class ConfigOptimize extends Configurable {	
+public abstract class Optimizations extends Configurable {	
 	@Node(path = "TPSSleep.NoOneFreeze.enable")
     public static boolean TPSSleepNoOneFreezeenable = true;
 	

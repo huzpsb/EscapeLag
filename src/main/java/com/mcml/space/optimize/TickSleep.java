@@ -3,7 +3,7 @@ package com.mcml.space.optimize;
 import org.bukkit.Bukkit;
 import org.bukkit.plugin.Plugin;
 
-import com.mcml.space.config.ConfigOptimize;
+import com.mcml.space.config.Optimizations;
 import com.mcml.space.util.PlayerList;
 import com.mcml.space.util.Ticker;
 
@@ -11,24 +11,24 @@ public class TickSleep {
     private static volatile long sleepMillis = 20;
     
     public static void init(Plugin plugin) {
-        if (ConfigOptimize.TPSSleepNoOneFreezeenable || !ConfigOptimize.TPSSleepSleepMode.equalsIgnoreCase("NoUse"))
+        if (Optimizations.TPSSleepNoOneFreezeenable || !Optimizations.TPSSleepSleepMode.equalsIgnoreCase("NoUse"))
             Bukkit.getScheduler().runTaskTimer(plugin, new Runnable() {
                 public void run() {
                     try {
-                        if (ConfigOptimize.TPSSleepNoOneFreezeenable && PlayerList.isEmpty()) {
+                        if (Optimizations.TPSSleepNoOneFreezeenable && PlayerList.isEmpty()) {
                             Thread.sleep(TickSleep.getTargetSleepTime(5));
                         }
                         
-                        if (ConfigOptimize.TPSSleepSleepMode.equalsIgnoreCase("AutoSleep")) {
+                        if (Optimizations.TPSSleepSleepMode.equalsIgnoreCase("AutoSleep")) {
                             Thread.sleep(TickSleep.getTargetSleepTime(sleepMillis));
-                        } else if (ConfigOptimize.TPSSleepSleepMode.matches("[0-9]+")) {
-                            Thread.sleep(TickSleep.getTargetSleepTime(Integer.parseInt(ConfigOptimize.TPSSleepSleepMode)));
+                        } else if (Optimizations.TPSSleepSleepMode.matches("[0-9]+")) {
+                            Thread.sleep(TickSleep.getTargetSleepTime(Integer.parseInt(Optimizations.TPSSleepSleepMode)));
                         }
                     } catch (InterruptedException ex) {}
                 }
             }, 1L, 1L);
         
-        if (ConfigOptimize.TPSSleepSleepMode.equalsIgnoreCase("AutoSleep"))
+        if (Optimizations.TPSSleepSleepMode.equalsIgnoreCase("AutoSleep"))
             Bukkit.getScheduler().runTaskTimerAsynchronously(plugin, new Runnable() {
                 public void run() {
                     if (sleepMillis < 20) {

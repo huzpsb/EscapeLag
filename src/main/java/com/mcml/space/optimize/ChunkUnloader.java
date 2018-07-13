@@ -12,7 +12,7 @@ import org.bukkit.event.player.PlayerQuitEvent;
 import org.bukkit.event.player.PlayerTeleportEvent;
 import org.bukkit.plugin.Plugin;
 
-import com.mcml.space.config.ConfigOptimize;
+import com.mcml.space.config.Optimizations;
 import com.mcml.space.core.EscapeLag;
 import com.mcml.space.util.AzureAPI;
 
@@ -20,7 +20,7 @@ public class ChunkUnloader implements Listener {
 	public static long totalUnloadedChunks;
 
 	public static void init(Plugin JavaPlugin) {
-	    if (!ConfigOptimize.chunkUnloader) return;
+	    if (!Optimizations.chunkUnloader) return;
 	    
 		Bukkit.getPluginManager().registerEvents(new ChunkUnloader(), JavaPlugin);
 		AzureAPI.log("区块卸载系统现在运行...");

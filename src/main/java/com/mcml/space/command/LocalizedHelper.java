@@ -1,6 +1,6 @@
 package com.mcml.space.command;
 
-import com.mcml.space.config.ConfigMain;
+import com.mcml.space.config.Core;
 import com.mcml.space.core.EscapeLag;
 
 public class LocalizedHelper {
@@ -17,7 +17,7 @@ public class LocalizedHelper {
 	public static String PluginPrefixLine;
 
 	public static void init() {
-		if(ConfigMain.lang.equalsIgnoreCase("zh_cn")) {
+		if(Core.lang.equalsIgnoreCase("zh_cn")) {
 			PleaseEnterelToHelp = "§c请输入/el help 来获取帮助";
 			Sucesstoopenupdate = "§a§l[EscapeLag]§b已经成功开启自动更新！";
 			HelpLine1 = "§e/el reload 重载插件";
@@ -30,7 +30,7 @@ public class LocalizedHelper {
 			HelpLine8 = "§e/el monitor 查阅关于插件耗能侦测";
 			PluginPrefixLine = "§b------§a§lEscapeLag - §e版本 " + EscapeLag.plugin.getDescription().getVersion() + "§b------";
 		}
-		if(ConfigMain.lang.equalsIgnoreCase("en_GB")) {
+		if(Core.lang.equalsIgnoreCase("en_GB")) {
 			PleaseEnterelToHelp = "§cPlease enter /el help to get help";
 			Sucesstoopenupdate = "§a§l[EscapeLag]§bSucess to open AutoUpdate!";
 			HelpLine1 = "§e/el reload ReloadPlugin";

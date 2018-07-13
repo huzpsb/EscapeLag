@@ -16,8 +16,8 @@ import com.mcml.space.util.PluginExtends;
 import com.mcml.space.util.VersionLevel;
 import com.mcml.space.util.VersionLevel.Version;
 
-import static com.mcml.space.config.ConfigFunction.controlExplode;
-import static com.mcml.space.config.ConfigFunction.explodeControlType;
+import static com.mcml.space.config.Features.controlExplode;
+import static com.mcml.space.config.Features.explodeControlType;
 
 /**
  * @author Vlvxingze, SotrForgotten
