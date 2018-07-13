@@ -23,7 +23,7 @@ import com.mcml.space.config.ConfigPatch;
 import com.mcml.space.function.AntiSpam;
 import com.mcml.space.function.ExplosionController;
 import com.mcml.space.function.FarmProtection;
-import com.mcml.space.function.RespawnAction;
+import com.mcml.space.function.AutoRespawn;
 import com.mcml.space.function.SpawnerController;
 import com.mcml.space.function.UpgradeNotifier;
 import com.mcml.space.optimize.RedstoneSlacker;
@@ -149,7 +149,7 @@ public class EscapeLag extends JavaPlugin {
         Bukkit.getPluginManager().registerEvents(new AntiLongStringCrash(), this);
         Bukkit.getPluginManager().registerEvents(new TeleportPreLoader(), this);
         TickSleep.init(this);
-        RespawnAction.init(this);
+        AutoRespawn.init(this);
         EmptyRestart.init(this);
         CheatBookBlocker.init(this);
         OverloadRestart.init(this);
