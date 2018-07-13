@@ -29,7 +29,7 @@ public class RailsMachine implements Listener {
         if (isLayer(layer.getType()) || isOrigin(evt.getChangedType())) evt.setCancelled(true);
     }
     
-    @EventHandler(priority = EventPriority.HIGHEST, ignoreCancelled = true)
+    @EventHandler(priority = EventPriority.MONITOR, ignoreCancelled = true)
     public void onBreak(BlockBreakEvent evt) {
         final Block up = evt.getBlock().getRelative(BlockFace.UP);
         if (!canExploit(up.getType())) return;
