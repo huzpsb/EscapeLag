@@ -18,8 +18,25 @@ public abstract class PatchesDupeFixes extends Configurable {
     public static boolean enableNetherHoppersDupeFixes = true;
     
     @Node(path = "settings.nether-hoppers.worlds.restrict-environment")
-    public static boolean netherHoppersDupeFixesRestrictEnv = true;
+    public static boolean netherHoppersDupeFixes_RestrictEnv = true;
     
     @Node(path = "settings.nether-hoppers.worlds.enable-worlds")
-    public static Set<String> netherHoppersDupeFixesWorlds = Sets.newHashSet();
+    public static Set<String> netherHoppersDupeFixes_Worlds = Sets.newHashSet();
+    
+    // Negative item
+    @Node(path = "settings.negative-amount-item.enable-fixes")
+    public static boolean enableNegativeItemDupeFixes = false;
+    
+    @Node(path = "settings.negative-amount-item.notify-message")
+    public static String negativeItemDupeFixes_NotifyMesssage = "&b发现 &f$player &b获取到负数物品, 已执行清理!";
+    
+    @Node(path = "settings.negative-amount-item.actions.removes-item.enable")
+    public static boolean negativeItemDupeFixes_RemovesItem = false;
+    
+    @Node(path = "settings.negative-amount-item.actions.removes-item.fliter-drops")
+    public static boolean negativeItemDupeFixes_RemovesItem_FliterDrops = true;
+    
+    @Node(path = "settings.negative-amount-item.actions.fliter-players-inv")
+    public static boolean negativeItemDupeFixes_FliterPlayersInv = true;
+    
 }

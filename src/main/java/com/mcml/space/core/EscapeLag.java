@@ -20,6 +20,7 @@ import com.mcml.space.config.Features;
 import com.mcml.space.config.Core;
 import com.mcml.space.config.Optimizations;
 import com.mcml.space.config.Patches;
+import com.mcml.space.config.PatchesDupeFixes;
 import com.mcml.space.features.AutoRespawn;
 import com.mcml.space.features.CensoredChat;
 import com.mcml.space.features.ExplosionController;
@@ -214,6 +215,7 @@ public class EscapeLag extends JavaPlugin {
         setupConfig(CONFIG_PATCH, Patches.class);
         setupConfig(CONFIG_OPTIMIZE, Optimizations.class);
         setupConfig(CONFIG_FUNCTION, Features.class);
+        setupConfig(CONFIG_OPTIMIZE_DUPE_FIXES, PatchesDupeFixes.class);
     }
     
     public void setupConfig(String configIdentifier, Class<? extends Configurable> provider) {

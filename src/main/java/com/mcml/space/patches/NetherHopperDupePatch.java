@@ -13,7 +13,7 @@ import org.bukkit.plugin.Plugin;
 import com.mcml.space.config.PatchesDupeFixes;
 import com.mcml.space.util.AzureAPI;
 
-import static com.mcml.space.config.PatchesDupeFixes.netherHoppersDupeFixesWorlds;;
+import static com.mcml.space.config.PatchesDupeFixes.netherHoppersDupeFixes_Worlds;
 
 public class NetherHopperDupePatch implements Listener {
     
@@ -30,12 +30,12 @@ public class NetherHopperDupePatch implements Listener {
         Hopper to = (Hopper) evt.getInitiator().getHolder();
         Hopper from = (Hopper) evt.getSource().getHolder();
         
-        if (netherHoppersDupeFixesWorlds.isEmpty() ||
-                netherHoppersDupeFixesWorlds.contains(from.getWorld().getName())) handleCancellation(from, to, evt);
+        if (netherHoppersDupeFixes_Worlds.isEmpty() ||
+                netherHoppersDupeFixes_Worlds.contains(from.getWorld().getName())) handleCancellation(from, to, evt);
     }
     
     private static void handleCancellation(Hopper from, Hopper to, Cancellable evt) {
-        if (PatchesDupeFixes.netherHoppersDupeFixesRestrictEnv && from.getWorld().getEnvironment() != Environment.NETHER) return;
+        if (PatchesDupeFixes.netherHoppersDupeFixes_RestrictEnv && from.getWorld().getEnvironment() != Environment.NETHER) return;
         if (to.getChunk() != from.getChunk()) evt.setCancelled(true);
     }
 }

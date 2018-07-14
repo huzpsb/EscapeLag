@@ -60,12 +60,6 @@ public abstract class Patches extends Configurable {
     @Node(path = "AntiPortalInfItem.enable")
     public static boolean fixPortalInfItem = true;
 
-    @Node(path = "AntiRPGITEM.enable")
-    public static boolean fixRPGItemInfItem = true;
-
-    @Node(path = "AntiRPGITEM.force-clear-mode")
-    public static boolean forceRPGItemPatch = true;
-
     @Node(path = "AntiSkullCrash.enable")
     public static boolean noSkullCrash = true;
 

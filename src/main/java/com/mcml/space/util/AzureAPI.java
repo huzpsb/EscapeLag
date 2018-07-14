@@ -108,7 +108,6 @@ public abstract class AzureAPI {
     }
     
     public static void warn(final String prefix, final String context) {
-        if (isBlank(context)) return;
         Bukkit.getLogger().log(Level.WARNING, prefix + context);
     }
     
@@ -117,7 +116,6 @@ public abstract class AzureAPI {
     }
 
     public static void log(final String prefix, final String context) {
-        if (isBlank(context)) return;
         Bukkit.getConsoleSender().sendMessage(prefix + context);
     }
 
@@ -134,8 +132,11 @@ public abstract class AzureAPI {
         bc(loggerPrefix, context);
     }
     
+    public static void bc(final String context, final String placeholder, final String placevalue) {
+        bc(loggerPrefix, StringUtils.replace(context, placeholder, placevalue));
+    }
+    
     public static void bc(final String prefix, final String context) {
-        if (isBlank(context)) return;
         Bukkit.broadcastMessage(prefix + context);
     }
 
