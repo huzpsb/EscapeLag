@@ -132,7 +132,7 @@ public class CensoredChat {
     }
     
     private static class DirtyChatDetector implements Listener {
-        @EventHandler(ignoreCancelled = true)
+        @EventHandler(priority = EventPriority.HIGH, ignoreCancelled = true)
         public void checkChatDirty(AsyncPlayerChatEvent evt) {
             Player player = evt.getPlayer();
             if (Perms.has(player) || AzureAPI.hasPerm(player, "escapelag.bypass.dirty")) return;
