@@ -38,6 +38,12 @@ public abstract class Features extends Configurable {
 	
 	@Node(path = "AntiSpam.Dirty.enable")
     public static boolean enableAntiDirty = true;
+	
+	@Node(path = "AntiSpam.Dirty.ignore-case")
+    public static boolean enableAntiDirtyIgnoreCase = true;
+	
+	@Node(path = "AntiSpam.Dirty.enable.check-signs")
+    public static boolean enableAntiDirtyCheckSign = true;
 
 	@Node(path = "AntiSpam.Dirty.List")
 	public static @hash Set<String> AntiSpamDirtyList = DefaultOptions.spamMessages();

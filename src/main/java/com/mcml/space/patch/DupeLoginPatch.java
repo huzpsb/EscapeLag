@@ -12,9 +12,6 @@ import com.mcml.space.util.AzureAPI;
 import com.mcml.space.util.PlayerList;
 import com.mcml.space.util.PluginExtends;
 
-/**
- * @author Vlvxingze, SotrForgotten
- */
 public class DupeLoginPatch implements Listener, PluginExtends {
     public static void init(Plugin plugin) {
         if (!Patches.fixDupeOnline) return;

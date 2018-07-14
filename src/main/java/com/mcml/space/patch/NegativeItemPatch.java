@@ -12,9 +12,6 @@ import com.mcml.space.util.PluginExtends;
 
 import static com.mcml.space.config.Patches.fixRPGItemInfItem;
 
-/**
- * @author Vlvxingze
- */
 public class NegativeItemPatch implements Listener, PluginExtends {
     public static void init(Plugin plugin) {
         if (!fixRPGItemInfItem && !Bukkit.getPluginManager().isPluginEnabled("RPGItems") && !Bukkit.getPluginManager().isPluginEnabled("RPG_Items")) return;

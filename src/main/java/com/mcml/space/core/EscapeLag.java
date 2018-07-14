@@ -20,7 +20,7 @@ import com.mcml.space.config.Features;
 import com.mcml.space.config.Core;
 import com.mcml.space.config.Optimizations;
 import com.mcml.space.config.Patches;
-import com.mcml.space.function.AntiSpam;
+import com.mcml.space.function.CensoredChat;
 import com.mcml.space.function.ExplosionController;
 import com.mcml.space.function.FarmProtection;
 import com.mcml.space.function.AutoRespawn;
@@ -130,7 +130,7 @@ public class EscapeLag extends JavaPlugin {
         NegativeItemPatch.init(this);
         Bukkit.getPluginManager().registerEvents(new NoCrowdEntity(), this);
         Bukkit.getPluginManager().registerEvents(new AntiCrashSign(), this);
-        Bukkit.getPluginManager().registerEvents(new AntiSpam(), this);
+        CensoredChat.init(this);
         ExplosionController.init(this);
         RedstoneSlacker.init(this);
         Bukkit.getPluginManager().registerEvents(new UnloadClear(), this);

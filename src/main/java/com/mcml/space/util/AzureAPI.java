@@ -251,17 +251,17 @@ public abstract class AzureAPI {
     }
     
     public static boolean hasPerm(CommandSender sender, String perm) {
-        return sender.isOp() || sender.hasPermission(perm);
+        return sender.hasPermission(perm);
     }
     
     public static boolean hasPerm(String username, String perm) {
         Player player = Bukkit.getPlayer(username);
         if (player == null) return false;
-        return player.isOp() || player.hasPermission(perm);
+        return player.hasPermission(perm);
     }
     
     public static boolean hasPerm(CommandSender sender, Permission perm) {
-        return sender.isOp() || sender.hasPermission(perm);
+        return sender.hasPermission(perm);
     }
     
     public static FileConfiguration loadOrCreateFile(File file) {
