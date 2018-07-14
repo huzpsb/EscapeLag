@@ -21,7 +21,7 @@ public abstract class Optimizations extends Configurable {
     public static int EntityClearLimitCount = 1200;
 	
 	@Node(path = "EntityClear.ClearEntityType")
-    public static @hash Set<String> EntityClearEntityType = DefaultOptions.EntityClearEntityTypes();
+    public static Set<String> EntityClearEntityType = DefaultOptions.EntityClearEntityTypes();
 	
 	@Node(path = "EntityClear.ClearMessage")
     public static String EntityClearClearMessage = "§a成功清除了过多的实体~~(@^_^@)~";
@@ -82,7 +82,7 @@ public abstract class Optimizations extends Configurable {
     public static boolean NoCrowdedEntityenable = true;
     
     @Node(path = "NoCrowdedEntity.TypeList")
-    public static @hash Set<String> NoCrowdedEntityTypeList = DefaultOptions.slackEntityTypes();
+    public static Set<String> NoCrowdedEntityTypeList = DefaultOptions.slackEntityTypes();
     
     @Node(path = "NoCrowdedEntity.PerChunkLimit")
     public static int NoCrowdedEntityPerChunkLimit = 30;
@@ -97,7 +97,7 @@ public abstract class Optimizations extends Configurable {
     public static String OverLoadMemoryRestartKickMessage = "抱歉！由于服务器内存过载，需要重启服务器！";
     
     @Node(path = "AntiRedstone.RemoveBlockList")
-    public static @hash Set<String> AntiRedstoneRemoveBlockList = DefaultOptions.redstoneRemovalMaterialTypes();
+    public static Set<String> AntiRedstoneRemoveBlockList = DefaultOptions.redstoneRemovalMaterialTypes();
     
     @Node(path = "AutoSave.Interval")
     public static long AutoSaveInterval = 15;
@@ -127,5 +127,5 @@ public abstract class Optimizations extends Configurable {
     public static boolean UnloadClearenable = true;
     
     @Node(path = "UnloadClear.type")
-    public static @hash Set<String> UnloadCleartype = DefaultOptions.unloadClearEntityTypes();
+    public static Set<String> UnloadCleartype = DefaultOptions.unloadClearEntityTypes();
 }

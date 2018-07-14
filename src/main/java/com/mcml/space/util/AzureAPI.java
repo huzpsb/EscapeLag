@@ -269,7 +269,8 @@ public abstract class AzureAPI {
             try {
                 file.createNewFile();
             } catch (IOException ex) {
-                AzureAPI.fatal("Cannot save configuration ( " + file.getName() + " ), file blocked?", EscapeLag.plugin);
+                AzureAPI.fatal("Cannot save configuration '" + file.getName() + "', file blocked?", EscapeLag.plugin);
+                ex.printStackTrace();
             }
         }
         return YamlConfiguration.loadConfiguration(file);
@@ -305,20 +306,28 @@ public abstract class AzureAPI {
         }
     }
     
-    @SuppressWarnings("all")
-    public static Object colorzine(Object o) {
-        if (o instanceof String) {
-            return StringUtils.replaceChars((String) o, '&', '§');
+    @SuppressWarnings("unchecked")
+    public static <E> E colorzine(E element, Class<E> type) {
+        if (element instanceof String) return (E) ((String) element).replace('&', '§');
+        
+        if (element instanceof String[]) {
+            String[] array = (String[]) element;
+            for (int i = 0; i < array.length; i++) array[i] = array[i].replace('&', '§');
+            return (E) array;
         }
-        if (o instanceof List) {
-            List list = (List) o;
-            for (Object obj : list) {
-                if (obj instanceof String) {
-                    list.set(list.indexOf(obj), StringUtils.replaceChars((String) obj, '&', '§'));
-                }
-            }
-            return list;
+        
+        if (element instanceof List) {
+            List<String> c = (List<String>) element;
+            for (String each : c) c.set(c.indexOf(each), each.replace('&', '§'));
+            return (E) c;
         }
-        return o;
+        
+        if (element instanceof Set) {
+            Set<String> c = (Set<String>) element;
+            for (String each : c) c.add(each.replace('&', '§'));
+            return (E) c;
+        }
+        
+        return element;
     }
 }

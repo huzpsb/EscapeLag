@@ -6,15 +6,11 @@ import java.util.concurrent.TimeUnit;
 
 import org.apache.commons.lang.StringUtils;
 import org.bukkit.Bukkit;
-import org.bukkit.Material;
-import org.bukkit.block.Block;
-import org.bukkit.block.Sign;
 import org.bukkit.entity.Player;
 import org.bukkit.event.Cancellable;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
-import org.bukkit.event.block.SignChangeEvent;
 import org.bukkit.event.player.AsyncPlayerChatEvent;
 import org.bukkit.event.player.PlayerQuitEvent;
 import org.bukkit.plugin.Plugin;
@@ -33,8 +29,6 @@ public class CensoredChat {
         
         if (Features.enableAntiDirty) {
             Bukkit.getPluginManager().registerEvents(new DirtyChatDetector(), plugin);
-            
-            if (Features.enableAntiDirtyCheckSign) Bukkit.getPluginManager().registerEvents(new DirtySignDetector(), plugin);
         }
     }
     
@@ -80,57 +74,6 @@ public class CensoredChat {
         }
     }
     
-    private static class DirtySignDetector implements Listener {
-        @EventHandler(priority = EventPriority.MONITOR, ignoreCancelled = true)
-        public void checkSignDirty(final SignChangeEvent event) {
-            final Player player = event.getPlayer();
-            if (Perms.has(player) || AzureAPI.hasPerm(player, "escapelag.bypass.dirty")) return;
-            
-            Bukkit.getScheduler().runTaskAsynchronously(EscapeLag.plugin, new Runnable() {
-                @Override
-                public void run() {
-                    final Map<Integer, String> replacedIndexs = Maps.newHashMap();
-                    NEXT_LINE: for (int index = 0; index < event.getLines().length; index++) {
-                        String line = event.getLines()[index];
-                        if (StringUtils.isBlank(line)) continue;
-                        
-                        for (String each : Features.AntiSpamDirtyListSingle) {
-                            if (line.equalsIgnoreCase(each)) {
-                                replacedIndexs.put(index, "");
-                                continue NEXT_LINE;
-                            }
-                        }
-                        for (String each : Features.AntiSpamDirtyList) {
-                            if (handle(line, each, false, replacedIndexs, index)) continue NEXT_LINE;
-                        }
-                        for (String each : Features.AntiSpamDirtyListIgnoreCase) {
-                            if (handle(line, each, true, replacedIndexs, index)) continue NEXT_LINE;
-                        }
-                    }
-                    
-                    Bukkit.getScheduler().runTask(EscapeLag.plugin, new Runnable() {
-                        @Override
-                        public void run() {
-                            Block signBlock = event.getBlock();
-                            Material type = signBlock.getType();
-                            if (type == Material.SIGN || type == Material.WALL_SIGN || type == Material.SIGN_POST) {
-                                Sign sign = (Sign) signBlock;
-                                for (Entry<Integer, String> entry : replacedIndexs.entrySet()) sign.setLine(entry.getKey(), entry.getValue());
-                            }
-                        }
-                    });
-                    AzureAPI.log(player, Features.AntiSpamDirtyWarnMessage);
-                }
-            });
-        }
-        
-        private static boolean handle(String message, String contain, boolean ignoreCase, Map<Integer, String> replacedIndexs, int index) {
-            String replaced = ignoreCase ? message.replaceAll("(?i)" + contain, "") : StringUtils.replace(message, contain, "");
-            if (!message.equalsIgnoreCase(replaced)) replacedIndexs.put(index, replaced);
-            return true; // trick
-        }
-    }
-    
     private static class DirtyChatDetector implements Listener {
         @EventHandler(priority = EventPriority.HIGH, ignoreCancelled = true)
         public void checkChatDirty(AsyncPlayerChatEvent evt) {
@@ -138,22 +81,26 @@ public class CensoredChat {
             if (Perms.has(player) || AzureAPI.hasPerm(player, "escapelag.bypass.dirty")) return;
             
             String message = evt.getMessage();
-            for (String each : Features.AntiSpamDirtyListSingle) {
-                if (handle(message, each, true, true, evt, player)) return;
-            }
-            for (String each : Features.AntiSpamDirtyList) {
-                if (handle(message, each, false, false, evt, player)) return;
-            }
-            for (String each : Features.AntiSpamDirtyListIgnoreCase) {
-                if (handle(message, each, false, true, evt, player)) return;
+            for (Entry<String, Boolean> entry : Features.AntiSpamDirtyList.entrySet()) {
+                if (handle(message, entry.getKey(), entry.getValue(), evt, player)) return;
             }
         }
         
-        private static boolean handle(String message, String contain, boolean single, boolean ignoreCase, Cancellable evt, Player player) {
-            if (single ? (ignoreCase ? message.equalsIgnoreCase(contain) : message.equals(contain)) : (ignoreCase ? StringUtils.containsIgnoreCase(message, contain) : StringUtils.contains(message, contain))) {
+        private static boolean handle(String message, String contain, boolean ignoreCase, Cancellable evt, Player player) {
+            if (hasWhitelist(message, contain, ignoreCase)) {
                 evt.setCancelled(true);
                 AzureAPI.log(player, Features.AntiSpamDirtyWarnMessage);
                 return true;
+            }
+            return false;
+        }
+        
+        private static boolean hasWhitelist(String message, String contain, boolean ignoreCase) {
+            message = ignoreCase ? message.toLowerCase() : message;
+            int count = StringUtils.countMatches(message, ignoreCase ? contain.toLowerCase() : contain);
+            if (count == 0) return true;
+            for (String each : Features.AntiSpamDirtyWhitelist) {
+                if (StringUtils.countMatches(message, ignoreCase ? each.toLowerCase() : each) >= count) return true;
             }
             return false;
         }

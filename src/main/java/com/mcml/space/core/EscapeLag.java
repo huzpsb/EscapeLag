@@ -204,9 +204,11 @@ public class EscapeLag extends JavaPlugin {
         try {
             Configurable.restoreNodes(AzureAPI.wrapCoord(configFile, AzureAPI.loadOrCreateFile(configFile)), provider);
         } catch (IllegalArgumentException | IllegalAccessException illegal) {
-            AzureAPI.fatal("Cannot setup configuration ( " + configFile.getName() + " ), wrong format?", this);
+            AzureAPI.fatal("Cannot setup configuration '" + configFile.getName() + "', wrong format?", this);
+            illegal.printStackTrace();
         } catch (IOException io) {
-            AzureAPI.fatal("Cannot load configuration ( " + configFile.getName() + " ), file blocked?", this);
+            AzureAPI.fatal("Cannot load configuration '" + configFile.getName() + "', file blocked?", this);
+            io.printStackTrace();
         }
         
         if (configIdentifier.equals(CONFIG_MAIN)) {
