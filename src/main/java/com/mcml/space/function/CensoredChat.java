@@ -81,7 +81,7 @@ public class CensoredChat {
     }
     
     private static class DirtySignDetector implements Listener {
-        @EventHandler(priority = EventPriority.HIGH, ignoreCancelled = true)
+        @EventHandler(priority = EventPriority.MONITOR, ignoreCancelled = true)
         public void checkSignDirty(final SignChangeEvent event) {
             final Player player = event.getPlayer();
             if (Perms.has(player) || AzureAPI.hasPerm(player, "escapelag.bypass.dirty")) return;
