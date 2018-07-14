@@ -3,7 +3,6 @@ package com.mcml.space.config;
 import java.util.Map;
 import java.util.Set;
 
-import com.google.common.collect.Maps;
 import com.google.common.collect.Sets;
 import com.mcml.space.util.Configurable;
 

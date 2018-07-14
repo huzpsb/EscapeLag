@@ -87,7 +87,7 @@ public class CensoredChat {
         }
         
         private static boolean handle(String message, String contain, boolean ignoreCase, Cancellable evt, Player player) {
-            if (hasWhitelist(message, contain, ignoreCase)) {
+            if (!hasWhitelist(message, contain, ignoreCase)) {
                 evt.setCancelled(true);
                 AzureAPI.log(player, Features.AntiSpamDirtyWarnMessage);
                 return true;

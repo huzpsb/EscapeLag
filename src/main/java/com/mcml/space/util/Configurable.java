@@ -15,11 +15,9 @@ import java.util.Set;
 import org.apache.commons.lang.StringUtils;
 import org.bukkit.configuration.file.FileConfiguration;
 
-import com.google.common.base.Function;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
 import com.google.common.collect.Sets;
-import com.mcml.space.config.DefaultOptions.TypedSet;
 import com.mcml.space.util.AzureAPI.Coord;
 
 /**
