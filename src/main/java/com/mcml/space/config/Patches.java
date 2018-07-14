@@ -53,12 +53,6 @@ public abstract class Patches extends Configurable {
 
     @Node(path = "AntiInfItem.enable")
     public static boolean noInfItem = true;
-
-    @Node(path = "AntiInfRail.enable")
-    public static boolean fixInfRail = true;
-
-    @Node(path = "AntiNetherHopperInfItem.enable")
-    public static boolean fixNetherHopperInfItem = true;
     
     @Node(path = "patches.vaildate-actions.enable")
     public static boolean enableVaildateActions = false;

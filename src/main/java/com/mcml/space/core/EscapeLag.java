@@ -67,10 +67,18 @@ import lombok.SneakyThrows;
 public class EscapeLag extends JavaPlugin {
     public static EscapeLag plugin;
     
+    // Core
     public final static String CONFIG_MAIN = "PluginMainConfig.yml";
-    public final static String CONFIG_PATCH = "AntiBugConfig.yml";
-    public final static String CONFIG_OPTIMIZE = "ClearLagConfig.yml";
+    
+    // Features
     public final static String CONFIG_FUNCTION = "DoEventConfig.yml";
+    
+    // Pathches
+    public final static String CONFIG_PATCH = "AntiBugConfig.yml";
+    
+    // Optimizations
+    public final static String CONFIG_OPTIMIZE = "ClearLagConfig.yml";
+    public final static String CONFIG_OPTIMIZE_DUPE_FIXES = "patches/dupe_fixes.yml";
     
     public final static Map<String, Coord3<File, FileConfiguration, Class<? extends Configurable>>> configurations = Maps.newHashMap(); // File name as key
     
@@ -83,7 +91,7 @@ public class EscapeLag extends JavaPlugin {
         setupConfigs();
         clearModules();
         
-        // Only once binds
+        // Non-task only once binds
         Perms.bind(GLOBAL_PERMS);
         EscapeLag.AutoSetServer(false);
         
