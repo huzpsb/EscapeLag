@@ -268,6 +268,7 @@ public abstract class AzureAPI {
     public static FileConfiguration loadOrCreateFile(File file) {
         if (!file.exists()) {
             try {
+                file.mkdirs();
                 file.createNewFile();
             } catch (IOException ex) {
                 AzureAPI.fatal("Cannot save configuration '" + file.getName() + "', file blocked?", EscapeLag.plugin);
