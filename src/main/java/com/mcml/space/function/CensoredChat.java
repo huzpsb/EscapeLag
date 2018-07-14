@@ -1,10 +1,15 @@
 package com.mcml.space.function;
 
+import java.util.List;
 import java.util.Map;
+import java.util.Map.Entry;
 import java.util.concurrent.TimeUnit;
 
 import org.apache.commons.lang.StringUtils;
 import org.bukkit.Bukkit;
+import org.bukkit.Material;
+import org.bukkit.block.Block;
+import org.bukkit.block.Sign;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
@@ -14,6 +19,7 @@ import org.bukkit.event.player.AsyncPlayerChatEvent;
 import org.bukkit.event.player.PlayerQuitEvent;
 import org.bukkit.plugin.Plugin;
 
+import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
 import com.mcml.space.config.Features;
 import com.mcml.space.core.EscapeLag;
@@ -84,15 +90,27 @@ public class CensoredChat {
             Bukkit.getScheduler().runTaskAsynchronously(EscapeLag.plugin, new Runnable() {
                 @Override
                 public void run() {
+                    int curIndex = 0;
+                    final Map<Integer, String> replacedIndexs = Maps.newHashMap();
                     for (String line : event.getLines()) {
-                        
                         for (String each : Features.AntiSpamDirtyList) {
-                            if (Features.enableAntiDirtyIgnoreCase ? StringUtils.containsIgnoreCase(line, each) : StringUtils.contains(line, each)) {
-                                event.setCancelled(true);
-                                AzureAPI.log(player, Features.AntiSpamDirtyWarnMessage);
-                            }
+                            String replaced = Features.enableAntiDirtyIgnoreCase ? line.replaceAll("(?i)" + each, "") : StringUtils.replace(line, each, "");
+                            if (!line.equalsIgnoreCase(replaced)) replacedIndexs.put(curIndex++, replaced);
                         }
                     }
+                    
+                    Bukkit.getScheduler().runTask(EscapeLag.plugin, new Runnable() {
+                        @Override
+                        public void run() {
+                            Block signBlock = event.getBlock();
+                            Material type = signBlock.getType();
+                            if (type == Material.SIGN || type == Material.WALL_SIGN || type == Material.SIGN_POST) {
+                                Sign sign = (Sign) signBlock;
+                                for (Entry<Integer, String> entry : replacedIndexs.entrySet()) sign.setLine(entry.getKey(), entry.getValue());
+                            }
+                        }
+                    });
+                    AzureAPI.log(player, Features.AntiSpamDirtyWarnMessage);
                 }
             });
         }
@@ -109,6 +127,7 @@ public class CensoredChat {
                 if (Features.enableAntiDirtyIgnoreCase ? StringUtils.containsIgnoreCase(message, each) : StringUtils.contains(message, each)) {
                     evt.setCancelled(true);
                     AzureAPI.log(player, Features.AntiSpamDirtyWarnMessage);
+                    return;
                 }
             }
         }
