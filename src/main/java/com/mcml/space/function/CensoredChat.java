@@ -1,6 +1,5 @@
 package com.mcml.space.function;
 
-import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 import java.util.concurrent.TimeUnit;
@@ -11,6 +10,7 @@ import org.bukkit.Material;
 import org.bukkit.block.Block;
 import org.bukkit.block.Sign;
 import org.bukkit.entity.Player;
+import org.bukkit.event.Cancellable;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
@@ -19,7 +19,6 @@ import org.bukkit.event.player.AsyncPlayerChatEvent;
 import org.bukkit.event.player.PlayerQuitEvent;
 import org.bukkit.plugin.Plugin;
 
-import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
 import com.mcml.space.config.Features;
 import com.mcml.space.core.EscapeLag;
@@ -94,8 +93,10 @@ public class CensoredChat {
                     final Map<Integer, String> replacedIndexs = Maps.newHashMap();
                     for (String line : event.getLines()) {
                         for (String each : Features.AntiSpamDirtyList) {
-                            String replaced = Features.enableAntiDirtyIgnoreCase ? line.replaceAll("(?i)" + each, "") : StringUtils.replace(line, each, "");
-                            if (!line.equalsIgnoreCase(replaced)) replacedIndexs.put(curIndex++, replaced);
+                            handle(line, each, false, replacedIndexs, curIndex++);
+                        }
+                        for (String each : Features.AntiSpamDirtyListIgnoreCase) {
+                            handle(line, each, true, replacedIndexs, curIndex++);
                         }
                     }
                     
@@ -114,6 +115,11 @@ public class CensoredChat {
                 }
             });
         }
+        
+        private static void handle(String message, String contain, boolean ignoreCase, Map<Integer, String> replacedIndexs, int curIndex) {
+            String replaced = ignoreCase ? message.replaceAll("(?i)" + contain, "") : StringUtils.replace(message, contain, "");
+            if (!message.equalsIgnoreCase(replaced)) replacedIndexs.put(curIndex, replaced);
+        }
     }
     
     private static class DirtyChatDetector implements Listener {
@@ -124,12 +130,20 @@ public class CensoredChat {
             
             String message = evt.getMessage();
             for (String each : Features.AntiSpamDirtyList) {
-                if (Features.enableAntiDirtyIgnoreCase ? StringUtils.containsIgnoreCase(message, each) : StringUtils.contains(message, each)) {
-                    evt.setCancelled(true);
-                    AzureAPI.log(player, Features.AntiSpamDirtyWarnMessage);
-                    return;
-                }
+                if (handle(message, each, false, evt, player)) return;
             }
+            for (String each : Features.AntiSpamDirtyListIgnoreCase) {
+                if (handle(message, each, true, evt, player)) return;
+            }
+        }
+        
+        private static boolean handle(String message, String contain, Boolean ignoreCase, Cancellable evt, Player player) {
+            if (ignoreCase ? StringUtils.containsIgnoreCase(message, contain) : StringUtils.contains(message, contain)) {
+                evt.setCancelled(true);
+                AzureAPI.log(player, Features.AntiSpamDirtyWarnMessage);
+                return true;
+            }
+            return false;
         }
     }
     

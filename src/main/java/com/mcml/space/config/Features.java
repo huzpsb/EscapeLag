@@ -2,6 +2,7 @@ package com.mcml.space.config;
 
 import java.util.Set;
 
+import com.google.common.collect.Sets;
 import com.mcml.space.util.Configurable;
 
 public abstract class Features extends Configurable {
@@ -39,14 +40,14 @@ public abstract class Features extends Configurable {
 	@Node(path = "AntiSpam.Dirty.enable")
     public static boolean enableAntiDirty = true;
 	
-	@Node(path = "AntiSpam.Dirty.ignore-case")
-    public static boolean enableAntiDirtyIgnoreCase = true;
-	
 	@Node(path = "AntiSpam.Dirty.enable.check-signs")
     public static boolean enableAntiDirtyCheckSign = true;
 
 	@Node(path = "AntiSpam.Dirty.List")
 	public static @hash Set<String> AntiSpamDirtyList = DefaultOptions.spamMessages();
+	
+	@Node(path = "AntiSpam.Dirty.ignore-case-list")
+    public static @hash Set<String> AntiSpamDirtyListIgnoreCase = Sets.newHashSet();
 
 	@Node(path = "NoEggChangeSpawner.enable")
 	public static boolean preventSpawnerModify = true;
