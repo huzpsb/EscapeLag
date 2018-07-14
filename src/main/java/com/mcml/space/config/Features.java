@@ -4,6 +4,7 @@ import java.util.Map;
 import java.util.Set;
 
 import com.google.common.collect.Sets;
+import com.mcml.space.config.DefaultOptions.TypedSet;
 import com.mcml.space.util.Configurable;
 
 public abstract class Features extends Configurable {
@@ -45,7 +46,7 @@ public abstract class Features extends Configurable {
     public static Map<String, Boolean> AntiSpamDirtyList = DefaultOptions.spamMessages();
 	
 	@Node(path = "AntiSpam.Dirty.white-list")
-    public static Set<String> AntiSpamDirtyWhitelist = Sets.newHashSet();
+    public static Set<String> AntiSpamDirtyWhitelist = DefaultOptions.spamWhitelist();
 
 	@Node(path = "NoEggChangeSpawner.enable")
 	public static boolean preventSpawnerModify = true;

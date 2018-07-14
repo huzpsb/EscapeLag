@@ -7,6 +7,9 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
+import com.google.common.collect.Maps;
+import com.google.common.collect.Sets;
+
 import static org.bukkit.entity.EntityType.*;
 import static org.bukkit.Material.*;
 
@@ -65,7 +68,7 @@ public abstract class DefaultOptions {
 		     .from(SKELETON)
 		     .from(SPIDER)
 		     .from(CREEPER);
-		return types; // TODO This should be much faster when we switch to koloboke!
+		return Sets.newHashSet(types); // TODO This should be much faster when we switch to koloboke!
 	}
 	
 	public static Set<String> slackEntityTypes() {
@@ -77,14 +80,14 @@ public abstract class DefaultOptions {
              .from(SHEEP)
              .from(PIG)
              .from(CHICKEN);
-		return types;
+		return Sets.newHashSet(types);
 	}
 	
 	public static Set<String> blockedErrorMessages() {
 	    TypedSet messages = TypedSet.create();
 	    messages.from("ErrorPluginName")
 	            .from("ErrorPluginMessage");
-		return messages;
+		return Sets.newHashSet(messages);
 	}
 	
 	public static Set<String> EntityClearEntityTypes() {
@@ -96,7 +99,7 @@ public abstract class DefaultOptions {
              .from(SHEEP)
              .from(PIG)
              .from(CHICKEN);
-		return types;
+		return Sets.newHashSet(types);
 	}
 	
 	public static Set<String> redstoneRemovalMaterialTypes() {
@@ -107,7 +110,7 @@ public abstract class DefaultOptions {
              .from(REDSTONE_TORCH_ON)
              .from(REDSTONE_TORCH_OFF)
              .from(REDSTONE_BLOCK);
-        return types;
+        return Sets.newHashSet(types);
 	}
 	
 	public static Map<String, Boolean> spamMessages() {
@@ -188,13 +191,13 @@ public abstract class DefaultOptions {
                 .from("你媽")
                 .from("腦殘")
                 .from("賤");
-		return messages;
+		return Maps.newHashMap(messages);
 	}
 	
-	public static Set<String> spamMessagesWhitelist() {
+	public static Set<String> spamWhitelist() {
         TypedSet messages = TypedSet.create();
         messages.from("全家福");
-        return messages;
+        return Sets.newHashSet(messages);
     }
 
 }
