@@ -48,7 +48,7 @@ public class CensoredChat {
         }
         
         @EventHandler(priority = EventPriority.LOW, ignoreCancelled = true)
-        public void spamChecker(AsyncPlayerChatEvent evt) {
+        public void checkSpam(AsyncPlayerChatEvent evt) {
             Player player = evt.getPlayer();
             if (Perms.has(player) || AzureAPI.hasPerm(player, "escapelag.bypass.spam")) return;
             
@@ -77,7 +77,7 @@ public class CensoredChat {
     
     private static class DirtySignDetector implements Listener {
         @EventHandler(priority = EventPriority.HIGH, ignoreCancelled = true)
-        public void checkSign(final SignChangeEvent event) {
+        public void checkSignDirty(final SignChangeEvent event) {
             final Player player = event.getPlayer();
             if (Perms.has(player) || AzureAPI.hasPerm(player, "escapelag.bypass.dirty")) return;
             
@@ -100,7 +100,7 @@ public class CensoredChat {
     
     private static class DirtyChatDetector implements Listener {
         @EventHandler(ignoreCancelled = true)
-        public void checkDirty(AsyncPlayerChatEvent evt) {
+        public void checkChatDirty(AsyncPlayerChatEvent evt) {
             Player player = evt.getPlayer();
             if (Perms.has(player) || AzureAPI.hasPerm(player, "escapelag.bypass.dirty")) return;
             
