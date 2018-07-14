@@ -10,12 +10,12 @@ import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.entity.Player;
 import com.mcml.space.config.Core;
 import com.mcml.space.core.EscapeLag;
-import com.mcml.space.optimize.ChunkKeeper;
-import com.mcml.space.optimize.ChunkUnloader;
-import com.mcml.space.optimize.OverloadRestart;
+import com.mcml.space.core.Network;
+import com.mcml.space.optimizations.ChunkKeeper;
+import com.mcml.space.optimizations.ChunkUnloader;
+import com.mcml.space.optimizations.OverloadRestart;
 import com.mcml.space.util.AzureAPI;
 import com.mcml.space.util.HeapDumper;
-import com.mcml.space.util.NetWorker;
 import com.mcml.space.util.Perms;
 import com.mcml.space.util.Ticker;
 import com.mcml.space.util.AzureAPI.ChunkCoord;
@@ -60,7 +60,7 @@ public class EscapeLagCommand {
 						Bukkit.getScheduler().runTaskAsynchronously(EscapeLag.plugin, new Runnable() {
 							@Override
 							public void run() {
-								NetWorker.DownloadAntiAttack();
+								Network.DownloadAntiAttack();
 							}
 						});
 					}

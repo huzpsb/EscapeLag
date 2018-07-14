@@ -20,47 +20,46 @@ import com.mcml.space.config.Features;
 import com.mcml.space.config.Core;
 import com.mcml.space.config.Optimizations;
 import com.mcml.space.config.Patches;
-import com.mcml.space.function.CensoredChat;
-import com.mcml.space.function.ExplosionController;
-import com.mcml.space.function.FarmProtection;
-import com.mcml.space.function.AutoRespawn;
-import com.mcml.space.function.SpawnerController;
-import com.mcml.space.function.UpgradeNotifier;
-import com.mcml.space.optimize.RedstoneSlacker;
-import com.mcml.space.optimize.AutoSave;
-import com.mcml.space.optimize.ChunkKeeper;
-import com.mcml.space.optimize.EmptyRestart;
-import com.mcml.space.optimize.FireSpreadSlacker;
-import com.mcml.space.optimize.UnloadClear;
-import com.mcml.space.optimize.NoCrowdEntity;
-import com.mcml.space.optimize.OverloadRestart;
-import com.mcml.space.optimize.TickSleep;
-import com.mcml.space.optimize.TeleportPreLoader;
-import com.mcml.space.optimize.TimerGarbageCollect;
-import com.mcml.space.optimize.WaterFlowLimitor;
-import com.mcml.space.patch.AntiBedExplode;
-import com.mcml.space.patch.AntiCrashSign;
-import com.mcml.space.patch.AntiDupeDropItem;
-import com.mcml.space.patch.AntiFakeDeath;
-import com.mcml.space.patch.AntiInfItem;
-import com.mcml.space.patch.RailsMachine;
-import com.mcml.space.patch.CancelledPlacementPatch;
-import com.mcml.space.patch.AntiLongStringCrash;
-import com.mcml.space.patch.NetherHopperDupePatch;
-import com.mcml.space.patch.ContainerPortalPatch;
-import com.mcml.space.patch.CalculationAbusePatch;
-import com.mcml.space.patch.BonemealDupePatch;
-import com.mcml.space.patch.CheatBookBlocker;
-import com.mcml.space.patch.DupeLoginPatch;
-import com.mcml.space.patch.NegativeItemPatch;
-import com.mcml.space.patch.AutoRecipePatch;
+import com.mcml.space.features.AutoRespawn;
+import com.mcml.space.features.CensoredChat;
+import com.mcml.space.features.ExplosionController;
+import com.mcml.space.features.FarmProtection;
+import com.mcml.space.features.SpawnerController;
+import com.mcml.space.features.UpgradeNotifier;
+import com.mcml.space.optimizations.AutoSave;
+import com.mcml.space.optimizations.ChunkKeeper;
+import com.mcml.space.optimizations.EmptyRestart;
+import com.mcml.space.optimizations.FireSpreadSlacker;
+import com.mcml.space.optimizations.NoCrowdEntity;
+import com.mcml.space.optimizations.OverloadRestart;
+import com.mcml.space.optimizations.RedstoneSlacker;
+import com.mcml.space.optimizations.TeleportPreLoader;
+import com.mcml.space.optimizations.TickSleep;
+import com.mcml.space.optimizations.TimerGarbageCollect;
+import com.mcml.space.optimizations.UnloadClear;
+import com.mcml.space.optimizations.WaterFlowLimitor;
+import com.mcml.space.patches.AntiBedExplode;
+import com.mcml.space.patches.AntiCrashSign;
+import com.mcml.space.patches.AntiDupeDropItem;
+import com.mcml.space.patches.AntiFakeDeath;
+import com.mcml.space.patches.AntiInfItem;
+import com.mcml.space.patches.AntiLongStringCrash;
+import com.mcml.space.patches.AutoRecipePatch;
+import com.mcml.space.patches.BonemealDupePatch;
+import com.mcml.space.patches.CalculationAbusePatch;
+import com.mcml.space.patches.CancelledPlacementPatch;
+import com.mcml.space.patches.CheatBookBlocker;
+import com.mcml.space.patches.ContainerPortalPatch;
+import com.mcml.space.patches.DupeLoginPatch;
+import com.mcml.space.patches.NegativeItemPatch;
+import com.mcml.space.patches.NetherHopperDupePatch;
+import com.mcml.space.patches.RailsMachine;
 import com.mcml.space.util.AzureAPI;
 import com.mcml.space.util.AzureAPI.Coord3;
 import com.mcml.space.util.PlayerList;
-import com.mcml.space.util.Configurable;
-import com.mcml.space.util.NetWorker;
-import com.mcml.space.util.Perms;
 import com.mcml.space.util.Ticker;
+import com.mcml.space.util.Configurable;
+import com.mcml.space.util.Perms;
 import com.mcml.space.util.VersionLevel;
 
 import lombok.SneakyThrows;
@@ -85,8 +84,6 @@ public class EscapeLag extends JavaPlugin {
         clearModules();
         
         // Only once binds
-        Ticker.init(this);
-        PlayerList.bind(this);
         Perms.bind(GLOBAL_PERMS);
         EscapeLag.AutoSetServer(false);
         
@@ -124,42 +121,56 @@ public class EscapeLag extends JavaPlugin {
         PlayerList.bind(new UpgradeNotifier());
         
         // Reentrant binds
-        Bukkit.getPluginManager().registerEvents(new AntiInfItem(), this);
+        // Core
+        Ticker.init(this);
+        Network.init(this);
+        PlayerList.bind(this);
+        
+        // Features
+        CensoredChat.init(this);
+        ExplosionController.init(this);
+        SpawnerController.init(this);
+        FarmProtection.init(this);
+        AutoRespawn.init(this);
+        
+        Bukkit.getPluginManager().registerEvents(new NoCrowdEntity(), this);
+        
+        // Pathces
         ContainerPortalPatch.init(this);
         NetherHopperDupePatch.init(this);
         NegativeItemPatch.init(this);
-        Bukkit.getPluginManager().registerEvents(new NoCrowdEntity(), this);
-        Bukkit.getPluginManager().registerEvents(new AntiCrashSign(), this);
-        CensoredChat.init(this);
-        ExplosionController.init(this);
-        RedstoneSlacker.init(this);
-        Bukkit.getPluginManager().registerEvents(new UnloadClear(), this);
         RailsMachine.init(this);
-        Bukkit.getPluginManager().registerEvents(new AutoSave(), this);
         DupeLoginPatch.init(this);
-        SpawnerController.init(this);
         AntiDupeDropItem.init(this);
-        Bukkit.getPluginManager().registerEvents(new CancelledPlacementPatch(), this);
-        Bukkit.getPluginManager().registerEvents(new AntiBedExplode(), this);
-        Bukkit.getPluginManager().registerEvents(new WaterFlowLimitor(), this);
-        FireSpreadSlacker.init(this);
-        FarmProtection.init(this);
         BonemealDupePatch.init(this);
-        Bukkit.getPluginManager().registerEvents(new AntiLongStringCrash(), this);
-        Bukkit.getPluginManager().registerEvents(new TeleportPreLoader(), this);
-        TickSleep.init(this);
-        AutoRespawn.init(this);
-        EmptyRestart.init(this);
         CheatBookBlocker.init(this);
-        OverloadRestart.init(this);
         CalculationAbusePatch.init(this);
-        ChunkKeeper.init(this);
-        TimerGarbageCollect.init(this);
         AntiFakeDeath.init(this);
         
-        if (Bukkit.getPluginManager().isPluginEnabled("ProtocolLib")) AutoRecipePatch.init(this);
+        Bukkit.getPluginManager().registerEvents(new AntiInfItem(), this);
+        Bukkit.getPluginManager().registerEvents(new AntiCrashSign(), this);
+        Bukkit.getPluginManager().registerEvents(new CancelledPlacementPatch(), this);
+        Bukkit.getPluginManager().registerEvents(new AntiBedExplode(), this);
+        Bukkit.getPluginManager().registerEvents(new AntiLongStringCrash(), this);
+        if (canAccessPackets()) AutoRecipePatch.init(this);
         
-        if (Core.AutoUpdate) Bukkit.getScheduler().runTaskAsynchronously(this, new NetWorker());
+        // Optimizations
+        TickSleep.init(this);
+        EmptyRestart.init(this);
+        OverloadRestart.init(this);
+        FireSpreadSlacker.init(this);
+        RedstoneSlacker.init(this);
+        ChunkKeeper.init(this);
+        TimerGarbageCollect.init(this);
+        
+        Bukkit.getPluginManager().registerEvents(new UnloadClear(), this);
+        Bukkit.getPluginManager().registerEvents(new AutoSave(), this);
+        Bukkit.getPluginManager().registerEvents(new WaterFlowLimitor(), this);
+        Bukkit.getPluginManager().registerEvents(new TeleportPreLoader(), this);
+    }
+    
+    public static boolean canAccessPackets() {
+        return Bukkit.getPluginManager().isPluginEnabled("ProtocolLib");
     }
     
     @Override

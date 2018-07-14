@@ -53,6 +53,8 @@ public class Ticker {
                 cachedTotalTicks = totalTicks;
             }
         }, 0L, 1000L);
+        
+        AzureAPI.log("TPS计算与监控核心模块已启用");
     }
     
     public static boolean notifyStucked() {

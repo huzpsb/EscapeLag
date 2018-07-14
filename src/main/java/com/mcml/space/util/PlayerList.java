@@ -34,6 +34,8 @@ public class PlayerList implements Listener {
     public static void bind(Plugin plugin) {
         assert plugin != null;
         Bukkit.getPluginManager().registerEvents(new PlayerList(), plugin);
+        
+        AzureAPI.log("玩家监控核心模块已启用");
     }
     
     public static void bind(JoinReactor reactor) {
