@@ -111,15 +111,15 @@ public abstract class Configurable {
                         // Impl Note: (boolean, string) format in configuration will be transfrom to (string, boolean) as map
                         hasSeparator(entry) ?
                                 hasBooleanKey(entry) && !hasBooleanValue(entry) ?
-                                        StringUtils.replace(StringUtils.substringBefore(entry, " : "), "/:/", ":") :
-                                        StringUtils.replace(StringUtils.substringAfter (entry, " : "), "/:/", ":") // boolean key
-                                : StringUtils.replace(entry, "/:/", ":") // no separator
+                                        cast(StringUtils.replace(StringUtils.substringBefore(entry, " : "), "/:/", ":")) :
+                                            cast(StringUtils.replace(StringUtils.substringAfter (entry, " : "), "/:/", ":")) // boolean key
+                                : cast(StringUtils.replace(entry, "/:/", ":")) // no separator
                         ,
                         hasSeparator(entry) ?
                                 hasBooleanKey(entry) && !hasBooleanValue(entry) ?
-                                        StringUtils.replace(StringUtils.substringAfter (entry, " : "), "/:/", ":") :
-                                        StringUtils.substringBefore(entry, " : ") // boolean key
-                                : "true" // no separator
+                                        cast(StringUtils.replace(StringUtils.substringAfter (entry, " : "), "/:/", ":")) :
+                                            cast(StringUtils.substringBefore(entry, " : ")) // boolean key
+                                : Boolean.TRUE // no separator
                         );
             }
             return AzureAPI.<Object, Object>wrapCoord(combinedEntries, targetType.cast(deserializedMap));
@@ -138,5 +138,9 @@ public abstract class Configurable {
     
     private static boolean hasBooleanValue(String entry) {
         return StringUtils.endsWith(entry, " : true") || StringUtils.endsWith(entry, " : false");
+    }
+    
+    private static Object cast(String value) {
+        return value.equalsIgnoreCase("true") ? Boolean.TRUE : value.equalsIgnoreCase("false") ? Boolean.FALSE : value;
     }
 }

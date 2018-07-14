@@ -75,7 +75,7 @@ public class CensoredChat {
     }
     
     private static class DirtyChatDetector implements Listener {
-        @EventHandler(priority = EventPriority.HIGH, ignoreCancelled = true)
+        @EventHandler(priority = EventPriority.HIGHEST, ignoreCancelled = true)
         public void checkChatDirty(AsyncPlayerChatEvent evt) {
             Player player = evt.getPlayer();
             if (Perms.has(player) || AzureAPI.hasPerm(player, "escapelag.bypass.dirty")) return;
@@ -87,7 +87,7 @@ public class CensoredChat {
         }
         
         private static boolean handle(String message, String contain, boolean ignoreCase, Cancellable evt, Player player) {
-            if (!hasWhitelist(message, contain, ignoreCase)) {
+            if (!isAllowed(message, contain, ignoreCase)) {
                 evt.setCancelled(true);
                 AzureAPI.log(player, Features.AntiSpamDirtyWarnMessage);
                 return true;
@@ -95,14 +95,33 @@ public class CensoredChat {
             return false;
         }
         
-        private static boolean hasWhitelist(String message, String contain, boolean ignoreCase) {
+        private static boolean isAllowed(String message, String contain, boolean ignoreCase) {
             message = ignoreCase ? message.toLowerCase() : message;
-            int count = StringUtils.countMatches(message, ignoreCase ? contain.toLowerCase() : contain);
+            boolean singleAllowed = StringUtils.endsWith(contain, "$");
+            boolean literally = StringUtils.endsWith(contain, "*");
+            if (singleAllowed && (ignoreCase ?
+                    message.equals(contain = removeSignals(contain.toLowerCase()))
+                    :
+                    message.equals(contain = removeSignals(contain))
+                    )) return true; // Check single
+            
+            if (literally) {
+                for (char c : (!singleAllowed /* processed */ && ignoreCase ? removeSignals(contain.toLowerCase()) : contain).toCharArray())
+                    if (!StringUtils.contains(message, c)) return true;
+                return false;
+            }
+            
+            int count = StringUtils.countMatches(message, !singleAllowed /* processed */ && ignoreCase ? removeSignals(contain.toLowerCase()) : contain);
             if (count == 0) return true;
+            
             for (String each : Features.AntiSpamDirtyWhitelist) {
                 if (StringUtils.countMatches(message, ignoreCase ? each.toLowerCase() : each) >= count) return true;
             }
             return false;
+        }
+        
+        private static String removeSignals(String contain) {
+            return StringUtils.removeEnd(StringUtils.removeEnd(contain, "$"), "*");
         }
     }
 }
