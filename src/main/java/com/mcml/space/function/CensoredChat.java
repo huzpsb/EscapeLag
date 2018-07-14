@@ -89,14 +89,22 @@ public class CensoredChat {
             Bukkit.getScheduler().runTaskAsynchronously(EscapeLag.plugin, new Runnable() {
                 @Override
                 public void run() {
-                    int curIndex = 0;
                     final Map<Integer, String> replacedIndexs = Maps.newHashMap();
-                    for (String line : event.getLines()) {
+                    NEXT_LINE: for (int index = 0; index < event.getLines().length; index++) {
+                        String line = event.getLines()[index];
+                        if (StringUtils.isBlank(line)) continue;
+                        
+                        for (String each : Features.AntiSpamDirtyListSingle) {
+                            if (line.equalsIgnoreCase(each)) {
+                                replacedIndexs.put(index, "");
+                                continue NEXT_LINE;
+                            }
+                        }
                         for (String each : Features.AntiSpamDirtyList) {
-                            handle(line, each, false, replacedIndexs, curIndex++);
+                            if (handle(line, each, false, replacedIndexs, index)) continue NEXT_LINE;
                         }
                         for (String each : Features.AntiSpamDirtyListIgnoreCase) {
-                            handle(line, each, true, replacedIndexs, curIndex++);
+                            if (handle(line, each, true, replacedIndexs, index)) continue NEXT_LINE;
                         }
                     }
                     
@@ -116,9 +124,10 @@ public class CensoredChat {
             });
         }
         
-        private static void handle(String message, String contain, boolean ignoreCase, Map<Integer, String> replacedIndexs, int curIndex) {
+        private static boolean handle(String message, String contain, boolean ignoreCase, Map<Integer, String> replacedIndexs, int index) {
             String replaced = ignoreCase ? message.replaceAll("(?i)" + contain, "") : StringUtils.replace(message, contain, "");
-            if (!message.equalsIgnoreCase(replaced)) replacedIndexs.put(curIndex, replaced);
+            if (!message.equalsIgnoreCase(replaced)) replacedIndexs.put(index, replaced);
+            return true; // trick
         }
     }
     
@@ -129,16 +138,19 @@ public class CensoredChat {
             if (Perms.has(player) || AzureAPI.hasPerm(player, "escapelag.bypass.dirty")) return;
             
             String message = evt.getMessage();
+            for (String each : Features.AntiSpamDirtyListSingle) {
+                if (handle(message, each, true, true, evt, player)) return;
+            }
             for (String each : Features.AntiSpamDirtyList) {
-                if (handle(message, each, false, evt, player)) return;
+                if (handle(message, each, false, false, evt, player)) return;
             }
             for (String each : Features.AntiSpamDirtyListIgnoreCase) {
-                if (handle(message, each, true, evt, player)) return;
+                if (handle(message, each, false, true, evt, player)) return;
             }
         }
         
-        private static boolean handle(String message, String contain, Boolean ignoreCase, Cancellable evt, Player player) {
-            if (ignoreCase ? StringUtils.containsIgnoreCase(message, contain) : StringUtils.contains(message, contain)) {
+        private static boolean handle(String message, String contain, boolean single, boolean ignoreCase, Cancellable evt, Player player) {
+            if (single ? (ignoreCase ? message.equalsIgnoreCase(contain) : message.equals(contain)) : (ignoreCase ? StringUtils.containsIgnoreCase(message, contain) : StringUtils.contains(message, contain))) {
                 evt.setCancelled(true);
                 AzureAPI.log(player, Features.AntiSpamDirtyWarnMessage);
                 return true;
@@ -146,5 +158,4 @@ public class CensoredChat {
             return false;
         }
     }
-    
 }

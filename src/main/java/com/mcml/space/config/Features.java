@@ -48,6 +48,9 @@ public abstract class Features extends Configurable {
 	
 	@Node(path = "AntiSpam.Dirty.ignore-case-list")
     public static @hash Set<String> AntiSpamDirtyListIgnoreCase = Sets.newHashSet();
+	
+	@Node(path = "AntiSpam.Dirty.single-world-list")
+    public static @hash Set<String> AntiSpamDirtyListSingle = Sets.newHashSet();
 
 	@Node(path = "NoEggChangeSpawner.enable")
 	public static boolean preventSpawnerModify = true;
