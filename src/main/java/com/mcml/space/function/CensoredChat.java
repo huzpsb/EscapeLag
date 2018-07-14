@@ -44,7 +44,7 @@ public class CensoredChat {
                 public void run() {
                     PLAYERS_CHAT_TIME.clear();
                 }
-            }, 0L, AzureAPI.toTicks(TimeUnit.SECONDS, (int) Math.ceil(Features.AntiSpamPeriodPeriod) > 10 ? (int) Math.ceil(Features.AntiSpamPeriodPeriod) : 10));
+            }, 0L, AzureAPI.toTicks(TimeUnit.SECONDS, (int) Math.ceil(Features.AntiSpamPeriodPeriod) > 30 ? (int) Math.ceil(Features.AntiSpamPeriodPeriod) : 30));
         }
         
         @EventHandler(priority = EventPriority.LOW, ignoreCancelled = true)
