@@ -27,7 +27,7 @@ public abstract class Patches extends Configurable {
     @SuppressWarnings("deprecation")
     @Node(path = "NoDoubleOnline.enable")
     public static boolean fixDupeOnline = !Bukkit.getOnlineMode() && !(VersionLevel.isHigherEquals(Version.MINECRAFT_1_7_R4) &&
-            VersionLevel.isSpigot() ? Bukkit.getServer().spigot().getConfig().getBoolean("settings.bungeecord") : false); // since 1.7.10
+            VersionLevel.spigotAPI() ? Bukkit.getServer().spigot().getConfig().getBoolean("settings.bungeecord") : false); // since 1.7.10
 
     @Locale
     @Node(path = "NoDoubleOnline.KickMessage")

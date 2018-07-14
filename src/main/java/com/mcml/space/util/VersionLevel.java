@@ -9,6 +9,7 @@ public class VersionLevel {
     private final static Version level = check();
     private static boolean paper;
     private static boolean spigot;
+    private static boolean spigotApi;
     private static boolean forge;
     private static String rawVersion;
     
@@ -116,13 +117,17 @@ public class VersionLevel {
         return spigot;
     }
     
+    public static boolean spigotAPI() {
+        return spigotApi;
+    }
+    
     public static boolean isForge() {
         return forge;
     }
     
     private static void checkType(String bukkitVersion) {
         bukkitVersion = bukkitVersion.toLowerCase();
-        boolean thermos = bukkitVersion.contains("thermos") || bukkitVersion.contains("contigo");
+        boolean thermos = spigotApi = bukkitVersion.contains("thermos") || bukkitVersion.contains("contigo");
         forge = thermos || bukkitVersion.contains("cauldron") || bukkitVersion.contains("mcpc") || bukkitVersion.contains("uranium");
         paper = bukkitVersion.contains("paper") || bukkitVersion.contains("taco") || bukkitVersion.contains("torch") || bukkitVersion.contains("akarin");
         try {
