@@ -13,6 +13,9 @@ import java.util.logging.Level;
 import java.util.logging.LogRecord;
 import java.util.logging.Logger;
 
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
+
 import org.apache.commons.lang.StringUtils;
 import org.bukkit.Bukkit;
 import org.bukkit.Sound;
@@ -36,24 +39,42 @@ import lombok.Getter;
  * @author SotrForgotten, Vlvxingze
  */
 public abstract class AzureAPI {
-    private static String loggerPrefix = "";
-    private static final int bukkitVDChunk = (Bukkit.getViewDistance() * 2) ^ 2 + 1;
-    private static final int bukkitVDBlock = Bukkit.getViewDistance() * 16;
+    /**
+     * Cached prefix for every message
+     */
+    private static String loggerPrefix;
     
-    public static ChunkCoord wrapCoord(int chunkX, int chunkZ) {
-        return new ChunkCoord(chunkX, chunkZ);
-    }
+    /**
+     * Server view distance (squared, both sides) in chunks
+     */
+    private static final int squaredViewDistanceChunk = (Bukkit.getViewDistance() * 2) ^ 2 + 1;
     
+    /**
+     * Server view distance (direct, single side) in blocks
+     */
+    private static final int viewDistanceBlock = Bukkit.getViewDistance() * 16;
+    
+    /**
+     * Cached server thread instance
+     */
     private static Thread serverThread;
     
-    public static Thread getMainThread() {
+    /**
+     * Get cached server thread instance, lookup it if not have a cache yet
+     * @return the main thread
+     */
+    @Nonnull
+    public static Thread serverThread() {
         if (serverThread != null) return serverThread;
         for (Thread t : Thread.getAllStackTraces().keySet()) {
             if (t.getName().equals("Server thread")) return (serverThread = t);
         }
         throw new AssertionError("Cannot find main thread!");
     }
-
+    
+    /**
+     * Coord stores chunk x and z as primitive int
+     */
     @Getter
     @EqualsAndHashCode
     @AllArgsConstructor
@@ -61,126 +82,239 @@ public abstract class AzureAPI {
         final int chunkX;
         final int chunkZ;
     }
-
-    public static int viewDistance(final Player player) {
+    
+    /**
+     * Creates a chunk coord by chunk x and z (performs >> 4 by a block pos)
+     * @param chunkX
+     * @param chunkZ
+     * @return chunk coord
+     */
+    public static ChunkCoord wrapCoord(int chunkX, int chunkZ) {
+        return new ChunkCoord(chunkX, chunkZ);
+    }
+    
+    /**
+     * Get the standard view distance from player, server value if current server not supporting custom value
+     * @param player
+     * @return
+     */
+    public static int viewDistance(Player player) {
         return customViewDistance(player) ? player.getViewDistance() : Bukkit.getViewDistance();
     }
 
-    public static int viewDistanceBlock(final Player player) {
+    /**
+     * Get view distance (direct, single side) in block from player, server value if current server not supporting custom value
+     * @param player
+     * @return
+     */
+    public static int viewDistanceBlock(Player player) {
         if (customViewDistance(player)) return player.getViewDistance() * 16;
-        return bukkitVDBlock;
+        return viewDistanceBlock;
     }
-
-    public static int viewDistanceChunk(final Player player) {
+    
+    /**
+     * Get view distance (squared, both sidess) in chunk from player, server value if current server not supporting custom value
+     * @param player
+     * @return has
+     */
+    public static int viewDistanceChunk(Player player) {
         if (customViewDistance(player)) return (player.getViewDistance() * 2) ^ 2 + 1;
-        return bukkitVDChunk;
+        return squaredViewDistanceChunk;
     }
-
-    public static boolean customViewDistance(final Player player) {
+    
+    /**
+     * Check if the player has a custom view distance from player, false if current server not supporting custom value
+     * @param player
+     * @return has
+     */
+    public static boolean customViewDistance(Player player) {
         if (player == null || !isPaper()) return false;
         return player.getViewDistance() != Bukkit.getViewDistance();
     }
-
-    public static String setPrefix(final String prefix) {
-        loggerPrefix = prefix;
+    
+    /**
+     * Set given prefix, the prefix will be appended before every message, set as null to reset.
+     * @param prefix
+     * @return colornized prefix
+     */
+    public static String setPrefix(String prefix) {
+        loggerPrefix = (prefix = StringUtils.replaceChars(prefix, '&', '§'));
         return prefix;
     }
-
+    
+    /**
+     * Reset the prefix, i.e set to null.
+     */
     public static void resetPrefix() {
-        loggerPrefix = "";
+        loggerPrefix = null;
     }
     
-    public static void fatal(final String context, final JavaPlugin plugin) {
+    /**
+     * Concat the prefix with the context in the fastest way (according from benchmarks)
+     * @param prefix
+     * @param context
+     * @return the prefixed context
+     */
+    public static String prefix(String prefix, String context) {
+        return prefix == null ? context : prefix.concat(context);
+    }
+    
+    /**
+     * Send a severe level message to console with global prefix and disable the plugin
+     * @param context
+     * @param plugin
+     */
+    public static void fatal(String context, JavaPlugin plugin) {
         fatal(loggerPrefix, context, plugin);
     }
     
-    public static void fatal(final String prefix, final String context, final JavaPlugin plugin) {
-        Bukkit.getLogger().severe(prefix + context);
+    /**
+     * Send a severe level message to console with given prefix and disable the plugin
+     * @param prefix
+     * @param context
+     * @param plugin
+     */
+    public static void fatal(String prefix, String context, JavaPlugin plugin) {
+        Bukkit.getLogger().severe(prefix(prefix, context));
         Bukkit.getPluginManager().disablePlugin(plugin);
     }
     
-    public static boolean isBlank(final String s) {
-        return s.equals("");
-    }
-    
-    public static void warn(final String context) {
+    /**
+     * Send a warning level message to console with global prefix
+     * @param context
+     */
+    public static void warn(String context) {
         warn(loggerPrefix, context);
     }
     
-    public static void warn(final String prefix, final String context) {
-        Bukkit.getLogger().log(Level.WARNING, prefix + context);
+    /**
+     * Send a warning level message to console with given prefix
+     * @param context
+     */
+    public static void warn(String prefix, String context) {
+        Bukkit.getLogger().log(Level.WARNING, prefix(prefix, context));
     }
     
-    public static void log(final String context) {
+    /**
+     * Send a info level message to console with global prefix
+     * @param context
+     */
+    public static void log(String context) {
         log(loggerPrefix, context);
     }
-
-    public static void log(final String prefix, final String context) {
-        Bukkit.getConsoleSender().sendMessage(prefix + context);
-    }
-
-    public static void log(final CommandSender sender, final String context) {
-        log(sender, loggerPrefix, context);
-    }
-
-    public static void log(final CommandSender sender, final String prefix, final String msg) {
-        if (isBlank(msg)) return;
-        sender.sendMessage(prefix + msg);
+    
+    /**
+     * Send a info level message to console with given prefix
+     * @param prefix
+     * @param context
+     */
+    public static void log(String prefix, String context) {
+        Bukkit.getConsoleSender().sendMessage(prefix(prefix, context));
     }
     
-    public static void bc(final String context) {
+    /**
+     * Send a message to the sender with global prefix
+     * @param sender
+     * @param context
+     */
+    public static void log(CommandSender sender, String context) {
+        log(sender, loggerPrefix, context);
+    }
+    
+    /**
+     * Send a message to the sender with given prefix
+     * @param sender
+     * @param prefix
+     * @param msg
+     */
+    public static void log(CommandSender sender, String prefix, String context) {
+        sender.sendMessage(prefix(prefix, context));
+    }
+    
+    /**
+     * Broadcast a message with global prefix
+     * @param context
+     */
+    public static void bc(String context) {
         bc(loggerPrefix, context);
     }
     
-    public static void bc(final String context, final String placeholder, final String placevalue) {
-        bc(loggerPrefix, StringUtils.replace(context, placeholder, placevalue));
+    /**
+     * Broadcast a message with global prefix and placing the placeholders
+     * @param context
+     */
+    public static void bc(String context, String placeholder, String value) {
+        bc(loggerPrefix, context, placeholder, value);
     }
     
-    public static void bc(final String prefix, final String context) {
-        Bukkit.broadcastMessage(prefix + context);
+    /**
+     * Broadcast a message with given prefix and placing the placeholders
+     * @param context
+     */
+    public static void bc(String prefix, String context, String placeholder, String value) {
+        bc(prefix, StringUtils.replace(context, placeholder, value));
     }
-
+    
+    /**
+     * Broadcast a message with given prefix
+     * @param context
+     */
+    public static void bc(String prefix, String context) {
+        Bukkit.broadcastMessage(prefix(prefix, context));
+    }
+    
+    /**
+     * Converts a time to standard (20 per seconds) ticks
+     * @param unit time unit
+     * @param duration
+     * @return in ticks
+     */
     public static long toTicks(TimeUnit unit, long duration) {
         return unit.toSeconds(duration) * 20;
     }
-
-    public static Logger createLogger(final String prefix) {
-        assert prefix != null;
-        return new PrefixedLogger(prefix);
-    }
-
-    protected static class PrefixedLogger extends Logger {
-        protected final String prefix;
-
-        protected PrefixedLogger(final String prefix) {
-            super(prefix, null);
-            this.prefix = prefix;
-            setParent(Logger.getGlobal());
-            setLevel(Level.INFO);
-        }
-
-        @Override
-        public void log(final LogRecord logRecord) {
-            if (this.isLoggable(logRecord.getLevel())) Bukkit.getConsoleSender().sendMessage(prefix + logRecord.getMessage());
-        }
-    }
-
+    
+    /**
+     * Creates a coord that wraps the given objects
+     * @param key
+     * @param value
+     * @return
+     */
     public static <K, V> Coord<K, V> wrapCoord(K key, V value) {
         return new Coord<K, V>(key, value);
     }
-
+    
+    /**
+     * Coord stores key and value data
+     * @param <K> first object
+     * @param <V> second object
+     */
     @Getter
+    @EqualsAndHashCode
     @AllArgsConstructor
     public static class Coord<K, V> {
         final K key;
         final V value;
     }
     
+    /**
+     * Creates a coord that wraps the given objects
+     * @param key
+     * @param value
+     * @param extra
+     * @return
+     */
     public static <K, V, E> Coord3<K, V, E> wrapCoord(K key, V value, E extra) {
         return new Coord3<K, V, E>(key, value, extra);
     }
     
+    /**
+     * Coord stores key and value, extra data
+     * @param <K> first object
+     * @param <V> second object
+     * @param <E> third object
+     */
     @Getter
+    @EqualsAndHashCode
     @AllArgsConstructor
     public static class Coord3<K, V, E> {
         final K key;
@@ -188,28 +322,55 @@ public abstract class AzureAPI {
         final E extra;
     }
     
+    /**
+     * Creates a case insensitive map
+     * @return
+     */
     public static <E> Map<String, E> newCaseInsensitiveMap() {
         return newCaseInsensitiveMap(false);
     }
     
+    /**
+     * Creates a case insensitive map, maybe thread safe
+     * @return
+     */
     public static <E> Map<String, E> newCaseInsensitiveMap(boolean concurrent) {
         return new CaseInsensitiveMap<E>(concurrent);
     }
-
+    
+    /**
+     * Creates a case insensitive set
+     * @return
+     */
     public static Set<String> newCaseInsensitiveSet() {
         return newCaseInsensitiveSet(false);
     }
     
+    /**
+     * Creates a case insensitive set, maybe thread safe
+     * @return
+     */
     public static Set<String> newCaseInsensitiveSet(boolean concurrent) {
         return Sets.newSetFromMap(AzureAPI.<Boolean>newCaseInsensitiveMap(concurrent));
     }
     
+    /**
+     * Returns elements from the start, the edge included, collects to a list with immutable capacity. Respects the standard list index.
+     * @param list
+     * @param start
+     * @param end
+     * @return
+     */
     public static <E> List<E> matchElements(List<E> list, int start) {
         return matchElements(list, start, list.size() - 1);
     }
     
     /**
-     * Returns elements between the start and end index, included the edge as well, collect to a list with capacity 'end - start + 1'
+     * Returns elements between the start and end index, the edge included, collects to a list with immutable capacity. Respects the standard list index.
+     * @param list
+     * @param start
+     * @param end
+     * @return
      */
     public static <E> List<E> matchElements(List<E> list, int start, int end) {
         List<E> t = Lists.newArrayListWithCapacity(end - start + 1);
@@ -219,52 +380,74 @@ public abstract class AzureAPI {
         return t;
     }
     
-    public static String contactBetween(List<String> list, int start, char spilt) {
-        return contactBetween(list, start, spilt);
-    }
-    
-    public static String contactBetween(List<String> list, int start, String spilt) {
-        return contactBetween(list, start, list.size() - 1, spilt);
-    }
-    
-    public static String contactBetween(List<String> list, int start, int end, char spilt) {
-        return contactBetween(list, start, end, spilt);
+    /**
+     * Contacts strings from the start, included the edge as well. Respects the standard list index.
+     */
+    public static String concatsBetween(List<String> list, int start, char spilt) {
+        return concatsBetween(list, start, spilt);
     }
     
     /**
-     * Contacts strings between the start and end index, included the edge as well, then spilt with the given string
+     * Contacts strings from the start, included the edge as well, then spilt by the given string. Respects the standard list index.
      */
-    public static String contactBetween(List<String> list, int start, int end, String spilt) {
-        String r = "";
+    public static String concatsBetween(List<String> list, int start, String spilt) {
+        return concatsBetween(list, start, list.size() - 1, spilt);
+    }
+    
+    /**
+     * Contacts strings between the start and end index, included the edge as well, then spilt by the given char. Respects the standard list index.
+     */
+    public static String concatsBetween(List<String> list, int start, int end, char spilt) {
+        return concatsBetween(list, start, end, spilt);
+    }
+    
+    /**
+     * Contacts strings between the start and end index, included the edge as well, then spilt by the given string. Respects the standard list index.
+     */
+    public static String concatsBetween(List<String> list, int start, int end, String spilt) {
+        String concated = "";
         for (; start <= end; start++) {
-            r = r.concat(list.get(start) + (start == end ? "" : spilt));
+            concated = concated.concat(list.get(start).concat(start == end ? "" : spilt));
         }
-        return r;
+        return concated;
     }
     
-    
-    @SuppressWarnings("serial")
-    public static class ChainArrayList<E> extends ArrayList<E> {
-        public ChainArrayList<E> to(E e) {
-            add(e);
-            return this;
-        }
-    }
-    
+    /**
+     * Check whether the sender has specified permission, ignore ops
+     * @param sender
+     * @param perm
+     * @return
+     */
     public static boolean hasPerm(CommandSender sender, String perm) {
         return sender.hasPermission(perm);
     }
     
+    /**
+     * Check whether the player has specified permission, false if cannot find, ignore ops
+     * @param username
+     * @param perm
+     * @return
+     */
     public static boolean hasPerm(String username, String perm) {
         Player player = Bukkit.getPlayer(username);
-        if (player == null) return false;
-        return player.hasPermission(perm);
+        return player == null ? false : player.hasPermission(perm);
     }
     
+    /**
+     * Check whether the sender has specified permission, ignore ops
+     * @param sender
+     * @param perm
+     * @return
+     */
     public static boolean hasPerm(CommandSender sender, Permission perm) {
         return sender.hasPermission(perm);
     }
     
+    /**
+     * Try to load a config, creates an empty one if not exist
+     * @param file
+     * @return
+     */
     public static FileConfiguration loadOrCreateConfiguration(File file) {
         try {
             file = createDirectories(file);
@@ -276,73 +459,104 @@ public abstract class AzureAPI {
         return YamlConfiguration.loadConfiguration(file);
     }
     
+    /**
+     * Fixes a file that name contains path, transfer them to its path
+     * @param file
+     * @return
+     */
     public static File fixesFilePath(File file) {
          return StringUtils.contains(file.getName(), "/") || StringUtils.contains(file.getName(), "\\") ?
                  new File(
-                         StringUtils.substringBeforeLast(fixesPath(file.getPath()), "\\") + "\\" + StringUtils.substringBeforeLast(fixesPath(file.getName()), "\\"), // fixed patch
-                         StringUtils.substringAfterLast(fixesPath(file.getName()), "\\")) // fixed name
+                         StringUtils.substringBeforeLast(fixesPathSeparator(file.getPath()), "\\") + "\\" + StringUtils.substringBeforeLast(fixesPathSeparator(file.getName()), "\\"), // fixed patch
+                         StringUtils.substringAfterLast(fixesPathSeparator(file.getName()), "\\")) // fixed name
                 : file;
     }
     
-    public static String fixesPath(String path) {
+    /**
+     * Replaces '/' to '\'
+     * @param path
+     * @return
+     */
+    public static String fixesPathSeparator(String path) {
         return StringUtils.replace(path, "/", "\\");
-   }
+    }
     
+    /**
+     * Try to create the parent directories for the file
+     * @param file
+     * @return
+     */
     public static File createDirectories(File file) {
         file = fixesFilePath(file);
-        new File(StringUtils.substringBeforeLast(fixesPath(file.getPath()), "\\")).mkdirs();
+        new File(StringUtils.substringBeforeLast(fixesPathSeparator(file.getPath()), "\\")).mkdirs();
         return file;
     }
     
-    public static boolean restartServer(final String message){
-        if (VersionLevel.isSpigot()) {
-            AzureAPI.log("开始以理由 " + message +"重启服务器...");
-            PlayerList.forEach(new Predicate<Player>() {
-                @Override
-                public boolean apply(Player player) {
-                    player.kickPlayer(loggerPrefix + message);
-                    return true;
-                }
-            });
-            org.spigotmc.RestartCommand.restart();
-            return true;
-        } else {
-            AzureAPI.log("请重启您的服务器");
-            return false;
-        }
+    /**
+     * Try to restart server, false if not supports
+     * @param message
+     * @return
+     */
+    public static boolean restartServer(String message){
+        if (!VersionLevel.isSpigot()) return false;
+        PlayerList.forEach(new Predicate<Player>() {
+            @Override
+            public boolean apply(Player player) {
+                player.kickPlayer(prefix(loggerPrefix, message));
+                return true;
+            }
+        });
+        org.spigotmc.RestartCommand.restart();
+        return true;
     }
     
+    /**
+     * Plays a private sound at the player location
+     * @param player
+     * @param sound
+     */
     public static void playSound(Player player, Sound sound) {
         playSound(player, sound, false);
     }
     
+    /**
+     * Plays a public sound at the player location
+     * @param player
+     * @param sound
+     */
     public static void playSound(Player player, Sound sound, boolean broadcast) {
         if (broadcast) {
-            player.getWorld().playSound(player.getLocation(), sound, 1F, 1F);
+            player.getWorld().playSound(player.getLocation(), sound, 10F, 1F);
         } else {
-            player.playSound(player.getLocation(), sound, 1F, 1F);
+            player.playSound(player.getLocation(), sound, 10F, 1F);
         }
     }
     
+    /**
+     * Try to colornize the element, no-op if not supports
+     * @param element
+     * @param type
+     * @return
+     */
     @SuppressWarnings("unchecked")
     public static <E> E colorzine(E element, Class<E> type) {
-        if (element instanceof String) return (E) ((String) element).replace('&', '§');
+        if (element instanceof String) return (E) StringUtils.replaceChars((String) element, '&', '§');
         
         if (element instanceof String[]) {
             String[] array = (String[]) element;
-            for (int i = 0; i < array.length; i++) array[i] = array[i].replace('&', '§');
+            for (int i = 0; i < array.length; i++) array[i] = StringUtils.replaceChars(array[i], '&', '§');
             return (E) array;
         }
         
         if (element instanceof List) {
             List<String> c = (List<String>) element;
-            for (String each : c) c.set(c.indexOf(each), each.replace('&', '§'));
+            for (String each : c) c.set(c.indexOf(each), StringUtils.replaceChars(each, '&', '§'));
             return (E) c;
         }
         
         if (element instanceof Set) {
             Set<String> c = (Set<String>) element;
-            for (String each : c) c.add(each.replace('&', '§'));
+            for (String each : c) c.add(StringUtils.replaceChars(each, '&', '§'));
             return (E) c;
         }
         
