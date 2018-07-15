@@ -265,19 +265,35 @@ public abstract class AzureAPI {
         return sender.hasPermission(perm);
     }
     
-    public static FileConfiguration loadOrCreateFile(File file) {
-        if (!file.exists()) {
-            try {
-                file.mkdirs();
-                file.createNewFile();
-            } catch (IOException ex) {
-                AzureAPI.fatal("Cannot save configuration '" + file.getName() + "', file blocked?", EscapeLag.plugin);
-                ex.printStackTrace();
-            }
+    public static FileConfiguration loadOrCreateConfiguration(File file) {
+        try {
+            file = createDirectories(file);
+            file.createNewFile();
+        } catch (IOException ex) {
+            AzureAPI.fatal("Cannot create file '" + file.getPath() + "', blocked?", EscapeLag.plugin);
+            ex.printStackTrace();
         }
         return YamlConfiguration.loadConfiguration(file);
     }
-
+    
+    public static File fixesFilePath(File file) {
+         return StringUtils.contains(file.getName(), "/") || StringUtils.contains(file.getName(), "\\") ?
+                 new File(
+                         StringUtils.substringBeforeLast(fixesPath(file.getPath()), "\\") + "\\" + StringUtils.substringBeforeLast(fixesPath(file.getName()), "\\"), // fixed patch
+                         StringUtils.substringAfterLast(fixesPath(file.getName()), "\\")) // fixed name
+                : file;
+    }
+    
+    public static String fixesPath(String path) {
+        return StringUtils.replace(path, "/", "\\");
+   }
+    
+    public static File createDirectories(File file) {
+        file = fixesFilePath(file);
+        new File(StringUtils.substringBeforeLast(fixesPath(file.getPath()), "\\")).mkdirs();
+        return file;
+    }
+    
     public static boolean restartServer(final String message){
         if (VersionLevel.isSpigot()) {
             AzureAPI.log("开始以理由 " + message +"重启服务器...");

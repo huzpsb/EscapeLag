@@ -56,7 +56,7 @@ import com.mcml.space.patches.NegativeItemPatch;
 import com.mcml.space.patches.NetherHopperDupePatch;
 import com.mcml.space.patches.RailsMachine;
 import com.mcml.space.util.AzureAPI;
-import com.mcml.space.util.AzureAPI.Coord3;
+import com.mcml.space.util.AzureAPI.Coord;
 import com.mcml.space.util.PlayerList;
 import com.mcml.space.util.Ticker;
 import com.mcml.space.util.Configurable;
@@ -81,7 +81,7 @@ public class EscapeLag extends JavaPlugin {
     public final static String CONFIG_OPTIMIZE = "ClearLagConfig.yml";
     public final static String CONFIG_OPTIMIZE_DUPE_FIXES = "patches/dupe_fixes.yml";
     
-    public final static Map<String, Coord3<File, FileConfiguration, Class<? extends Configurable>>> configurations = Maps.newHashMap(); // File name as key
+    public final static Map<String, Coord<File, FileConfiguration>> configurations = Maps.newHashMap(); // File name as key
     
     public final static String GLOBAL_PERMS = "escapelag.admin";
     
@@ -184,8 +184,8 @@ public class EscapeLag extends JavaPlugin {
     
     @Override
     public void onDisable() {
-        AzureAPI.warn("Plugin has been disabled.");
-        AzureAPI.warn("Thanks for using!");
+        AzureAPI.log("Plugin has been disabled.");
+        AzureAPI.log("Thanks for using!");
     }
     
     public static File getPluginFile() {
@@ -200,10 +200,11 @@ public class EscapeLag extends JavaPlugin {
         return false;
     }
     
-    private File configsFile(String name, Class<? extends Configurable> provider) {
+    private Coord<File, FileConfiguration> configsFile(String name) {
         File configFile = new File(this.getDataFolder(), name);
-        configurations.put(name, AzureAPI.<File, FileConfiguration, Class<? extends Configurable>>wrapCoord(configFile, AzureAPI.loadOrCreateFile(configFile), provider));
-        return configFile;
+        Coord<File, FileConfiguration> coord = AzureAPI.<File, FileConfiguration>wrapCoord(configFile, AzureAPI.loadOrCreateConfiguration(configFile));
+        configurations.put(name, coord);
+        return coord;
     }
     
     public void setupConfigs() {
@@ -211,31 +212,41 @@ public class EscapeLag extends JavaPlugin {
         if (StringUtils.startsWithIgnoreCase(Core.lang, "zh_")) locale = "中文";
         EscapeLag.plugin.saveResource("documents/Guide-" + locale + ".txt", true);
         
+        // Core
         setupConfig(CONFIG_MAIN, Core.class);
-        setupConfig(CONFIG_PATCH, Patches.class);
-        setupConfig(CONFIG_OPTIMIZE, Optimizations.class);
+        
+        // Features
         setupConfig(CONFIG_FUNCTION, Features.class);
+        
+        // Patches
+        setupConfig(CONFIG_PATCH, Patches.class);
         setupConfig(CONFIG_OPTIMIZE_DUPE_FIXES, PatchesDupeFixes.class);
+        
+        // Optimizations
+        setupConfig(CONFIG_OPTIMIZE, Optimizations.class);
     }
     
-    public void setupConfig(String configIdentifier, Class<? extends Configurable> provider) {
+    public boolean setupConfig(String configIdentifier, Class<? extends Configurable> provider) {
         configurations.remove(configIdentifier);
-        File configFile = configsFile(configIdentifier, provider);
+        Coord<File, FileConfiguration> configCoord = configsFile(configIdentifier);
         
         try {
-            Configurable.restoreNodes(AzureAPI.wrapCoord(configFile, AzureAPI.loadOrCreateFile(configFile)), provider);
+            Configurable.restoreNodes(configCoord, provider);
         } catch (IllegalArgumentException | IllegalAccessException illegal) {
-            AzureAPI.fatal("Cannot setup configuration '" + configFile.getName() + "', wrong format?", this);
+            AzureAPI.fatal("Cannot setup configuration '" + configCoord.getKey().getName() + "', wrong format?", this);
             illegal.printStackTrace();
+            return false;
         } catch (IOException io) {
-            AzureAPI.fatal("Cannot load configuration '" + configFile.getName() + "', file blocked?", this);
+            AzureAPI.fatal("Cannot load configuration '" + configCoord.getKey().getName() + "', file blocked?", this);
             io.printStackTrace();
+            return false;
         }
         
         if (configIdentifier.equals(CONFIG_MAIN)) {
             AzureAPI.setPrefix(ChatColor.translateAlternateColorCodes('&', Core.PluginPrefix) + ChatColor.RESET + " > ");
             LocalizedHelper.init();
         }
+        return true;
     }
     
     @SneakyThrows
@@ -245,7 +256,7 @@ public class EscapeLag extends JavaPlugin {
         long heapmb = Runtime.getRuntime().maxMemory() / 1024 / 1024;
         File BukkitFile = new File("bukkit.yml");
         if (BukkitFile.exists()) {
-            FileConfiguration bukkit = AzureAPI.loadOrCreateFile(BukkitFile);
+            FileConfiguration bukkit = AzureAPI.loadOrCreateConfiguration(BukkitFile);
             File backupBukkitFile = new File("backup_bukkit.yml");
             if (backupBukkitFile.exists() == false) {
                 backupBukkitFile.createNewFile();
@@ -265,7 +276,7 @@ public class EscapeLag extends JavaPlugin {
         }
         File SpigotFile = new File("spigot.yml");
         if (SpigotFile.exists()) {
-            FileConfiguration spigot = AzureAPI.loadOrCreateFile(SpigotFile);
+            FileConfiguration spigot = AzureAPI.loadOrCreateConfiguration(SpigotFile);
             File backupSpigotFile = new File("backup_spigot.yml");
             if (backupSpigotFile.exists() == false) {
                 backupSpigotFile.createNewFile();
@@ -311,7 +322,7 @@ public class EscapeLag extends JavaPlugin {
         }
         File PaperFile = new File("paper.yml");
         if (PaperFile.exists()) {
-            FileConfiguration paper = AzureAPI.loadOrCreateFile(PaperFile);
+            FileConfiguration paper = AzureAPI.loadOrCreateConfiguration(PaperFile);
             File backupPaperFile = new File("backup_paper.yml");
             if (backupPaperFile.exists() == false) {
                 backupPaperFile.createNewFile();
@@ -329,7 +340,7 @@ public class EscapeLag extends JavaPlugin {
             }
         }
         if (BukkitFile.exists()) {
-            FileConfiguration bukkit = AzureAPI.loadOrCreateFile(BukkitFile);
+            FileConfiguration bukkit = AzureAPI.loadOrCreateConfiguration(BukkitFile);
             if (bukkit.getInt("EscapeLag.SetStep") == 1) {
                 bukkit.set("EscapeLag.SetStep", 2);
                 try {

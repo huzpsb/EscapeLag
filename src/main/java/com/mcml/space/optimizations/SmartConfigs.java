@@ -28,7 +28,7 @@ public class SmartConfigs { // Not ready for use now
     
     @SneakyThrows
     private static FileConfiguration loadAndBackup(File file) {
-        File backup = new File("backup_configurations/" + file.getName());
+        File backup = new File("backup_configurations/", file.getName());
         backup.createNewFile();
         
         FileConfiguration configuration = YamlConfiguration.loadConfiguration(file);

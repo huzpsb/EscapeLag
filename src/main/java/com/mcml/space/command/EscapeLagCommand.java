@@ -140,7 +140,7 @@ public class EscapeLagCommand {
 					}
 					if (args[1].equalsIgnoreCase("dump")) {
 						sender.sendMessage("§a开始 dump 内存堆！这可能会花费一些时间并导致服务器卡住！");
-						File dumpedFile = new File(EscapeLag.plugin.getDataFolder(),"heap.hprof");
+						File dumpedFile = new File(EscapeLag.getPluginFile().getParentFile(),"heap.hprof");
 						if(dumpedFile.exists()) {
 							dumpedFile.delete();
 						}
