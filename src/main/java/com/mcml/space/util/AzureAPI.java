@@ -497,7 +497,7 @@ public abstract class AzureAPI {
      * @param message
      * @return
      */
-    public static boolean restartServer(String message){
+    public static boolean restartServer(final String message){
         if (!VersionLevel.isSpigot()) return false;
         PlayerList.forEach(new Predicate<Player>() {
             @Override
