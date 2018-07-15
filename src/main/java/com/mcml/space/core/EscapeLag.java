@@ -29,6 +29,7 @@ import com.mcml.space.features.SpawnerController;
 import com.mcml.space.features.UpgradeNotifier;
 import com.mcml.space.optimizations.AutoSave;
 import com.mcml.space.optimizations.ChunkKeeper;
+import com.mcml.space.optimizations.ChunkUnloader;
 import com.mcml.space.optimizations.EmptyRestart;
 import com.mcml.space.optimizations.FireSpreadSlacker;
 import com.mcml.space.optimizations.NoCrowdEntity;
@@ -171,6 +172,7 @@ public class EscapeLag extends JavaPlugin {
         RedstoneSlacker.init(this);
         ChunkKeeper.init(this);
         TimerGarbageCollect.init(this);
+        ChunkUnloader.init(this);
         
         Bukkit.getPluginManager().registerEvents(new UnloadClear(), this);
         Bukkit.getPluginManager().registerEvents(new AutoSave(), this);

@@ -42,16 +42,16 @@ public class ChunkUnloader implements Listener {
 	
 	@EventHandler(priority = EventPriority.HIGHEST, ignoreCancelled = true)
 	public void onTeleport(PlayerTeleportEvent evt) {
-	    handleWorldChunks(evt.getFrom(), evt.getPlayer(), 0);
+	    handleWorldChunks(evt.getFrom(), evt.getPlayer());
 	}
 	
 	@EventHandler
     public void onQuit(PlayerQuitEvent evt) {
-        handleWorldChunks(evt.getPlayer().getLocation(), evt.getPlayer(), 1); // In case disconnect post to main thread
+        handleWorldChunks(evt.getPlayer().getLocation(), evt.getPlayer());
     }
 	
-	private static void handleWorldChunks(final Location from, final Player player, int delayedTicks) {
-	    Bukkit.getScheduler().runTaskLater(EscapeLag.plugin, new Runnable() {
+	private static void handleWorldChunks(final Location from, final Player player) {
+	    Bukkit.getScheduler().runTask(EscapeLag.plugin, new Runnable() {
             @Override
             public void run() {
                 World world = from.getWorld();
@@ -64,7 +64,7 @@ public class ChunkUnloader implements Listener {
                     unloadChunksAt(from, player);
                 }
             }
-        }, delayedTicks);
+        });
 	}
 	
 	public static void unloadChunksAt(Location from, Player player) {
