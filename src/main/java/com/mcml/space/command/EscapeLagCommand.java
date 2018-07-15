@@ -2,6 +2,12 @@ package com.mcml.space.command;
 
 import java.io.File;
 import java.io.IOException;
+import java.text.BreakIterator;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
+
 import org.bukkit.Bukkit;
 import org.bukkit.Chunk;
 import org.bukkit.command.Command;
@@ -21,6 +27,8 @@ import com.mcml.space.util.Ticker;
 import com.mcml.space.util.AzureAPI.ChunkCoord;
 
 public class EscapeLagCommand {
+    private final static DateFormat timestamp_format = new SimpleDateFormat("yyyyMMddHHmmss"); 
+    
 	public static boolean processCommand(CommandSender sender, Command cmd, String label, String[] args) {
 		if (label.equalsIgnoreCase("el")) {
 			sender.sendMessage(LocalizedHelper.PluginPrefixLine);
@@ -140,10 +148,9 @@ public class EscapeLagCommand {
 					}
 					if (args[1].equalsIgnoreCase("dump")) {
 						sender.sendMessage("§a开始 dump 内存堆！这可能会花费一些时间并导致服务器卡住！");
-						File dumpedFile = new File(EscapeLag.getPluginFile().getParentFile(),"heap.hprof");
-						if(dumpedFile.exists()) {
-							dumpedFile.delete();
-						}
+						File rootDir = EscapeLag.getPluginFile().getParentFile().getParentFile();
+						File dumpedFile = new File(rootDir, "heap_" + timestamp_format.format(System.currentTimeMillis()) + ".hprof");
+						if (dumpedFile.exists()) dumpedFile.delete();
 						HeapDumper.dumpHeap(dumpedFile);
 						sender.sendMessage("§adump已经完成，储存为: " + dumpedFile);
 					}
