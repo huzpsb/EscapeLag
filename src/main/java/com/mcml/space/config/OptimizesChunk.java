@@ -31,5 +31,8 @@ public abstract class OptimizesChunk extends Configurable {
     
     @Node("settings.delayed-chunk-keeper.max-unload-chunks-per-tick")
     public static int delayedChunkKeeper_maxUnloadChunksPerTick = 30;
+    
+    @Node("settings.delayed-chunk-keeper.post-skip-ticks")
+    public static int delayedChunkKeeper_postSkipTicks = 1;
 }
  

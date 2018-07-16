@@ -28,7 +28,7 @@ public class DelayedChunkKeeper implements Listener {
     
     public static void init(Plugin plugin) {
         if (!OptimizesChunk.enableDelayedChunkKeeper
-                || (delayedChunkKeeper_maxUnloadChunksPerTick == -1 && isPaper())) return;
+                && (delayedChunkKeeper_maxUnloadChunksPerTick <= 0 || isPaper())) return;
         Bukkit.getPluginManager().registerEvents(new DelayedChunkKeeper(), plugin);
     }
     
@@ -41,13 +41,13 @@ public class DelayedChunkKeeper implements Listener {
         Chunk chunk = evt.getChunk();
         ChunkCoord coord = AzureAPI.wrapCoord(chunk.getX(), chunk.getZ());
         
-        if (delayedChunkKeeper_maxUnloadChunksPerTick != -1) {
+        if (delayedChunkKeeper_maxUnloadChunksPerTick <= 0) {
             if (currentTick == Ticker.currentTick()) {
                 if (++unloadedChunks > delayedChunkKeeper_maxUnloadChunksPerTick
                         && (isPaper() && !DEALYED_CHUNKS.contains(coord))) {
-                    Bukkit.getScheduler().runTask(EscapeLag.plugin, () -> {
+                    Bukkit.getScheduler().runTaskLater(EscapeLag.plugin, () -> {
                         if (world.isChunkLoaded(chunk) && !world.isChunkInUse(chunk.getX(), chunk.getZ())) chunk.unload();
-                    });
+                    }, OptimizesChunk.delayedChunkKeeper_postSkipTicks);
                     evt.setCancelled(true);
                     return;
                 }
