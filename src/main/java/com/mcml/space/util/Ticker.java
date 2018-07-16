@@ -45,14 +45,14 @@ public class Ticker {
             }
         }, 0L, 1L);
         
-        new Timer().scheduleAtFixedRate(new TimerTask() {
+        Bukkit.getScheduler().runTaskTimerAsynchronously(plugin, new Runnable() {
             @Override
-            public void run() {
+            public void run(){
                 // to diff real-time ticks
                 realTimeTicks = (int) (totalTicks - cachedTotalTicks);
                 cachedTotalTicks = totalTicks;
             }
-        }, 0L, 1000L);
+        }, 0L, 20L);
         
         AzureAPI.log("TPS计算与监控核心模块已启用");
     }
