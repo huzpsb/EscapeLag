@@ -1,42 +1,53 @@
 package com.mcml.space.config;
 
+import java.util.Map;
 import java.util.Set;
 
 import com.google.common.collect.Sets;
 import com.mcml.space.util.Configurable;
 
 public abstract class PatchesDupeFixes extends Configurable {
-    @Node(path = "config-version")
+    @Node("config-version")
     public static long configVersion = 1;
     
     // Rails machine
-    @Node(path = "settings.rails-machine.enable-fixes")
+    @Node("settings.rails-machine.enable-fixes")
     public static boolean enableRailsMachineFixes = true;
     
     // Nether hoppers
-    @Node(path = "settings.nether-hoppers.enable-fixes")
+    @Node("settings.nether-hoppers.enable-fixes")
     public static boolean enableNetherHoppersDupeFixes = true;
     
-    @Node(path = "settings.nether-hoppers.worlds.restrict-environment")
+    @Node("settings.nether-hoppers.worlds.restrict-environment")
     public static boolean netherHoppersDupeFixes_RestrictEnv = true;
     
-    @Node(path = "settings.nether-hoppers.worlds.enable-worlds")
+    @Node("settings.nether-hoppers.worlds.enable-worlds")
     public static Set<String> netherHoppersDupeFixes_Worlds = Sets.newHashSet();
     
     // Negative item
-    @Node(path = "settings.negative-amount-item.enable-fixes")
+    @Node("settings.negative-amount-item.enable-fixes")
     public static boolean enableNegativeItemDupeFixes = false;
     
-    @Node(path = "settings.negative-amount-item.notify-message")
+    @Node("settings.negative-amount-item.notify-message")
     public static String negativeItemDupeFixes_NotifyMesssage = "&b发现 &f$player &b获取到负数物品, 已执行清理!";
     
-    @Node(path = "settings.negative-amount-item.actions.removes-item.enable")
+    @Node("settings.negative-amount-item.actions.removes-item.enable")
     public static boolean negativeItemDupeFixes_RemovesItem = false;
     
-    @Node(path = "settings.negative-amount-item.actions.removes-item.fliter-drops")
+    @Node("settings.negative-amount-item.actions.removes-item.fliter-drops")
     public static boolean negativeItemDupeFixes_RemovesItem_FliterDrops = true;
     
-    @Node(path = "settings.negative-amount-item.actions.fliter-players-inv")
+    @Node("settings.negative-amount-item.actions.fliter-players-inv")
     public static boolean negativeItemDupeFixes_FliterPlayersInv = true;
     
+    // Portal container
+    @Node("settings.portal-container.enable-fixes")
+    public static boolean enablePortalContainerDupeFixes = true;
+    
+    // Cancelled placement
+    @Node("settings.cancelled-placement.enable-fixes")
+    public static boolean enableCancelledPlacementDupeFixes = true;
+    
+    @Node("settings.cancelled-placement.clears-radius")
+    public static Map<String, Integer> cancelledPlacementDupeFixes_ClearsRadius = DefaultOptions.droppedItemClearsRadius();
 }

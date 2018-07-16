@@ -28,7 +28,7 @@ public abstract class Configurable {
     @Documented
     @Retention(RetentionPolicy.RUNTIME)
     protected static @interface Node {
-        String path();
+        String value();
     }
 
     @Documented
@@ -46,7 +46,7 @@ public abstract class Configurable {
             Object defaultValue = field.get(null);
             int mod = field.getModifiers();
             if (Modifier.isStatic(mod) && !Modifier.isFinal(mod)) {
-                String path = node.path();
+                String path = node.value();
                 Object configuredValue = config.get(path);
                 
                 if (configuredValue == null) {

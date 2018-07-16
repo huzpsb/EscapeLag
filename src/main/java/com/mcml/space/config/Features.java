@@ -8,76 +8,76 @@ import com.mcml.space.config.DefaultOptions.TypedSet;
 import com.mcml.space.util.Configurable;
 
 public abstract class Features extends Configurable {
-	@Node(path = "Monitor.enable")
+	@Node("Monitor.enable")
     public static boolean Monitorenable = true;
 	
-	@Node(path = "Monitor.ThreadLagWarning")
+	@Node("Monitor.ThreadLagWarning")
     public static boolean MonitorThreadLagWarning = true;
 	
-	@Node(path = "Monitor.PluginLagWarning.enable")
+	@Node("Monitor.PluginLagWarning.enable")
     public static boolean MonitorPluginLagWarningenable = true;
 	
-	@Node(path = "Monitor.PluginLagWarning.Period")
+	@Node("Monitor.PluginLagWarning.Period")
     public static long MonitorPluginLagWarningPeriod = 1000L;
 	
-	@Node(path = "PluginErrorMessageBlocker.enable")
+	@Node("PluginErrorMessageBlocker.enable")
 	public static boolean PluginErrorMessageBlockerenable = true;
 	
-	@Node(path = "PluginErrorMessageBlocker.Message")
+	@Node("PluginErrorMessageBlocker.Message")
 	public static Set<String> PluginErrorMessageBlockerMessage = DefaultOptions.blockedErrorMessages();
 	
-	@Node(path = "PluginErrorMessageLogger.enable")
+	@Node("PluginErrorMessageLogger.enable")
 	public static boolean PluginErrorMessageLoggerenable = false;
 	
-	@Node(path = "AntiSpam.enable")
+	@Node("AntiSpam.enable")
 	public static boolean AntiSpamenable = true;
 
-	@Node(path = "AntiSpam.Period.Period")
+	@Node("AntiSpam.Period.Period")
 	public static double AntiSpamPeriodPeriod = 1.5;
 
 	@Locale
-	@Node(path = "AntiSpam.Period.WarnMessage")
+	@Node("AntiSpam.Period.WarnMessage")
 	public static String AntiSpamPeriodWarnMessage = "§c请慢点说话，别激动嘛！ _(:з」∠)_";
 	
-	@Node(path = "AntiSpam.Dirty.enable")
+	@Node("AntiSpam.Dirty.enable")
     public static boolean enableAntiDirty = true;
 
-	@Node(path = "AntiSpam.Dirty.List")
+	@Node("AntiSpam.Dirty.List")
     public static Map<String, Boolean> AntiSpamDirtyList = DefaultOptions.spamMessages();
 	
-	@Node(path = "AntiSpam.Dirty.white-list")
+	@Node("AntiSpam.Dirty.white-list")
     public static Set<String> AntiSpamDirtyWhitelist = DefaultOptions.spamWhitelist();
 
-	@Node(path = "NoEggChangeSpawner.enable")
+	@Node("NoEggChangeSpawner.enable")
 	public static boolean preventSpawnerModify = true;
 
-	@Node(path = "ProtectFarm.enable")
+	@Node("ProtectFarm.enable")
 	public static boolean ProtectFarmenable = true;
 	
-	@Node(path = "ProtectFarm.onlyPlayer")
+	@Node("ProtectFarm.onlyPlayer")
     public static boolean ProtectFarmOnlyPlayer = false;
 
 	@Locale
-	@Node(path = "AntiSpam.Dirty.WarnMessage")
+	@Node("AntiSpam.Dirty.WarnMessage")
 	public static String AntiSpamDirtyWarnMessage = "§c什么事情激动得你都想骂人啦？";
 
-	@Node(path = "AutoRespawn.enable")
+	@Node("AutoRespawn.enable")
 	public static boolean canAutoRespawn = true;
 
-	@Node(path = "AutoRespawn.RespawnTitle.enable")
+	@Node("AutoRespawn.RespawnTitle.enable")
 	public static boolean sendTitleAutoRespawn = false;
 
 	@Locale
-	@Node(path = "AutoRespawn.RespawnTitle.MainMessage")
+	@Node("AutoRespawn.RespawnTitle.MainMessage")
 	public static String titleAutoRespawn = "§e你死了！";
 
 	@Locale
-	@Node(path = "AutoRespawn.RespawnTitle.MiniMessage")
+	@Node("AutoRespawn.RespawnTitle.MiniMessage")
 	public static String subtitleAutoRespawn = "§c已为您自动复活！";
 
-	@Node(path = "NoExplode.enable")
+	@Node("NoExplode.enable")
 	public static boolean controlExplode = true;
 
-	@Node(path = "NoExplode.Type")
+	@Node("NoExplode.Type")
 	public static String explodeControlType = "NoBlockBreak";
 }

@@ -13,14 +13,14 @@ import org.bukkit.event.player.PlayerTeleportEvent.TeleportCause;
 import org.bukkit.inventory.InventoryHolder;
 import org.bukkit.plugin.Plugin;
 import com.google.common.collect.Sets;
-import com.mcml.space.config.Patches;
+import com.mcml.space.config.PatchesDupeFixes;
 import com.mcml.space.core.EscapeLag;
 
 public class ContainerPortalPatch implements Listener {
     private final static Set<InventoryHolder> CONTAINER_INV = Sets.newSetFromMap(new java.util.IdentityHashMap<InventoryHolder, Boolean>(4));
     
     public static void init(Plugin plugin) {
-        if(!Patches.fixPortalInfItem) return;
+        if(!PatchesDupeFixes.enablePortalContainerDupeFixes) return;
         Bukkit.getPluginManager().registerEvents(new ContainerPortalPatch(), plugin);
     }
     
@@ -62,7 +62,6 @@ public class ContainerPortalPatch implements Listener {
     }
     
     private static boolean handleContainer(InventoryHolder holder) {
-        if (holder.getInventory().getContents() == null) return false; // Skip empty minecarts
         CONTAINER_INV.add(holder);
         for (HumanEntity player : holder.getInventory().getViewers()) {
             player.closeInventory();

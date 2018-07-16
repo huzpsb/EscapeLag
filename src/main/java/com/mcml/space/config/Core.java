@@ -3,15 +3,15 @@ package com.mcml.space.config;
 import com.mcml.space.util.Configurable;
 
 public abstract class Core extends Configurable {
-    @Node(path = "PluginPrefix")
+    @Node("PluginPrefix")
     public static String PluginPrefix = "&bEscapeLag";
 
-    @Node(path = "AutoUpdate")
+    @Node("AutoUpdate")
     public static boolean AutoUpdate = true;
 
-    @Node(path = "internal-version")
+    @Node("internal-version")
     public static String internalVersion = String.valueOf("%BUILD_NUMBER%");
 
-    @Node(path = "language")
+    @Node("language")
     public static String lang = "zh_cn";
 }

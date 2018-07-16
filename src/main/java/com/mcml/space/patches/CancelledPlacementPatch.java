@@ -1,4 +1,3 @@
-
 package com.mcml.space.patches;
 
 import org.bukkit.Bukkit;
@@ -12,11 +11,14 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.block.BlockPlaceEvent;
 import org.bukkit.plugin.Plugin;
 
-import com.mcml.space.config.Patches;
+import com.mcml.space.config.PatchesDupeFixes;
+import static com.mcml.space.config.PatchesDupeFixes.cancelledPlacementDupeFixes_ClearsRadius;
+
+import java.util.Map;
 
 public class CancelledPlacementPatch implements Listener {
     public static void init(Plugin plugin) {
-        if (!Patches.AntiInfSuagrenable) return;
+        if (!PatchesDupeFixes.enableCancelledPlacementDupeFixes) return;
         Bukkit.getPluginManager().registerEvents(new CancelledPlacementPatch(), plugin);
     }
 	
@@ -25,7 +27,8 @@ public class CancelledPlacementPatch implements Listener {
         if(!evt.isCancelled()) return;
         
         Player player = evt.getPlayer();
-        for (Entity drop : player.getNearbyEntities(2, 2, 2)) {
+        Map<String, Integer> radius = cancelledPlacementDupeFixes_ClearsRadius;
+        for (Entity drop : player.getNearbyEntities(radius.get("x"), radius.get("y"), radius.get("z"))) {
             if (drop.getType() != EntityType.DROPPED_ITEM) continue;
             
             org.bukkit.entity.Item item = (org.bukkit.entity.Item) drop;

@@ -5,127 +5,127 @@ import java.util.Set;
 import com.mcml.space.util.Configurable;
 
 public abstract class Optimizations extends Configurable {	
-	@Node(path = "TPSSleep.NoOneFreeze.enable")
+	@Node("TPSSleep.NoOneFreeze.enable")
     public static boolean TPSSleepNoOneFreezeenable = true;
 	
-	@Node(path = "TPSSleep.SleepMode")
+	@Node("TPSSleep.SleepMode")
     public static String TPSSleepSleepMode = "NoUse";
 	
-	@Node(path = "EntityClear.enable")
+	@Node("EntityClear.enable")
     public static boolean EntityClearenable = true;
 	
-	@Node(path = "EntityClear.CheckInterval")
+	@Node("EntityClear.CheckInterval")
     public static int EntityClearCheckInterval = 600;
 	
-	@Node(path = "EntityClear.LimitCount")
+	@Node("EntityClear.LimitCount")
     public static int EntityClearLimitCount = 1200;
 	
-	@Node(path = "EntityClear.ClearEntityType")
+	@Node("EntityClear.ClearEntityType")
     public static Set<String> EntityClearEntityType = DefaultOptions.EntityClearEntityTypes();
 	
-	@Node(path = "EntityClear.ClearMessage")
+	@Node("EntityClear.ClearMessage")
     public static String EntityClearClearMessage = "§a成功清除了过多的实体~~(@^_^@)~";
 	
-	@Node(path = "NooneRestart.enable")
+	@Node("NooneRestart.enable")
 	public static boolean emptyRestart = true;
 
-	@Node(path = "NooneRestart.TimeLong")
+	@Node("NooneRestart.TimeLong")
 	public static long emptyRestartDelay = 1200;
 	
-    @Node(path = "OverLoadMemoryRestart.enable")
+    @Node("OverLoadMemoryRestart.enable")
     public static boolean OverLoadMemoryRestartenable = true;
     
-    @Node(path = "ChunkUnloader.Interval")
+    @Node("ChunkUnloader.Interval")
     public static long ChunkUnloaderInterval = 30;
     
-    @Node(path = "WaterFlowLimitor.enable")
+    @Node("WaterFlowLimitor.enable")
     public static boolean WaterFlowLimitorenable = true;
     
-    @Node(path = "WaterFlowLimitor.PerChunkTimes")
+    @Node("WaterFlowLimitor.PerChunkTimes")
     public static long WaterFlowLimitorPerChunkTimes = 2;
     
-    @Node(path = "AntiRedstone.enable")
+    @Node("AntiRedstone.enable")
     public static boolean AntiRedstoneenable = true;
     
-    @Node(path = "AntiRedstone.drop-item")
+    @Node("AntiRedstone.drop-item")
     public static boolean dropRedstone = true;
     
-    @Node(path = "AntiRedstone.Times")
+    @Node("AntiRedstone.Times")
     public static int AntiRedstoneTimes = 5;
     
-    @Node(path = "FireLimitor.enable")
+    @Node("FireLimitor.enable")
     public static boolean FireLimitorenable = true;
     
-    @Node(path = "FireLimitor.Period")
+    @Node("FireLimitor.Period")
     public static long FireLimitorPeriod = 3000L;
     
-    @Node(path = "TimerGc.enable")
+    @Node("TimerGc.enable")
     public static boolean timerGC = false;
     
-    @Node(path = "TeleportPreLoader.enable")
+    @Node("TeleportPreLoader.enable")
     public static boolean TeleportPreLoaderenable = true;
     
     @Locale
-    @Node(path = "TimerGc.Message")
+    @Node("TimerGc.Message")
     public static String TimerGcMessage = "§e服务器清理内存中... ԅ(¯ㅂ¯ԅ)";
     
-    @Node(path = "TimerGc.Period")
+    @Node("TimerGc.Period")
     public static long TimerGcPeriod = 600;
 
-    @Node(path = "UnloadClear.DROPPED_ITEM.NoCleatDeath")
+    @Node("UnloadClear.DROPPED_ITEM.NoCleatDeath")
     public static boolean UnloadClearDROPPED_ITEMNoCleatDeath = true;
     
-    @Node(path = "UnloadClear.DROPPED_ITEM.NoClearTeleport")
+    @Node("UnloadClear.DROPPED_ITEM.NoClearTeleport")
     public static boolean UnloadClearDROPPED_ITEMNoClearTeleport = false;
     
-    @Node(path = "NoCrowdedEntity.enable")
+    @Node("NoCrowdedEntity.enable")
     public static boolean NoCrowdedEntityenable = true;
     
-    @Node(path = "NoCrowdedEntity.TypeList")
+    @Node("NoCrowdedEntity.TypeList")
     public static Set<String> NoCrowdedEntityTypeList = DefaultOptions.slackEntityTypes();
     
-    @Node(path = "NoCrowdedEntity.PerChunkLimit")
+    @Node("NoCrowdedEntity.PerChunkLimit")
     public static int NoCrowdedEntityPerChunkLimit = 30;
     
-    @Node(path = "AntiRedstone.Message")
+    @Node("AntiRedstone.Message")
     public static String AntiRedstoneMessage = "§c检测到高频红石在 %location% 附近，插件已经将其清除，不许玩了！ (╰_╯)#";
     
-    @Node(path = "OverLoadMemoryRestart.HeapMBLefted")
+    @Node("OverLoadMemoryRestart.HeapMBLefted")
     public static int OverLoadMemoryRestartHeapMBLefted = 130;
 	
-	@Node(path = "OverLoadMemoryRestart.KickMessage")
+	@Node("OverLoadMemoryRestart.KickMessage")
     public static String OverLoadMemoryRestartKickMessage = "抱歉！由于服务器内存过载，需要重启服务器！";
     
-    @Node(path = "AntiRedstone.RemoveBlockList")
+    @Node("AntiRedstone.RemoveBlockList")
     public static Set<String> AntiRedstoneRemoveBlockList = DefaultOptions.redstoneRemovalMaterialTypes();
     
-    @Node(path = "AutoSave.Interval")
+    @Node("AutoSave.Interval")
     public static long AutoSaveInterval = 15;
     
-    @Node(path = "OverLoadMemoryRestart.WarnMessage")
+    @Node("OverLoadMemoryRestart.WarnMessage")
     public static String OverLoadMemoryRestartWarnMessage = "服务器会在15秒后重启，请玩家不要游戏，耐心等待！ ╮(╯_╰)╭";
     
-    @Node(path = "OverLoadMemoryRestart.DelayTime")
+    @Node("OverLoadMemoryRestart.DelayTime")
     public static int OverLoadMemoryRestartDelayTime = 15;
     
-    @Node(path = "AutoSet.enable")
+    @Node("AutoSet.enable")
     public static boolean AutoSetenable = true;
     
-    @Node(path = "AutoSave.enable")
+    @Node("AutoSave.enable")
     public static boolean AutoSaveenable = true;
     
-    @Node(path = "UnloadClear.DROPPED_ITEM.enable")
+    @Node("UnloadClear.DROPPED_ITEM.enable")
     public static boolean UnloadClearDROPPED_ITEMenable = true;
     
-    @Node(path = "ChunkKeeper.enable")
+    @Node("ChunkKeeper.enable")
     public static boolean ChunkKeeperenable = true;
     
-    @Node(path = "ChunkUnloader.enable")
+    @Node("ChunkUnloader.enable")
     public static boolean chunkUnloader = true;
     
-    @Node(path = "UnloadClear.enable")
+    @Node("UnloadClear.enable")
     public static boolean UnloadClearenable = true;
     
-    @Node(path = "UnloadClear.type")
+    @Node("UnloadClear.type")
     public static Set<String> UnloadCleartype = DefaultOptions.unloadClearEntityTypes();
 }

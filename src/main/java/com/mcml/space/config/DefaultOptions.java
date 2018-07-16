@@ -10,6 +10,8 @@ import java.util.Set;
 import com.google.common.collect.Maps;
 import com.google.common.collect.Sets;
 
+import lombok.RequiredArgsConstructor;
+
 import static org.bukkit.entity.EntityType.*;
 import static org.bukkit.Material.*;
 
@@ -42,23 +44,25 @@ public abstract class DefaultOptions {
         }
     }
     
-    public static class TypedMap extends HashMap<String, Boolean> implements Map<String, Boolean> {
+    @RequiredArgsConstructor
+    public static class TypedMap<V> extends HashMap<String, V> implements Map<String, V> {
         private static final long serialVersionUID = 1L;
+        private final V defaultValue;
         
-        public TypedMap from(Object e) {
-            assert e instanceof Enum || e instanceof String : "Unsafe cast";
-            super.put(e.toString(), Boolean.TRUE);
+        public TypedMap<V> from(Object k) {
+            assert k instanceof Enum || k instanceof String : "Unsafe cast";
+            super.put(k.toString(), defaultValue);
             return this;
         }
         
-        public TypedMap from(Object e, Boolean b) {
-            assert e instanceof Enum || e instanceof String : "Unsafe cast";
-            super.put(e.toString(), b);
+        public TypedMap<V> from(Object k, V v) {
+            assert k instanceof Enum || k instanceof String : "Unsafe cast";
+            super.put(k.toString(), v);
             return this;
         }
         
-        static TypedMap create() {
-            return new TypedMap();
+        static <V> TypedMap<V> create(V defaultValue) {
+            return new TypedMap<V>(defaultValue);
         }
     }
 	
@@ -113,8 +117,16 @@ public abstract class DefaultOptions {
         return Sets.newHashSet(types);
 	}
 	
+	public static Map<String, Integer> droppedItemClearsRadius() {
+        TypedMap<Integer> radius = TypedMap.create(Integer.valueOf(2));
+        radius.from("x")
+              .from("y")
+              .from("z");
+        return Maps.newHashMap(radius);
+    }
+	
 	public static Map<String, Boolean> spamMessages() {
-	    TypedMap messages = TypedMap.create();
+	    TypedMap<Boolean> messages = TypedMap.create(Boolean.TRUE);
         messages.from("垃圾服*") // server
                 .from("破服*")
                 .from("狗服*")

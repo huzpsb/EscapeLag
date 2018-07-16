@@ -44,7 +44,6 @@ import com.mcml.space.patches.AntiBedExplode;
 import com.mcml.space.patches.AntiCrashSign;
 import com.mcml.space.patches.AntiDupeDropItem;
 import com.mcml.space.patches.AntiFakeDeath;
-import com.mcml.space.patches.AntiInfItem;
 import com.mcml.space.patches.AntiLongStringCrash;
 import com.mcml.space.patches.AutoRecipePatch;
 import com.mcml.space.patches.BonemealDupePatch;
@@ -157,7 +156,6 @@ public class EscapeLag extends JavaPlugin {
         CalculationAbusePatch.init(this);
         AntiFakeDeath.init(this);
         
-        Bukkit.getPluginManager().registerEvents(new AntiInfItem(), this);
         Bukkit.getPluginManager().registerEvents(new AntiCrashSign(), this);
         Bukkit.getPluginManager().registerEvents(new CancelledPlacementPatch(), this);
         Bukkit.getPluginManager().registerEvents(new AntiBedExplode(), this);
