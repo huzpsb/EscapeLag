@@ -2,12 +2,8 @@ package com.mcml.space.command;
 
 import java.io.File;
 import java.io.IOException;
-import java.text.BreakIterator;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
-import java.util.Calendar;
-import java.util.Date;
-
 import org.bukkit.Bukkit;
 import org.bukkit.Chunk;
 import org.bukkit.command.Command;
@@ -25,6 +21,7 @@ import com.mcml.space.util.HeapDumper;
 import com.mcml.space.util.Perms;
 import com.mcml.space.util.Ticker;
 import com.mcml.space.util.AzureAPI.ChunkCoord;
+import com.mcml.space.util.Ticker.Distance;
 
 public class EscapeLagCommand {
     private final static DateFormat timestamp_format = new SimpleDateFormat("yyyyMMddHHmmss"); 
@@ -184,7 +181,10 @@ public class EscapeLagCommand {
 						}
 					}
 					if (args[1].equalsIgnoreCase("tps")) {
-						sender.sendMessage("§e目前服务器的TPS是 " + Ticker.getRealTimeTPS());
+						sender.sendMessage("§e一秒钟内的实时TPS: " + Ticker.getRealTimeTPS());
+						sender.sendMessage("§e一分钟内的平均TPS: " + Ticker.getRecentTPS());
+						sender.sendMessage("§e五分钟内的平均TPS: " + Ticker.getAverageTPS(Distance.MINUTES_5));
+						sender.sendMessage("§e一刻钟内的平均TPS: " + Ticker.getAverageTPS(Distance.MINUTES_15));
 					}
 				}
 				if (args[0].equalsIgnoreCase("reload")) {
