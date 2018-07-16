@@ -69,7 +69,7 @@ public abstract class AzureAPI {
         for (Thread t : Thread.getAllStackTraces().keySet()) {
             if (t.getName().equals("Server thread")) return (serverThread = t);
         }
-        throw new AssertionError("Cannot find main thread!");
+        throw new AssertionError("NO SERVER THREAD!");
     }
     
     /**

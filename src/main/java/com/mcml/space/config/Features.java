@@ -3,8 +3,6 @@ package com.mcml.space.config;
 import java.util.Map;
 import java.util.Set;
 
-import com.google.common.collect.Sets;
-import com.mcml.space.config.DefaultOptions.TypedSet;
 import com.mcml.space.util.Configurable;
 
 public abstract class Features extends Configurable {
