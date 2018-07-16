@@ -25,6 +25,8 @@ import com.mcml.space.util.Perms;
 import com.mcml.space.util.Ticker;
 import com.mcml.space.util.AzureAPI.ChunkCoord;
 import com.mcml.space.util.Ticker.Distance;
+import com.mcml.space.util.VersionLevel;
+import com.mcml.space.util.VersionLevel.Version;
 
 public class EscapeLagCommand {
     private final static DateFormat timestamp_format = new SimpleDateFormat("yyyyMMddHHmmss"); 
@@ -93,7 +95,7 @@ public class EscapeLagCommand {
 						return true;
 					}
 					if (args[1].equalsIgnoreCase("list")) {
-						sender.sendMessage("§e目前正在延时卸载的区块列表:" + DelayedChunkKeeper.DEALYED_CHUNKS);
+						sender.sendMessage("§e目前正在延时卸载的区块列表:" + (VersionLevel.isPaper() ? "未启用" : DelayedChunkKeeper.DEALYED_CHUNKS));
 					}
 				}
 				if (args[0].equalsIgnoreCase("heap")) {

@@ -3,6 +3,9 @@ package com.mcml.space.optimizations;
 import java.util.Set;
 import java.util.concurrent.TimeUnit;
 
+import javax.annotation.Nullable;
+
+import org.apache.commons.lang.ObjectUtils.Null;
 import org.bukkit.Bukkit;
 import org.bukkit.Chunk;
 import org.bukkit.World;
@@ -24,7 +27,7 @@ import static com.mcml.space.config.OptimizesChunk.delayedChunkKeeper_maxUnloadC
 import static com.mcml.space.util.VersionLevel.isPaper;
 
 public class DelayedChunkKeeper implements Listener {
-    public final static Set<ChunkCoord> DEALYED_CHUNKS = isPaper() ? Sets.newHashSet() : null;
+    @Nullable public final static Set<ChunkCoord> DEALYED_CHUNKS = isPaper() ? null : Sets.newHashSet();
     
     public static void init(Plugin plugin) {
         if (!OptimizesChunk.enableDelayedChunkKeeper
@@ -58,7 +61,7 @@ public class DelayedChunkKeeper implements Listener {
         }
         
         // Dealyed unload
-        if (!DEALYED_CHUNKS.contains(coord) && !isPaper()) {
+        if (!isPaper() && !DEALYED_CHUNKS.contains(coord)) {
             DEALYED_CHUNKS.add(coord);
             Bukkit.getScheduler().runTaskLater(EscapeLag.plugin, () -> {
                 if (world.isChunkLoaded(chunk) && !world.isChunkInUse(chunk.getX(), chunk.getZ())) chunk.unload();

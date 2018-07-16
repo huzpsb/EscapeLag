@@ -18,6 +18,8 @@ import com.mcml.space.config.OptimizesChunk;
 import com.mcml.space.core.EscapeLag;
 import com.mcml.space.util.AzureAPI;
 
+import static com.mcml.space.util.VersionLevel.isPaper;
+
 public class NoStyxChunks {
 	public static long totalUnloadedChunks;
 
@@ -30,7 +32,7 @@ public class NoStyxChunks {
             public void run() {
                 for (World world : Bukkit.getWorlds()) {
                     for (Chunk chunk : world.getLoadedChunks())
-                    if (!world.isChunkInUse(chunk.getX(), chunk.getZ()) && !DelayedChunkKeeper.DEALYED_CHUNKS.contains(AzureAPI.wrapCoord(chunk.getX(), chunk.getZ()))) { // Respect dealy
+                    if (!world.isChunkInUse(chunk.getX(), chunk.getZ()) && (isPaper() || !DelayedChunkKeeper.DEALYED_CHUNKS.contains(AzureAPI.wrapCoord(chunk.getX(), chunk.getZ())))) { // Respect dealy
                         if (chunk.unload(true)) totalUnloadedChunks++;
                     }
                 }
@@ -85,7 +87,7 @@ public class NoStyxChunks {
             for (int z = from.getBlockZ() - view; z <= edgeZ; z = z + 16) {
                 int chunkX = x >> 4;
                 int chunkZ = z >> 4;
-                if (DelayedChunkKeeper.DEALYED_CHUNKS.contains(AzureAPI.wrapCoord(chunkX, chunkZ))) continue; // Respect dealy
+                if (!isPaper() && DelayedChunkKeeper.DEALYED_CHUNKS.contains(AzureAPI.wrapCoord(chunkX, chunkZ))) continue; // Respect dealy
                 
                 Chunk chunk = world.getChunkAt(chunkX, chunkZ);
                 if (world.isChunkInUse(chunkX, chunkZ)) {
