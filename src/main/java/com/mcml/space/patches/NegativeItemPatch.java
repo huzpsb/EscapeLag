@@ -32,7 +32,7 @@ public class NegativeItemPatch implements Listener, PluginExtends {
                 !Bukkit.getPluginManager().isPluginEnabled("RPGItems") && !Bukkit.getPluginManager().isPluginEnabled("RPG_Items")) return;
         
         Bukkit.getPluginManager().registerEvents(new NegativeItemPatch(), plugin);
-        AzureAPI.log("RPGItem 修复模块已启用");
+        AzureAPI.log("负数物品修复模块已启用");
     }
     
     @EventHandler(priority = EventPriority.HIGHEST, ignoreCancelled = true)
