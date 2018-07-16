@@ -17,8 +17,6 @@ import com.mcml.space.config.OptimizesChunk;
 import com.mcml.space.core.EscapeLag;
 import com.mcml.space.util.AzureAPI.ChunkCoord;
 
-import net.minecraft.server.ChunkGenerator;
-
 import com.mcml.space.util.Ticker;
 import com.mcml.space.util.AzureAPI;
 
@@ -39,6 +37,7 @@ public class DelayedChunkKeeper implements Listener {
 
     @EventHandler(priority = EventPriority.LOWEST, ignoreCancelled = true)
     public void onChunkUnload(ChunkUnloadEvent evt) {
+        World world = evt.getWorld();
         Chunk chunk = evt.getChunk();
         ChunkCoord coord = AzureAPI.wrapCoord(chunk.getX(), chunk.getZ());
         
@@ -46,7 +45,9 @@ public class DelayedChunkKeeper implements Listener {
             if (currentTick == Ticker.currentTick()) {
                 if (++unloadedChunks > delayedChunkKeeper_maxUnloadChunksPerTick
                         && (isPaper() && !DEALYED_CHUNKS.contains(coord))) {
-                    Bukkit.getScheduler().runTask(EscapeLag.plugin, chunk::unload);
+                    Bukkit.getScheduler().runTask(EscapeLag.plugin, () -> {
+                        if (world.isChunkLoaded(chunk) && !world.isChunkInUse(chunk.getX(), chunk.getZ())) chunk.unload();
+                    });
                     evt.setCancelled(true);
                     return;
                 }
@@ -59,9 +60,8 @@ public class DelayedChunkKeeper implements Listener {
         // Dealyed unload
         if (!DEALYED_CHUNKS.contains(coord) && !isPaper()) {
             DEALYED_CHUNKS.add(coord);
-            World world = evt.getWorld();
             Bukkit.getScheduler().runTaskLater(EscapeLag.plugin, () -> {
-                if (!world.isChunkLoaded(chunk) && !world.isChunkInUse(chunk.getX(), chunk.getZ())) chunk.unload();
+                if (world.isChunkLoaded(chunk) && !world.isChunkInUse(chunk.getX(), chunk.getZ())) chunk.unload();
                 DEALYED_CHUNKS.remove(coord);
             }, AzureAPI.toTicks(TimeUnit.SECONDS, OptimizesChunk.delayedChunkKeeper_delayInSeconds));
         }
