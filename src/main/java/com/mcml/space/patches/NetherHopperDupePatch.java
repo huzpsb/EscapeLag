@@ -39,18 +39,15 @@ public class NetherHopperDupePatch implements Listener {
         if (PatchesDupeFixes.netherHoppersDupeFixes_restrictEnv && from.getWorld().getEnvironment() != Environment.NETHER) return;
         if (to.getChunk() != from.getChunk()) evt.setCancelled(true);
         
-        Bukkit.getScheduler().runTask(EscapeLag.plugin, new Runnable() {
-            @Override
-            public void run() {
-                // Safely checks item
-                from.getChunk().load();
-                if (!from.getInventory().contains(item)) return;
-                
-                // Safely transfers item
-                from.getInventory().remove(item);
-                to.getChunk().load();
-                to.getInventory().addItem(item);
-            }
+        Bukkit.getScheduler().runTask(EscapeLag.plugin, () -> {
+            // Safely checks item
+            from.getChunk().load();
+            if (!from.getInventory().contains(item)) return;
+            
+            // Safely transfers item
+            from.getInventory().remove(item);
+            to.getChunk().load();
+            to.getInventory().addItem(item);
         });
     }
 }

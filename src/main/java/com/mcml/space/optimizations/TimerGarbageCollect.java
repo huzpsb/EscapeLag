@@ -20,18 +20,15 @@ public class TimerGarbageCollect implements PluginExtends {
         if(!timerGC) return;
         
         long ticks = AzureAPI.toTicks(TimeUnit.SECONDS, Optimizes.TimerGcPeriod);
-        Bukkit.getScheduler().runTaskTimer(plugin, new Runnable() {
-            @Override
-            public void run() {
-                long mark = System.currentTimeMillis();
-                long released = collectGarbage();
-                long duration = System.currentTimeMillis() - mark;
-                
-                if(!StringUtils.isBlank(TimerGcMessage)) {
-                    String message = StringUtils.replace(TimerGcMessage, "%gc_released_memory%", String.valueOf(released) + " MB");
-                    message = StringUtils.replace(message, "%gc_cost_time%", String.valueOf(duration) + " ms");
-                    AzureAPI.log(message);
-                }
+        Bukkit.getScheduler().runTaskTimer(plugin, () -> {
+            long mark = System.currentTimeMillis();
+            long released = collectGarbage();
+            long duration = System.currentTimeMillis() - mark;
+            
+            if(!StringUtils.isBlank(TimerGcMessage)) {
+                String message = StringUtils.replace(TimerGcMessage, "%gc_released_memory%", String.valueOf(released) + " MB");
+                message = StringUtils.replace(message, "%gc_cost_time%", String.valueOf(duration) + " ms");
+                AzureAPI.log(message);
             }
         }, ticks, ticks);
         

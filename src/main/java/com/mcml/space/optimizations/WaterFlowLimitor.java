@@ -19,12 +19,7 @@ public class WaterFlowLimitor implements Listener {
 	private final static HashMap<Chunk, Integer> CheckedTimes = new HashMap<Chunk, Integer>();
 	
 	public WaterFlowLimitor(){
-		Bukkit.getScheduler().runTaskTimer(EscapeLag.plugin, new Runnable(){
-			@Override
-            public void run(){
-				CheckedTimes.clear();
-			}
-		}, 7 * 20, 7 * 20);
+		Bukkit.getScheduler().runTaskTimer(EscapeLag.plugin, CheckedTimes::clear, 7 * 20, 7 * 20);
 	}
 	
 	@EventHandler

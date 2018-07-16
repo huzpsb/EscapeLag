@@ -30,12 +30,9 @@ public class ContainerPortalPatch implements Listener {
         if (hasInventory(type)) {
             if (!handleContainer((InventoryHolder) evt.getEntity())) return;
             
-            Bukkit.getScheduler().runTask(EscapeLag.plugin, new Runnable() {
-                @Override
-                public void run() {
-                    containerInv.remove((InventoryHolder) evt.getEntity());
-                    evt.getEntity().teleport(evt.getTo(), TeleportCause.NETHER_PORTAL); 
-                }
+            Bukkit.getScheduler().runTask(EscapeLag.plugin, () -> {
+                containerInv.remove((InventoryHolder) evt.getEntity());
+                evt.getEntity().teleport(evt.getTo(), TeleportCause.NETHER_PORTAL); 
             });
             evt.setCancelled(true);
         }

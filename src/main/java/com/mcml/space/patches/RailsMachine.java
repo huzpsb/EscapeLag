@@ -33,13 +33,7 @@ public class RailsMachine implements Listener {
     public void onBreak(BlockBreakEvent evt) {
         final Block up = evt.getBlock().getRelative(BlockFace.UP);
         if (!canExploit(up.getType())) return;
-        
-        Bukkit.getScheduler().runTask(EscapeLag.plugin, new Runnable() {
-            @Override
-            public void run() {
-                up.breakNaturally();
-            }
-        });
+        Bukkit.getScheduler().runTask(EscapeLag.plugin, up::breakNaturally);
     }
     
     @SuppressWarnings("deprecation")

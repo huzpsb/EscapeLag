@@ -11,12 +11,7 @@ public class AntiFakeDeath {
     public static void init(Plugin plugin) {
         if (!Patches.noFakedeath) return;
         
-        Bukkit.getScheduler().runTaskTimer(plugin, new Runnable() {
-            @Override
-            public void run() {
-                clearUndeadPlayers();
-            }
-        }, 0L, 7 * 20);
+        Bukkit.getScheduler().runTaskTimer(plugin, AntiFakeDeath::clearUndeadPlayers, 0L, 7 * 20);
     }
     
     public static void clearUndeadPlayers() {
