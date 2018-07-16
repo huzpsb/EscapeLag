@@ -154,9 +154,11 @@ public class EscapeLagCommand {
 					}
 					if (args[1].equalsIgnoreCase("tps")) {
 						sender.sendMessage("§e一秒钟内的实时TPS: " + Ticker.getRealTimeTPS());
-						sender.sendMessage("§e一分钟内的平均TPS: " + tps_format.format(Ticker.getRecentTPS()));
-						sender.sendMessage("§e五分钟内的平均TPS: " + tps_format.format(Ticker.getAverageTPS(Distance.MINUTES_5)));
-						sender.sendMessage("§e一刻钟内的平均TPS: " + tps_format.format(Ticker.getAverageTPS(Distance.MINUTES_15)));
+						if (VersionLevel.isPaper()) {
+		                      sender.sendMessage("§e一分钟内的平均TPS: " + tps_format.format(Ticker.getRecentTPS()));
+		                      sender.sendMessage("§e五分钟内的平均TPS: " + tps_format.format(Ticker.getAverageTPS(Distance.MINUTES_5)));
+		                      sender.sendMessage("§e一刻钟内的平均TPS: " + tps_format.format(Ticker.getAverageTPS(Distance.MINUTES_15)));
+						}
 					}
 				}
 				if (args[0].equalsIgnoreCase("reload")) {
