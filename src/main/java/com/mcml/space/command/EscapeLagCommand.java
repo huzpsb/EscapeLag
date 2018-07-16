@@ -6,9 +6,7 @@ import java.text.DateFormat;
 import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
 
-import org.apache.commons.lang.StringUtils;
 import org.bukkit.Bukkit;
-import org.bukkit.Chunk;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 import org.bukkit.configuration.file.FileConfiguration;
@@ -21,12 +19,9 @@ import com.mcml.space.core.Ticker.Distance;
 import com.mcml.space.optimizations.DelayedChunkKeeper;
 import com.mcml.space.optimizations.NoStyxChunks;
 import com.mcml.space.optimizations.OverloadRestart;
-import com.mcml.space.util.AzureAPI;
 import com.mcml.space.util.HeapDumper;
 import com.mcml.space.util.Perms;
-import com.mcml.space.util.AzureAPI.ChunkCoord;
 import com.mcml.space.util.VersionLevel;
-import com.mcml.space.util.VersionLevel.Version;
 
 public class EscapeLagCommand {
     private final static DateFormat timestamp_format = new SimpleDateFormat("yyyyMMddHHmmss"); 
