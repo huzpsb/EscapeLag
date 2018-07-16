@@ -58,8 +58,6 @@ import com.mcml.space.patches.NetherHopperDupePatch;
 import com.mcml.space.patches.RailsMachine;
 import com.mcml.space.util.AzureAPI;
 import com.mcml.space.util.AzureAPI.Coord;
-import com.mcml.space.util.PlayerList;
-import com.mcml.space.util.Ticker;
 import com.mcml.space.util.Configurable;
 import com.mcml.space.util.Perms;
 import com.mcml.space.util.VersionLevel;
@@ -356,11 +354,9 @@ public class EscapeLag extends JavaPlugin {
             if (bukkit.getInt("EscapeLag.SetStep") == 0) {
                 bukkit.set("EscapeLag.SetStep", 1);
                 bukkit.save(BukkitFile);
-                Bukkit.getScheduler().runTaskLater(EscapeLag.plugin, new Runnable() {
-                    public void run() {
-                        AzureAPI.log("成功改动服务器配端，正在重启来启用它.");
-                        AzureAPI.restartServer("配端完成，正在重启中！");
-                    }
+                Bukkit.getScheduler().runTaskLater(EscapeLag.plugin, () -> {
+                    AzureAPI.log("成功改动服务器配端，正在重启来启用它.");
+                    AzureAPI.restartServer("配端完成，正在重启中！");
                 }, 1);
             }
         }

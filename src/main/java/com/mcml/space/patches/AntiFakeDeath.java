@@ -5,7 +5,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.plugin.Plugin;
 import com.google.common.base.Predicate;
 import com.mcml.space.config.Patches;
-import com.mcml.space.util.PlayerList;
+import com.mcml.space.core.PlayerList;
 
 public class AntiFakeDeath {
     public static void init(Plugin plugin) {

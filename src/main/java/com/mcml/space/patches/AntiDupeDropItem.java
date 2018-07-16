@@ -10,8 +10,8 @@ import org.bukkit.plugin.Plugin;
 
 import com.mcml.space.config.Patches;
 import com.mcml.space.core.EscapeLag;
+import com.mcml.space.core.PlayerList;
 import com.mcml.space.util.AzureAPI;
-import com.mcml.space.util.PlayerList;
 import com.mcml.space.util.VersionLevel;
 import com.mcml.space.util.VersionLevel.Version;
 

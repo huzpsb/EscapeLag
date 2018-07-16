@@ -18,9 +18,9 @@ import org.bukkit.plugin.Plugin;
 import com.google.common.collect.Maps;
 import com.mcml.space.config.Features;
 import com.mcml.space.core.EscapeLag;
+import com.mcml.space.core.PlayerList;
 import com.mcml.space.util.AzureAPI;
 import com.mcml.space.util.Perms;
-import com.mcml.space.util.PlayerList;
 import com.mcml.space.util.QuitReactor;
 
 public class CensoredChat {
@@ -36,12 +36,8 @@ public class CensoredChat {
         private SpamDetector() {
             PlayerList.bind(this);
             
-            Bukkit.getScheduler().runTaskTimer(EscapeLag.plugin, new Runnable() {
-                @Override
-                public void run() {
-                    PLAYERS_CHAT_TIME.clear();
-                }
-            }, 0L, AzureAPI.toTicks(TimeUnit.SECONDS, (int) Math.ceil(Features.AntiSpamPeriodPeriod) > 30 ? (int) Math.ceil(Features.AntiSpamPeriodPeriod) : 30));
+            Bukkit.getScheduler().runTaskTimer(EscapeLag.plugin, PLAYERS_CHAT_TIME::clear,
+                    0L, AzureAPI.toTicks(TimeUnit.SECONDS, (int) Math.ceil(Features.AntiSpamPeriodPeriod) > 30 ? (int) Math.ceil(Features.AntiSpamPeriodPeriod) : 30));
         }
         
         @EventHandler(priority = EventPriority.LOW, ignoreCancelled = true)

@@ -1,7 +1,12 @@
-package com.mcml.space.util;
+package com.mcml.space.core;
+
+import java.util.Timer;
+import java.util.TimerTask;
 
 import org.bukkit.Bukkit;
 import org.bukkit.plugin.Plugin;
+
+import com.mcml.space.util.AzureAPI;
 
 public class Ticker {
     /**
@@ -25,30 +30,24 @@ public class Ticker {
     private static volatile int realTimeTicks = 20;
     
     public static void init(Plugin plugin) {
-        Bukkit.getScheduler().runTaskTimer(plugin, new Runnable() {
-            @Override
-            public void run() {
-                // update resources from main thread
-                cachedMillis = System.currentTimeMillis();
-                totalTicks++;
-            }
+        Bukkit.getScheduler().runTaskTimer(plugin, () -> {
+            // update resources from main thread
+            cachedMillis = System.currentTimeMillis();
+            totalTicks++;
         }, 0L, 1L);
         
-        Bukkit.getScheduler().runTaskTimerAsynchronously(plugin, new Runnable() {
+        new Timer().scheduleAtFixedRate(new TimerTask() {
             @Override
-            public void run(){
+            public void run() {
                 // to check and notify main thread hang
                 notifyStucked();
             }
-        }, 0L, 1L);
+        }, 0L, 100L);
         
-        Bukkit.getScheduler().runTaskTimerAsynchronously(plugin, new Runnable() {
-            @Override
-            public void run(){
-                // to diff real-time ticks
-                realTimeTicks = (int) (totalTicks - cachedTotalTicks);
-                cachedTotalTicks = totalTicks;
-            }
+        Bukkit.getScheduler().runTaskTimerAsynchronously(plugin, () -> {
+            // to diff real-time ticks
+            realTimeTicks = (int) (totalTicks - cachedTotalTicks);
+            cachedTotalTicks = totalTicks;
         }, 0L, 20L);
         
         AzureAPI.log("TPS计算与监控核心模块已启用");

@@ -8,8 +8,8 @@ import org.bukkit.event.player.AsyncPlayerPreLoginEvent;
 import org.bukkit.plugin.Plugin;
 
 import com.mcml.space.config.Patches;
+import com.mcml.space.core.PlayerList;
 import com.mcml.space.util.AzureAPI;
-import com.mcml.space.util.PlayerList;
 import com.mcml.space.util.PluginExtends;
 
 public class DupeLoginPatch implements Listener, PluginExtends {

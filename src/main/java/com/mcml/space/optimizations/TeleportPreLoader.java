@@ -48,104 +48,74 @@ public class TeleportPreLoader implements Listener {
 				}
 				final World world = event.getTo().getWorld();
 
-				Bukkit.getScheduler().runTaskLater(EscapeLag.plugin, new Runnable() {
-					@Override
-					public void run() {
-						nowint.put(thistpid, nowint.get(thistpid) + cs / 10);
-						for (int i = nowint.get(thistpid) - cs / 10; i < nowint.get(thistpid); i++) {
-						    ChunkCoord coord = chunks.get(i);
-							world.loadChunk(coord.getChunkX(), coord.getChunkZ());
-						}
-					}
+				Bukkit.getScheduler().runTaskLater(EscapeLag.plugin, () -> {
+                    nowint.put(thistpid, nowint.get(thistpid) + cs / 10);
+                    for (int i = nowint.get(thistpid) - cs / 10; i < nowint.get(thistpid); i++) {
+                        ChunkCoord coord = chunks.get(i);
+                        world.loadChunk(coord.getChunkX(), coord.getChunkZ());
+                    }
 				}, 1);
-				Bukkit.getScheduler().runTaskLater(EscapeLag.plugin, new Runnable() {
-					@Override
-					public void run() {
-						nowint.put(thistpid, nowint.get(thistpid) + cs / 10);
-						for (int i = nowint.get(thistpid) - cs / 10; i < nowint.get(thistpid); i++) {
-						    ChunkCoord coord = chunks.get(i);
-							world.loadChunk(coord.getChunkX(), coord.getChunkZ());
-						}
-					}
+				Bukkit.getScheduler().runTaskLater(EscapeLag.plugin, () -> {
+                    nowint.put(thistpid, nowint.get(thistpid) + cs / 10);
+                    for (int i = nowint.get(thistpid) - cs / 10; i < nowint.get(thistpid); i++) {
+                        ChunkCoord coord = chunks.get(i);
+                        world.loadChunk(coord.getChunkX(), coord.getChunkZ());
+                    }
 				}, 2);
-				Bukkit.getScheduler().runTaskLater(EscapeLag.plugin, new Runnable() {
-					@Override
-					public void run() {
-						nowint.put(thistpid, nowint.get(thistpid) + cs / 10);
-						for (int i = nowint.get(thistpid) - cs / 10; i < nowint.get(thistpid); i++) {
-						    ChunkCoord coord = chunks.get(i);
-							world.loadChunk(coord.getChunkX(), coord.getChunkZ());
-						}
-					}
+				Bukkit.getScheduler().runTaskLater(EscapeLag.plugin, () -> {
+                    nowint.put(thistpid, nowint.get(thistpid) + cs / 10);
+                    for (int i = nowint.get(thistpid) - cs / 10; i < nowint.get(thistpid); i++) {
+                        ChunkCoord coord = chunks.get(i);
+                        world.loadChunk(coord.getChunkX(), coord.getChunkZ());
+                    }
 				}, 3);
-				Bukkit.getScheduler().runTaskLater(EscapeLag.plugin, new Runnable() {
-					@Override
-					public void run() {
-						nowint.put(thistpid, nowint.get(thistpid) + cs / 10);
-						for (int i = nowint.get(thistpid) - cs / 10; i < nowint.get(thistpid); i++) {
-						    ChunkCoord coord = chunks.get(i);
-							world.loadChunk(coord.getChunkX(), coord.getChunkZ());
-						}
-					}
+				Bukkit.getScheduler().runTaskLater(EscapeLag.plugin, () -> {
+                    nowint.put(thistpid, nowint.get(thistpid) + cs / 10);
+                    for (int i = nowint.get(thistpid) - cs / 10; i < nowint.get(thistpid); i++) {
+                        ChunkCoord coord = chunks.get(i);
+                        world.loadChunk(coord.getChunkX(), coord.getChunkZ());
+                    }
 				}, 4);
-				Bukkit.getScheduler().runTaskLater(EscapeLag.plugin, new Runnable() {
-					@Override
-					public void run() {
-						nowint.put(thistpid, nowint.get(thistpid) + cs / 10);
-						for (int i = nowint.get(thistpid) - cs / 10; i < nowint.get(thistpid); i++) {
-						    ChunkCoord coord = chunks.get(i);
-							world.loadChunk(coord.getChunkX(), coord.getChunkZ());
-						}
-					}
+				Bukkit.getScheduler().runTaskLater(EscapeLag.plugin, () -> {
+                    nowint.put(thistpid, nowint.get(thistpid) + cs / 10);
+                    for (int i = nowint.get(thistpid) - cs / 10; i < nowint.get(thistpid); i++) {
+                        ChunkCoord coord = chunks.get(i);
+                        world.loadChunk(coord.getChunkX(), coord.getChunkZ());
+                    }
 				}, 5);
-				Bukkit.getScheduler().runTaskLater(EscapeLag.plugin, new Runnable() {
-					@Override
-					public void run() {
-						nowint.put(thistpid, nowint.get(thistpid) + cs / 10);
-						for (int i = nowint.get(thistpid) - cs / 10; i < nowint.get(thistpid); i++) {
-						    ChunkCoord coord = chunks.get(i);
-							world.loadChunk(coord.getChunkX(), coord.getChunkZ());
-						}
-					}
+				Bukkit.getScheduler().runTaskLater(EscapeLag.plugin, () -> {
+                    nowint.put(thistpid, nowint.get(thistpid) + cs / 10);
+                    for (int i = nowint.get(thistpid) - cs / 10; i < nowint.get(thistpid); i++) {
+                        ChunkCoord coord = chunks.get(i);
+                        world.loadChunk(coord.getChunkX(), coord.getChunkZ());
+                    }
 				}, 6);
-				Bukkit.getScheduler().runTaskLater(EscapeLag.plugin, new Runnable() {
-					@Override
-					public void run() {
-						nowint.put(thistpid, nowint.get(thistpid) + cs / 10);
-						for (int i = nowint.get(thistpid) - cs / 10; i < nowint.get(thistpid); i++) {
-						    ChunkCoord coord = chunks.get(i);
-							world.loadChunk(coord.getChunkX(), coord.getChunkZ());
-						}
-					}
+				Bukkit.getScheduler().runTaskLater(EscapeLag.plugin, () -> {
+                    nowint.put(thistpid, nowint.get(thistpid) + cs / 10);
+                    for (int i = nowint.get(thistpid) - cs / 10; i < nowint.get(thistpid); i++) {
+                        ChunkCoord coord = chunks.get(i);
+                        world.loadChunk(coord.getChunkX(), coord.getChunkZ());
+                    }
 				}, 7);
-				Bukkit.getScheduler().runTaskLater(EscapeLag.plugin, new Runnable() {
-					@Override
-					public void run() {
-						nowint.put(thistpid, nowint.get(thistpid) + cs / 10);
-						for (int i = nowint.get(thistpid) - cs / 10; i < nowint.get(thistpid); i++) {
-						    ChunkCoord coord = chunks.get(i);
-							world.loadChunk(coord.getChunkX(), coord.getChunkZ());
-						}
-					}
+				Bukkit.getScheduler().runTaskLater(EscapeLag.plugin, () -> {
+                    nowint.put(thistpid, nowint.get(thistpid) + cs / 10);
+                    for (int i = nowint.get(thistpid) - cs / 10; i < nowint.get(thistpid); i++) {
+                        ChunkCoord coord = chunks.get(i);
+                        world.loadChunk(coord.getChunkX(), coord.getChunkZ());
+                    }
 				}, 8);
-				Bukkit.getScheduler().runTaskLater(EscapeLag.plugin, new Runnable() {
-					@Override
-					public void run() {
-						nowint.put(thistpid, nowint.get(thistpid) + cs / 10);
-						for (int i = nowint.get(thistpid) - cs / 10; i < nowint.get(thistpid); i++) {
-						    ChunkCoord coord = chunks.get(i);
-							world.loadChunk(coord.getChunkX(), coord.getChunkZ());
-						}
-					}
+				Bukkit.getScheduler().runTaskLater(EscapeLag.plugin, () -> {
+                    nowint.put(thistpid, nowint.get(thistpid) + cs / 10);
+                    for (int i = nowint.get(thistpid) - cs / 10; i < nowint.get(thistpid); i++) {
+                        ChunkCoord coord = chunks.get(i);
+                        world.loadChunk(coord.getChunkX(), coord.getChunkZ());
+                    }
 				}, 9);
-				Bukkit.getScheduler().runTaskLater(EscapeLag.plugin, new Runnable() {
-					@Override
-					public void run() {
-						isPreLoading = true;
-						player.teleport(event.getTo());
-						isPreLoading = false;
-						nowint.remove(thistpid);
-					}
+				Bukkit.getScheduler().runTaskLater(EscapeLag.plugin, () -> {
+                    isPreLoading = true;
+                    player.teleport(event.getTo());
+                    isPreLoading = false;
+                    nowint.remove(thistpid);
 				}, 10);
 			}
 		}

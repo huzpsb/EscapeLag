@@ -16,15 +16,15 @@ import org.bukkit.entity.Player;
 import com.mcml.space.config.Core;
 import com.mcml.space.core.EscapeLag;
 import com.mcml.space.core.Network;
+import com.mcml.space.core.Ticker;
+import com.mcml.space.core.Ticker.Distance;
 import com.mcml.space.optimizations.DelayedChunkKeeper;
 import com.mcml.space.optimizations.NoStyxChunks;
 import com.mcml.space.optimizations.OverloadRestart;
 import com.mcml.space.util.AzureAPI;
 import com.mcml.space.util.HeapDumper;
 import com.mcml.space.util.Perms;
-import com.mcml.space.util.Ticker;
 import com.mcml.space.util.AzureAPI.ChunkCoord;
-import com.mcml.space.util.Ticker.Distance;
 import com.mcml.space.util.VersionLevel;
 import com.mcml.space.util.VersionLevel.Version;
 
@@ -68,12 +68,7 @@ public class EscapeLagCommand {
 					}
 					if (args[1].equalsIgnoreCase("download")) {
 						sender.sendMessage("§e操作开始执行中...");
-						Bukkit.getScheduler().runTaskAsynchronously(EscapeLag.plugin, new Runnable() {
-							@Override
-							public void run() {
-								Network.DownloadAntiAttack();
-							}
-						});
+						Bukkit.getScheduler().runTaskAsynchronously(EscapeLag.plugin, Network::DownloadAntiAttack);
 					}
 				}
 				

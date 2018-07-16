@@ -27,32 +27,28 @@ public class AutoSave implements Listener {
             return;
         }
         final Player p = e.getPlayer();
-        TaskId.put(p, Bukkit.getScheduler().scheduleSyncRepeatingTask(EscapeLag.plugin, new Runnable() {
-
-            @Override
-            public void run() {
-                Chunk chunk = p.getLocation().getChunk();
-                Chunk LastChunk = PlayerInChunkMap.get(p);
-                if (LastChunk != chunk) {
-                    if (LastChunk == null) {
-                        PlayerInChunkMap.put(p, chunk);
-                        return;
-                    }
-                    if (PlayerClickedMap.containsValue(LastChunk)) {
-                        return;
-                    }
-                    World world = LastChunk.getWorld();
-                    if (LastChunk.isLoaded() == true) {
-                    	world.unloadChunk(LastChunk.getX(), LastChunk.getZ(), true);
-                        LastChunk.load();
-                    } else {
-                        LastChunk.load();
-                        world.unloadChunk(LastChunk.getX(), LastChunk.getZ(), true);
-                    }
+        TaskId.put(p, Bukkit.getScheduler().scheduleSyncRepeatingTask(EscapeLag.plugin, () ->  {
+            Chunk chunk = p.getLocation().getChunk();
+            Chunk LastChunk = PlayerInChunkMap.get(p);
+            if (LastChunk != chunk) {
+                if (LastChunk == null) {
+                    PlayerInChunkMap.put(p, chunk);
+                    return;
                 }
-                PlayerInChunkMap.put(p, chunk);
-                p.saveData();
+                if (PlayerClickedMap.containsValue(LastChunk)) {
+                    return;
+                }
+                World world = LastChunk.getWorld();
+                if (LastChunk.isLoaded() == true) {
+                    world.unloadChunk(LastChunk.getX(), LastChunk.getZ(), true);
+                    LastChunk.load();
+                } else {
+                    LastChunk.load();
+                    world.unloadChunk(LastChunk.getX(), LastChunk.getZ(), true);
+                }
             }
+            PlayerInChunkMap.put(p, chunk);
+            p.saveData();
         }, Optimizes.AutoSaveInterval * 20, Optimizes.AutoSaveInterval * 20));
     }
 

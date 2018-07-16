@@ -27,14 +27,11 @@ public class NoStyxChunks {
 	    if (!OptimizesChunk.enableNoStyxChunks) return;
 	    
 	    if (OptimizesChunk.noStyxChunks_chancesInterval_enable)
-	    Bukkit.getScheduler().runTaskTimer(plugin, new Runnable() {
-            @Override
-            public void run() {
-                for (World world : Bukkit.getWorlds()) {
-                    for (Chunk chunk : world.getLoadedChunks())
-                    if (!world.isChunkInUse(chunk.getX(), chunk.getZ()) && (isPaper() || !DelayedChunkKeeper.DEALYED_CHUNKS.contains(AzureAPI.wrapCoord(chunk.getX(), chunk.getZ())))) { // Respect dealy
-                        if (chunk.unload(true)) totalUnloadedChunks++;
-                    }
+	    Bukkit.getScheduler().runTaskTimer(plugin, () -> {
+            for (World world : Bukkit.getWorlds()) {
+                for (Chunk chunk : world.getLoadedChunks())
+                if (!world.isChunkInUse(chunk.getX(), chunk.getZ()) && (isPaper() || !DelayedChunkKeeper.DEALYED_CHUNKS.contains(AzureAPI.wrapCoord(chunk.getX(), chunk.getZ())))) { // Respect dealy
+                    if (chunk.unload(true)) totalUnloadedChunks++;
                 }
             }
         }, 60, AzureAPI.toTicks(TimeUnit.MINUTES, OptimizesChunk.noStyxChunks_chancesInterval_periods));
@@ -60,18 +57,15 @@ public class NoStyxChunks {
     }
 	
 	private static void handleWorldChunks(final Location from, final Player player) {
-	    Bukkit.getScheduler().runTask(EscapeLag.plugin, new Runnable() {
-            @Override
-            public void run() {
-                World world = from.getWorld();
-                if (world.getPlayers().isEmpty()) {
-                    for (Chunk each : world.getLoadedChunks()) {
-                        each.unload();
-                        totalUnloadedChunks++;
-                    }
-                } else {
-                    unloadChunksAt(from, player);
+	    Bukkit.getScheduler().runTask(EscapeLag.plugin, () -> {
+            World world = from.getWorld();
+            if (world.getPlayers().isEmpty()) {
+                for (Chunk each : world.getLoadedChunks()) {
+                    each.unload();
+                    totalUnloadedChunks++;
                 }
+            } else {
+                unloadChunksAt(from, player);
             }
         });
 	}

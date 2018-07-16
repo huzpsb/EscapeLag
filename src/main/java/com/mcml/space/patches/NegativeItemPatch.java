@@ -22,8 +22,8 @@ import org.bukkit.plugin.Plugin;
 
 import com.google.common.base.Predicate;
 import com.mcml.space.config.PatchesDupeFixes;
+import com.mcml.space.core.PlayerList;
 import com.mcml.space.util.AzureAPI;
-import com.mcml.space.util.PlayerList;
 import com.mcml.space.util.PluginExtends;
 
 public class NegativeItemPatch implements Listener, PluginExtends {

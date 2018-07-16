@@ -24,12 +24,7 @@ public class FireSpreadSlacker implements Listener {
         if (!Optimizes.FireLimitorenable) return;
         Bukkit.getPluginManager().registerEvents(new FireSpreadSlacker(), plugin);
         
-        Bukkit.getScheduler().runTaskTimer(plugin, new Runnable() {
-            @Override
-            public void run() {
-                CHECKED_CHUNKS.clear();
-            }
-        }, 0L, AzureAPI.toTicks(TimeUnit.SECONDS, 90));
+        Bukkit.getScheduler().runTaskTimer(plugin, CHECKED_CHUNKS::clear, 0L, AzureAPI.toTicks(TimeUnit.SECONDS, 90));
     }
     
     @EventHandler(priority = EventPriority.LOW, ignoreCancelled = true)

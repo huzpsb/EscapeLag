@@ -18,9 +18,8 @@ import org.bukkit.plugin.Plugin;
 import com.google.common.collect.Sets;
 import com.mcml.space.config.OptimizesChunk;
 import com.mcml.space.core.EscapeLag;
+import com.mcml.space.core.Ticker;
 import com.mcml.space.util.AzureAPI.ChunkCoord;
-
-import com.mcml.space.util.Ticker;
 import com.mcml.space.util.AzureAPI;
 
 import static com.mcml.space.config.OptimizesChunk.delayedChunkKeeper_maxUnloadChunksPerTick;

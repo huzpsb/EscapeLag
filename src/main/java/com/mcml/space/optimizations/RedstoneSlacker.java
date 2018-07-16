@@ -26,12 +26,7 @@ public class RedstoneSlacker implements Listener {
     public static void init(Plugin plugin){
         if(!Optimizes.AntiRedstoneenable) return;
         
-        Bukkit.getScheduler().runTaskTimer(plugin, new Runnable(){
-            @Override
-            public void run() {
-                CHECKED_TIMES.clear();
-            }
-        }, 0L, AzureAPI.toTicks(TimeUnit.SECONDS, Optimizes.AntiRedstoneTimes));
+        Bukkit.getScheduler().runTaskTimer(plugin, CHECKED_TIMES::clear, 0L, AzureAPI.toTicks(TimeUnit.SECONDS, Optimizes.AntiRedstoneTimes));
         maxCounts = Optimizes.AntiRedstoneTimes * 4;
         
         Bukkit.getPluginManager().registerEvents(new RedstoneSlacker(), plugin);
@@ -52,13 +47,11 @@ public class RedstoneSlacker implements Listener {
         if (times <= maxCounts) return;
         
         if (Optimizes.AntiRedstoneRemoveBlockList.contains(block.getType().name())){
-            Bukkit.getScheduler().runTask(EscapeLag.plugin, new Runnable() {
-                public void run(){
-                    if (Optimizes.dropRedstone) {
-                        block.breakNaturally();
-                    } else {
-                        block.setType(Material.AIR);
-                    }
+            Bukkit.getScheduler().runTask(EscapeLag.plugin, () -> {
+                if (Optimizes.dropRedstone) {
+                    block.breakNaturally();
+                } else {
+                    block.setType(Material.AIR);
                 }
             });
             

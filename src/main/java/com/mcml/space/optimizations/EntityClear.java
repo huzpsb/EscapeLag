@@ -11,8 +11,8 @@ import org.bukkit.entity.Player;
 
 import com.google.common.base.Predicate;
 import com.mcml.space.config.Optimizes;
+import com.mcml.space.core.PlayerList;
 import com.mcml.space.util.AzureAPI;
-import com.mcml.space.util.PlayerList;
 
 public class EntityClear implements Runnable{
 

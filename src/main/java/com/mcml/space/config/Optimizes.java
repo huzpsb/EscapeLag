@@ -60,7 +60,7 @@ public abstract class Optimizes extends Configurable {
     public static boolean timerGC = false;
     
     @Node("TeleportPreLoader.enable")
-    public static boolean TeleportPreLoaderenable = true;
+    public static boolean TeleportPreLoaderenable = false;
     
     @Locale
     @Node("TimerGc.Message")

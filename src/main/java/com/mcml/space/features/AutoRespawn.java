@@ -39,18 +39,14 @@ public class AutoRespawn implements Listener, PluginExtends {
         AzureAPI.log("自动重生模块已启动");
     }
     
+    @SuppressWarnings("deprecation")
     @EventHandler(priority = EventPriority.HIGHEST)
     public void autoRespawn(PlayerDeathEvent evt) {
         final Player player = evt.getEntity();
-        Bukkit.getScheduler().runTask(EscapeLag.plugin, new Runnable() {
-            @Override
-            @SuppressWarnings("deprecation")
-            public void run() {
-                player.spigot().respawn();
-                
-                if (sendTitleAutoRespawn && VersionLevel.isHigherEquals(Version.MINECRAFT_1_8_R2)) {
-                    player.sendTitle(titleAutoRespawn, subtitleAutoRespawn);
-                }
+        Bukkit.getScheduler().runTask(EscapeLag.plugin, () -> {
+            player.spigot().respawn();
+            if (sendTitleAutoRespawn && VersionLevel.isHigherEquals(Version.MINECRAFT_1_8_R2)) {
+                player.sendTitle(titleAutoRespawn, subtitleAutoRespawn);
             }
         });
     }

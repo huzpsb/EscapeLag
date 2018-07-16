@@ -4,8 +4,8 @@ import org.bukkit.Bukkit;
 import org.bukkit.plugin.Plugin;
 
 import com.mcml.space.config.Optimizes;
-import com.mcml.space.util.PlayerList;
-import com.mcml.space.util.Ticker;
+import com.mcml.space.core.PlayerList;
+import com.mcml.space.core.Ticker;
 
 public class TickSleep {
     private static volatile long sleepMillis = 20;
