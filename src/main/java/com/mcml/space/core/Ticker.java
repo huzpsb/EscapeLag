@@ -2,6 +2,9 @@ package com.mcml.space.core;
 
 import java.util.Timer;
 import java.util.TimerTask;
+import java.util.concurrent.locks.LockSupport;
+
+import javax.net.ssl.SSLException;
 
 import org.bukkit.Bukkit;
 import org.bukkit.plugin.Plugin;
@@ -29,6 +32,16 @@ public class Ticker {
      */
     private static volatile int realTimeTicks = 20;
     
+    /**
+     * Thread instance of timer
+     */
+    private static Thread timerThread;
+    
+    /**
+     * Whether the timer thread is parked, volatile for instant view
+     */
+    private static volatile boolean isParked;
+    
     public static void init(Plugin plugin) {
         Bukkit.getScheduler().runTaskTimer(plugin, () -> {
             // update resources from main thread
@@ -39,12 +52,14 @@ public class Ticker {
         new Timer().scheduleAtFixedRate(new TimerTask() {
             @Override
             public void run() {
+                if (timerThread == null) timerThread = Thread.currentThread();
                 // to check and notify main thread hang
                 notifyStucked();
             }
         }, 0L, 100L);
         
         Bukkit.getScheduler().runTaskTimerAsynchronously(plugin, () -> {
+            if (isParked) LockSupport.unpark(timerThread);
             // to diff real-time ticks
             realTimeTicks = (int) (totalTicks - cachedTotalTicks);
             cachedTotalTicks = totalTicks;
@@ -53,13 +68,13 @@ public class Ticker {
         AzureAPI.log("TPS计算与监控核心模块已启用");
     }
     
-    public static boolean notifyStucked() {
+    public static void notifyStucked() {
         long current = System.currentTimeMillis();
-        if (current - cachedMillis >= 1000L) { // TODO configurable
+        if (current - cachedMillis >= 1000L) {
             AzureAPI.log("警告！服务器主线程陷入停顿超过1秒！这可能是有其他插件进行网络操作、出现死循环或耗时操作所致！");
-            return true;
+            isParked = true;
+            LockSupport.park();
         }
-        return false;
     }
     
     public enum Distance {
