@@ -4,18 +4,14 @@ import static com.mcml.space.util.VersionLevel.isPaper;
 
 import java.io.File;
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import java.util.concurrent.TimeUnit;
 import java.util.logging.Level;
-import java.util.logging.LogRecord;
-import java.util.logging.Logger;
+import java.util.regex.Pattern;
 
 import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
-
 import org.apache.commons.lang.StringUtils;
 import org.bukkit.Bukkit;
 import org.bukkit.Sound;
@@ -53,6 +49,47 @@ public abstract class AzureAPI {
      * Server view distance (direct, single side) in blocks
      */
     private static final int viewDistanceBlock = Bukkit.getViewDistance() * 16;
+    
+    private static final Pattern SPACE = Pattern.compile(" ");
+    private static final Pattern NOT_NUMERIC = Pattern.compile("[^-\\d.]");
+    
+    public static int getSeconds(String str) {
+        str = SPACE.matcher(str).replaceAll("");
+        final char unit = str.charAt(str.length() - 1);
+        str = NOT_NUMERIC.matcher(str).replaceAll("");
+        double num;
+        try {
+            num = Double.parseDouble(str);
+        } catch (Exception e) {
+            num = 0D;
+        }
+        switch (unit) {
+            case 'd': num *= (double) 60*60*24; break;
+            case 'h': num *= (double) 60*60; break;
+            case 'm': num *= (double) 60; break;
+            default: case 's': break;
+        }
+        return (int) num;
+    }
+
+    protected static String timeSummary(int seconds) {
+        String time = "";
+
+        if (seconds > 60 * 60 * 24) {
+            time += TimeUnit.SECONDS.toDays(seconds) + "d";
+            seconds %= 60 * 60 * 24;
+        }
+
+        if (seconds > 60 * 60) {
+            time += TimeUnit.SECONDS.toHours(seconds) + "h";
+            seconds %= 60 * 60;
+        }
+
+        if (seconds > 0) {
+            time += TimeUnit.SECONDS.toMinutes(seconds) + "m";
+        }
+        return time;
+    }
     
     /**
      * Cached server thread instance

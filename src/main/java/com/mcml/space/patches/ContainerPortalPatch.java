@@ -17,12 +17,12 @@ import com.mcml.space.config.PatchesDupeFixes;
 import com.mcml.space.core.EscapeLag;
 
 public class ContainerPortalPatch implements Listener {
-    private final static Set<InventoryHolder> CONTAINER_INV = Sets.newSetFromMap(new java.util.IdentityHashMap<InventoryHolder, Boolean>(4));
-    
     public static void init(Plugin plugin) {
         if(!PatchesDupeFixes.enablePortalContainerDupeFixes) return;
         Bukkit.getPluginManager().registerEvents(new ContainerPortalPatch(), plugin);
     }
+    
+    private final Set<InventoryHolder> containerInv = Sets.newSetFromMap(new java.util.IdentityHashMap<InventoryHolder, Boolean>(4));
     
     @EventHandler(priority = EventPriority.LOWEST, ignoreCancelled = true)
     public void onPortal(final EntityPortalEvent evt) {
@@ -33,7 +33,7 @@ public class ContainerPortalPatch implements Listener {
             Bukkit.getScheduler().runTask(EscapeLag.plugin, new Runnable() {
                 @Override
                 public void run() {
-                    CONTAINER_INV.remove((InventoryHolder) evt.getEntity());
+                    containerInv.remove((InventoryHolder) evt.getEntity());
                     evt.getEntity().teleport(evt.getTo(), TeleportCause.NETHER_PORTAL); 
                 }
             });
@@ -43,9 +43,17 @@ public class ContainerPortalPatch implements Listener {
     
     @EventHandler(priority = EventPriority.LOWEST, ignoreCancelled = true)
     public void onPortal(InventoryOpenEvent evt) {
-        if (CONTAINER_INV.contains(evt.getInventory().getHolder())) {
+        if (containerInv.contains(evt.getInventory().getHolder())) {
             evt.setCancelled(true);
         }
+    }
+    
+    private boolean handleContainer(InventoryHolder holder) {
+        containerInv.add(holder);
+        for (HumanEntity player : holder.getInventory().getViewers()) {
+            player.closeInventory();
+        }
+        return true;
     }
     
     private static boolean hasInventory(EntityType type) {
@@ -59,13 +67,5 @@ public class ContainerPortalPatch implements Listener {
             default:
                 return false;
         }
-    }
-    
-    private static boolean handleContainer(InventoryHolder holder) {
-        CONTAINER_INV.add(holder);
-        for (HumanEntity player : holder.getInventory().getViewers()) {
-            player.closeInventory();
-        }
-        return true;
     }
 }

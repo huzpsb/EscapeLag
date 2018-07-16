@@ -2,7 +2,7 @@ package com.mcml.space.optimizations;
 
 import org.bukkit.Bukkit;
 import org.bukkit.plugin.Plugin;
-import com.mcml.space.config.Optimizations;
+import com.mcml.space.config.Optimizes;
 import com.mcml.space.core.EscapeLag;
 import com.mcml.space.util.AzureAPI;
 import com.mcml.space.util.PluginExtends;
@@ -19,20 +19,20 @@ public class OverloadRestart implements Runnable, PluginExtends {
     
     @Override
     public void run() {
-        if (Optimizations.OverLoadMemoryRestartenable && isMemoryOverload()) {
-            AzureAPI.bc(Optimizations.OverLoadMemoryRestartWarnMessage);
+        if (Optimizes.OverLoadMemoryRestartenable && isMemoryOverload()) {
+            AzureAPI.bc(Optimizes.OverLoadMemoryRestartWarnMessage);
             Bukkit.getServer().getScheduler().runTaskLater(EscapeLag.plugin, new Runnable() {
                 @Override
                 public void run() {
-                    if (!AzureAPI.restartServer(Optimizations.OverLoadMemoryRestartKickMessage)) TimerGarbageCollect.collectGarbage();
+                    if (!AzureAPI.restartServer(Optimizes.OverLoadMemoryRestartKickMessage)) TimerGarbageCollect.collectGarbage();
                 }
-            }, Optimizations.OverLoadMemoryRestartDelayTime * 20);
+            }, Optimizes.OverLoadMemoryRestartDelayTime * 20);
         }
     }
     
     public static boolean isMemoryOverload() {
         Runtime run = Runtime.getRuntime();
-        return run.maxMemory() - run.totalMemory() + run.freeMemory() < Optimizations.OverLoadMemoryRestartHeapMBLefted;
+        return run.maxMemory() - run.totalMemory() + run.freeMemory() < Optimizes.OverLoadMemoryRestartHeapMBLefted;
     }
     
 }

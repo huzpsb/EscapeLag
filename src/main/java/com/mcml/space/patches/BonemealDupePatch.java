@@ -15,7 +15,6 @@ import com.mcml.space.util.VersionLevel.Version;
 public class BonemealDupePatch implements Listener {
 	public static void init(Plugin plugin) {
 	    if (VersionLevel.isLowerThan(Version.MINECRAFT_1_6_R3) || VersionLevel.isHigherThan(Version.MINECRAFT_1_7_R4)) return;
-	    
 		Bukkit.getPluginManager().registerEvents(new BonemealDupePatch(), plugin);
 	}
 	

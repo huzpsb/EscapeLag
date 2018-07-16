@@ -18,7 +18,8 @@ import com.mcml.space.command.EscapeLagCommand;
 import com.mcml.space.command.LocalizedHelper;
 import com.mcml.space.config.Features;
 import com.mcml.space.config.Core;
-import com.mcml.space.config.Optimizations;
+import com.mcml.space.config.Optimizes;
+import com.mcml.space.config.OptimizesChunk;
 import com.mcml.space.config.Patches;
 import com.mcml.space.config.PatchesDupeFixes;
 import com.mcml.space.features.AutoRespawn;
@@ -28,8 +29,8 @@ import com.mcml.space.features.FarmProtection;
 import com.mcml.space.features.SpawnerController;
 import com.mcml.space.features.UpgradeNotifier;
 import com.mcml.space.optimizations.AutoSave;
-import com.mcml.space.optimizations.ChunkKeeper;
-import com.mcml.space.optimizations.ChunkUnloader;
+import com.mcml.space.optimizations.DelayedChunkKeeper;
+import com.mcml.space.optimizations.NoStyxChunks;
 import com.mcml.space.optimizations.EmptyRestart;
 import com.mcml.space.optimizations.FireSpreadSlacker;
 import com.mcml.space.optimizations.NoCrowdEntity;
@@ -69,17 +70,18 @@ public class EscapeLag extends JavaPlugin {
     public static EscapeLag plugin;
     
     // Core
-    public final static String CONFIG_MAIN = "PluginMainConfig.yml";
+    public final static String CONFIG_CORE = "PluginMainConfig.yml";
     
     // Features
-    public final static String CONFIG_FUNCTION = "DoEventConfig.yml";
+    public final static String CONFIG_FEATURES = "DoEventConfig.yml";
     
     // Pathches
-    public final static String CONFIG_PATCH = "AntiBugConfig.yml";
+    public final static String CONFIG_PATCHES = "AntiBugConfig.yml";
+    public final static String CONFIG_PATCH_DUPE_FIXES = "patches/dupe_fixes.yml";
     
     // Optimizations
-    public final static String CONFIG_OPTIMIZE = "ClearLagConfig.yml";
-    public final static String CONFIG_OPTIMIZE_DUPE_FIXES = "patches/dupe_fixes.yml";
+    public final static String CONFIG_OPTIMIZES = "ClearLagConfig.yml";
+    public final static String CONFIG_OPTIMIZE_DUPE_FIXES = "optimizes/chunks.yml";
     
     public final static Map<String, Coord<File, FileConfiguration>> configurations = Maps.newHashMap(); // File name as key
     
@@ -120,6 +122,8 @@ public class EscapeLag extends JavaPlugin {
         AzureAPI.log("Uninstall modules..");
         HandlerList.unregisterAll(this);
         Bukkit.getScheduler().cancelTasks(this);
+        
+        TimerGarbageCollect.collectGarbage();
     }
     
     public void bindCoreModules() {
@@ -168,9 +172,9 @@ public class EscapeLag extends JavaPlugin {
         OverloadRestart.init(this);
         FireSpreadSlacker.init(this);
         RedstoneSlacker.init(this);
-        ChunkKeeper.init(this);
+        DelayedChunkKeeper.init(this);
         TimerGarbageCollect.init(this);
-        ChunkUnloader.init(this);
+        NoStyxChunks.init(this);
         
         Bukkit.getPluginManager().registerEvents(new UnloadClear(), this);
         Bukkit.getPluginManager().registerEvents(new AutoSave(), this);
@@ -213,17 +217,18 @@ public class EscapeLag extends JavaPlugin {
         EscapeLag.plugin.saveResource("documents/Guide-" + locale + ".txt", true);
         
         // Core
-        setupConfig(CONFIG_MAIN, Core.class);
+        setupConfig(CONFIG_CORE, Core.class);
         
         // Features
-        setupConfig(CONFIG_FUNCTION, Features.class);
+        setupConfig(CONFIG_FEATURES, Features.class);
         
         // Patches
-        setupConfig(CONFIG_PATCH, Patches.class);
-        setupConfig(CONFIG_OPTIMIZE_DUPE_FIXES, PatchesDupeFixes.class);
+        setupConfig(CONFIG_PATCHES, Patches.class);
+        setupConfig(CONFIG_PATCH_DUPE_FIXES, PatchesDupeFixes.class);
         
         // Optimizations
-        setupConfig(CONFIG_OPTIMIZE, Optimizations.class);
+        setupConfig(CONFIG_OPTIMIZES, Optimizes.class);
+        setupConfig(CONFIG_OPTIMIZE_DUPE_FIXES, OptimizesChunk.class);
     }
     
     public boolean setupConfig(String configIdentifier, Class<? extends Configurable> provider) {
@@ -242,8 +247,8 @@ public class EscapeLag extends JavaPlugin {
             return false;
         }
         
-        if (configIdentifier.equals(CONFIG_MAIN)) {
-            AzureAPI.setPrefix(ChatColor.translateAlternateColorCodes('&', Core.PluginPrefix) + ChatColor.RESET + " > ");
+        if (configIdentifier.equals(CONFIG_CORE)) {
+            AzureAPI.setPrefix(Core.PluginPrefix + ChatColor.RESET + " > ");
             LocalizedHelper.init();
         }
         return true;
@@ -251,7 +256,7 @@ public class EscapeLag extends JavaPlugin {
     
     @SneakyThrows
     public static void AutoSetServer(boolean force) {
-        if (!force && !Optimizations.AutoSetenable) return;
+        if (!force && !Optimizes.AutoSetenable) return;
         
         long heapmb = Runtime.getRuntime().maxMemory() / 1024 / 1024;
         File BukkitFile = new File("bukkit.yml");

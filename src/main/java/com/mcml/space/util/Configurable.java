@@ -23,7 +23,6 @@ import com.mcml.space.util.AzureAPI.Coord;
 /**
  * @author SotrForgotten
  */
-@SuppressWarnings("unchecked")
 public abstract class Configurable {
     @Documented
     @Retention(RetentionPolicy.RUNTIME)
@@ -102,8 +101,7 @@ public abstract class Configurable {
         }
         
         if (Map.class.isAssignableFrom(targetType)) {
-            @SuppressWarnings("rawtypes")
-            Map deserializedMap = Maps.newHashMap();
+            Map<Object, Object> deserializedMap = Maps.newHashMap();
             // Recovery entries from specified format
             List<String> combinedEntries = Lists.newArrayList(((List<?>) configuredValue).toArray(new String[0]));
             for (String entry : combinedEntries) {

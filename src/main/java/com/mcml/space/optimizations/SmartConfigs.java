@@ -4,13 +4,13 @@ import java.io.File;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.plugin.Plugin;
-import com.mcml.space.config.Optimizations;
+import com.mcml.space.config.Optimizes;
 import com.mcml.space.core.EscapeLag;
 import lombok.SneakyThrows;
 
 public class SmartConfigs { // Not ready for use now
     public static void init(Plugin plugin, boolean force) {
-        if(!force && !Optimizations.AutoSetenable) return;
+        if(!force && !Optimizes.AutoSetenable) return;
         
         File backupFolder = new File("backup_configurations");
         if (backupFolder.isDirectory()) backupFolder.delete();
@@ -22,8 +22,8 @@ public class SmartConfigs { // Not ready for use now
         File spigotFile = new File("spigot.yml");
         if (spigotFile.exists()) configsSpigot(spigotFile);
         
-        Optimizations.AutoSaveenable = false;
-        EscapeLag.plugin.setupConfig(EscapeLag.CONFIG_OPTIMIZE, Optimizations.class);
+        Optimizes.AutoSaveenable = false;
+        EscapeLag.plugin.setupConfig(EscapeLag.CONFIG_OPTIMIZES, Optimizes.class);
     }
     
     @SneakyThrows

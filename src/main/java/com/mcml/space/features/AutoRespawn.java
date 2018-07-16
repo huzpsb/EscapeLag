@@ -31,7 +31,7 @@ public class AutoRespawn implements Listener, PluginExtends {
         if (!VersionLevel.isSpigot()) {
             AzureAPI.warn("Auto respawn feature only works with servers implemented Spigot API!");
             Features.canAutoRespawn = false;
-            EscapeLag.plugin.setupConfig(EscapeLag.CONFIG_FUNCTION, Features.class);
+            EscapeLag.plugin.setupConfig(EscapeLag.CONFIG_FEATURES, Features.class);
             return;
         }
         

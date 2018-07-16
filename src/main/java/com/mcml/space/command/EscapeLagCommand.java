@@ -16,8 +16,8 @@ import org.bukkit.entity.Player;
 import com.mcml.space.config.Core;
 import com.mcml.space.core.EscapeLag;
 import com.mcml.space.core.Network;
-import com.mcml.space.optimizations.ChunkKeeper;
-import com.mcml.space.optimizations.ChunkUnloader;
+import com.mcml.space.optimizations.DelayedChunkKeeper;
+import com.mcml.space.optimizations.NoStyxChunks;
 import com.mcml.space.optimizations.OverloadRestart;
 import com.mcml.space.util.AzureAPI;
 import com.mcml.space.util.HeapDumper;
@@ -39,10 +39,10 @@ public class EscapeLagCommand {
 					return true;
 				}
 				if (args[0].equalsIgnoreCase("updateon")) {
-					FileConfiguration MainConfig = EscapeLag.configurations.get(EscapeLag.CONFIG_MAIN).getValue();
+					FileConfiguration MainConfig = EscapeLag.configurations.get(EscapeLag.CONFIG_CORE).getValue();
 					MainConfig.set("AutoUpdate", true);
 					try {
-						MainConfig.save(EscapeLag.configurations.get(EscapeLag.CONFIG_MAIN).getKey());
+						MainConfig.save(EscapeLag.configurations.get(EscapeLag.CONFIG_CORE).getKey());
 					} catch (IOException ex) {
 					}
 					Core.AutoUpdate = true;
@@ -90,34 +90,10 @@ public class EscapeLagCommand {
 					if (args.length == 1) {
 						sender.sendMessage("§a后置参数:");
 						sender.sendMessage("§elist 查阅以及被保持的区块列表");
-						sender.sendMessage("§eaddthis 将你所处区块加入保持列表");
-						sender.sendMessage("§eremovethis 将你所处区块删除报错列表");
-						sender.sendMessage("§eclear 清空所有区块保持列表");
 						return true;
 					}
 					if (args[1].equalsIgnoreCase("list")) {
-						sender.sendMessage("§e目前以及被保存的区块列表:" + ChunkKeeper.KEEP_LOADED_CHUNKS);
-					}
-					if (args[1].equalsIgnoreCase("addthis")) {
-						Player p = (Player) sender;
-						Chunk chunk = p.getLocation().getChunk();
-						ChunkKeeper.KEEP_LOADED_CHUNKS.add(AzureAPI.wrapCoord(chunk.getX(), chunk.getZ()));
-						sender.sendMessage("§e成功将你所在区块加入保持列表");
-					}
-					if (args[1].equalsIgnoreCase("removethis")) {
-						Player p = (Player) sender;
-						Chunk chunk = p.getLocation().getChunk();
-						ChunkCoord coord = AzureAPI.wrapCoord(chunk.getX(), chunk.getZ());
-						if (ChunkKeeper.KEEP_LOADED_CHUNKS.contains(coord)) {
-							ChunkKeeper.KEEP_LOADED_CHUNKS.remove(coord);
-							sender.sendMessage("§e成功将所在区块从保持列表中删除");
-						} else {
-							sender.sendMessage("§e失败将所在区块从保持列表中删除，因为该区块不在保持列表中。");
-						}
-					}
-					if (args[1].equalsIgnoreCase("clear")) {
-						ChunkKeeper.KEEP_LOADED_CHUNKS.clear();
-						sender.sendMessage("§e已经清空所有在保持列表的区块。");
+						sender.sendMessage("§e目前正在延时卸载的区块列表:" + DelayedChunkKeeper.DEALYED_CHUNKS);
 					}
 				}
 				if (args[0].equalsIgnoreCase("heap")) {
@@ -145,7 +121,7 @@ public class EscapeLagCommand {
 						sender.sendMessage("§6成功检测一次内存濒临重启！若未发出重启提醒则意味着内存仍然充足不至于崩溃！");
 					}
 					if (args[1].equalsIgnoreCase("chunkunloadlog")) {
-						sender.sendMessage("§a截止到目前，插件已经卸载了" + ChunkUnloader.totalUnloadedChunks + "个无用区块");
+						sender.sendMessage("§a截止到目前，插件已经卸载了" + NoStyxChunks.totalUnloadedChunks + "个无用区块");
 					}
 					if (args[1].equalsIgnoreCase("dump")) {
 						sender.sendMessage("§a开始 dump 内存堆！这可能会花费一些时间并导致服务器卡住！");

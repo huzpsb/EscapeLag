@@ -23,8 +23,6 @@ import com.mcml.space.config.Patches;
 import com.mcml.space.util.AzureAPI;
 
 public class ValidateActions implements Listener {
-    private final static Set<String> INV_KEEPERS = Sets.newHashSet(); // Handle this by nms is nice
-    
     public static void init(Plugin plugin) {
         if (!Patches.enableVaildateActions) return;
         
@@ -32,14 +30,16 @@ public class ValidateActions implements Listener {
         Bukkit.getPluginManager().registerEvents(new ValidateActions(), plugin);
     }
     
+    private final Set<String> invKeepers = Sets.newHashSet(); // Handle this by nms is nice
+    
     @EventHandler(priority = EventPriority.MONITOR, ignoreCancelled = true)
     public void onOpenInventory(InventoryOpenEvent evt) {
-        INV_KEEPERS.add(evt.getPlayer().getName());
+        invKeepers.add(evt.getPlayer().getName());
     }
     
     @EventHandler(priority = EventPriority.MONITOR, ignoreCancelled = true)
     public void onCloseInventory(InventoryCloseEvent evt) {
-        INV_KEEPERS.remove(evt.getPlayer().getName());
+        invKeepers.remove(evt.getPlayer().getName());
     }
     
     @EventHandler(priority = EventPriority.LOWEST, ignoreCancelled = true)
@@ -72,8 +72,8 @@ public class ValidateActions implements Listener {
         handlePlayerAction(evt.getPlayer(), evt);
     }
     
-    public static void handlePlayerAction(Player player, Cancellable evt) {
-        if (INV_KEEPERS.contains(player.getName())) {
+    public void handlePlayerAction(Player player, Cancellable evt) {
+        if (invKeepers.contains(player.getName())) {
             evt.setCancelled(true);
             AzureAPI.warn("Player " + player.getName() + " acted action that impossible to happen (hack client?)");
         }

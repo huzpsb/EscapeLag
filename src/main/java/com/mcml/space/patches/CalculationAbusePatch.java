@@ -11,8 +11,6 @@ import com.mcml.space.config.Patches;
 import com.mcml.space.util.AzureAPI;
 
 public class CalculationAbusePatch implements Listener {
-    private final static String CALC_LABEL = "//calc ";
-    
 	public static void init(Plugin plugin) {
 	    Plugin worldedit = Bukkit.getPluginManager().getPlugin("WorldEdit");
 		if (worldedit == null || hasCalculationPerms(worldedit.getDescription().getVersion())) return;
@@ -20,6 +18,8 @@ public class CalculationAbusePatch implements Listener {
         AzureAPI.log("已经启用WEcalc命令炸服Bug!");
         Bukkit.getPluginManager().registerEvents(new CalculationAbusePatch(), plugin);
 	}
+	
+    private final String calcLabel = "//calc ";
 	
 	/**
 	 * Fyi. https://github.com/sk89q/WorldEdit/commit/23d6fa7579566b0d92697548afc6a1e27c455a2f
@@ -41,7 +41,7 @@ public class CalculationAbusePatch implements Listener {
 	@EventHandler(priority = EventPriority.LOW, ignoreCancelled = true)
 	public void onCommand(PlayerCommandPreprocessEvent evt) {
 		String command = evt.getMessage();
-		if (!command.startsWith(CALC_LABEL) || evt.getPlayer().isOp() || AzureAPI.hasPerm(evt.getPlayer(), "worldedit.calc")) return;
+		if (!command.startsWith(calcLabel) || evt.getPlayer().isOp() || AzureAPI.hasPerm(evt.getPlayer(), "worldedit.calc")) return;
 		
         evt.getPlayer().sendMessage(Patches.AntiWEcalcWarnMessage);
         evt.setCancelled(true);

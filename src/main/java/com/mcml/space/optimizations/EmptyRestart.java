@@ -8,7 +8,7 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.event.player.PlayerQuitEvent;
 import org.bukkit.plugin.Plugin;
-import com.mcml.space.config.Optimizations;
+import com.mcml.space.config.Optimizes;
 import com.mcml.space.core.EscapeLag;
 import com.mcml.space.util.AzureAPI;
 import com.mcml.space.util.PlayerList;
@@ -19,7 +19,7 @@ import com.mcml.space.util.PluginExtends;
  */
 public class EmptyRestart implements Listener, PluginExtends {
     public static void init(Plugin plugin) {
-        if (!Optimizations.emptyRestart) return;
+        if (!Optimizes.emptyRestart) return;
         
         Bukkit.getPluginManager().registerEvents(new EmptyRestart(), plugin);
         AzureAPI.log("无人重启模块已启动");
@@ -29,19 +29,19 @@ public class EmptyRestart implements Listener, PluginExtends {
     
     @EventHandler
     public void preparRestart(PlayerQuitEvent evt){
-        if(Optimizations.emptyRestart && restartTaskId == -1 && PlayerList.isEmpty()){
+        if(Optimizes.emptyRestart && restartTaskId == -1 && PlayerList.isEmpty()){
             restartTaskId = Bukkit.getScheduler().runTaskLater(EscapeLag.plugin, new Runnable(){
                 @Override
                 public void run(){
                     AzureAPI.restartServer("服务器无人在线，开始重启...");
                 }
-            }, AzureAPI.toTicks(TimeUnit.SECONDS, Optimizations.emptyRestartDelay)).getTaskId();
+            }, AzureAPI.toTicks(TimeUnit.SECONDS, Optimizes.emptyRestartDelay)).getTaskId();
         }
     }
     
     @EventHandler
     public void cancelRestart(PlayerJoinEvent evt){
-        if(Optimizations.emptyRestart) {
+        if(Optimizes.emptyRestart) {
             if (restartTaskId != -1) Bukkit.getScheduler().cancelTask(restartTaskId);
         }
     }

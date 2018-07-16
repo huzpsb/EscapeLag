@@ -10,7 +10,7 @@ import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
 
 import com.google.common.base.Predicate;
-import com.mcml.space.config.Optimizations;
+import com.mcml.space.config.Optimizes;
 import com.mcml.space.util.AzureAPI;
 import com.mcml.space.util.PlayerList;
 
@@ -18,7 +18,7 @@ public class EntityClear implements Runnable{
 
 	@Override
 	public void run() {
-		if(Optimizations.EntityClearenable){
+		if(Optimizes.EntityClearenable){
 			int count = 0;
 			List<World> worlds = Bukkit.getWorlds();
 			final List<LivingEntity> allents = new ArrayList<LivingEntity>();
@@ -29,13 +29,13 @@ public class EntityClear implements Runnable{
 				int ls = lents.size();
 				for(int ii = 0;ii<ls;ii++){
 					LivingEntity le = lents.get(ii);
-					if(Optimizations.EntityClearEntityType.contains("*") ||Optimizations.EntityClearEntityType.contains(le.getType().name())){
+					if(Optimizes.EntityClearEntityType.contains("*") ||Optimizes.EntityClearEntityType.contains(le.getType().name())){
 						allents.add(le);
 						count = count + lents.size();
 					}
 				}
 			}
-			if(count > Optimizations.EntityClearLimitCount){
+			if(count > Optimizes.EntityClearLimitCount){
 	            PlayerList.forEach(new Predicate<Player>() {
 	                @Override
 	                public boolean apply(Player player) {
@@ -51,7 +51,7 @@ public class EntityClear implements Runnable{
 	                }
 	            });
 				int aes = allents.size();
-				AzureAPI.bc(Optimizations.EntityClearClearMessage);
+				AzureAPI.bc(Optimizes.EntityClearClearMessage);
 				for(int ii = 0;ii<aes;ii++){
 					allents.get(ii).remove();
 				}

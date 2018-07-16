@@ -13,7 +13,7 @@ import org.bukkit.event.player.PlayerTeleportEvent;
 import org.bukkit.event.world.ChunkUnloadEvent;
 
 import com.google.common.collect.Lists;
-import com.mcml.space.config.Optimizations;
+import com.mcml.space.config.Optimizes;
 import com.mcml.space.util.Utils;
 
 public class UnloadClear implements Listener {
@@ -21,7 +21,7 @@ public class UnloadClear implements Listener {
 
 	@EventHandler
 	public void ChunkloadClear(ChunkUnloadEvent event) {
-		if (Optimizations.UnloadClearenable != true) {
+		if (Optimizes.UnloadClearenable != true) {
 			return;
 		}
 		Chunk chunk = event.getChunk();
@@ -38,10 +38,10 @@ public class UnloadClear implements Listener {
 		Entity[] entities = chunk.getEntities();
 		for (int i = 0; i < entities.length; i++) {
 			Entity ent = entities[i];
-			if (ent.getType() == EntityType.DROPPED_ITEM && noclearitemchunk == false && Optimizations.UnloadClearDROPPED_ITEMenable) {
+			if (ent.getType() == EntityType.DROPPED_ITEM && noclearitemchunk == false && Optimizes.UnloadClearDROPPED_ITEMenable) {
 				ent.remove();
 			}
-			if(Optimizations.UnloadCleartype.contains(ent.getType().name())||Optimizations.UnloadCleartype.contains("*")) {
+			if(Optimizes.UnloadCleartype.contains(ent.getType().name())||Optimizes.UnloadCleartype.contains("*")) {
 				ent.remove();
 			}
 		}
@@ -49,7 +49,7 @@ public class UnloadClear implements Listener {
 
 	@EventHandler
 	public void DeathNoClear(PlayerDeathEvent event) {
-		if (Optimizations.UnloadClearDROPPED_ITEMNoCleatDeath != true) {
+		if (Optimizes.UnloadClearDROPPED_ITEMNoCleatDeath != true) {
 			return;
 		}
 		Player player = event.getEntity();
@@ -59,7 +59,7 @@ public class UnloadClear implements Listener {
 
 	@EventHandler
 	public void TeleportNoClear(PlayerTeleportEvent event) {
-		if (Optimizations.UnloadClearDROPPED_ITEMNoClearTeleport != true) {
+		if (Optimizes.UnloadClearDROPPED_ITEMNoClearTeleport != true) {
 			return;
 		}
 		Player player = event.getPlayer();

@@ -4,7 +4,7 @@ import java.util.Set;
 
 import com.mcml.space.util.Configurable;
 
-public abstract class Optimizations extends Configurable {	
+public abstract class Optimizes extends Configurable {	
 	@Node("TPSSleep.NoOneFreeze.enable")
     public static boolean TPSSleepNoOneFreezeenable = true;
 	
@@ -34,9 +34,6 @@ public abstract class Optimizations extends Configurable {
 	
     @Node("OverLoadMemoryRestart.enable")
     public static boolean OverLoadMemoryRestartenable = true;
-    
-    @Node("ChunkUnloader.Interval")
-    public static long ChunkUnloaderInterval = 30;
     
     @Node("WaterFlowLimitor.enable")
     public static boolean WaterFlowLimitorenable = true;
@@ -116,12 +113,6 @@ public abstract class Optimizations extends Configurable {
     
     @Node("UnloadClear.DROPPED_ITEM.enable")
     public static boolean UnloadClearDROPPED_ITEMenable = true;
-    
-    @Node("ChunkKeeper.enable")
-    public static boolean ChunkKeeperenable = true;
-    
-    @Node("ChunkUnloader.enable")
-    public static boolean chunkUnloader = true;
     
     @Node("UnloadClear.enable")
     public static boolean UnloadClearenable = true;

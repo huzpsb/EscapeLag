@@ -12,7 +12,7 @@ import org.bukkit.event.block.BlockPlaceEvent;
 import org.bukkit.plugin.Plugin;
 
 import com.mcml.space.config.PatchesDupeFixes;
-import static com.mcml.space.config.PatchesDupeFixes.cancelledPlacementDupeFixes_ClearsRadius;
+import static com.mcml.space.config.PatchesDupeFixes.cancelledPlacementDupeFixes_clearsRadius;
 
 import java.util.Map;
 
@@ -27,7 +27,7 @@ public class CancelledPlacementPatch implements Listener {
         if(!evt.isCancelled()) return;
         
         Player player = evt.getPlayer();
-        Map<String, Integer> radius = cancelledPlacementDupeFixes_ClearsRadius;
+        Map<String, Integer> radius = cancelledPlacementDupeFixes_clearsRadius;
         for (Entity drop : player.getNearbyEntities(radius.get("x"), radius.get("y"), radius.get("z"))) {
             if (drop.getType() != EntityType.DROPPED_ITEM) continue;
             

@@ -8,23 +8,23 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.entity.CreatureSpawnEvent;
 import org.bukkit.event.world.ChunkLoadEvent;
 
-import com.mcml.space.config.Optimizations;
+import com.mcml.space.config.Optimizes;
 
 public class NoCrowdEntity implements Listener {
 
 	@EventHandler
 	public void CheckCrowd(ChunkLoadEvent evt) {
-		if (Optimizations.NoCrowdedEntityenable) {
+		if (Optimizes.NoCrowdedEntityenable) {
 			Chunk chunk = evt.getChunk();
 			Entity[] entities = chunk.getEntities();
 
 			for (Entity e : entities) {
 				EntityType type = e.getType();
 				int count = 0;
-				if (Optimizations.NoCrowdedEntityTypeList.contains("*")
-						|| Optimizations.NoCrowdedEntityTypeList.contains(type.name())) {
+				if (Optimizes.NoCrowdedEntityTypeList.contains("*")
+						|| Optimizes.NoCrowdedEntityTypeList.contains(type.name())) {
 					count++;
-					if (count > Optimizations.NoCrowdedEntityPerChunkLimit && e.getType() != EntityType.PLAYER) {
+					if (count > Optimizes.NoCrowdedEntityPerChunkLimit && e.getType() != EntityType.PLAYER) {
 						e.remove();
 					}
 				}
@@ -34,17 +34,17 @@ public class NoCrowdEntity implements Listener {
 
 	@EventHandler
 	public void onSpawn(CreatureSpawnEvent event) {
-		if (Optimizations.NoCrowdedEntityenable) {
+		if (Optimizes.NoCrowdedEntityenable) {
 			Chunk chunk = event.getEntity().getLocation().getChunk();
 			Entity[] entities = chunk.getEntities();
 
 			for (Entity e : entities) {
 				EntityType type = e.getType();
 				int count = 0;
-				if (Optimizations.NoCrowdedEntityTypeList.contains("*")
-						|| Optimizations.NoCrowdedEntityTypeList.contains(type.name())) {
+				if (Optimizes.NoCrowdedEntityTypeList.contains("*")
+						|| Optimizes.NoCrowdedEntityTypeList.contains(type.name())) {
 					count++;
-					if (count > Optimizations.NoCrowdedEntityPerChunkLimit && e.getType() != EntityType.PLAYER) {
+					if (count > Optimizes.NoCrowdedEntityPerChunkLimit && e.getType() != EntityType.PLAYER) {
 						e.remove();
 					}
 				}

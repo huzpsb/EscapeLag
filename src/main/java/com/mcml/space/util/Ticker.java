@@ -1,8 +1,5 @@
 package com.mcml.space.util;
 
-import java.util.Timer;
-import java.util.TimerTask;
-
 import org.bukkit.Bukkit;
 import org.bukkit.plugin.Plugin;
 
@@ -80,5 +77,9 @@ public class Ticker {
     
     public static int getRealTimeTPS(){
         return realTimeTicks;
+    }
+    
+    public static long currentTick(){
+        return totalTicks;
     }
 }

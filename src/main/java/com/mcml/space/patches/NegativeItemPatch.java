@@ -70,7 +70,7 @@ public class NegativeItemPatch implements Listener, PluginExtends {
         
         removesNegativeDrops(evt.getItem().getWorld());
         fliterPlayersInventory(evt.getPlayer());
-        AzureAPI.bc(PatchesDupeFixes.negativeItemDupeFixes_NotifyMesssage, "$player", evt.getPlayer().getName());
+        AzureAPI.bc(PatchesDupeFixes.negativeItemDupeFixes_notifyMesssage, "$player", evt.getPlayer().getName());
         
         evt.setCancelled(true);
     }
@@ -80,7 +80,7 @@ public class NegativeItemPatch implements Listener, PluginExtends {
      * @param sourcePlayer to avoid double notify
      */
     private static void fliterPlayersInventory(@Nullable Player sourcePlayer) {
-        if (!PatchesDupeFixes.negativeItemDupeFixes_FliterPlayersInv) return;
+        if (!PatchesDupeFixes.negativeItemDupeFixes_fliterPlayersInv) return;
         
         PlayerList.forEach(new Predicate<Player>() {
             @Override
@@ -93,7 +93,7 @@ public class NegativeItemPatch implements Listener, PluginExtends {
                     }
                 }
                 if (notify && sourcePlayer != null && !sourcePlayer.getName().equals(player.getName()))
-                    AzureAPI.bc(PatchesDupeFixes.negativeItemDupeFixes_NotifyMesssage, "$player", player.getName());
+                    AzureAPI.bc(PatchesDupeFixes.negativeItemDupeFixes_notifyMesssage, "$player", player.getName());
                 return true;
             }
         });
@@ -105,9 +105,9 @@ public class NegativeItemPatch implements Listener, PluginExtends {
      * @return whether removes item is allowed
      */
     public static boolean removesNegativeDrops(World world) {
-        if (!PatchesDupeFixes.negativeItemDupeFixes_RemovesItem) return false;
+        if (!PatchesDupeFixes.negativeItemDupeFixes_removesItem) return false;
         
-        if (PatchesDupeFixes.negativeItemDupeFixes_RemovesItem_FliterDrops) {
+        if (PatchesDupeFixes.negativeItemDupeFixes_removesItem_fliterDrops) {
             for (Entity entity : world.getEntities()) {
                 if (entity.getType() != EntityType.DROPPED_ITEM) continue;
                 if (((Item) entity).getItemStack().getAmount() <= 0) entity.remove();

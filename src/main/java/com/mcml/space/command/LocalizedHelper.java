@@ -27,7 +27,6 @@ public class LocalizedHelper {
 			HelpLine5 = "§e/el tps 查阅关于TPS和主线程";
 			HelpLine6 = "§e/el autoset 查阅关于自动配端";
 			HelpLine7 = "§e/el antiattack 查阅关于反压测模块";
-			HelpLine8 = "§e/el monitor 查阅关于插件耗能侦测";
 			PluginPrefixLine = "§b------§a§lEscapeLag - §e版本 " + EscapeLag.plugin.getDescription().getVersion() + "§b------";
 		}
 		if(Core.lang.equalsIgnoreCase("en_GB")) {
@@ -40,7 +39,6 @@ public class LocalizedHelper {
 			HelpLine5 = "§e/el tps ask help for tps";
 			HelpLine6 = "§e/el autoset ask help for AutoSet model";
 			HelpLine7 = "§e/el antiattack install and ask help for AntiAttack model";
-			HelpLine8 = "§e/el monitor enter Plugin Used monitor";
 			PluginPrefixLine = "§b------§a§lEscapeLag - §eVer " + EscapeLag.plugin.getDescription().getVersion() + "§b------";
 		}
 	}

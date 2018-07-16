@@ -15,10 +15,9 @@ import com.mcml.space.config.PatchesDupeFixes;
 import com.mcml.space.core.EscapeLag;
 import com.mcml.space.util.AzureAPI;
 
-import static com.mcml.space.config.PatchesDupeFixes.netherHoppersDupeFixes_Worlds;
+import static com.mcml.space.config.PatchesDupeFixes.netherHoppersDupeFixes_worlds;
 
 public class NetherHopperDupePatch implements Listener {
-    
     public static void init(Plugin plugin) {
         if (!PatchesDupeFixes.enableNetherHoppersDupeFixes) return;
         
@@ -32,12 +31,12 @@ public class NetherHopperDupePatch implements Listener {
         Hopper to = (Hopper) evt.getInitiator().getHolder();
         Hopper from = (Hopper) evt.getSource().getHolder();
         
-        if (netherHoppersDupeFixes_Worlds.isEmpty() ||
-                netherHoppersDupeFixes_Worlds.contains(from.getWorld().getName())) handleCancellation(from, to, evt.getItem(), evt);
+        if (netherHoppersDupeFixes_worlds.isEmpty() ||
+                netherHoppersDupeFixes_worlds.contains(from.getWorld().getName())) handleCancellation(from, to, evt.getItem(), evt);
     }
     
     private static void handleCancellation(Hopper from, Hopper to, ItemStack item, Cancellable evt) {
-        if (PatchesDupeFixes.netherHoppersDupeFixes_RestrictEnv && from.getWorld().getEnvironment() != Environment.NETHER) return;
+        if (PatchesDupeFixes.netherHoppersDupeFixes_restrictEnv && from.getWorld().getEnvironment() != Environment.NETHER) return;
         if (to.getChunk() != from.getChunk()) evt.setCancelled(true);
         
         Bukkit.getScheduler().runTask(EscapeLag.plugin, new Runnable() {
