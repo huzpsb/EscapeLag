@@ -36,7 +36,7 @@ public class Network implements Runnable {
                 // 检查插件并下载新版本
                 EscapeLag.plugin.getLogger().info("正在检查新版本插件，请稍等...");
                 int NewVersion = URLLog.getInt("UpdateVersion");
-                int NowVersion = Integer.valueOf("%BUILD_NUMBER%");
+                int NowVersion = Integer.valueOf(Core.internalVersion);
                 if (NewVersion > NowVersion) {
                     EscapeLag.plugin.getLogger().info("插件检测到新版本 " + NewVersion + "，正在自动下载新版本插件...");
                     DowloadFile("http://www.relatev.com/files/EscapeLag/EscapeLag.jar", EscapeLag.getPluginFile());
