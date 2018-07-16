@@ -5,6 +5,7 @@ import java.util.concurrent.TimeUnit;
 
 import org.bukkit.Bukkit;
 import org.bukkit.Chunk;
+import org.bukkit.World;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
@@ -15,6 +16,9 @@ import com.google.common.collect.Sets;
 import com.mcml.space.config.OptimizesChunk;
 import com.mcml.space.core.EscapeLag;
 import com.mcml.space.util.AzureAPI.ChunkCoord;
+
+import net.minecraft.server.ChunkGenerator;
+
 import com.mcml.space.util.Ticker;
 import com.mcml.space.util.AzureAPI;
 
@@ -55,8 +59,9 @@ public class DelayedChunkKeeper implements Listener {
         // Dealyed unload
         if (!DEALYED_CHUNKS.contains(coord) && !isPaper()) {
             DEALYED_CHUNKS.add(coord);
+            World world = evt.getWorld();
             Bukkit.getScheduler().runTaskLater(EscapeLag.plugin, () -> {
-                chunk.unload();
+                if (!world.isChunkLoaded(chunk) && !world.isChunkInUse(chunk.getX(), chunk.getZ())) chunk.unload();
                 DEALYED_CHUNKS.remove(coord);
             }, AzureAPI.toTicks(TimeUnit.SECONDS, OptimizesChunk.delayedChunkKeeper_delayInSeconds));
         }
