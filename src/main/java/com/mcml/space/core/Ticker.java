@@ -42,6 +42,11 @@ public class Ticker {
      */
     private static volatile boolean isParked;
     
+    /**
+     * Notify when server stucked
+     */
+    protected static Timer notifier;
+    
     public static void init(Plugin plugin) {
         Bukkit.getScheduler().runTaskTimer(plugin, () -> {
             // update resources from main thread
@@ -49,7 +54,8 @@ public class Ticker {
             totalTicks++;
         }, 0L, 1L);
         
-        new Timer().scheduleAtFixedRate(new TimerTask() {
+        notifier = new Timer(true);
+        notifier.scheduleAtFixedRate(new TimerTask() {
             @Override
             public void run() {
                 if (timerThread == null) timerThread = Thread.currentThread();

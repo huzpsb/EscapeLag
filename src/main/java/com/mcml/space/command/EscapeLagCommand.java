@@ -19,6 +19,7 @@ import com.mcml.space.core.Ticker.Distance;
 import com.mcml.space.optimizations.DelayedChunkKeeper;
 import com.mcml.space.optimizations.NoStyxChunks;
 import com.mcml.space.optimizations.OverloadRestart;
+import com.mcml.space.optimizations.TimerGarbageCollect;
 import com.mcml.space.util.HeapDumper;
 import com.mcml.space.util.Perms;
 import com.mcml.space.util.VersionLevel;
@@ -105,7 +106,7 @@ public class EscapeLagCommand {
 						sender.sendMessage("§e分配内存 §c" + Runtime.getRuntime().totalMemory() / 1024 / 1024 + "MB");
 					}
 					if (args[1].equalsIgnoreCase("clearheap")) {
-						System.gc();
+						TimerGarbageCollect.collectGarbage();
 						sender.sendMessage("§6内存清理完毕！");
 					}
 					if (args[1].equalsIgnoreCase("heapshut")) {

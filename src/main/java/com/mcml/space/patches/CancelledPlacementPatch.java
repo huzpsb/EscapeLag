@@ -14,6 +14,7 @@ import org.bukkit.plugin.Plugin;
 import com.mcml.space.config.PatchesDupeFixes;
 import static com.mcml.space.config.PatchesDupeFixes.cancelledPlacementDupeFixes_clearsRadius;
 
+import java.util.List;
 import java.util.Map;
 
 public class CancelledPlacementPatch implements Listener {
@@ -28,7 +29,8 @@ public class CancelledPlacementPatch implements Listener {
         
         Player player = evt.getPlayer();
         Map<String, Integer> radius = cancelledPlacementDupeFixes_clearsRadius;
-        for (Entity drop : player.getNearbyEntities(radius.get("x"), radius.get("y"), radius.get("z"))) {
+        List<Entity> entities = player.getNearbyEntities(radius.get("x"), radius.get("y"), radius.get("z"));
+        for (Entity drop : entities) {
             if (drop.getType() != EntityType.DROPPED_ITEM) continue;
             
             org.bukkit.entity.Item item = (org.bukkit.entity.Item) drop;
