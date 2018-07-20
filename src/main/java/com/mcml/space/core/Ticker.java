@@ -4,8 +4,6 @@ import java.util.Timer;
 import java.util.TimerTask;
 import java.util.concurrent.locks.LockSupport;
 
-import javax.net.ssl.SSLException;
-
 import org.bukkit.Bukkit;
 import org.bukkit.plugin.Plugin;
 
@@ -43,9 +41,9 @@ public class Ticker {
     private static volatile boolean isParked;
     
     /**
-     * Notify when server stucked
+     * Whether we should cancel the notify task
      */
-    protected static Timer notifier;
+    private static boolean isPendingCancel;
     
     public static void init(Plugin plugin) {
         Bukkit.getScheduler().runTaskTimer(plugin, () -> {
@@ -54,10 +52,11 @@ public class Ticker {
             totalTicks++;
         }, 0L, 1L);
         
-        notifier = new Timer(true);
-        notifier.scheduleAtFixedRate(new TimerTask() {
+        // 
+        new Timer(true).scheduleAtFixedRate(new TimerTask() {
             @Override
             public void run() {
+                if (isPendingCancel) this.cancel();
                 if (timerThread == null) timerThread = Thread.currentThread();
                 // to check and notify main thread hang
                 notifyStucked();
@@ -72,6 +71,10 @@ public class Ticker {
         }, 0L, 20L);
         
         AzureAPI.log("TPS计算与监控核心模块已启用");
+    }
+    
+    public static void cancelNotifyTask() {
+        isPendingCancel = true;
     }
     
     public static void notifyStucked() {

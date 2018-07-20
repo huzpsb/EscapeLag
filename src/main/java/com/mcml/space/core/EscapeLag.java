@@ -90,7 +90,6 @@ public class EscapeLag extends JavaPlugin {
         plugin = this;
         
         setupConfigs();
-        clearModules();
         
         // Non-task only once binds
         Perms.bind(GLOBAL_PERMS);
@@ -116,9 +115,17 @@ public class EscapeLag extends JavaPlugin {
         AzureAPI.log("§a您正在使用EscapeLag构建号 " + Core.internalVersion);
     }
     
+    @Override
+    public void onDisable() {
+        clearModules();
+        
+        AzureAPI.log("Plugin has been disabled.");
+        AzureAPI.log("Thanks for using!");
+    }
+    
     public void clearModules() {
         AzureAPI.log("Uninstall modules..");
-        if (Ticker.notifier != null) Ticker.notifier.cancel();
+        Ticker.cancelNotifyTask();
         HandlerList.unregisterAll(this);
         Bukkit.getScheduler().cancelTasks(this);
         
@@ -183,12 +190,6 @@ public class EscapeLag extends JavaPlugin {
     
     public static boolean canAccessPackets() {
         return Bukkit.getPluginManager().isPluginEnabled("ProtocolLib");
-    }
-    
-    @Override
-    public void onDisable() {
-        AzureAPI.log("Plugin has been disabled.");
-        AzureAPI.log("Thanks for using!");
     }
     
     public static File getPluginFile() {
