@@ -7,10 +7,14 @@ import org.bukkit.Bukkit;
  */
 public class VersionLevel {
     private final static Version level = check();
-    private static boolean paper;
     private static boolean spigot;
-    private static boolean spigotApi;
+    private static boolean spigotInternalApi;
+    
+    private static boolean paper;
+    private static boolean paperViewDistanceApi;
+    
     private static boolean forge;
+    
     private static String rawVersion;
     
     public static final Version get() {
@@ -109,16 +113,20 @@ public class VersionLevel {
         return Version.UNKNOWN;
     }
     
-    public static boolean isPaper() {
-        return paper;
-    }
-    
     public static boolean isSpigot() {
         return spigot;
     }
     
-    public static boolean spigotAPI() {
-        return spigotApi;
+    public static boolean canAccessSpigotInternalApi() {
+        return spigotInternalApi;
+    }
+    
+    public static boolean isPaper() {
+        return paper;
+    }
+    
+    public static boolean canAccessPaperViewDistanceApi() {
+        return paperViewDistanceApi;
     }
     
     public static boolean isForge() {
@@ -127,14 +135,24 @@ public class VersionLevel {
     
     private static void checkType(String bukkitVersion) {
         bukkitVersion = bukkitVersion.toLowerCase();
-        boolean thermos = spigotApi = bukkitVersion.contains("thermos") || bukkitVersion.contains("contigo");
+        boolean thermos = spigot = bukkitVersion.contains("thermos") || bukkitVersion.contains("contigo");
         forge = thermos || bukkitVersion.contains("cauldron") || bukkitVersion.contains("mcpc") || bukkitVersion.contains("uranium");
         paper = bukkitVersion.contains("paper") || bukkitVersion.contains("taco") || bukkitVersion.contains("torch") || bukkitVersion.contains("akarin");
+        checkApi();
+    }
+    
+    private static void checkApi() {
         try {
             Class.forName("org.spigotmc.RestartCommand");
-            spigot = true;
+            spigotInternalApi = true;
         } catch (ClassNotFoundException ignored) {
-            spigot = false;
+            spigotInternalApi = false;
+        }
+        try {
+            org.bukkit.entity.Player.class.getMethod("getViewDistance");
+            paperViewDistanceApi = true;
+        } catch (NoSuchMethodException | SecurityException ignored) {
+            paperViewDistanceApi = false;
         }
     }
     

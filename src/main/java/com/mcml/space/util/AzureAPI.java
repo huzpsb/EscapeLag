@@ -1,7 +1,5 @@
 package com.mcml.space.util;
 
-import static com.mcml.space.util.VersionLevel.isPaper;
-
 import java.io.File;
 import java.io.IOException;
 import java.util.List;
@@ -27,10 +25,11 @@ import com.google.common.collect.Lists;
 import com.google.common.collect.Sets;
 import com.mcml.space.core.EscapeLag;
 import com.mcml.space.core.PlayerList;
-
 import lombok.AllArgsConstructor;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
+
+import static java.io.File.separator;
 
 /**
  * @author SotrForgotten, Vlvxingze
@@ -166,7 +165,7 @@ public abstract class AzureAPI {
      * @return has
      */
     public static boolean customViewDistance(Player player) {
-        if (player == null || !isPaper()) return false;
+        if (player == null || !VersionLevel.canAccessPaperViewDistanceApi()) return false;
         return player.getViewDistance() != Bukkit.getViewDistance();
     }
     
@@ -503,10 +502,10 @@ public abstract class AzureAPI {
      * @return
      */
     public static File fixesFilePath(File file) {
-         return StringUtils.contains(file.getName(), "/") || StringUtils.contains(file.getName(), "\\") ?
+         return StringUtils.contains(file.getName(), "/") || StringUtils.contains(file.getName(), "\\") || StringUtils.contains(file.getName(), separator) ?
                  new File(
-                         StringUtils.substringBeforeLast(fixesPathSeparator(file.getPath()), "\\") + "\\" + StringUtils.substringBeforeLast(fixesPathSeparator(file.getName()), "\\"), // fixed patch
-                         StringUtils.substringAfterLast(fixesPathSeparator(file.getName()), "\\")) // fixed name
+                         StringUtils.substringBeforeLast(fixesPathSeparator(file.getPath()), separator) + separator + StringUtils.substringBeforeLast(fixesPathSeparator(file.getName()), separator), // fixed patch
+                         StringUtils.substringAfterLast(fixesPathSeparator(file.getName()), separator)) // fixed name
                 : file;
     }
     
@@ -516,7 +515,7 @@ public abstract class AzureAPI {
      * @return
      */
     public static String fixesPathSeparator(String path) {
-        return StringUtils.replace(path, "/", "\\");
+        return StringUtils.replace(path, "/", separator);
     }
     
     /**
@@ -526,7 +525,7 @@ public abstract class AzureAPI {
      */
     public static File createDirectories(File file) {
         file = fixesFilePath(file);
-        new File(StringUtils.substringBeforeLast(fixesPathSeparator(file.getPath()), "\\")).mkdirs();
+        new File(StringUtils.substringBeforeLast(fixesPathSeparator(file.getPath()), separator)).mkdirs();
         return file;
     }
     
