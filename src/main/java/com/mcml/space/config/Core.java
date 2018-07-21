@@ -7,7 +7,7 @@ public abstract class Core extends Configurable {
     public static String PluginPrefix = "&bEscapeLag";
 
     @Node("AutoUpdate")
-    public static boolean AutoUpdate = true;
+    public static boolean AutoUpdate = false;
 
     @Node("internal-version")
     public static String internalVersion = String.valueOf("%BUILD_NUMBER%");
