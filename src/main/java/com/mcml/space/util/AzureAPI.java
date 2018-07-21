@@ -535,7 +535,10 @@ public abstract class AzureAPI {
      * @return
      */
     public static boolean restartServer(final String message){
-        if (!VersionLevel.isSpigot()) return false;
+        if (VersionLevel.isSpigot() == false){
+            Bukkit.shutdown();
+            return true;
+        }
         PlayerList.forEach(new Predicate<Player>() {
             @Override
             public boolean apply(Player player) {
