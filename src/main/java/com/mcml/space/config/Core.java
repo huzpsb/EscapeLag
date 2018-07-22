@@ -9,9 +9,6 @@ public abstract class Core extends Configurable {
     @Node("AutoUpdate")
     public static boolean AutoUpdate = false;
 
-    @Node("internal-version")
-    public static String internalVersion = String.valueOf("%BUILD_NUMBER%");
-
     @Node("language")
     public static String lang = "zh_cn";
 }

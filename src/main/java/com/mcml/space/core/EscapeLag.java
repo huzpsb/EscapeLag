@@ -112,7 +112,7 @@ public class EscapeLag extends JavaPlugin {
         List<String> devs = getDescription().getAuthors();
         AzureAPI.log("|||" + devs.get(0) + "/EscapeLag 合作作品.|||");
         AzureAPI.log("|||" + AzureAPI.concatsBetween(devs, 1, ", ") + " 合作开发.|||");
-        AzureAPI.log("§a您正在使用EscapeLag构建号 " + Core.internalVersion);
+        AzureAPI.log("§a您正在使用EscapeLag构建号 " + "%BUILD_NUMBER%");
     }
     
     @Override
