@@ -29,10 +29,14 @@ public abstract class Configurable {
     protected static @interface Node {
         String value();
     }
+    
+    @Documented
+    @Retention(RetentionPolicy.RUNTIME)
+    protected static @interface View {}
 
     @Documented
     @Retention(RetentionPolicy.RUNTIME)
-    protected static @interface Locale {}
+    protected static @interface Locale {} // Not ready for use
 
     public static void restoreNodes(Coord<File, FileConfiguration> fileCoord, Class<? extends Configurable> providerClass) throws IllegalArgumentException, IllegalAccessException, IOException {
     	FileConfiguration config = fileCoord.getValue();
@@ -48,12 +52,15 @@ public abstract class Configurable {
                 String path = node.value();
                 Object configuredValue = config.get(path);
                 
+                View view = field.getAnnotation(View.class);
+                
                 if (configuredValue == null) {
                     // Process and save default values
                     config.set(path, AzureAPI.colorzine(serializeCollection(defaultValue).getValue(), Object.class));
                     continue;
                 }
                 
+                if (view != null) continue; // Readonly fields
                 field.set(null, deserializeCollection(configuredValue, defaultValue.getClass()).getValue());
             }
         }
@@ -107,13 +114,13 @@ public abstract class Configurable {
             for (String entry : combinedEntries) {
                 deserializedMap.put(
                         // Impl Note: (boolean, string) format in configuration will be transfrom to (string, boolean) as map
-                        hasSeparator(entry) ?
+                        hasMapSeparator(entry) ?
                                 hasBooleanKey(entry) && !hasBooleanValue(entry) ?
                                         cast(StringUtils.replace(StringUtils.substringBefore(entry, " : "), "/:/", ":")) :
                                             cast(StringUtils.replace(StringUtils.substringAfter (entry, " : "), "/:/", ":")) // boolean key
                                 : cast(StringUtils.replace(entry, "/:/", ":")) // no separator
                         ,
-                        hasSeparator(entry) ?
+                        hasMapSeparator(entry) ?
                                 hasBooleanKey(entry) && !hasBooleanValue(entry) ?
                                         cast(StringUtils.replace(StringUtils.substringAfter (entry, " : "), "/:/", ":")) :
                                             cast(StringUtils.substringBefore(entry, " : ")) // boolean key
@@ -126,7 +133,7 @@ public abstract class Configurable {
         return AzureAPI.<Object, Object>wrapCoord(configuredValue, configuredValue);
     }
     
-    private static boolean hasSeparator(String value) {
+    private static boolean hasMapSeparator(String value) {
         return StringUtils.contains(value, " : ");
     }
     

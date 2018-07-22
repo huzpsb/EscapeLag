@@ -75,7 +75,7 @@ public class EscapeLag extends JavaPlugin {
     
     // Pathches
     public final static String CONFIG_PATCHES = "AntiBugConfig.yml";
-    public final static String CONFIG_PATCH_DUPE_FIXES = "patches/dupe_fixes.yml";
+    public final static String CONFIG_PATCH_DUPE_FIXES = "patches/dupe_fixes.yml"; // The separator will be automatically fixed
     
     // Optimizations
     public final static String CONFIG_OPTIMIZES = "ClearLagConfig.yml";
@@ -112,12 +112,12 @@ public class EscapeLag extends JavaPlugin {
         List<String> devs = getDescription().getAuthors();
         AzureAPI.log("|||" + devs.get(0) + "/EscapeLag 合作作品.|||");
         AzureAPI.log("|||" + AzureAPI.concatsBetween(devs, 1, ", ") + " 合作开发.|||");
-        AzureAPI.log("§a您正在使用EscapeLag构建号 " + "%BUILD_NUMBER%");
+        AzureAPI.log("§a您正在使用EscapeLag构建号 " + Core.internalVersion);
     }
     
     @Override
     public void onDisable() {
-        clearModules();
+        clearModules(); // Not every disable is server stopping
         
         AzureAPI.log("Plugin has been disabled.");
         AzureAPI.log("Thanks for using!");
