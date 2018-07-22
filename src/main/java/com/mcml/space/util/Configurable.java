@@ -53,14 +53,12 @@ public abstract class Configurable {
                 Object configuredValue = config.get(path);
                 
                 View view = field.getAnnotation(View.class);
-                
-                if (configuredValue == null) {
+                if (view != null /* Forcely override */ || configuredValue == null) {
                     // Process and save default values
                     config.set(path, AzureAPI.colorzine(serializeCollection(defaultValue).getValue(), Object.class));
                     continue;
                 }
                 
-                if (view != null) continue; // Readonly fields
                 field.set(null, deserializeCollection(configuredValue, defaultValue.getClass()).getValue());
             }
         }
