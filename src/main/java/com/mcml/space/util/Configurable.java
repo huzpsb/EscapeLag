@@ -114,14 +114,14 @@ public abstract class Configurable {
                         // Impl Note: (boolean, string) format in configuration will be transfrom to (string, boolean) as map
                         hasMapSeparator(entry) ?
                                 hasBooleanKey(entry) && !hasBooleanValue(entry) ?
-                                        cast(StringUtils.replace(StringUtils.substringBefore(entry, " : "), "/:/", ":")) :
-                                            cast(StringUtils.replace(StringUtils.substringAfter (entry, " : "), "/:/", ":")) // boolean key
-                                : cast(StringUtils.replace(entry, "/:/", ":")) // no separator
+                                        adaptType(StringUtils.replace(StringUtils.substringBefore(entry, " : "), "/:/", ":")) :
+                                            adaptType(StringUtils.replace(StringUtils.substringAfter (entry, " : "), "/:/", ":")) // boolean key
+                                : adaptType(StringUtils.replace(entry, "/:/", ":")) // no separator
                         ,
                         hasMapSeparator(entry) ?
                                 hasBooleanKey(entry) && !hasBooleanValue(entry) ?
-                                        cast(StringUtils.replace(StringUtils.substringAfter (entry, " : "), "/:/", ":")) :
-                                            cast(StringUtils.substringBefore(entry, " : ")) // boolean key
+                                        adaptType(StringUtils.replace(StringUtils.substringAfter (entry, " : "), "/:/", ":")) :
+                                            adaptType(StringUtils.substringBefore(entry, " : ")) // boolean key
                                 : Boolean.TRUE // no separator
                         );
             }
@@ -143,7 +143,7 @@ public abstract class Configurable {
         return StringUtils.endsWith(entry, " : true") || StringUtils.endsWith(entry, " : false");
     }
     
-    private static Object cast(String value) {
+    private static Object adaptType(String value) {
         return value.equalsIgnoreCase("true") ? Boolean.TRUE : value.equalsIgnoreCase("false") ? Boolean.FALSE : value;
     }
 }
