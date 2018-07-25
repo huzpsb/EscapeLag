@@ -114,15 +114,15 @@ public abstract class Configurable {
                         // Impl Note: (boolean, string) format in configuration will be transfrom to (string, boolean) as map
                         hasMapSeparator(entry) ?
                                 hasBooleanKey(entry) && !hasBooleanValue(entry) ?
-                                        adaptType(StringUtils.replace(StringUtils.substringBefore(entry, " : "), "/:/", ":")) :
-                                            adaptType(StringUtils.replace(StringUtils.substringAfter (entry, " : "), "/:/", ":")) // boolean key
+                                        adaptType(StringUtils.replace(StringUtils.substringAfter(entry, " : "), "/:/", ":")) :
+                                            adaptType(StringUtils.replace(StringUtils.substringBefore(entry, " : "), "/:/", ":")) // boolean key
                                 : adaptType(StringUtils.replace(entry, "/:/", ":")) // no separator
                         ,
                         hasMapSeparator(entry) ?
                                 hasBooleanKey(entry) && !hasBooleanValue(entry) ?
-                                        adaptType(StringUtils.replace(StringUtils.substringAfter (entry, " : "), "/:/", ":")) :
-                                            adaptType(StringUtils.substringBefore(entry, " : ")) // boolean key
-                                : Boolean.TRUE // no separator
+                                        adaptType(StringUtils.replace(StringUtils.substringBefore(entry, " : "), "/:/", ":")) :
+                                            adaptType(StringUtils.substringAfter(entry, " : ")) // boolean key
+                                : true // no separator
                         );
             }
             return AzureAPI.<Object, Object>wrapCoord(combinedEntries, targetType.cast(deserializedMap));
@@ -144,6 +144,6 @@ public abstract class Configurable {
     }
     
     private static Object adaptType(String value) {
-        return value.equalsIgnoreCase("true") ? Boolean.TRUE : value.equalsIgnoreCase("false") ? Boolean.FALSE : value;
+        return value.equalsIgnoreCase("true") ? true : value.equalsIgnoreCase("false") ? false : value;
     }
 }

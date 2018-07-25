@@ -49,5 +49,5 @@ public abstract class PatchesDupeFixes extends Configurable {
     public static boolean enableCancelledPlacementDupeFixes = true;
     
     @Node("settings.cancelled-placement.clears-radius")
-    public static Map<String, Integer> cancelledPlacementDupeFixes_clearsRadius = DefaultOptions.droppedItemClearsRadius();
+    public static Map<String, String> cancelledPlacementDupeFixes_clearsRadius = DefaultOptions.droppedItemClearsRadius();
 }
