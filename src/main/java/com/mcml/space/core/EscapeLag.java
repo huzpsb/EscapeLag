@@ -103,7 +103,6 @@ public class EscapeLag extends JavaPlugin {
         AzureAPI.log("Bukkit: " + Bukkit.getServer().getBukkitVersion());
         AzureAPI.log("Level: " + VersionLevel.get() + "\n");
         
-        AzureAPI.log("Setup modules..");
         bindCoreModules();
         
         AzureAPI.log("EscapeLag has been installed successfully!");
@@ -132,9 +131,11 @@ public class EscapeLag extends JavaPlugin {
         Bukkit.getScheduler().cancelTasks(this);
         
         TimerGarbageCollect.collectGarbage();
+        AzureAPI.log("All modules have been cleared!");
     }
     
     public void bindCoreModules() {
+        AzureAPI.log("Setup modules..");
         // Clears pervious
         PlayerList.clear();
         
@@ -188,6 +189,8 @@ public class EscapeLag extends JavaPlugin {
         Bukkit.getPluginManager().registerEvents(new AutoSave(), this);
         Bukkit.getPluginManager().registerEvents(new WaterFlowLimitor(), this);
         Bukkit.getPluginManager().registerEvents(new TeleportPreLoader(), this);
+        
+        AzureAPI.log("All modules have been installed!");
     }
     
     public static boolean canAccessPackets() {

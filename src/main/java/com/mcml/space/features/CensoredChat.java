@@ -26,7 +26,6 @@ import com.mcml.space.util.QuitReactor;
 public class CensoredChat {
     public static void init(Plugin plugin) {
         if (Features.AntiSpamenable) Bukkit.getPluginManager().registerEvents(new SpamDetector(), plugin);
-        
         if (Features.enableAntiDirty) Bukkit.getPluginManager().registerEvents(new DirtyChatDetector(), plugin);
     }
     

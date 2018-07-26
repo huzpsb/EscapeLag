@@ -6,7 +6,7 @@ import org.bukkit.Bukkit;
  * @author SotrForgotten
  */
 public class VersionLevel {
-    private final static Version level = check();
+    private final static Version level = checkServerAndApi();
     private static boolean modernApi;
     
     private static boolean spigot;
@@ -27,9 +27,62 @@ public class VersionLevel {
         return rawVersion;
     }
     
-    private static Version check() {
+    public static boolean modernApi() {
+        return modernApi;
+    }
+    
+    public static boolean isSpigot() {
+        return spigot;
+    }
+    
+    public static boolean canAccessSpigotInternalApi() {
+        return spigotInternalApi;
+    }
+    
+    public static boolean isPaper() {
+        return paper;
+    }
+    
+    public static boolean canAccessPaperViewDistanceApi() {
+        return paperViewDistanceApi;
+    }
+    
+    public static boolean isForge() {
+        return forge;
+    }
+    
+    private static Version checkServerAndApi() {
+        Version level = checkServerVersion();
+        checkServerType(rawVersion);
+        checkApiType(level);
+        return level;
+    }
+    
+    private static void checkServerType(String rawVersion) {
+        String bukkitVersion = rawVersion.toLowerCase();
+        boolean thermos = spigot = bukkitVersion.contains("thermos") || bukkitVersion.contains("contigo");
+        forge = thermos || bukkitVersion.contains("cauldron") || bukkitVersion.contains("mcpc") || bukkitVersion.contains("uranium");
+        paper = bukkitVersion.contains("paper") || bukkitVersion.contains("taco") || bukkitVersion.contains("torch") || bukkitVersion.contains("akarin");
+    }
+    
+    private static void checkApiType(Version level) {
+        modernApi = level.ordinal() <= Version.MINECRAFT_1_13_R1.ordinal();
+        try {
+            Class.forName("org.spigotmc.RestartCommand");
+            spigotInternalApi = true;
+        } catch (ClassNotFoundException ignored) {
+            spigotInternalApi = false;
+        }
+        try {
+            org.bukkit.entity.Player.class.getMethod("getViewDistance");
+            paperViewDistanceApi = true;
+        } catch (NoSuchMethodException | SecurityException ignored) {
+            paperViewDistanceApi = false;
+        }
+    }
+    
+    private static Version checkServerVersion() {
         String version = rawVersion = Bukkit.getServer().getVersion();
-        checkType(version);
         
         if (version.contains("1.13")) {
             return Version.MINECRAFT_1_13_R1;
@@ -117,54 +170,6 @@ public class VersionLevel {
         
         AzureAPI.warn("Cannot capture server version, set as future version.");
         return Version.MINECRAFT_FUTURE;
-    }
-    
-    public static boolean modernApi() {
-        return modernApi;
-    }
-    
-    public static boolean isSpigot() {
-        return spigot;
-    }
-    
-    public static boolean canAccessSpigotInternalApi() {
-        return spigotInternalApi;
-    }
-    
-    public static boolean isPaper() {
-        return paper;
-    }
-    
-    public static boolean canAccessPaperViewDistanceApi() {
-        return paperViewDistanceApi;
-    }
-    
-    public static boolean isForge() {
-        return forge;
-    }
-    
-    private static void checkType(String bukkitVersion) {
-        bukkitVersion = bukkitVersion.toLowerCase();
-        boolean thermos = spigot = bukkitVersion.contains("thermos") || bukkitVersion.contains("contigo");
-        forge = thermos || bukkitVersion.contains("cauldron") || bukkitVersion.contains("mcpc") || bukkitVersion.contains("uranium");
-        paper = bukkitVersion.contains("paper") || bukkitVersion.contains("taco") || bukkitVersion.contains("torch") || bukkitVersion.contains("akarin");
-        checkApi();
-    }
-    
-    private static void checkApi() {
-        modernApi = isHigherEquals(Version.MINECRAFT_1_13_R1);
-        try {
-            Class.forName("org.spigotmc.RestartCommand");
-            spigotInternalApi = true;
-        } catch (ClassNotFoundException ignored) {
-            spigotInternalApi = false;
-        }
-        try {
-            org.bukkit.entity.Player.class.getMethod("getViewDistance");
-            paperViewDistanceApi = true;
-        } catch (NoSuchMethodException | SecurityException ignored) {
-            paperViewDistanceApi = false;
-        }
     }
     
     public static boolean isLowerThan(Version other) {
