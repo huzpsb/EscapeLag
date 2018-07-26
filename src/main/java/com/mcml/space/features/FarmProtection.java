@@ -1,5 +1,7 @@
 package com.mcml.space.features;
 
+import static com.mcml.space.util.VersionLevel.modernApi;
+
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.entity.EntityType;
@@ -12,6 +14,8 @@ import org.bukkit.event.entity.EntityInteractEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.plugin.Plugin;
 import com.mcml.space.config.Features;
+
+import static org.bukkit.Material.*;
 
 public class FarmProtection {
     public static void init(Plugin plugin) {
@@ -38,6 +42,6 @@ public class FarmProtection {
     }
     
     private static void handleInteract(Cancellable evt, Material material) {
-        if (material == Material.SOIL) evt.setCancelled(true);
+        if (material == (modernApi() ? LEGACY_SOIL : SOIL)) evt.setCancelled(true);
     }
 }

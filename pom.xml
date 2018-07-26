@@ -85,7 +85,6 @@
 			<id>dmulloy2-repo</id>
 			<url>http://repo.dmulloy2.net/content/groups/public/</url>
 		</repository>
-		<!-- Spigot Access -->
 		<repository>
 			<id>in-project</id>
 			<url>file://${project.basedir}/lib</url>
@@ -102,6 +101,13 @@
 	</repositories>
 
 	<dependencies>
+		<!-- Material-->
+		<dependency>
+			<groupId>org.bukkit</groupId>
+			<artifactId>generic-material</artifactId>
+			<version>1.0</version>
+			<scope>provided</scope>
+		</dependency>
 		<!-- Ppaer API -->
 		<dependency>
 			<groupId>com.destroystokyo.paper</groupId>
@@ -109,7 +115,6 @@
 			<version>1.9.4-R0.1-SNAPSHOT</version>
 			<scope>provided</scope>
 		</dependency>
-		<!-- Spigot Access -->
 		<dependency>
 			<groupId>org.spigotmc</groupId>
 			<artifactId>spigot-impl</artifactId>

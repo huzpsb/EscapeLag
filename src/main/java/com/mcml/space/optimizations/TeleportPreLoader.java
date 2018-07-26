@@ -5,7 +5,6 @@ import java.util.List;
 
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
-import org.bukkit.Material;
 import org.bukkit.World;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -17,6 +16,9 @@ import com.mcml.space.config.Optimizes;
 import com.mcml.space.core.EscapeLag;
 import com.mcml.space.util.AzureAPI.ChunkCoord;
 import com.mcml.space.util.Utils;
+
+import static com.mcml.space.util.VersionLevel.modernApi;
+import static org.bukkit.Material.*;
 
 public class TeleportPreLoader implements Listener {
 
@@ -34,7 +36,7 @@ public class TeleportPreLoader implements Listener {
 			if (player.getVehicle() != null) {
 				return;
 			}
-			if (event.getFrom().getBlock().getType() == Material.ENDER_PORTAL) {
+			if (event.getFrom().getBlock().getType() == (modernApi() ? LEGACY_ENDER_PORTAL : ENDER_PORTAL)) {
 				return;
 			}
 			nowteleportid++;

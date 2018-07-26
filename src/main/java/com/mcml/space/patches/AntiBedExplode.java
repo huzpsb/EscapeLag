@@ -1,6 +1,8 @@
 package com.mcml.space.patches;
 
-import org.bukkit.Material;
+import static com.mcml.space.util.VersionLevel.modernApi;
+import static org.bukkit.Material.*;
+
 import org.bukkit.World;
 import org.bukkit.block.Block;
 import org.bukkit.entity.Player;
@@ -20,7 +22,7 @@ public class AntiBedExplode implements Listener {
             Player p = e.getPlayer();
             Block block = e.getClickedBlock();
             if (e.getAction() == Action.RIGHT_CLICK_BLOCK) {
-                if (block.getType() == Material.BED_BLOCK) {
+                if (block.getType() == (modernApi() ? LEGACY_BED_BLOCK : BED_BLOCK)) {
                     if (p.getWorld().getEnvironment() == World.Environment.NETHER || p.getWorld().getEnvironment() == World.Environment.THE_END) {
                         e.setCancelled(true);
                         AzureAPI.log(p, Patches.AntiBedExplodeTipMessage);

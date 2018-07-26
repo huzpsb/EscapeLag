@@ -6,7 +6,6 @@ import java.util.concurrent.TimeUnit;
 import org.apache.commons.lang.StringUtils;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
-import org.bukkit.Material;
 import org.bukkit.block.Block;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
@@ -18,6 +17,9 @@ import com.google.common.collect.Maps;
 import com.mcml.space.config.Optimizes;
 import com.mcml.space.core.EscapeLag;
 import com.mcml.space.util.AzureAPI;
+
+import static com.mcml.space.util.VersionLevel.modernApi;
+import static org.bukkit.Material.*;
 
 public class RedstoneSlacker implements Listener {
     private final static HashMap<Location, Integer> CHECKED_TIMES = Maps.newHashMap();
@@ -51,7 +53,7 @@ public class RedstoneSlacker implements Listener {
                 if (Optimizes.dropRedstone) {
                     block.breakNaturally();
                 } else {
-                    block.setType(Material.AIR);
+                    block.setType(modernApi() ? LEGACY_AIR : AIR);
                 }
             });
             

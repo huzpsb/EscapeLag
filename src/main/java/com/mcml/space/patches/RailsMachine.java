@@ -14,6 +14,8 @@ import org.bukkit.plugin.Plugin;
 import com.mcml.space.config.PatchesDupeFixes;
 import com.mcml.space.core.EscapeLag;
 
+import static com.mcml.space.util.VersionLevel.modernApi;
+
 public class RailsMachine implements Listener {
     public static void init(Plugin plugin) {
         if (!PatchesDupeFixes.enableRailsMachineFixes) return;
@@ -38,56 +40,111 @@ public class RailsMachine implements Listener {
     
     @SuppressWarnings("deprecation")
     private static boolean canExploit(Material type) {
-        if (type.getId() == 171 /* Carpet */) return true;
-        switch (type) {
-            case RAILS:
-            case POWERED_RAIL:
-            case DETECTOR_RAIL:
-            case ACTIVATOR_RAIL:
-                return true;
-            default:
-                return false;
+        if (modernApi()) {
+            switch (type) {
+                case LEGACY_CARPET:
+                case LEGACY_RAILS:
+                case LEGACY_POWERED_RAIL:
+                case LEGACY_DETECTOR_RAIL:
+                case LEGACY_ACTIVATOR_RAIL:
+                    return true;
+                default:
+                    return false;
+            }
+        } else {
+            if (type.getId() == 171 /* Carpet */) return true;
+            
+            switch (type) {
+                case RAILS:
+                case POWERED_RAIL:
+                case DETECTOR_RAIL:
+                case ACTIVATOR_RAIL:
+                    return true;
+                default:
+                    return false;
+            }
         }
     }
     
     @SuppressWarnings("deprecation")
     private static boolean isLayer(Material type) {
-        if (type.getId() == 165 /* Slime block */) return true;
-        switch (type) {
-            case AIR:
-                
-            case PUMPKIN:
-            case JACK_O_LANTERN:
-            case MELON_BLOCK:
-                
-            case PISTON_BASE:
-            case PISTON_MOVING_PIECE:
-            case PISTON_STICKY_BASE:
-            case PISTON_EXTENSION:
-                return true;
-            default:
-                return false;
+        if (modernApi()) {
+            switch (type) {
+                case LEGACY_AIR:
+                    
+                case LEGACY_PUMPKIN:
+                case LEGACY_JACK_O_LANTERN:
+                case LEGACY_MELON_BLOCK:
+                case LEGACY_SLIME_BLOCK:
+                    
+                case LEGACY_PISTON_BASE:
+                case LEGACY_PISTON_MOVING_PIECE:
+                case LEGACY_PISTON_STICKY_BASE:
+                case LEGACY_PISTON_EXTENSION:
+                    return true;
+                default:
+                    return false;
+            }
+        } else {
+            if (type.getId() == 165 /* Slime block */) return true;
+            
+            switch (type) {
+                case AIR:
+                    
+                case PUMPKIN:
+                case JACK_O_LANTERN:
+                case MELON_BLOCK:
+                    
+                case PISTON_BASE:
+                case PISTON_MOVING_PIECE:
+                case PISTON_STICKY_BASE:
+                case PISTON_EXTENSION:
+                    return true;
+                default:
+                    return false;
+            }
         }
     }
     
     @SuppressWarnings("deprecation")
     private static boolean isOrigin(Material type) {
-        if (type.getId() == 165 /* Slime block */) return true;
-        switch (type) {
-            case PUMPKIN:
-            case JACK_O_LANTERN:
-            case MELON_BLOCK:
-                
-            case PISTON_BASE:
-            case PISTON_MOVING_PIECE:
-            case PISTON_STICKY_BASE:
-            case PISTON_EXTENSION:
-                
-            case DISPENSER:
-            case DROPPER:
-                return true;
-            default:
-                return false;
+        if (modernApi()) {
+            switch (type) {
+                case LEGACY_PUMPKIN:
+                case LEGACY_JACK_O_LANTERN:
+                case LEGACY_MELON_BLOCK:
+                case LEGACY_SLIME_BLOCK:
+                    
+                case LEGACY_PISTON_BASE:
+                case LEGACY_PISTON_MOVING_PIECE:
+                case LEGACY_PISTON_STICKY_BASE:
+                case LEGACY_PISTON_EXTENSION:
+                    
+                case LEGACY_DISPENSER:
+                case LEGACY_DROPPER:
+                    return true;
+                default:
+                    return false;
+            }
+        } else {
+            if (type.getId() == 165 /* Slime block */) return true;
+            
+            switch (type) {
+                case PUMPKIN:
+                case JACK_O_LANTERN:
+                case MELON_BLOCK:
+                    
+                case PISTON_BASE:
+                case PISTON_MOVING_PIECE:
+                case PISTON_STICKY_BASE:
+                case PISTON_EXTENSION:
+                    
+                case DISPENSER:
+                case DROPPER:
+                    return true;
+                default:
+                    return false;
+            }
         }
     }
 }

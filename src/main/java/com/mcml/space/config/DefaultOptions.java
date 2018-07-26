@@ -7,13 +7,16 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
+import org.bukkit.entity.EntityType;
+
 import com.google.common.collect.Maps;
 import com.google.common.collect.Sets;
-
 import lombok.RequiredArgsConstructor;
 
 import static org.bukkit.entity.EntityType.*;
 import static org.bukkit.Material.*;
+
+import static com.mcml.space.util.VersionLevel.modernApi;
 
 public abstract class DefaultOptions {
     public static class TypedList extends ArrayList<String> implements List<String> {
@@ -83,7 +86,7 @@ public abstract class DefaultOptions {
              .from(CREEPER)
              .from(SHEEP)
              .from(PIG)
-             .from(CHICKEN);
+             .from(EntityType.CHICKEN); // ambiguous in 1.13
 		return Sets.newHashSet(types);
 	}
 	
@@ -102,18 +105,25 @@ public abstract class DefaultOptions {
              .from(CREEPER)
              .from(SHEEP)
              .from(PIG)
-             .from(CHICKEN);
+             .from(EntityType.CHICKEN); // ambiguous in 1.13
 		return Sets.newHashSet(types);
 	}
 	
 	public static Set<String> redstoneRemovalMaterialTypes() {
 	    TypedSet types = TypedSet.create();
-        types.from(REDSTONE_WIRE)
-             .from(DIODE_BLOCK_ON)
-             .from(DIODE_BLOCK_OFF)
-             .from(REDSTONE_TORCH_ON)
-             .from(REDSTONE_TORCH_OFF)
-             .from(REDSTONE_BLOCK);
+	    types = modernApi() ? 
+	            types.from(LEGACY_REDSTONE_WIRE)
+	                 .from(LEGACY_DIODE_BLOCK_ON)
+	                 .from(LEGACY_DIODE_BLOCK_OFF)
+	                 .from(LEGACY_REDSTONE_TORCH_ON)
+	                 .from(LEGACY_REDSTONE_TORCH_OFF)
+	                 .from(LEGACY_REDSTONE_BLOCK) :
+                types.from(REDSTONE_WIRE)
+                     .from(DIODE_BLOCK_ON)
+                     .from(DIODE_BLOCK_OFF)
+                     .from(REDSTONE_TORCH_ON)
+                     .from(REDSTONE_TORCH_OFF)
+                     .from(REDSTONE_BLOCK);
         return Sets.newHashSet(types);
 	}
 	
@@ -219,6 +229,7 @@ public abstract class DefaultOptions {
 	public static Set<String> spamWhitelist() {
         TypedSet messages = TypedSet.create();
         messages.from("全家福");
+        messages.from("全家桶");
         return Sets.newHashSet(messages);
     }
 

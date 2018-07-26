@@ -13,6 +13,9 @@ import com.mcml.space.util.Perms;
 import com.mcml.space.util.PluginExtends;
 
 import static com.mcml.space.config.Features.preventSpawnerModify;
+import static com.mcml.space.util.VersionLevel.modernApi;
+
+import static org.bukkit.Material.*;
 
 /**
  * @author Vlvxingze, SotrForgotten
@@ -30,9 +33,11 @@ public class SpawnerController implements Listener, PluginExtends {
         if (evt.getItem() == null || evt.getAction() != Action.RIGHT_CLICK_BLOCK) return;
         if (Perms.has(evt.getPlayer())) return;
         
-        if (evt.getClickedBlock().getType() == Material.MOB_SPAWNER) {
+        if (evt.getClickedBlock().getType() == (modernApi() ? LEGACY_MOB_SPAWNER : MOB_SPAWNER)) {
             Material type = evt.getItem().getType();
-            if (type == Material.MONSTER_EGG || type == Material.MONSTER_EGGS) {
+            if (modernApi() ?
+                    type == LEGACY_MONSTER_EGG || type == LEGACY_MONSTER_EGGS :
+                    type == MONSTER_EGG || type == MONSTER_EGGS) {
                 evt.setCancelled(true);
             }
         }

@@ -7,6 +7,8 @@ import org.bukkit.Bukkit;
  */
 public class VersionLevel {
     private final static Version level = check();
+    private static boolean modernApi;
+    
     private static boolean spigot;
     private static boolean spigotInternalApi;
     
@@ -28,6 +30,10 @@ public class VersionLevel {
     private static Version check() {
         String version = rawVersion = Bukkit.getServer().getVersion();
         checkType(version);
+        
+        if (version.contains("1.13")) {
+            return Version.MINECRAFT_1_13_R1;
+        }
         
         if (version.contains("1.12")) {
             return Version.MINECRAFT_1_12_R1;
@@ -109,8 +115,12 @@ public class VersionLevel {
             return Version.MINECRAFT_1_4_6;
         }
         
-        AzureAPI.warn("Cannot capture server version (unsupport?)");
-        return Version.UNKNOWN;
+        AzureAPI.warn("Cannot capture server version, set as future version.");
+        return Version.MINECRAFT_FUTURE;
+    }
+    
+    public static boolean modernApi() {
+        return modernApi;
     }
     
     public static boolean isSpigot() {
@@ -142,6 +152,7 @@ public class VersionLevel {
     }
     
     private static void checkApi() {
+        modernApi = isHigherEquals(Version.MINECRAFT_1_13_R1);
         try {
             Class.forName("org.spigotmc.RestartCommand");
             spigotInternalApi = true;
@@ -178,6 +189,10 @@ public class VersionLevel {
     
     // The order is important!
     public enum Version {
+        MINECRAFT_FUTURE,
+        
+        MINECRAFT_1_13_R1,
+        
         MINECRAFT_1_12_R1,
         MINECRAFT_1_11_R1,
         MINECRAFT_1_10_R1,
@@ -203,8 +218,6 @@ public class VersionLevel {
         MINECRAFT_1_5_R1,
         
         MINECRAFT_1_4_R1,
-        MINECRAFT_1_4_6,
-        
-        UNKNOWN;
+        MINECRAFT_1_4_6
     }
 }

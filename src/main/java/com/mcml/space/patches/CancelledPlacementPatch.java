@@ -14,6 +14,9 @@ import org.bukkit.plugin.Plugin;
 import com.mcml.space.config.PatchesDupeFixes;
 import static com.mcml.space.config.PatchesDupeFixes.cancelledPlacementDupeFixes_clearsRadius;
 
+import static com.mcml.space.util.VersionLevel.modernApi;
+import static org.bukkit.Material.*;
+
 import java.util.Map;
 
 public class CancelledPlacementPatch implements Listener {
@@ -32,7 +35,11 @@ public class CancelledPlacementPatch implements Listener {
             if (drop.getType() != EntityType.DROPPED_ITEM) continue;
             
             org.bukkit.entity.Item item = (org.bukkit.entity.Item) drop;
-            if (item.getItemStack().getType() == Material.SUGAR_CANE || item.getItemStack().getType() == Material.CACTUS) drop.remove();
+            Material material = item.getItemStack().getType();
+            
+            if (modernApi() ?
+                    material == LEGACY_SUGAR_CANE || material == LEGACY_CACTUS :
+                    material == SUGAR_CANE || material == CACTUS) drop.remove();
         }
     }
 }

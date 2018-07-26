@@ -1,10 +1,12 @@
 package com.mcml.space.optimizations;
 
+import static com.mcml.space.util.VersionLevel.modernApi;
+import static org.bukkit.Material.*;
+
 import java.util.HashMap;
 
 import org.bukkit.Bukkit;
 import org.bukkit.Chunk;
-import org.bukkit.Material;
 import org.bukkit.block.Block;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -27,7 +29,9 @@ public class WaterFlowLimitor implements Listener {
 		if(Optimizes.WaterFlowLimitorenable == true){
 			Block block = event.getBlock();
 			Chunk chunk = block.getChunk();
-	        if (block.getType() == Material.STATIONARY_WATER || block.getType() == Material.STATIONARY_LAVA) {
+	        if (modernApi() ?
+	                block.getType() == LEGACY_STATIONARY_WATER || block.getType() == LEGACY_STATIONARY_LAVA :
+	                block.getType() == STATIONARY_WATER || block.getType() == STATIONARY_LAVA) {
 	            if(CheckFast(block.getChunk())){
 	            	if(CheckedTimes.get(chunk) == null){
 	        			CheckedTimes.put(chunk, 0);

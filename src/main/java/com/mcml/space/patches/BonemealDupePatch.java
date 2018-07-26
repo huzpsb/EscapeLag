@@ -1,5 +1,8 @@
 package com.mcml.space.patches;
 
+import static com.mcml.space.util.VersionLevel.modernApi;
+import static org.bukkit.Material.*;
+
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.block.BlockState;
@@ -24,7 +27,9 @@ public class BonemealDupePatch implements Listener {
         
         for (BlockState state : evt.getBlocks()) {
             Material material = state.getBlock().getType();
-            if (material != Material.AIR && material != Material.SAPLING) {
+            if (modernApi() ?
+                    material != LEGACY_AIR && material != LEGACY_SAPLING :
+                    material != AIR && material != SAPLING) {
                 evt.setCancelled(true);
             }
         }
