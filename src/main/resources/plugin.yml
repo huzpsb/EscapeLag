@@ -3,6 +3,7 @@ main: com.mcml.space.core.EscapeLag
 version: ${project.version}-b%BUILD_NUMBER%
 softdepend: [ProtocolLib, AntiAttack, Essentials, RPG_Items, RPGItems]
 author: Vlvxingze
+api-version: 1.13
 authors: [IzzelAliz, Sotr]
 website: "https://github.com/Vlvxingze/EscapeLag"
 description: ${project.description}
