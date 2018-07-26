@@ -20,7 +20,6 @@ import org.bukkit.entity.Player;
 import org.bukkit.permissions.Permission;
 import org.bukkit.plugin.java.JavaPlugin;
 
-import com.google.common.base.Predicate;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Sets;
 import com.mcml.space.core.EscapeLag;
@@ -530,21 +529,27 @@ public abstract class AzureAPI {
     }
     
     /**
-     * Try to restart server, false if not supports
+     * Try to restart server, false if not supports and stopping server if failed
      * @param message
-     * @return
+     * @return Whether restarted smoothly
      */
-    public static boolean restartServer(final String message){
-        if (VersionLevel.isSpigot() == false){
-            Bukkit.shutdown();
-            return true;
+    public static boolean restartServer(String message) {
+        return restartServer(message, true);
+    }
+    
+    /**
+     * Try to restart server, false if not supports and stopping server if force
+     * @param message
+     * @return Whether restarted smoothly
+     */
+    public static boolean restartServer(String message, boolean force) {
+        if (!VersionLevel.isSpigot()) {
+            if (force) Bukkit.shutdown();
+            return false;
         }
-        PlayerList.forEach(new Predicate<Player>() {
-            @Override
-            public boolean apply(Player player) {
-                player.kickPlayer(prefix(loggerPrefix, message));
-                return true;
-            }
+        PlayerList.forEach(player -> {
+            player.kickPlayer(prefix(loggerPrefix, message));
+            return true;
         });
         org.spigotmc.RestartCommand.restart();
         return true;

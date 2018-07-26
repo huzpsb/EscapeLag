@@ -14,7 +14,6 @@ import org.bukkit.plugin.Plugin;
 import com.mcml.space.config.PatchesDupeFixes;
 import static com.mcml.space.config.PatchesDupeFixes.cancelledPlacementDupeFixes_clearsRadius;
 
-import java.util.List;
 import java.util.Map;
 
 public class CancelledPlacementPatch implements Listener {
@@ -25,12 +24,11 @@ public class CancelledPlacementPatch implements Listener {
 	
     @EventHandler(priority = EventPriority.MONITOR, ignoreCancelled = false)
     public void place(BlockPlaceEvent evt) { // Not only door can trigger this!
-        if(!evt.isCancelled()) return;
+        if (!evt.isCancelled()) return;
         
         Player player = evt.getPlayer();
-        Map<String, Integer> radius = cancelledPlacementDupeFixes_clearsRadius;
-        List<Entity> entities = player.getNearbyEntities(radius.get("x"), radius.get("y"), radius.get("z"));
-        for (Entity drop : entities) {
+        Map<String, String> radius = cancelledPlacementDupeFixes_clearsRadius;
+        for (Entity drop : player.getNearbyEntities(Integer.valueOf(radius.get("x")), Integer.valueOf(radius.get("y")), Integer.valueOf(radius.get("z")))) {
             if (drop.getType() != EntityType.DROPPED_ITEM) continue;
             
             org.bukkit.entity.Item item = (org.bukkit.entity.Item) drop;

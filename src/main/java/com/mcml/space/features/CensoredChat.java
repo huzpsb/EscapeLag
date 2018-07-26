@@ -40,7 +40,7 @@ public class CensoredChat {
                     0L, AzureAPI.toTicks(TimeUnit.SECONDS, (int) Math.ceil(Features.AntiSpamPeriodPeriod) > 30 ? (int) Math.ceil(Features.AntiSpamPeriodPeriod) : 30));
         }
         
-        @EventHandler(priority = EventPriority.LOW, ignoreCancelled = true)
+        @EventHandler(priority = EventPriority.LOWEST, ignoreCancelled = true)
         public void checkSpam(AsyncPlayerChatEvent evt) {
             Player player = evt.getPlayer();
             if (Perms.has(player) || AzureAPI.hasPerm(player, "escapelag.bypass.spam")) return;
@@ -59,17 +59,14 @@ public class CensoredChat {
         
         private static boolean isSpamming(Player player, long now) {
             Long last = PLAYERS_CHAT_TIME.get(player.getName());
-            if (last == null) {
-                PLAYERS_CHAT_TIME.put(player.getName(), System.currentTimeMillis());
-                return false;
-            }
+            PLAYERS_CHAT_TIME.put(player.getName(), now);
             
-            return System.currentTimeMillis() - last.longValue() <= Features.AntiSpamPeriodPeriod * 1000;
+            return last == null ? false : now - last.longValue() <= Features.AntiSpamPeriodPeriod * 1000;
         }
     }
     
     private static class DirtyChatDetector implements Listener {
-        @EventHandler(priority = EventPriority.HIGHEST, ignoreCancelled = true)
+        @EventHandler(priority = EventPriority.HIGH, ignoreCancelled = true)
         public void checkChatDirty(AsyncPlayerChatEvent evt) {
             Player player = evt.getPlayer();
             if (Perms.has(player) || AzureAPI.hasPerm(player, "escapelag.bypass.dirty")) return;

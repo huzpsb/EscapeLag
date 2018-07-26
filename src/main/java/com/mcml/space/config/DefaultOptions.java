@@ -117,8 +117,8 @@ public abstract class DefaultOptions {
         return Sets.newHashSet(types);
 	}
 	
-	public static Map<String, Integer> droppedItemClearsRadius() {
-        TypedMap<Integer> radius = TypedMap.create(Integer.valueOf(2));
+	public static Map<String, String> droppedItemClearsRadius() {
+        TypedMap<String> radius = TypedMap.create("2");
         radius.from("x")
               .from("y")
               .from("z");

@@ -29,10 +29,14 @@ public abstract class Configurable {
     protected static @interface Node {
         String value();
     }
+    
+    @Documented
+    @Retention(RetentionPolicy.RUNTIME)
+    protected static @interface View {}
 
     @Documented
     @Retention(RetentionPolicy.RUNTIME)
-    protected static @interface Locale {}
+    protected static @interface Locale {} // Not ready for use
 
     public static void restoreNodes(Coord<File, FileConfiguration> fileCoord, Class<? extends Configurable> providerClass) throws IllegalArgumentException, IllegalAccessException, IOException {
     	FileConfiguration config = fileCoord.getValue();
@@ -48,7 +52,8 @@ public abstract class Configurable {
                 String path = node.value();
                 Object configuredValue = config.get(path);
                 
-                if (configuredValue == null) {
+                View view = field.getAnnotation(View.class);
+                if (view != null /* Forcely override */ || configuredValue == null) {
                     // Process and save default values
                     config.set(path, AzureAPI.colorzine(serializeCollection(defaultValue).getValue(), Object.class));
                     continue;
@@ -107,17 +112,17 @@ public abstract class Configurable {
             for (String entry : combinedEntries) {
                 deserializedMap.put(
                         // Impl Note: (boolean, string) format in configuration will be transfrom to (string, boolean) as map
-                        hasSeparator(entry) ?
+                        hasMapSeparator(entry) ?
                                 hasBooleanKey(entry) && !hasBooleanValue(entry) ?
-                                        cast(StringUtils.replace(StringUtils.substringBefore(entry, " : "), "/:/", ":")) :
-                                            cast(StringUtils.replace(StringUtils.substringAfter (entry, " : "), "/:/", ":")) // boolean key
-                                : cast(StringUtils.replace(entry, "/:/", ":")) // no separator
+                                        adaptType(StringUtils.replace(StringUtils.substringAfter(entry, " : "), "/:/", ":")) :
+                                            adaptType(StringUtils.replace(StringUtils.substringBefore(entry, " : "), "/:/", ":")) // boolean key
+                                : adaptType(StringUtils.replace(entry, "/:/", ":")) // no separator
                         ,
-                        hasSeparator(entry) ?
+                        hasMapSeparator(entry) ?
                                 hasBooleanKey(entry) && !hasBooleanValue(entry) ?
-                                        cast(StringUtils.replace(StringUtils.substringAfter (entry, " : "), "/:/", ":")) :
-                                            cast(StringUtils.substringBefore(entry, " : ")) // boolean key
-                                : Boolean.TRUE // no separator
+                                        adaptType(StringUtils.replace(StringUtils.substringBefore(entry, " : "), "/:/", ":")) :
+                                            adaptType(StringUtils.substringAfter(entry, " : ")) // boolean key
+                                : true // no separator
                         );
             }
             return AzureAPI.<Object, Object>wrapCoord(combinedEntries, targetType.cast(deserializedMap));
@@ -126,7 +131,7 @@ public abstract class Configurable {
         return AzureAPI.<Object, Object>wrapCoord(configuredValue, configuredValue);
     }
     
-    private static boolean hasSeparator(String value) {
+    private static boolean hasMapSeparator(String value) {
         return StringUtils.contains(value, " : ");
     }
     
@@ -138,7 +143,7 @@ public abstract class Configurable {
         return StringUtils.endsWith(entry, " : true") || StringUtils.endsWith(entry, " : false");
     }
     
-    private static Object cast(String value) {
-        return value.equalsIgnoreCase("true") ? Boolean.TRUE : value.equalsIgnoreCase("false") ? Boolean.FALSE : value;
+    private static Object adaptType(String value) {
+        return value.equalsIgnoreCase("true") ? true : value.equalsIgnoreCase("false") ? false : value;
     }
 }

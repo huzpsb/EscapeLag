@@ -8,6 +8,8 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.event.player.PlayerQuitEvent;
 import org.bukkit.plugin.Plugin;
+
+import com.mcml.space.config.Core;
 import com.mcml.space.config.Optimizes;
 import com.mcml.space.core.EscapeLag;
 import com.mcml.space.core.PlayerList;
@@ -30,7 +32,7 @@ public class EmptyRestart implements Listener, PluginExtends {
     @EventHandler
     public void preparRestart(PlayerQuitEvent evt){
         if(Optimizes.emptyRestart && restartTaskId == -1 && PlayerList.isEmpty()){
-            restartTaskId = Bukkit.getScheduler().runTaskLater(EscapeLag.plugin, () -> AzureAPI.restartServer("服务器无人在线，开始重启..."),
+            restartTaskId = Bukkit.getScheduler().runTaskLater(EscapeLag.plugin, () -> AzureAPI.restartServer("服务器无人在线，开始重启...", Core.hookRestartByScript),
                     AzureAPI.toTicks(TimeUnit.SECONDS, Optimizes.emptyRestartDelay)).getTaskId();
         }
     }
