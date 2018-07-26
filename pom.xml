@@ -86,8 +86,8 @@
 			<url>http://repo.dmulloy2.net/content/groups/public/</url>
 		</repository>
 		<repository>
-			<id>in-project</id>
-			<url>file://${project.basedir}/lib</url>
+			<id>akarin-repo</id>
+			<url>https://repo.akarin.io/Akarin-project/akarin-repo/master/repository</url>
 		</repository>
 		<repository>
 			<id>spigot-repo</id>
