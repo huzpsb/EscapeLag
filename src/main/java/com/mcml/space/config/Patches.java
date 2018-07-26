@@ -49,7 +49,7 @@ public abstract class Patches extends Configurable {
     public static boolean fixDupeDropItem = true;
     
     @Node("patches.vaildate-actions.enable")
-    public static boolean enableVaildateActions = false;
+    public static boolean enableVaildateActions = true;
 
     @Node("AntiSkullCrash.enable")
     public static boolean noSkullCrash = true;

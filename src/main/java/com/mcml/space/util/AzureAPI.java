@@ -3,7 +3,6 @@ package com.mcml.space.util;
 import java.io.File;
 import java.io.IOException;
 import java.util.List;
-import java.util.Map;
 import java.util.Set;
 import java.util.concurrent.TimeUnit;
 import java.util.logging.Level;
@@ -21,7 +20,6 @@ import org.bukkit.permissions.Permission;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import com.google.common.collect.Lists;
-import com.google.common.collect.Sets;
 import com.mcml.space.core.EscapeLag;
 import com.mcml.space.core.PlayerList;
 import lombok.AllArgsConstructor;
@@ -356,38 +354,6 @@ public abstract class AzureAPI {
         final K key;
         final V value;
         final E extra;
-    }
-    
-    /**
-     * Creates a case insensitive map
-     * @return
-     */
-    public static <E> Map<String, E> newCaseInsensitiveMap() {
-        return newCaseInsensitiveMap(false);
-    }
-    
-    /**
-     * Creates a case insensitive map, maybe thread safe
-     * @return
-     */
-    public static <E> Map<String, E> newCaseInsensitiveMap(boolean concurrent) {
-        return new CaseInsensitiveMap<E>(concurrent);
-    }
-    
-    /**
-     * Creates a case insensitive set
-     * @return
-     */
-    public static Set<String> newCaseInsensitiveSet() {
-        return newCaseInsensitiveSet(false);
-    }
-    
-    /**
-     * Creates a case insensitive set, maybe thread safe
-     * @return
-     */
-    public static Set<String> newCaseInsensitiveSet(boolean concurrent) {
-        return Sets.newSetFromMap(AzureAPI.<Boolean>newCaseInsensitiveMap(concurrent));
     }
     
     /**

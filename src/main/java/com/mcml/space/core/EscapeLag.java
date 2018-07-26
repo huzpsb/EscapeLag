@@ -11,6 +11,7 @@ import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.event.HandlerList;
+import org.bukkit.plugin.Plugin;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import com.google.common.collect.Maps;
@@ -56,6 +57,7 @@ import com.mcml.space.patches.DupeLoginPatch;
 import com.mcml.space.patches.NegativeItemPatch;
 import com.mcml.space.patches.NetherHopperDupePatch;
 import com.mcml.space.patches.RailsMachine;
+import com.mcml.space.patches.ValidateActions;
 import com.mcml.space.util.AzureAPI;
 import com.mcml.space.util.AzureAPI.Coord;
 import com.mcml.space.util.Configurable;
@@ -155,8 +157,6 @@ public class EscapeLag extends JavaPlugin {
         FarmProtection.init(this);
         AutoRespawn.init(this);
         
-        Bukkit.getPluginManager().registerEvents(new NoCrowdEntity(), this);
-        
         // Pathces
         ContainerPortalPatch.init(this);
         NetherHopperDupePatch.init(this);
@@ -168,6 +168,7 @@ public class EscapeLag extends JavaPlugin {
         CheatBookBlocker.init(this);
         CalculationAbusePatch.init(this);
         AntiFakeDeath.init(this);
+        ValidateActions.init(this);
         
         Bukkit.getPluginManager().registerEvents(new AntiCrashSign(), this);
         Bukkit.getPluginManager().registerEvents(new CancelledPlacementPatch(), this);
@@ -189,6 +190,7 @@ public class EscapeLag extends JavaPlugin {
         Bukkit.getPluginManager().registerEvents(new AutoSave(), this);
         Bukkit.getPluginManager().registerEvents(new WaterFlowLimitor(), this);
         Bukkit.getPluginManager().registerEvents(new TeleportPreLoader(), this);
+        Bukkit.getPluginManager().registerEvents(new NoCrowdEntity(), this);
         
         AzureAPI.log("All modules have been installed!");
     }

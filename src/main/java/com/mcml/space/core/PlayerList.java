@@ -19,18 +19,20 @@ import com.mcml.space.util.AzureAPI;
 import com.mcml.space.util.JoinReactor;
 import com.mcml.space.util.QuitReactor;
 
+import io.akarin.collect.set.player.PlayerSets;
+
 /**
  * @author Vlvxingze, SotrForgotten
  */
 public class PlayerList implements Listener {
-    private final static Set<String> PLAYER_NAMES = AzureAPI.newCaseInsensitiveSet(true);
+    private final static Set<Player> PLAYERS = PlayerSets.newUsernameInsensitiveBitSet();
     
     private final static List<JoinReactor> JOIN_REACTORS = Lists.newArrayList();
     private final static List<QuitReactor> QUIT_REACTORS = Lists.newArrayList();
     
     static {
         for (World world : Bukkit.getWorlds()) {
-            for (Player each : world.getPlayers()) PLAYER_NAMES.add(each.getName());
+            for (Player each : world.getPlayers()) PLAYERS.add(each);
         }
     }
     
@@ -58,7 +60,7 @@ public class PlayerList implements Listener {
     public void onJoin(PlayerJoinEvent evt) {
         Player player = evt.getPlayer();
         if (!player.isOnline()) return;
-        PLAYER_NAMES.add(player.getName());
+        PLAYERS.add(player);
         
         if (!JOIN_REACTORS.isEmpty()) for (JoinReactor re : JOIN_REACTORS) re.react(evt);
     }
@@ -66,25 +68,26 @@ public class PlayerList implements Listener {
     @EventHandler(priority = EventPriority.LOWEST)
     public void onQuit(PlayerQuitEvent evt) {
         Player player = evt.getPlayer();
-        PLAYER_NAMES.remove(player.getName());
+        PLAYERS.remove(player);
         
         if (!QUIT_REACTORS.isEmpty()) for (QuitReactor re : QUIT_REACTORS) re.react(evt);
     }
     
     public static boolean contains(Player player) {
-        return PLAYER_NAMES.contains(player.getName());
+        return PLAYERS.contains(player);
     }
     
+    @SuppressWarnings("unlikely-arg-type")
     public static boolean contains(String username) {
-        return PLAYER_NAMES.contains(username);
+        return PLAYERS.contains(username); // our library support this
     }
     
     public static boolean isEmpty() {
-        return PLAYER_NAMES.isEmpty();
+        return PLAYERS.isEmpty();
     }
     
     public static int size() {
-        return PLAYER_NAMES.size();
+        return PLAYERS.size();
     }
     
     public static void forEach(Predicate<Player> consumer) {
