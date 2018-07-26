@@ -36,7 +36,7 @@ public abstract class Features extends Configurable {
 
     @Locale
     @Node("AntiSpam.Period.WarnMessage")
-    public static String AntiSpamPeriodWarnMessage = "§c请慢点说话，别激动嘛！ _(:з」∠)_";
+    public static String AntiSpamPeriodWarnMessage = "§c请慢一点，别激动嘛！ _(:з」∠)_";
 
     @Node("AntiSpam.Dirty.enable")
     public static boolean enableAntiDirty = true;

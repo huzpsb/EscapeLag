@@ -1,7 +1,9 @@
 package com.mcml.space.features;
 
+import java.util.Iterator;
 import java.util.Map;
 import java.util.Map.Entry;
+import java.util.Set;
 import java.util.concurrent.TimeUnit;
 
 import org.apache.commons.lang.StringUtils;
@@ -12,14 +14,17 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.AsyncPlayerChatEvent;
+import org.bukkit.event.player.PlayerCommandPreprocessEvent;
 import org.bukkit.event.player.PlayerQuitEvent;
 import org.bukkit.plugin.Plugin;
 
 import com.google.common.collect.Maps;
+import com.google.common.collect.Sets;
 import com.mcml.space.config.Features;
 import com.mcml.space.core.EscapeLag;
 import com.mcml.space.core.PlayerList;
 import com.mcml.space.util.AzureAPI;
+import com.mcml.space.util.AzureAPI.Coord;
 import com.mcml.space.util.Perms;
 import com.mcml.space.util.QuitReactor;
 
@@ -30,22 +35,35 @@ public class CensoredChat {
     }
     
     private static class SpamDetector implements Listener, QuitReactor {
-        private final static Map<String, Long> PLAYERS_CHAT_TIME = Maps.newHashMap();
+        private final Map<String, Long> playersChat = Maps.newHashMap();
+        private final Map<String, Set<Coord<String, Long>>> playersCommand = Maps.newHashMap();
         
         private SpamDetector() {
             PlayerList.bind(this);
             
-            Bukkit.getScheduler().runTaskTimer(EscapeLag.plugin, PLAYERS_CHAT_TIME::clear,
+            Bukkit.getScheduler().runTaskTimer(EscapeLag.plugin, playersChat::clear,
                     0L, AzureAPI.toTicks(TimeUnit.SECONDS, (int) Math.ceil(Features.AntiSpamPeriodPeriod) > 30 ? (int) Math.ceil(Features.AntiSpamPeriodPeriod) : 30));
         }
         
         @EventHandler(priority = EventPriority.LOWEST, ignoreCancelled = true)
-        public void checkSpam(AsyncPlayerChatEvent evt) {
+        public void checkChatSpam(AsyncPlayerChatEvent evt) {
             Player player = evt.getPlayer();
             if (Perms.has(player) || AzureAPI.hasPerm(player, "escapelag.bypass.spam")) return;
             
             long now = System.currentTimeMillis();
-            if (isSpamming(player, now)) {
+            if (isSpammingChat(player, now)) {
+                evt.setCancelled(true);
+                AzureAPI.log(player, Features.AntiSpamPeriodWarnMessage);
+            }
+        }
+        
+        @EventHandler(priority = EventPriority.LOWEST, ignoreCancelled = true)
+        public void checkCommandSpam(PlayerCommandPreprocessEvent evt) {
+            Player player = evt.getPlayer();
+            if (Perms.has(player) || AzureAPI.hasPerm(player, "escapelag.bypass.spam")) return;
+            
+            long now = System.currentTimeMillis();
+            if (isSpammingCommand(player, StringUtils.substringBefore(evt.getMessage(), " "), now)) {
                 evt.setCancelled(true);
                 AzureAPI.log(player, Features.AntiSpamPeriodWarnMessage);
             }
@@ -53,14 +71,37 @@ public class CensoredChat {
         
         @Override
         public void react(PlayerQuitEvent evt) {
-            PLAYERS_CHAT_TIME.remove(evt.getPlayer().getName());
+            playersChat.remove(evt.getPlayer().getName());
         }
         
-        private static boolean isSpamming(Player player, long now) {
-            Long last = PLAYERS_CHAT_TIME.get(player.getName());
-            PLAYERS_CHAT_TIME.put(player.getName(), now);
+        private boolean isSpammingChat(Player player, long now) {
+            Long last = playersChat.get(player.getName());
+            playersChat.put(player.getName(), now);
             
             return last == null ? false : now - last.longValue() <= Features.AntiSpamPeriodPeriod * 1000;
+        }
+        
+        private boolean isSpammingCommand(Player player, String commandLabel, long now) {
+            Set<Coord<String, Long>> recorded = playersCommand.get(player.getName());
+            if (recorded == null) {
+                recorded = Sets.newHashSet();
+                recorded.add(AzureAPI.wrapCoord(commandLabel, now));
+                playersCommand.put(player.getName(), recorded);
+                return false;
+            }
+            
+            Iterator<Coord<String, Long>> it = recorded.iterator();
+            while (it.hasNext()) {
+                Coord<String, Long> coord = it.next();
+                if (!coord.getKey().equalsIgnoreCase(commandLabel)) continue;
+                
+                it.remove();
+                recorded.add(AzureAPI.wrapCoord(commandLabel, now));
+                return now - coord.getValue().longValue() <= Features.AntiSpamPeriodPeriod * 1000;
+            }
+            
+            recorded.add(AzureAPI.wrapCoord(commandLabel, now));
+            return false;
         }
     }
     
