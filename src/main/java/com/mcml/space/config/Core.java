@@ -7,7 +7,7 @@ public abstract class Core extends Configurable {
     public static String PluginPrefix = "&bEscapeLag";
 
     @Node("AutoUpdate")
-    public static boolean AutoUpdate = false;
+    public static boolean AutoUpdate = true;
 
     @Node("language")
     public static String lang = "zh_cn";
