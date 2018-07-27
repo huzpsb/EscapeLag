@@ -1,11 +1,22 @@
 package com.mcml.space.util;
 
+import java.lang.annotation.Documented;
+import java.lang.annotation.Retention;
+import java.lang.annotation.RetentionPolicy;
+
 import org.bukkit.Bukkit;
 
 /**
  * @author SotrForgotten
  */
 public class VersionLevel {
+    @Documented
+    @Retention(RetentionPolicy.SOURCE)
+    // This is only a marker so far
+    public static @interface CallerSensitive {
+        String server() default "";
+    }
+    
     private final static Version level = checkServerAndApi();
     private static boolean modernApi;
     
