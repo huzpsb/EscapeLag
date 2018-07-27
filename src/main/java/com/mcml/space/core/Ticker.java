@@ -1,14 +1,18 @@
 package com.mcml.space.core;
 
+import java.lang.management.ManagementFactory;
 import java.util.Timer;
 import java.util.TimerTask;
 import java.util.concurrent.locks.LockSupport;
+import java.util.logging.Level;
 
 import org.bukkit.Bukkit;
 import org.bukkit.plugin.Plugin;
 
 import com.mcml.space.util.AzureAPI;
 import com.mcml.space.util.VersionLevel.CallerSensitive;
+
+import net.minecraft.server.MinecraftServer;
 
 public class Ticker {
     /**
@@ -74,7 +78,13 @@ public class Ticker {
                 }
                 // to check and notify main thread hang
                 if (isServerThreadStucked()) {
-                    AzureAPI.log("警告！服务器主线程陷入停顿超过1秒！这可能是有其他插件进行网络操作、出现死循环或耗时操作所致！");
+                    // print current stacks of main thread
+                    Bukkit.getLogger().log(Level.WARNING, "------------------------------");
+                    Bukkit.getLogger().log(Level.WARNING, "服务器主线程已陷入停顿! 这可能是由于文件操作, 网络操作, 死循环或耗时操作所致.");
+                    Bukkit.getLogger().log(Level.WARNING, "当前主线程堆栈追踪 (如果你无法阅读, 请报告给开发者!):");
+                    AzureAPI.dumpThread(ManagementFactory.getThreadMXBean().getThreadInfo(AzureAPI.serverThread().getId(), Integer.MAX_VALUE), Bukkit.getLogger());
+                    Bukkit.getLogger().log(Level.WARNING, "------------------------------");
+                    
                     // park to avoid spamming
                     isTimerServiceParked = true;
                     LockSupport.park();
@@ -98,7 +108,7 @@ public class Ticker {
     }
     
     public static boolean isServerThreadStucked() {
-        return System.currentTimeMillis() - cachedMillis >= 1000L;
+        return System.currentTimeMillis() - cachedMillis >= 2000L; // TODO configurable
     }
     
     public enum Distance {

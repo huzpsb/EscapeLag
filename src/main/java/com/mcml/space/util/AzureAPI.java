@@ -2,10 +2,13 @@ package com.mcml.space.util;
 
 import java.io.File;
 import java.io.IOException;
+import java.lang.management.MonitorInfo;
+import java.lang.management.ThreadInfo;
 import java.util.List;
 import java.util.Set;
 import java.util.concurrent.TimeUnit;
 import java.util.logging.Level;
+import java.util.logging.Logger;
 import java.util.regex.Pattern;
 
 import javax.annotation.Nonnull;
@@ -46,47 +49,6 @@ public abstract class AzureAPI {
      * Server view distance (direct, single side) in blocks
      */
     private static final int viewDistanceBlock = Bukkit.getViewDistance() * 16;
-    
-    private static final Pattern SPACE = Pattern.compile(" ");
-    private static final Pattern NOT_NUMERIC = Pattern.compile("[^-\\d.]");
-    
-    public static int getSeconds(String str) {
-        str = SPACE.matcher(str).replaceAll("");
-        final char unit = str.charAt(str.length() - 1);
-        str = NOT_NUMERIC.matcher(str).replaceAll("");
-        double num;
-        try {
-            num = Double.parseDouble(str);
-        } catch (Exception e) {
-            num = 0D;
-        }
-        switch (unit) {
-            case 'd': num *= (double) 60*60*24; break;
-            case 'h': num *= (double) 60*60; break;
-            case 'm': num *= (double) 60; break;
-            default: case 's': break;
-        }
-        return (int) num;
-    }
-
-    protected static String timeSummary(int seconds) {
-        String time = "";
-
-        if (seconds > 60 * 60 * 24) {
-            time += TimeUnit.SECONDS.toDays(seconds) + "d";
-            seconds %= 60 * 60 * 24;
-        }
-
-        if (seconds > 60 * 60) {
-            time += TimeUnit.SECONDS.toHours(seconds) + "h";
-            seconds %= 60 * 60;
-        }
-
-        if (seconds > 0) {
-            time += TimeUnit.SECONDS.toMinutes(seconds) + "m";
-        }
-        return time;
-    }
     
     /**
      * Cached server thread instance
@@ -572,5 +534,99 @@ public abstract class AzureAPI {
         }
         
         return element;
+    }
+    
+    /*
+     * The following codes are from Paper and released under The MIT License (MIT) license.
+     * Related contributor(s): Daniel Ennis <aikar@aikar.co>
+     * 
+     * The MIT License (MIT)
+     * =====================
+     * 
+     * Permission is hereby granted, free of charge, to any person
+     * obtaining a copy of this software and associated documentation
+     * files (the “Software”), to deal in the Software without
+     * restriction, including without limitation the rights to use,
+     * copy, modify, merge, publish, distribute, sublicense, and/or sell
+     * copies of the Software, and to permit persons to whom the
+     * Software is furnished to do so, subject to the following
+     * conditions:
+     * 
+     * The above copyright notice and this permission notice shall be
+     * included in all copies or substantial portions of the Software.
+     * 
+     * THE SOFTWARE IS PROVIDED “AS IS”, WITHOUT WARRANTY OF ANY KIND,
+     * EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES
+     * OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
+     * NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT
+     * HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY,
+     * WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING
+     * FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR
+     * OTHER DEALINGS IN THE SOFTWARE.
+     */
+    private static final Pattern SPACE = Pattern.compile(" ");
+    private static final Pattern NOT_NUMERIC = Pattern.compile("[^-\\d.]");
+    
+    public static int getSeconds(String str) {
+        str = SPACE.matcher(str).replaceAll("");
+        final char unit = str.charAt(str.length() - 1);
+        str = NOT_NUMERIC.matcher(str).replaceAll("");
+        double num;
+        try {
+            num = Double.parseDouble(str);
+        } catch (Exception e) {
+            num = 0D;
+        }
+        switch (unit) {
+            case 'd': num *= (double) 60*60*24; break;
+            case 'h': num *= (double) 60*60; break;
+            case 'm': num *= (double) 60; break;
+            default: case 's': break;
+        }
+        return (int) num;
+    }
+
+    public static String timeSummary(int seconds) {
+        String time = "";
+
+        if (seconds > 60 * 60 * 24) {
+            time += TimeUnit.SECONDS.toDays(seconds) + "d";
+            seconds %= 60 * 60 * 24;
+        }
+
+        if (seconds > 60 * 60) {
+            time += TimeUnit.SECONDS.toHours(seconds) + "h";
+            seconds %= 60 * 60;
+        }
+
+        if (seconds > 0) {
+            time += TimeUnit.SECONDS.toMinutes(seconds) + "m";
+        }
+        return time;
+    }
+    
+    /*
+     * The following codes are from Spigot and released under GNU General Public License version 3 license.
+     * Related contributor(s): Michael (md_5)
+     * 
+     * The license document of GNU General Public License version 3 is provided here:
+     * https://www.gnu.org/licenses/gpl-3.0.html
+     */
+    public static void dumpThread(ThreadInfo thread, Logger logger) {
+        logger.log(Level.SEVERE, "------------------------------");
+        //
+        logger.log(Level.SEVERE, "Current Thread: " + thread.getThreadName());
+        logger.log(Level.SEVERE, "\tPID: " + thread.getThreadId() + " | Suspended: " + thread.isSuspended() + " | Native: " + thread.isInNative() + " | State: " + thread.getThreadState());
+        if (thread.getLockedMonitors().length != 0) {
+            logger.log(Level.SEVERE, "\tThread is waiting on monitor(s):");
+            for (MonitorInfo monitor : thread.getLockedMonitors()) {
+                logger.log(Level.SEVERE, "\t\tLocked on:" + monitor.getLockedStackFrame());
+            }
+        }
+        logger.log(Level.SEVERE, "\tStack:");
+        //
+        for (StackTraceElement stack : thread.getStackTrace()) {
+            logger.log(Level.SEVERE, "\t\t" + stack);
+        }
     }
 }
