@@ -80,14 +80,14 @@
 	</build>
 
 	<repositories>
+		<repository>
+			<id>akarin-repo</id>
+			<url>https://raw.githubusercontent.com/Akarin-project/akarin-repo/master/repository</url>
+		</repository>
 		<!-- ProtocolLib -->
 		<repository>
 			<id>dmulloy2-repo</id>
 			<url>http://repo.dmulloy2.net/content/groups/public/</url>
-		</repository>
-		<repository>
-			<id>akarin-repo</id>
-			<url>https://raw.githubusercontent.com/Akarin-project/akarin-repo/master/repository</url>
 		</repository>
 		<repository>
 			<id>spigot-repo</id>
