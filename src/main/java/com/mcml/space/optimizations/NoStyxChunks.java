@@ -30,7 +30,9 @@ public class NoStyxChunks {
 	    Bukkit.getScheduler().runTaskTimer(plugin, () -> {
             for (World world : Bukkit.getWorlds()) {
                 for (Chunk chunk : world.getLoadedChunks())
-                if (!world.isChunkInUse(chunk.getX(), chunk.getZ()) && (isPaper() || !DelayedChunkKeeper.DEALYED_CHUNKS.contains(AzureAPI.wrapCoord(chunk.getX(), chunk.getZ())))) { // Respect dealy
+                if (!world.isChunkInUse(chunk.getX(), chunk.getZ()) &&
+                        (isPaper() || !DelayedChunkKeeper.DEALYED_CHUNKS.contains(AzureAPI.wrapCoord(chunk.getX(), chunk.getZ()))
+                   )) { // Respect dealy
                     if (chunk.unload(true)) totalUnloadedChunks++;
                 }
             }
@@ -45,18 +47,18 @@ public class NoStyxChunks {
 	private static class TeleportDetector implements Listener {
 	    @EventHandler(priority = EventPriority.HIGHEST, ignoreCancelled = true)
 	    public void onTeleport(PlayerTeleportEvent evt) {
-	        handleWorldChunks(evt.getFrom(), evt.getPlayer());
+	        handleChunksAt(evt.getFrom(), evt.getPlayer());
 	    }
 	}
 	
 	private static class ExitDetector implements Listener {
 	    @EventHandler(priority = EventPriority.HIGHEST)
 	    public void onQuit(PlayerQuitEvent evt) {
-	        handleWorldChunks(evt.getPlayer().getLocation(), evt.getPlayer());
+	        handleChunksAt(evt.getPlayer().getLocation(), evt.getPlayer());
 	    }
     }
 	
-	private static void handleWorldChunks(final Location from, final Player player) {
+	private static void handleChunksAt(final Location from, final Player player) {
 	    Bukkit.getScheduler().runTask(EscapeLag.plugin, () -> {
             World world = from.getWorld();
             if (world.getPlayers().isEmpty()) {
@@ -84,7 +86,7 @@ public class NoStyxChunks {
                 if (!isPaper() && DelayedChunkKeeper.DEALYED_CHUNKS.contains(AzureAPI.wrapCoord(chunkX, chunkZ))) continue; // Respect dealy
                 
                 Chunk chunk = world.getChunkAt(chunkX, chunkZ);
-                if (world.isChunkInUse(chunkX, chunkZ)) {
+                if (!world.isChunkInUse(chunkX, chunkZ)) {
                     chunk.unload();
                     totalUnloadedChunks++;
                 }
