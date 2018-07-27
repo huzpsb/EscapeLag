@@ -150,11 +150,16 @@ public class EscapeLagCommand {
                     }
                     if (args[1].equalsIgnoreCase("sleep")) {
                         sender.sendMessage("§e成功强制停顿了线程" + args[2] + "毫秒");
+                        Ticker.setNotifyConsoleOnStucked(false);
                         try {
                             Thread.sleep(Long.parseLong(args[2]));
-                        } catch (Exception ex) {
-                            sender.sendMessage("§c警告，出现错误!" + ex.toString());
+                        } catch (NumberFormatException e) {
+                            sender.sendMessage("§c请输入整数数字！");
+                        } catch (InterruptedException e) {
+                            sender.sendMessage("§c警告，由于出现错误! 线程停顿已提前中止");
+                            Thread.interrupted();
                         }
+                        Ticker.setNotifyConsoleOnStucked(true);
                     }
                     if (args[1].equalsIgnoreCase("tps")) {
                         sender.sendMessage("§e一秒钟内的实时TPS: " + Ticker.getRealTimeTPS());

@@ -127,7 +127,7 @@ public class EscapeLag extends JavaPlugin {
     
     public void clearModules() {
         AzureAPI.log("Uninstall modules..");
-        Ticker.cancelTimerService();
+        Ticker.setPendingCancelTimerService(true);
         HandlerList.unregisterAll(this);
         Bukkit.getScheduler().cancelTasks(this);
         

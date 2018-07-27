@@ -12,7 +12,7 @@ import org.bukkit.plugin.Plugin;
 import com.mcml.space.util.AzureAPI;
 import com.mcml.space.util.VersionLevel.CallerSensitive;
 
-import net.minecraft.server.MinecraftServer;
+import lombok.Setter;
 
 public class Ticker {
     /**
@@ -48,7 +48,12 @@ public class Ticker {
     /**
      * Whether we should cancel the notify task, volatile for instant view
      */
-    private static volatile boolean isPendingCancelTimerService;
+    @Setter private static volatile boolean isPendingCancelTimerService;
+    
+    /**
+     * Whether we should notify server owner when stucked
+     */
+    @Setter private static volatile boolean notifyConsoleOnStucked = true;
     
     public static void init(Plugin plugin) {
         // Tick update task (every tick)
@@ -78,12 +83,14 @@ public class Ticker {
                 }
                 // to check and notify main thread hang
                 if (isServerThreadStucked()) {
-                    // print current stacks of main thread
-                    Bukkit.getLogger().log(Level.WARNING, "------------------------------");
-                    Bukkit.getLogger().log(Level.WARNING, "服务器主线程已陷入停顿! 这可能是由于文件操作, 网络操作, 死循环或耗时操作所致.");
-                    Bukkit.getLogger().log(Level.WARNING, "当前主线程堆栈追踪 (如果你无法阅读, 请报告给开发者!):");
-                    AzureAPI.dumpThread(ManagementFactory.getThreadMXBean().getThreadInfo(AzureAPI.serverThread().getId(), Integer.MAX_VALUE), Bukkit.getLogger());
-                    Bukkit.getLogger().log(Level.WARNING, "------------------------------");
+                    if (notifyConsoleOnStucked) { // Respect our sleep command
+                        // print current stacks of main thread
+                        Bukkit.getLogger().log(Level.WARNING, "------------------------------");
+                        Bukkit.getLogger().log(Level.WARNING, "服务器主线程已陷入停顿! 这可能是由于文件操作, 网络操作, 死循环或耗时操作所致.");
+                        Bukkit.getLogger().log(Level.WARNING, "当前主线程堆栈追踪 (如果你无法阅读, 请报告给开发者!):");
+                        AzureAPI.dumpThread(ManagementFactory.getThreadMXBean().getThreadInfo(AzureAPI.serverThread().getId(), Integer.MAX_VALUE), Bukkit.getLogger());
+                        Bukkit.getLogger().log(Level.WARNING, "------------------------------");
+                    }
                     
                     // park to avoid spamming
                     isTimerServiceParked = true;
@@ -101,10 +108,6 @@ public class Ticker {
         }, 0L, 20L);
         
         AzureAPI.log("TPS计算与监控核心模块已启用");
-    }
-    
-    protected static void cancelTimerService() {
-        isPendingCancelTimerService = true;
     }
     
     public static boolean isServerThreadStucked() {
