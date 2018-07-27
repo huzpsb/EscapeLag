@@ -103,7 +103,6 @@ public class EscapeLag extends JavaPlugin {
         AzureAPI.log("Server: " + Bukkit.getServer().getVersion());
         AzureAPI.log("Bukkit: " + Bukkit.getServer().getBukkitVersion());
         AzureAPI.log("Level: " + VersionLevel.get() + "\n");
-        
         bindCoreModules();
         
         AzureAPI.log("EscapeLag has been installed successfully!");
