@@ -97,7 +97,7 @@ public class CensoredChat {
                 
                 it.remove();
                 recorded.add(AzureAPI.wrapCoord(commandLabel, now));
-                return now - coord.getValue().longValue() <= Features.AntiSpamPeriodPeriod * 1000;
+                return now - coord.getValue().longValue() <= Features.AntiCommandSpamPeriodPeriod * 1000;
             }
             
             recorded.add(AzureAPI.wrapCoord(commandLabel, now));

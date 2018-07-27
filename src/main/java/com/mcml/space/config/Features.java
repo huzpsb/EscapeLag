@@ -32,7 +32,10 @@ public abstract class Features extends Configurable {
     public static boolean AntiSpamenable = true;
 
     @Node("AntiSpam.Period.Period")
-    public static double AntiSpamPeriodPeriod = 1;
+    public static double AntiSpamPeriodPeriod = 1.5;
+    
+    @Node("AntiSpam.Period.Period-Command")
+    public static double AntiCommandSpamPeriodPeriod = 0.5;
 
     @Locale
     @Node("AntiSpam.Period.WarnMessage")
