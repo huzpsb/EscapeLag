@@ -13,7 +13,6 @@ public class LocalizedHelper {
 	public static String HelpLine5;
 	public static String HelpLine6;
 	public static String HelpLine7;
-	public static String HelpLine8;
 	public static String PluginPrefixLine;
 
 	public static void init() {

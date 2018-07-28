@@ -53,7 +53,6 @@ public class EscapeLagCommand {
                     sender.sendMessage(LocalizedHelper.HelpLine5);
                     sender.sendMessage(LocalizedHelper.HelpLine6);
                     sender.sendMessage(LocalizedHelper.HelpLine7);
-                    sender.sendMessage(LocalizedHelper.HelpLine8);
                 }
                 if (args[0].equalsIgnoreCase("antiattack")) {
                     if (args.length == 1) {
