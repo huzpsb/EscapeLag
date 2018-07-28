@@ -60,6 +60,7 @@ public class Ticker {
     private static volatile boolean notifyConsoleOnStucked = true;
 
     public static void init(Plugin plugin) {
+        Ticker.setPendingCancelTimerService(false);
         // Tick update task (every tick)
         Bukkit.getScheduler().runTaskTimer(plugin, () -> {
             // unpark timer thread once main thread heartbeat
