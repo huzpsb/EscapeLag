@@ -1,17 +1,15 @@
 package com.mcml.space.optimizations;
 
+import com.mcml.space.config.Optimizes;
+import com.mcml.space.core.PlayerList;
+import com.mcml.space.util.AzureAPI;
 import java.util.ArrayList;
 import java.util.List;
-
 import org.bukkit.Bukkit;
 import org.bukkit.World;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
-
-import com.mcml.space.config.Optimizes;
-import com.mcml.space.core.PlayerList;
-import com.mcml.space.util.AzureAPI;
 
 public class EntityClear implements Runnable {
 
@@ -35,7 +33,7 @@ public class EntityClear implements Runnable {
                 }
             }
             if (count > Optimizes.EntityClearLimitCount) {
-                for (Player player : PlayerList.Players) {
+                for (Player player : PlayerList.getPlayerList()) {
                     List<Entity> nents = player.getNearbyEntities(10, 10, 10);
                     int ls = nents.size();
                     for (int ii = 0; ii < ls; ii++) {

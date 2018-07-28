@@ -25,7 +25,7 @@ public class DupeLoginPatch implements Listener, PluginExtends {
 
     @EventHandler(priority = EventPriority.LOWEST)
     public void onLogin(AsyncPlayerPreLoginEvent evt) {
-        for (Player player : PlayerList.Players) {
+        for (Player player : PlayerList.getPlayerList()) {
             if (player.getName().equals(evt.getName())) {
                 evt.setLoginResult(AsyncPlayerPreLoginEvent.Result.KICK_OTHER);
                 evt.setKickMessage(Patches.messageKickDupeOnline);

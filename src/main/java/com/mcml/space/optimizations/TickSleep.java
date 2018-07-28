@@ -14,7 +14,7 @@ public class TickSleep {
             Bukkit.getScheduler().runTaskTimer(plugin, new Runnable() {
                 @Override
                 public void run() {
-                    if (PlayerList.Players.isEmpty()) {
+                    if (PlayerList.getPlayerList().isEmpty()) {
                         try {
                             Thread.sleep(TickSleep.getTargetSleepTime(5));
                         } catch (InterruptedException ex) {

@@ -1,10 +1,10 @@
 package com.mcml.space.patches;
 
+import com.mcml.space.config.Patches;
+import com.mcml.space.core.PlayerList;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.Plugin;
-import com.mcml.space.config.Patches;
-import com.mcml.space.core.PlayerList;
 
 public class AntiFakeDeath {
 
@@ -17,7 +17,7 @@ public class AntiFakeDeath {
     }
 
     public static void clearUndeadPlayers() {
-        for (Player player : PlayerList.Players) {
+        for (Player player : PlayerList.getPlayerList()) {
             if (player.getHealth() <= 0 && !player.isDead()) {
                 player.setHealth(0.0);
                 player.kickPlayer(Patches.messageFakedeath);

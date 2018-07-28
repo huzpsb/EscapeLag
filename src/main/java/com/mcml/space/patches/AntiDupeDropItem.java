@@ -22,7 +22,7 @@ public class AntiDupeDropItem implements Listener {
 	    if (!Patches.fixDupeDropItem) return;
 	    
 		if(VersionLevel.equals(Version.MINECRAFT_1_7_R4) && VersionLevel.isForge()){
-			AzureAPI.log("警告！您的服务器是 1.7.10 的Mod 服务端，因此关闭了假死刷物品的补丁!");
+			AzureAPI.log("提示！您的服务器是 1.7.10 的Mod 服务端，因此关闭了假死刷物品的补丁!");
 		}else{
 			Bukkit.getPluginManager().registerEvents(new AntiDupeDropItem(), EscapeLag.plugin);
 		}
@@ -31,6 +31,6 @@ public class AntiDupeDropItem implements Listener {
     @EventHandler(priority = EventPriority.LOWEST)
     public void onDrop(PlayerDropItemEvent evt) {
         Player player = evt.getPlayer();
-        if (PlayerList.Players.contains(player) && player.isDead()) evt.setCancelled(true);
+        if (PlayerList.getPlayerList().contains(player) && player.isDead()) evt.setCancelled(true);
     }
 }

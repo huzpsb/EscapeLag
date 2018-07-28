@@ -29,7 +29,7 @@ public class EmptyRestart implements Listener, PluginExtends {
     
     @EventHandler
     public void preparRestart(PlayerQuitEvent evt){
-        if(Optimizes.emptyRestart && restartTaskId == -1 && PlayerList.Players.isEmpty()){
+        if(Optimizes.emptyRestart && restartTaskId == -1 && PlayerList.getPlayerList().isEmpty()){
             restartTaskId = Bukkit.getScheduler().runTaskLater(EscapeLag.plugin, () -> AzureAPI.restartServer("服务器无人在线，开始重启...", Core.hookRestartByScript),
                     AzureAPI.toTicks(TimeUnit.SECONDS, Optimizes.emptyRestartDelay)).getTaskId();
         }
