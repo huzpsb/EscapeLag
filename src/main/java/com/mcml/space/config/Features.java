@@ -1,23 +1,22 @@
 package com.mcml.space.config;
 
+import com.mcml.space.util.Configurable;
 import java.util.Map;
 import java.util.Set;
-
-import com.mcml.space.util.Configurable;
 
 public abstract class Features extends Configurable {
 
     @Node("Monitor.enable")
     public static boolean Monitorenable = true;
 
-    @Node("Monitor.ThreadLagWarning")
+    @Node("Monitor.ThreadLagWarning.enable")
     public static boolean MonitorThreadLagWarning = true;
-
-    @Node("Monitor.PluginLagWarning.enable")
-    public static boolean MonitorPluginLagWarningenable = true;
-
-    @Node("Monitor.PluginLagWarning.Period")
-    public static long MonitorPluginLagWarningPeriod = 1000L;
+    
+    @Node("Monitor.ThreadLag.Period")
+    public static long MonitorThreadLagPeriod = 2000L;
+    
+    @Node("Monitor.ThreadLag.DumpStack")
+    public static boolean MonitorThreadLagDumpStack = false;
 
     @Node("PluginErrorMessageBlocker.enable")
     public static boolean PluginErrorMessageBlockerenable = true;
