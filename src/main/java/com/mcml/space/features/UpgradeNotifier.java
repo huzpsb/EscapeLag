@@ -5,12 +5,18 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.player.PlayerJoinEvent;
 
 import com.mcml.space.config.Core;
+import com.mcml.space.core.EscapeLag;
 import com.mcml.space.util.AzureAPI;
-import com.mcml.space.util.JoinReactor;
 import com.mcml.space.util.Perms;
+import org.bukkit.Bukkit;
+import org.bukkit.event.EventHandler;
+import org.bukkit.event.Listener;
 
-public class UpgradeNotifier implements JoinReactor {
-    @Override
+public class UpgradeNotifier implements Listener {
+    public static void init(){
+        Bukkit.getPluginManager().registerEvents(new UpgradeNotifier(), EscapeLag.plugin);
+    }    
+    @EventHandler
     public void react(PlayerJoinEvent evt) {
         if(Core.AutoUpdate) return;
         

@@ -22,7 +22,6 @@ import com.google.common.collect.Maps;
 import com.google.common.collect.Sets;
 import com.mcml.space.config.Features;
 import com.mcml.space.core.EscapeLag;
-import com.mcml.space.core.PlayerList;
 import com.mcml.space.util.AzureAPI;
 import com.mcml.space.util.AzureAPI.Coord;
 import com.mcml.space.util.Perms;
@@ -39,8 +38,6 @@ public class CensoredChat {
         private final Map<String, Set<Coord<String, Long>>> playersCommand = Maps.newHashMap();
         
         private SpamDetector() {
-            PlayerList.bind(this);
-            
             Bukkit.getScheduler().runTaskTimer(EscapeLag.plugin, playersChat::clear,
                     0L, AzureAPI.toTicks(TimeUnit.SECONDS, (int) Math.ceil(Features.AntiSpamPeriodPeriod) > 30 ? (int) Math.ceil(Features.AntiSpamPeriodPeriod) : 30));
         }

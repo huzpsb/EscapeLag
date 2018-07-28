@@ -1,10 +1,16 @@
 package com.mcml.space.optimizations;
 
+import com.google.common.collect.Sets;
+import com.mcml.space.config.OptimizesChunk;
+import static com.mcml.space.config.OptimizesChunk.delayedChunkKeeper_maxUnloadChunksPerTick;
+import com.mcml.space.core.EscapeLag;
+import com.mcml.space.core.Ticker;
+import com.mcml.space.util.AzureAPI;
+import com.mcml.space.util.AzureAPI.ChunkCoord;
+import static com.mcml.space.util.VersionLevel.isPaper;
 import java.util.Set;
 import java.util.concurrent.TimeUnit;
-
 import javax.annotation.Nullable;
-
 import org.bukkit.Bukkit;
 import org.bukkit.Chunk;
 import org.bukkit.World;
@@ -13,16 +19,6 @@ import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.world.ChunkUnloadEvent;
 import org.bukkit.plugin.Plugin;
-
-import com.google.common.collect.Sets;
-import com.mcml.space.config.OptimizesChunk;
-import com.mcml.space.core.EscapeLag;
-import com.mcml.space.core.Ticker;
-import com.mcml.space.util.AzureAPI.ChunkCoord;
-import com.mcml.space.util.AzureAPI;
-
-import static com.mcml.space.config.OptimizesChunk.delayedChunkKeeper_maxUnloadChunksPerTick;
-import static com.mcml.space.util.VersionLevel.isPaper;
 
 public class DelayedChunkKeeper implements Listener {
     @Nullable public final static Set<ChunkCoord> DEALYED_CHUNKS = isPaper() ? null : Sets.newHashSet();
@@ -43,7 +39,7 @@ public class DelayedChunkKeeper implements Listener {
         ChunkCoord coord = AzureAPI.wrapCoord(chunk.getX(), chunk.getZ());
         
         if (delayedChunkKeeper_maxUnloadChunksPerTick <= 0) {
-            if (currentTick == Ticker.currentTick()) {
+            if (currentTick == Ticker.currentTick) {
                 if (++unloadedChunks > delayedChunkKeeper_maxUnloadChunksPerTick
                         && (isPaper() && !DEALYED_CHUNKS.contains(coord))) {
                     Bukkit.getScheduler().runTaskLater(EscapeLag.plugin, () -> {
@@ -54,7 +50,7 @@ public class DelayedChunkKeeper implements Listener {
                 }
             } else {
                 unloadedChunks = 1;
-                currentTick = Ticker.currentTick();
+                currentTick = Ticker.currentTick;
             }
         }
         

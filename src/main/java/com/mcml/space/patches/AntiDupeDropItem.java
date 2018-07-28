@@ -1,5 +1,11 @@
 package com.mcml.space.patches;
 
+import com.mcml.space.config.Patches;
+import com.mcml.space.core.EscapeLag;
+import com.mcml.space.core.PlayerList;
+import com.mcml.space.util.AzureAPI;
+import com.mcml.space.util.VersionLevel;
+import com.mcml.space.util.VersionLevel.Version;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -7,13 +13,6 @@ import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerDropItemEvent;
 import org.bukkit.plugin.Plugin;
-
-import com.mcml.space.config.Patches;
-import com.mcml.space.core.EscapeLag;
-import com.mcml.space.core.PlayerList;
-import com.mcml.space.util.AzureAPI;
-import com.mcml.space.util.VersionLevel;
-import com.mcml.space.util.VersionLevel.Version;
 
 public class AntiDupeDropItem implements Listener {
 	
@@ -32,6 +31,6 @@ public class AntiDupeDropItem implements Listener {
     @EventHandler(priority = EventPriority.LOWEST)
     public void onDrop(PlayerDropItemEvent evt) {
         Player player = evt.getPlayer();
-        if (PlayerList.contains(player) && player.isDead()) evt.setCancelled(true);
+        if (PlayerList.Players.contains(player) && player.isDead()) evt.setCancelled(true);
     }
 }

@@ -1,23 +1,10 @@
 package com.mcml.space.core;
 
-import java.io.File;
-import java.io.IOException;
-import java.util.List;
-import java.util.Map;
-import org.apache.commons.lang.StringUtils;
-import org.bukkit.Bukkit;
-import org.bukkit.ChatColor;
-import org.bukkit.command.Command;
-import org.bukkit.command.CommandSender;
-import org.bukkit.configuration.file.FileConfiguration;
-import org.bukkit.event.HandlerList;
-import org.bukkit.plugin.java.JavaPlugin;
-
 import com.google.common.collect.Maps;
 import com.mcml.space.command.EscapeLagCommand;
 import com.mcml.space.command.LocalizedHelper;
-import com.mcml.space.config.Features;
 import com.mcml.space.config.Core;
+import com.mcml.space.config.Features;
 import com.mcml.space.config.Optimizes;
 import com.mcml.space.config.OptimizesChunk;
 import com.mcml.space.config.Patches;
@@ -30,10 +17,10 @@ import com.mcml.space.features.SpawnerController;
 import com.mcml.space.features.UpgradeNotifier;
 import com.mcml.space.optimizations.AutoSave;
 import com.mcml.space.optimizations.DelayedChunkKeeper;
-import com.mcml.space.optimizations.NoStyxChunks;
 import com.mcml.space.optimizations.EmptyRestart;
 import com.mcml.space.optimizations.FireSpreadSlacker;
 import com.mcml.space.optimizations.NoCrowdEntity;
+import com.mcml.space.optimizations.NoStyxChunks;
 import com.mcml.space.optimizations.OverloadRestart;
 import com.mcml.space.optimizations.RedstoneSlacker;
 import com.mcml.space.optimizations.TeleportPreLoader;
@@ -62,8 +49,19 @@ import com.mcml.space.util.AzureAPI.Coord;
 import com.mcml.space.util.Configurable;
 import com.mcml.space.util.Perms;
 import com.mcml.space.util.VersionLevel;
-
+import java.io.File;
+import java.io.IOException;
+import java.util.List;
+import java.util.Map;
 import lombok.SneakyThrows;
+import org.apache.commons.lang.StringUtils;
+import org.bukkit.Bukkit;
+import org.bukkit.ChatColor;
+import org.bukkit.command.Command;
+import org.bukkit.command.CommandSender;
+import org.bukkit.configuration.file.FileConfiguration;
+import org.bukkit.event.HandlerList;
+import org.bukkit.plugin.java.JavaPlugin;
 
 public class EscapeLag extends JavaPlugin {
     public static EscapeLag plugin;
@@ -126,7 +124,7 @@ public class EscapeLag extends JavaPlugin {
     
     public void clearModules() {
         AzureAPI.log("Uninstall modules..");
-        Ticker.setPendingCancelTimerService(true);
+        Ticker.close();
         HandlerList.unregisterAll(this);
         Bukkit.getScheduler().cancelTasks(this);
         
@@ -136,17 +134,12 @@ public class EscapeLag extends JavaPlugin {
     
     public void bindCoreModules() {
         AzureAPI.log("Setup modules..");
-        // Clears pervious
-        PlayerList.clear();
-        
-        // Sudmodules
-        PlayerList.bind(new UpgradeNotifier());
-        
         // Reentrant binds
         // Core
-        Ticker.init(this);
+        Ticker.init();
         Network.init(this);
-        PlayerList.bind(this);
+        PlayerList.init();
+        UpgradeNotifier.init();
         
         // Features
         CensoredChat.init(this);

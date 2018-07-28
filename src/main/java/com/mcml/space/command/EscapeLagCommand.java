@@ -1,21 +1,9 @@
 package com.mcml.space.command;
 
-import java.io.File;
-import java.io.IOException;
-import java.text.DateFormat;
-import java.text.DecimalFormat;
-import java.text.SimpleDateFormat;
-
-import org.bukkit.Bukkit;
-import org.bukkit.command.Command;
-import org.bukkit.command.CommandSender;
-import org.bukkit.configuration.file.FileConfiguration;
-import org.bukkit.entity.Player;
 import com.mcml.space.config.Core;
 import com.mcml.space.core.EscapeLag;
 import com.mcml.space.core.Network;
 import com.mcml.space.core.Ticker;
-import com.mcml.space.core.Ticker.Distance;
 import com.mcml.space.optimizations.DelayedChunkKeeper;
 import com.mcml.space.optimizations.NoStyxChunks;
 import com.mcml.space.optimizations.OverloadRestart;
@@ -23,6 +11,16 @@ import com.mcml.space.optimizations.TimerGarbageCollect;
 import com.mcml.space.util.HeapDumper;
 import com.mcml.space.util.Perms;
 import com.mcml.space.util.VersionLevel;
+import java.io.File;
+import java.io.IOException;
+import java.text.DateFormat;
+import java.text.DecimalFormat;
+import java.text.SimpleDateFormat;
+import org.bukkit.Bukkit;
+import org.bukkit.command.Command;
+import org.bukkit.command.CommandSender;
+import org.bukkit.configuration.file.FileConfiguration;
+import org.bukkit.entity.Player;
 
 public class EscapeLagCommand {
 
@@ -150,7 +148,6 @@ public class EscapeLagCommand {
                     }
                     if (args[1].equalsIgnoreCase("sleep")) {
                         sender.sendMessage("§e成功强制停顿了线程" + args[2] + "毫秒");
-                        Ticker.setNotifyConsoleOnStucked(false);
                         try {
                             Thread.sleep(Long.parseLong(args[2]));
                         } catch (NumberFormatException e) {
@@ -159,15 +156,9 @@ public class EscapeLagCommand {
                             sender.sendMessage("§c警告，由于出现错误! 线程停顿已提前中止");
                             Thread.interrupted();
                         }
-                        Ticker.setNotifyConsoleOnStucked(true);
                     }
                     if (args[1].equalsIgnoreCase("tps")) {
-                        sender.sendMessage("§e一秒钟内的实时TPS: " + Ticker.getRealTimeTPS());
-                        if (VersionLevel.isPaper()) {
-                            sender.sendMessage("§e一分钟内的平均TPS: " + tps_format.format(Ticker.getRecentTPS()));
-                            sender.sendMessage("§e五分钟内的平均TPS: " + tps_format.format(Ticker.getAverageTPS(Distance.MINUTES_5)));
-                            sender.sendMessage("§e一刻钟内的平均TPS: " + tps_format.format(Ticker.getAverageTPS(Distance.MINUTES_15)));
-                        }
+                        sender.sendMessage("§e实时TPS: " + Ticker.TPS);
                     }
                 }
                 if (args[0].equalsIgnoreCase("reload")) {
