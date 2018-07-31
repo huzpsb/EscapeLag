@@ -42,9 +42,10 @@ public class DelayedChunkKeeper implements Listener {
             if (currentTick == Ticker.currentTick()) {
                 if (++unloadedChunks > delayedChunkKeeper_maxUnloadChunksPerTick
                         && (isPaper() && !DEALYED_CHUNKS.contains(coord))) {
+                    int skipTicks = OptimizesChunk.delayedChunkKeeper_postSkipTicks - 1;
                     Bukkit.getScheduler().runTaskLater(EscapeLag.plugin, () -> {
                         if (world.isChunkLoaded(chunk) && !world.isChunkInUse(chunk.getX(), chunk.getZ())) chunk.unload();
-                    }, OptimizesChunk.delayedChunkKeeper_postSkipTicks);
+                    }, skipTicks < 0 ? 0 : skipTicks);
                     evt.setCancelled(true);
                     return;
                 }
