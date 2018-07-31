@@ -10,7 +10,6 @@ import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.plugin.Plugin;
 import com.mcml.space.util.AzureAPI;
 import com.mcml.space.util.Perms;
-import com.mcml.space.util.PluginExtends;
 
 import static com.mcml.space.config.Features.preventSpawnerModify;
 import static com.mcml.space.util.VersionLevel.modernApi;
@@ -20,7 +19,7 @@ import static org.bukkit.Material.*;
 /**
  * @author Vlvxingze, SotrForgotten
  */
-public class SpawnerGuard implements Listener, PluginExtends {
+public class SpawnerGuard implements Listener {
     public static void init(Plugin plugin) {
         if (!preventSpawnerModify) return;
         

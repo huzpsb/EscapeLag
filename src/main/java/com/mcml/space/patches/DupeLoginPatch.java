@@ -3,7 +3,6 @@ package com.mcml.space.patches;
 import com.mcml.space.config.Patches;
 import com.mcml.space.core.PlayerList;
 import com.mcml.space.util.AzureAPI;
-import com.mcml.space.util.PluginExtends;
 import org.bukkit.Bukkit;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
@@ -13,7 +12,7 @@ import org.bukkit.plugin.Plugin;
 
 import static org.bukkit.event.player.AsyncPlayerPreLoginEvent.Result.*;
 
-public class DupeLoginPatch implements Listener, PluginExtends {
+public class DupeLoginPatch implements Listener {
 
     public static void init(Plugin plugin) {
         if (!Patches.fixDupeOnline) return;

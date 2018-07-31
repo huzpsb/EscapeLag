@@ -7,12 +7,11 @@ import com.mcml.space.config.Core;
 import com.mcml.space.config.Optimizes;
 import com.mcml.space.core.EscapeLag;
 import com.mcml.space.util.AzureAPI;
-import com.mcml.space.util.PluginExtends;
 
 /**
  * @author Vlvxingze, SotrForgotten
  */
-public class OverloadRestart implements Runnable, PluginExtends {
+public class OverloadRestart implements Runnable {
     public static void init(Plugin plugin) {
         Bukkit.getScheduler().runTaskTimer(plugin, new OverloadRestart(), 7 * 20, 7 * 20);
         AzureAPI.log("超负荷控制模块已启动");

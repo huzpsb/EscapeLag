@@ -7,7 +7,6 @@ import org.bukkit.Bukkit;
 import org.bukkit.plugin.Plugin;
 import com.mcml.space.config.Optimizes;
 import com.mcml.space.util.AzureAPI;
-import com.mcml.space.util.PluginExtends;
 
 import static com.mcml.space.config.Optimizes.TimerGcMessage;
 import static com.mcml.space.config.Optimizes.timerGC;
@@ -15,7 +14,7 @@ import static com.mcml.space.config.Optimizes.timerGC;
 /**
  * @author Vlvxingze, SotrForgotten
  */
-public class TimerGarbageCollect implements PluginExtends {
+public class TimerGarbageCollect {
     public static void init(Plugin plugin) {
         if(!timerGC) return;
         

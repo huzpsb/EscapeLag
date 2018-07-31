@@ -11,7 +11,6 @@ import org.bukkit.plugin.Plugin;
 import com.mcml.space.config.Features;
 import com.mcml.space.core.EscapeLag;
 import com.mcml.space.util.AzureAPI;
-import com.mcml.space.util.PluginExtends;
 import com.mcml.space.util.VersionLevel;
 import com.mcml.space.util.VersionLevel.Version;
 
@@ -24,7 +23,7 @@ import static com.mcml.space.config.Features.subtitleAutoRespawn;
 /**
  * @author Vlvxingze, SotrForgotten
  */
-public class AutoRespawn implements Listener, PluginExtends {
+public class AutoRespawn implements Listener {
     public static void init(Plugin plugin) {
         if (!canAutoRespawn) return;
         

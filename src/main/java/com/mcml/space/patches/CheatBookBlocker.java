@@ -10,7 +10,6 @@ import org.bukkit.inventory.ItemFlag;
 import org.bukkit.inventory.meta.BookMeta;
 import org.bukkit.plugin.Plugin;
 import com.mcml.space.util.AzureAPI;
-import com.mcml.space.util.PluginExtends;
 
 import static com.mcml.space.config.Patches.noCheatBook;
 
@@ -22,7 +21,7 @@ import java.util.Set;
 /**
  * @author SotrForgotten
  */
-public class CheatBookBlocker implements Listener, PluginExtends {
+public class CheatBookBlocker implements Listener {
     public static void init(Plugin plugin) {
         if (!noCheatBook) return;
         

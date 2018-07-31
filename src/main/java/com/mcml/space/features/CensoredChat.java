@@ -22,10 +22,10 @@ import com.google.common.collect.Maps;
 import com.google.common.collect.Sets;
 import com.mcml.space.config.Features;
 import com.mcml.space.core.EscapeLag;
+import com.mcml.space.core.PlayerList.PlayerQuitReactor;
 import com.mcml.space.util.AzureAPI;
 import com.mcml.space.util.AzureAPI.Coord;
 import com.mcml.space.util.Perms;
-import com.mcml.space.util.QuitReactor;
 
 public class CensoredChat {
     public static void init(Plugin plugin) {
@@ -33,7 +33,7 @@ public class CensoredChat {
         if (Features.enableAntiDirty) Bukkit.getPluginManager().registerEvents(new DirtyChatDetector(), plugin);
     }
     
-    private static class SpamDetector implements Listener, QuitReactor {
+    private static class SpamDetector implements Listener, PlayerQuitReactor {
         private final Map<String, Long> playersChat = Maps.newHashMap();
         private final Map<String, Set<Coord<String, Long>>> playersCommand = Maps.newHashMap();
         

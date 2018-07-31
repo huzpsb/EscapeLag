@@ -3,7 +3,6 @@ package com.mcml.space.patches;
 import com.mcml.space.config.PatchesDupeFixes;
 import com.mcml.space.core.PlayerList;
 import com.mcml.space.util.AzureAPI;
-import com.mcml.space.util.PluginExtends;
 import javax.annotation.Nullable;
 import org.bukkit.Bukkit;
 import org.bukkit.World;
@@ -23,7 +22,7 @@ import org.bukkit.inventory.InventoryHolder;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.plugin.Plugin;
 
-public class NegativeItemPatch implements Listener, PluginExtends {
+public class NegativeItemPatch implements Listener {
 
     public static void init(Plugin plugin) {
         if (!PatchesDupeFixes.enableNegativeItemDupeFixes

@@ -12,7 +12,6 @@ import org.bukkit.event.block.BlockExplodeEvent;
 import org.bukkit.event.entity.EntityExplodeEvent;
 import org.bukkit.plugin.Plugin;
 import com.mcml.space.util.AzureAPI;
-import com.mcml.space.util.PluginExtends;
 import com.mcml.space.util.VersionLevel;
 import com.mcml.space.util.VersionLevel.Version;
 
@@ -22,7 +21,7 @@ import static com.mcml.space.config.Features.explodeControlType;
 /**
  * @author Vlvxingze, SotrForgotten
  */
-public class ExplosionController implements PluginExtends {
+public class ExplosionController {
     public static void init(Plugin plugin) {
         if (!controlExplode) return;
         

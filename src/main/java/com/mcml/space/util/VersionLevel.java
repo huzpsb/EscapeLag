@@ -15,6 +15,7 @@ public class VersionLevel {
     // This is only a marker so far
     public static @interface CallerSensitive {
         String server() default "";
+        String version() default "";
     }
     
     private final static Version level = checkServerAndApi();

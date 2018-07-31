@@ -5,7 +5,6 @@ import com.mcml.space.config.Optimizes;
 import com.mcml.space.core.EscapeLag;
 import com.mcml.space.core.PlayerList;
 import com.mcml.space.util.AzureAPI;
-import com.mcml.space.util.PluginExtends;
 import java.util.concurrent.TimeUnit;
 import org.bukkit.Bukkit;
 import org.bukkit.event.EventHandler;
@@ -17,7 +16,7 @@ import org.bukkit.plugin.Plugin;
 /**
  * @author Vlvxingze, SotrForgotten
  */
-public class EmptyRestart implements Listener, PluginExtends {
+public class EmptyRestart implements Listener {
     public static void init(Plugin plugin) {
         if (!Optimizes.emptyRestart) return;
         

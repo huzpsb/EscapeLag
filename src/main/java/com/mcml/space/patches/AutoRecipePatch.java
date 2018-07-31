@@ -11,15 +11,16 @@ import com.comphenix.protocol.ProtocolLibrary;
 import com.comphenix.protocol.events.PacketAdapter;
 import com.comphenix.protocol.events.PacketEvent;
 import com.mcml.space.util.AzureAPI;
-import com.mcml.space.util.PluginExtends;
 import com.mcml.space.util.VersionLevel;
+import com.mcml.space.util.VersionLevel.CallerSensitive;
 
 import io.akarin.collect.set.player.MarkablePlayerSet;
 import io.akarin.collect.set.player.PlayerSets;
 
-public class AutoRecipePatch implements Listener, PluginExtends {
+public class AutoRecipePatch implements Listener {
     public static final MarkablePlayerSet RECIPE_KEEPERS = PlayerSets.newInstanceBitSet();
     
+    @CallerSensitive(version = "1.12")
     public static void init(Plugin plugin) {
         if (!VersionLevel.rawVersion().contains("(MC: 1.12)")) return;
         

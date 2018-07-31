@@ -21,8 +21,7 @@ public class UpgradeNotifier implements Listener {
     
     public static void init(Plugin plugin) {
         component = new TextComponent(Locale.isNative() ?
-                "§3§lE§b§lL §b> §f输入 §3/el updateon §f开启自动更新, 永远保持高效运作! "
-                :
+                "§3§lE§b§lL §b> §f输入 §3/el updateon §f开启自动更新, 永远保持高效运作! " :
                 "§3§lE§b§lL §b> §fType §3/el updateon §fto enable auto-update, always keep running efficiently! ");
         TextComponent knownOption = new TextComponent("§b§n".concat(Locale.isNative() ? "我知道了" : "Got it"));
         knownOption.setClickEvent(new ClickEvent(ClickEvent.Action.RUN_COMMAND, "/el iknown"));
