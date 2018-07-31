@@ -541,9 +541,7 @@ public abstract class AzureAPI {
             }
             return false;
         }
-        for (Player player : PlayerList.getPlayerList()) {
-            player.kickPlayer(prefix(loggerPrefix, message));
-        }
+        PlayerList.forEach(player -> player.kickPlayer(prefix(loggerPrefix, message)));
         org.spigotmc.RestartCommand.restart();
         return true;
     }

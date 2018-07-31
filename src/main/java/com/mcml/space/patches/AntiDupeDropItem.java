@@ -31,6 +31,6 @@ public class AntiDupeDropItem implements Listener {
     @EventHandler(priority = EventPriority.LOWEST)
     public void onDrop(PlayerDropItemEvent evt) {
         Player player = evt.getPlayer();
-        if (PlayerList.getPlayerList().contains(player) && player.isDead()) evt.setCancelled(true);
+        if (PlayerList.contains(player) && player.isDead()) evt.setCancelled(true);
     }
 }

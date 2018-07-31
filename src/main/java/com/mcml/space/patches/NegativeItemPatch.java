@@ -93,19 +93,19 @@ public class NegativeItemPatch implements Listener, PluginExtends {
         if (!PatchesDupeFixes.negativeItemDupeFixes_fliterPlayersInv) {
             return;
         }
-
-        for (Player player : PlayerList.getPlayerList()) {
-            boolean notify = false;
+        
+        PlayerList.forEach(player -> {
+            boolean hasRemovedAny = false;
             for (ItemStack item : player.getInventory().getStorageContents()) {
                 if (item.getAmount() <= 0) {
-                    notify = true;
+                    hasRemovedAny = true;
                     player.getInventory().remove(item);
                 }
             }
-            if (notify && sourcePlayer != null && !sourcePlayer.getName().equals(player.getName())) {
+            if (hasRemovedAny && sourcePlayer != null && !sourcePlayer.getName().equals(player.getName())) {
                 AzureAPI.bc(PatchesDupeFixes.negativeItemDupeFixes_notifyMesssage, "$player", player.getName());
             }
-        }
+        });
     }
 
     /**

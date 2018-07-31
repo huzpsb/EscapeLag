@@ -4,6 +4,7 @@ import com.mcml.space.config.Core;
 import com.mcml.space.core.EscapeLag;
 import com.mcml.space.core.Network;
 import com.mcml.space.core.Ticker;
+import com.mcml.space.features.UpgradeNotifier;
 import com.mcml.space.optimizations.DelayedChunkKeeper;
 import com.mcml.space.optimizations.NoStyxChunks;
 import com.mcml.space.optimizations.OverloadRestart;
@@ -14,7 +15,6 @@ import com.mcml.space.util.VersionLevel;
 import java.io.File;
 import java.io.IOException;
 import java.text.DateFormat;
-import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
 import org.bukkit.Bukkit;
 import org.bukkit.command.Command;
@@ -25,7 +25,6 @@ import org.bukkit.entity.Player;
 public class EscapeLagCommand {
 
     private final static DateFormat timestamp_format = new SimpleDateFormat("yyyyMMddHHmmss");
-    private final static DecimalFormat tps_format = new DecimalFormat("#.00");
 
     public static boolean processCommand(CommandSender sender, Command cmd, String label, String[] args) {
         if (label.equalsIgnoreCase("el")) {
@@ -33,6 +32,10 @@ public class EscapeLagCommand {
             if (Perms.has(sender)) {
                 if (args.length == 0) {
                     sender.sendMessage(LocalizedHelper.PleaseEnterelToHelp);
+                    return true;
+                }
+                if (args[0].equalsIgnoreCase("iknown")) {
+                    UpgradeNotifier.setKnown(true);
                     return true;
                 }
                 if (args[0].equalsIgnoreCase("updateon")) {
@@ -157,13 +160,13 @@ public class EscapeLagCommand {
                         }
                     }
                     if (args[1].equalsIgnoreCase("tps")) {
-                        sender.sendMessage("§e实时TPS: " + Ticker.TPS);
+                        sender.sendMessage("§e实时TPS: " + Ticker.getRealTimeTPS());
                     }
                 }
                 if (args[0].equalsIgnoreCase("reload")) {
                     EscapeLag.plugin.setupConfigs();
                     EscapeLag.plugin.clearModules();
-                    EscapeLag.plugin.bindCoreModules();
+                    EscapeLag.plugin.bindModules();
                     sender.sendMessage("§a§l[EscapeLag]配置已经成功重载！");
                     return true;
                 }

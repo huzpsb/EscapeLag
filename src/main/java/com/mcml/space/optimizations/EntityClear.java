@@ -9,7 +9,6 @@ import org.bukkit.Bukkit;
 import org.bukkit.World;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.LivingEntity;
-import org.bukkit.entity.Player;
 
 public class EntityClear implements Runnable {
 
@@ -33,7 +32,7 @@ public class EntityClear implements Runnable {
                 }
             }
             if (count > Optimizes.EntityClearLimitCount) {
-                for (Player player : PlayerList.getPlayerList()) {
+                PlayerList.forEach(player -> {
                     List<Entity> nents = player.getNearbyEntities(10, 10, 10);
                     int ls = nents.size();
                     for (int ii = 0; ii < ls; ii++) {
@@ -42,7 +41,7 @@ public class EntityClear implements Runnable {
                             allents.remove(le);
                         }
                     }
-                }
+                });
                 int aes = allents.size();
                 AzureAPI.bc(Optimizes.EntityClearClearMessage);
                 for (int ii = 0; ii < aes; ii++) {

@@ -39,7 +39,7 @@ public class DelayedChunkKeeper implements Listener {
         ChunkCoord coord = AzureAPI.wrapCoord(chunk.getX(), chunk.getZ());
         
         if (delayedChunkKeeper_maxUnloadChunksPerTick <= 0) {
-            if (currentTick == Ticker.currentTick) {
+            if (currentTick == Ticker.currentTick()) {
                 if (++unloadedChunks > delayedChunkKeeper_maxUnloadChunksPerTick
                         && (isPaper() && !DEALYED_CHUNKS.contains(coord))) {
                     Bukkit.getScheduler().runTaskLater(EscapeLag.plugin, () -> {
@@ -50,7 +50,7 @@ public class DelayedChunkKeeper implements Listener {
                 }
             } else {
                 unloadedChunks = 1;
-                currentTick = Ticker.currentTick;
+                currentTick = Ticker.currentTick();
             }
         }
         

@@ -17,7 +17,7 @@ import com.mcml.space.config.Features;
 
 import static org.bukkit.Material.*;
 
-public class FarmProtection {
+public class FarmProtect {
     public static void init(Plugin plugin) {
         if(!Features.ProtectFarmenable) return;
         

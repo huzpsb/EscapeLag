@@ -20,12 +20,12 @@ import static org.bukkit.Material.*;
 /**
  * @author Vlvxingze, SotrForgotten
  */
-public class SpawnerController implements Listener, PluginExtends {
+public class SpawnerGuard implements Listener, PluginExtends {
     public static void init(Plugin plugin) {
         if (!preventSpawnerModify) return;
         
-        Bukkit.getPluginManager().registerEvents(new SpawnerController(), plugin);
-        AzureAPI.log("刷怪笼控制模块已启动");
+        Bukkit.getPluginManager().registerEvents(new SpawnerGuard(), plugin);
+        AzureAPI.log("刷怪笼保护模块已启动");
     }
     
     @EventHandler(priority = EventPriority.LOW, ignoreCancelled = true)

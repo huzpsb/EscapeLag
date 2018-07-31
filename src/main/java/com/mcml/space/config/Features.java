@@ -7,16 +7,16 @@ import java.util.Set;
 public abstract class Features extends Configurable {
 
     @Node("Monitor.enable")
-    public static boolean Monitorenable = true;
+    public static volatile boolean Monitorenable = true;
 
     @Node("Monitor.ThreadLagWarning.enable")
-    public static boolean MonitorThreadLagWarning = true;
+    public static volatile boolean MonitorThreadLagWarning = true;
     
     @Node("Monitor.ThreadLag.Period")
     public static long MonitorThreadLagPeriod = 2000L;
     
     @Node("Monitor.ThreadLag.DumpStack")
-    public static boolean MonitorThreadLagDumpStack = false;
+    public static volatile boolean MonitorThreadLagDumpStack = false;
 
     @Node("PluginErrorMessageBlocker.enable")
     public static boolean PluginErrorMessageBlockerenable = true;

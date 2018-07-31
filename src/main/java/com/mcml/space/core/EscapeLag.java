@@ -12,8 +12,8 @@ import com.mcml.space.config.PatchesDupeFixes;
 import com.mcml.space.features.AutoRespawn;
 import com.mcml.space.features.CensoredChat;
 import com.mcml.space.features.ExplosionController;
-import com.mcml.space.features.FarmProtection;
-import com.mcml.space.features.SpawnerController;
+import com.mcml.space.features.FarmProtect;
+import com.mcml.space.features.SpawnerGuard;
 import com.mcml.space.features.UpgradeNotifier;
 import com.mcml.space.optimizations.AutoSave;
 import com.mcml.space.optimizations.DelayedChunkKeeper;
@@ -101,7 +101,7 @@ public class EscapeLag extends JavaPlugin {
         AzureAPI.log("Server: " + Bukkit.getServer().getVersion());
         AzureAPI.log("Bukkit: " + Bukkit.getServer().getBukkitVersion());
         AzureAPI.log("Level: " + VersionLevel.get() + "\n");
-        bindCoreModules();
+        bindModules();
         
         AzureAPI.log("EscapeLag has been installed successfully!");
         AzureAPI.log("乐乐感谢您的使用——有建议务必反馈，QQ1207223090");
@@ -124,7 +124,6 @@ public class EscapeLag extends JavaPlugin {
     
     public void clearModules() {
         AzureAPI.log("Uninstall modules..");
-        Ticker.close();
         HandlerList.unregisterAll(this);
         Bukkit.getScheduler().cancelTasks(this);
         
@@ -132,20 +131,20 @@ public class EscapeLag extends JavaPlugin {
         AzureAPI.log("All modules have been cleared!");
     }
     
-    public void bindCoreModules() {
+    public void bindModules() {
         AzureAPI.log("Setup modules..");
         // Reentrant binds
         // Core
-        Ticker.init();
+        Ticker.init(this);
         Network.init(this);
-        PlayerList.init();
-        UpgradeNotifier.init();
+        PlayerList.init(this);
+        UpgradeNotifier.init(this);
         
         // Features
         CensoredChat.init(this);
         ExplosionController.init(this);
-        SpawnerController.init(this);
-        FarmProtection.init(this);
+        SpawnerGuard.init(this);
+        FarmProtect.init(this);
         AutoRespawn.init(this);
         
         // Pathces

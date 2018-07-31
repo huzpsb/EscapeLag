@@ -23,7 +23,7 @@ public class Network implements Runnable {
         if (!Core.AutoUpdate) return;
         
         Bukkit.getScheduler().runTaskAsynchronously(plugin, new Network());
-        AzureAPI.log("自动更新核心模块已启用");
+        AzureAPI.log("核心模块 - 自动更新已启用");
     }
 
     public static void CheckAndDownloadPlugin() {
