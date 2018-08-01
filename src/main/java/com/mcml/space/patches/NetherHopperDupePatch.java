@@ -23,7 +23,7 @@ public class NetherHopperDupePatch implements Listener {
         if (!PatchesDupeFixes.enableNetherHoppersDupeFixes) return;
         
         Bukkit.getPluginManager().registerEvents(new NetherHopperDupePatch(), plugin);
-        AzureAPI.log(Locale.isNative() ? "子模块 - 地狱漏斗修复 已启动" : "Submodule - NetherHopperPatch has been enabled");
+        AzureAPI.log(Locale.isNative() ? "子模块 - 地狱漏斗 已启动" : "Submodule - NetherHopperPatch has been enabled");
     }
     
     @EventHandler(priority = EventPriority.MONITOR, ignoreCancelled = true)

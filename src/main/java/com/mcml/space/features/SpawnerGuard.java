@@ -25,7 +25,7 @@ public class SpawnerGuard implements Listener {
         if (!preventSpawnerModify) return;
         
         Bukkit.getPluginManager().registerEvents(new SpawnerGuard(), plugin);
-        AzureAPI.log(Locale.isNative() ? "子模块 - 刷怪箱保护 已启动" : "Submodule - SpawnerGuard has been enabled");
+        AzureAPI.log(Locale.isNative() ? "子模块 - 刷怪保护 已启动" : "Submodule - SpawnerGuard has been enabled");
     }
     
     @EventHandler(priority = EventPriority.LOW, ignoreCancelled = true)

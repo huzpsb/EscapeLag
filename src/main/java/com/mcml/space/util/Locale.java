@@ -27,7 +27,7 @@ public class Locale {
     }
     
     public static boolean isNative() {
-        return language.equals(Lang.CHINESE_SIMPLIFIED) || language.equals(Lang.CHINESE_TRADITIONAL);
+        return language == Lang.CHINESE_SIMPLIFIED || language == Lang.CHINESE_TRADITIONAL;
     }
     
     public static boolean equals(Lang other) {

@@ -20,7 +20,7 @@ public class DupeLoginPatch implements Listener {
         if (!Patches.fixDupeOnline) return;
 
         Bukkit.getPluginManager().registerEvents(new DupeLoginPatch(), plugin);
-        AzureAPI.log(Locale.isNative() ? "子模块 - 多重在线修复 已启动" : "Submodule - DupeLoginPatch has been enabled");
+        AzureAPI.log(Locale.isNative() ? "子模块 - 多重在线 已启动" : "Submodule - DupeLoginPatch has been enabled");
     }
 
     @EventHandler(priority = EventPriority.LOWEST)

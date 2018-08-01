@@ -24,7 +24,7 @@ public class FarmProtect {
         if(!Features.ProtectFarmenable) return;
         if (Features.ProtectFarmOnlyPlayer) Bukkit.getPluginManager().registerEvents(new EntityDetector(), plugin);
         Bukkit.getPluginManager().registerEvents(new PlayerDetector(), plugin);
-        AzureAPI.log(Locale.isNative() ? "核心模块 - 耕地保护 已启动" : "Submodule - FarmProtect has been enabled");
+        AzureAPI.log(Locale.isNative() ? "子模块 - 耕地保护 已启动" : "Submodule - FarmProtect has been enabled");
     }
     
     private static class EntityDetector implements Listener {

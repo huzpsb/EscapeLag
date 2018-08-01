@@ -28,7 +28,7 @@ public class DelayedChunkKeeper implements Listener {
         if (!OptimizesChunk.enableDelayedChunkKeeper
                 && (delayedChunkKeeper_maxUnloadChunksPerTick <= 0 || isPaper())) return;
         Bukkit.getPluginManager().registerEvents(new DelayedChunkKeeper(), plugin);
-        AzureAPI.log(Locale.isNative() ? "子模块 - 区块延时保持 已启动" : "Submodule - DelayedChunkKeeper has been enabled");
+        AzureAPI.log(Locale.isNative() ? "子模块 - 区块延时 已启动" : "Submodule - DelayedChunkKeeper has been enabled");
     }
     
     private int unloadedChunks;

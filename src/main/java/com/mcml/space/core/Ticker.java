@@ -125,7 +125,7 @@ public class Ticker {
             }
         }, 0L, 1000L);
         
-        AzureAPI.log(Locale.isNative() ? "核心模块 - TPS计算与监控 已启用" : "Coremodule - Ticker has been enabled");
+        AzureAPI.log(Locale.isNative() ? "核心模块 - 效能计算 已启用" : "Coremodule - Ticker has been enabled");
     }
 
     public static boolean isServerThreadStucked() {

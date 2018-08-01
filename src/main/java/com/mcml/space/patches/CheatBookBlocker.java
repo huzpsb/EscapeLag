@@ -27,7 +27,7 @@ public class CheatBookBlocker implements Listener {
         if (!noCheatBook) return;
         
         Bukkit.getPluginManager().registerEvents(new CheatBookBlocker(), plugin);
-        AzureAPI.log(Locale.isNative() ? "子模块 - 书与笔修复 已启动" : "Submodule - CheatBookBlocker has been enabled");
+        AzureAPI.log(Locale.isNative() ? "子模块 - 书本修复 已启动" : "Submodule - CheatBookBlocker has been enabled");
     }
     
     @EventHandler(priority = EventPriority.LOWEST, ignoreCancelled = true)

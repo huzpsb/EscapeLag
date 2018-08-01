@@ -26,7 +26,7 @@ public class CancelledPlacementPatch implements Listener {
     public static void init(Plugin plugin) {
         if (!PatchesDupeFixes.enableCancelledPlacementDupeFixes) return;
         Bukkit.getPluginManager().registerEvents(new CancelledPlacementPatch(), plugin);
-        AzureAPI.log(Locale.isNative() ? "子模块 - 取消放置修复 已启动" : "Submodule - CancelledPlacementPatch has been enabled");
+        AzureAPI.log(Locale.isNative() ? "子模块 - 取消放置 已启动" : "Submodule - CancelledPlacementPatch has been enabled");
     }
 	
     @EventHandler(priority = EventPriority.MONITOR, ignoreCancelled = false)

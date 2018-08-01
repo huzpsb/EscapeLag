@@ -30,7 +30,7 @@ public class AutoRecipePatch implements Listener {
                 RECIPE_KEEPERS.add(evt.getPlayer());
             }
         });
-        AzureAPI.log(Locale.isNative() ? "子模块 - 自动合成修复 已启动" : "Submodule - AutoRecipePatch has been enabled");
+        AzureAPI.log(Locale.isNative() ? "子模块 - 合成修复 已启动" : "Submodule - AutoRecipePatch has been enabled");
     }
     
     @EventHandler(priority = EventPriority.MONITOR, ignoreCancelled = true)
