@@ -11,7 +11,7 @@ public class HeapDumper {
 	public static void dumpHeap(File file) {
 		if(MXBean == null) {
 			if(!HeapDumper.init()) {
-				AzureAPI.log("Dump内存堆失败!");
+				AzureAPI.log(Locale.isNative() ? "Dump内存堆失败!" : "Failed to dump heap!");
 				return;
 			}
 		}
@@ -20,7 +20,7 @@ public class HeapDumper {
 					new Class[] { String.class, Boolean.TYPE });
 			method.invoke(MXBean, new Object[] { file.toString(), true });
 		} catch (Exception rex) {
-			AzureAPI.log("Dump内存堆失败!");
+			AzureAPI.log(Locale.isNative() ? "Dump内存堆失败!" : "Failed to dump heap!");
 			AzureAPI.log(rex.toString());
 		}
 	}
@@ -33,7 +33,7 @@ public class HeapDumper {
 					clazz);
 			return true;
 		} catch (Exception rex) {
-			AzureAPI.log("无法初始化Dump内存堆系统!");
+			AzureAPI.log(Locale.isNative() ? "无法初始化Dump内存堆系统!" : "Failed to init dump heap server!");
 			AzureAPI.log(rex.toString());
 			return false;
 		}

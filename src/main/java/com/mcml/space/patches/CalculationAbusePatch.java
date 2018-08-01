@@ -9,14 +9,14 @@ import org.bukkit.plugin.Plugin;
 
 import com.mcml.space.config.Patches;
 import com.mcml.space.util.AzureAPI;
+import com.mcml.space.util.Locale;
 
 public class CalculationAbusePatch implements Listener {
 	public static void init(Plugin plugin) {
 	    Plugin worldedit = Bukkit.getPluginManager().getPlugin("WorldEdit");
 		if (worldedit == null || hasCalculationPerms(worldedit.getDescription().getVersion())) return;
-		
-        AzureAPI.log("已经启用WEcalc命令炸服Bug!");
         Bukkit.getPluginManager().registerEvents(new CalculationAbusePatch(), plugin);
+        AzureAPI.log(Locale.isNative() ? "子模块 - 计算滥用修复 已启动" : "Submodule - CalculationAbusePatch has been enabled");
 	}
 	
     private final String calcLabel = "//calc ";
@@ -42,8 +42,8 @@ public class CalculationAbusePatch implements Listener {
 	public void onCommand(PlayerCommandPreprocessEvent evt) {
 		String command = evt.getMessage();
 		if (!command.startsWith(calcLabel) || evt.getPlayer().isOp() || AzureAPI.hasPerm(evt.getPlayer(), "worldedit.calc")) return;
-		
-        evt.getPlayer().sendMessage(Patches.AntiWEcalcWarnMessage);
+
+        AzureAPI.log(evt.getPlayer(), Patches.AntiWEcalcWarnMessage);
         evt.setCancelled(true);
 	}
 }

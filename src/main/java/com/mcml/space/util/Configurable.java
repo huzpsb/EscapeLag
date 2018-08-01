@@ -34,10 +34,6 @@ public abstract class Configurable {
     @Retention(RetentionPolicy.RUNTIME)
     protected static @interface View {}
 
-    @Documented
-    @Retention(RetentionPolicy.RUNTIME)
-    protected static @interface Locale {} // Not ready for use
-
     public static void restoreNodes(Coord<File, FileConfiguration> fileCoord, Class<? extends Configurable> providerClass) throws IllegalArgumentException, IllegalAccessException, IOException {
     	FileConfiguration config = fileCoord.getValue();
     	

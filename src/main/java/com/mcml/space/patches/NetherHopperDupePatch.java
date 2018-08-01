@@ -14,6 +14,7 @@ import org.bukkit.plugin.Plugin;
 import com.mcml.space.config.PatchesDupeFixes;
 import com.mcml.space.core.EscapeLag;
 import com.mcml.space.util.AzureAPI;
+import com.mcml.space.util.Locale;
 
 import static com.mcml.space.config.PatchesDupeFixes.netherHoppersDupeFixes_worlds;
 
@@ -22,7 +23,7 @@ public class NetherHopperDupePatch implements Listener {
         if (!PatchesDupeFixes.enableNetherHoppersDupeFixes) return;
         
         Bukkit.getPluginManager().registerEvents(new NetherHopperDupePatch(), plugin);
-        AzureAPI.log("地狱漏斗防护模块已开启");
+        AzureAPI.log(Locale.isNative() ? "子模块 - 地狱漏斗修复 已启动" : "Submodule - NetherHopperPatch has been enabled");
     }
     
     @EventHandler(priority = EventPriority.MONITOR, ignoreCancelled = true)

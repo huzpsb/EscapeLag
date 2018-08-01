@@ -1,6 +1,8 @@
 package com.mcml.space.config;
 
 import com.mcml.space.util.Configurable;
+import com.mcml.space.util.Locale;
+
 import java.util.Set;
 
 public abstract class Optimizes extends Configurable {
@@ -24,7 +26,7 @@ public abstract class Optimizes extends Configurable {
     public static Set<String> EntityClearEntityType = DefaultOptions.EntityClearEntityTypes();
 
     @Node("EntityClear.ClearMessage")
-    public static String EntityClearClearMessage = "§a成功清除了过多的实体~~(@^_^@)~";
+    public static String EntityClearClearMessage = Locale.isNative() ? "§a成功清除了过多的实体 ~~(@^_^@)~" : "§aSuccessfully cleared overflow entities ~~(@^_^@)~";
 
     @Node("NooneRestart.enable")
     public static boolean emptyRestart = true;
@@ -62,9 +64,8 @@ public abstract class Optimizes extends Configurable {
     @Node("TeleportPreLoader.enable")
     public static boolean TeleportPreLoaderenable = false;
 
-    @Locale
     @Node("TimerGc.Message")
-    public static String TimerGcMessage = "§e服务器清理内存中... ԅ(¯ㅂ¯ԅ)";
+    public static String TimerGcMessage = Locale.isNative() ? "§e服务器清理内存中... ԅ(¯ㅂ¯ԅ)" : "§eCollecting server garbage... ԅ(¯ㅂ¯ԅ)";
 
     @Node("TimerGc.Period")
     public static long TimerGcPeriod = 600;
@@ -85,13 +86,15 @@ public abstract class Optimizes extends Configurable {
     public static int NoCrowdedEntityPerChunkLimit = 30;
 
     @Node("AntiRedstone.Message")
-    public static String AntiRedstoneMessage = "§c检测到高频红石在 %location% 附近，插件已经将其清除，不许玩了！ (╰_╯)#";
+    public static String AntiRedstoneMessage = Locale.isNative() ?
+            "§c检测到高频红石在 %location% 附近，插件已经将其清除，不许玩了！ (╰_╯)#" : "§cDetected there is an overclock redstone around %location%, we just cleared it, please stop! (╰_╯)#";
 
     @Node("OverLoadMemoryRestart.HeapMBLefted")
     public static int OverLoadMemoryRestartHeapMBLefted = 130;
 
     @Node("OverLoadMemoryRestart.KickMessage")
-    public static String OverLoadMemoryRestartKickMessage = "抱歉！由于服务器内存过载，需要重启服务器！";
+    public static String OverLoadMemoryRestartKickMessage = Locale.isNative() ?
+            "抱歉！由于服务器内存过载，需要重启服务器！" : "Sorry but we must restart due to memory overflow";
 
     @Node("AntiRedstone.RemoveBlockList")
     public static Set<String> AntiRedstoneRemoveBlockList = DefaultOptions.redstoneRemovalMaterialTypes();
@@ -100,7 +103,8 @@ public abstract class Optimizes extends Configurable {
     public static long AutoSaveInterval = 15;
 
     @Node("OverLoadMemoryRestart.WarnMessage")
-    public static String OverLoadMemoryRestartWarnMessage = "服务器会在15秒后重启，请玩家不要游戏，耐心等待！ ╮(╯_╰)╭";
+    public static String OverLoadMemoryRestartWarnMessage = Locale.isNative() ?
+            "服务器会在15秒后重启，请玩家不要游戏，耐心等待！ ╮(╯_╰)╭" : "Server will restart in 15s, please save your current work and await! ╮(╯_╰)╭";
 
     @Node("OverLoadMemoryRestart.DelayTime")
     public static int OverLoadMemoryRestartDelayTime = 15;

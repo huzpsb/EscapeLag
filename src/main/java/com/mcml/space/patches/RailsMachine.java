@@ -13,6 +13,8 @@ import org.bukkit.plugin.Plugin;
 
 import com.mcml.space.config.PatchesDupeFixes;
 import com.mcml.space.core.EscapeLag;
+import com.mcml.space.util.AzureAPI;
+import com.mcml.space.util.Locale;
 
 import static com.mcml.space.util.VersionLevel.modernApi;
 
@@ -20,6 +22,7 @@ public class RailsMachine implements Listener {
     public static void init(Plugin plugin) {
         if (!PatchesDupeFixes.enableRailsMachineFixes) return;
         Bukkit.getPluginManager().registerEvents(new RailsMachine(), EscapeLag.plugin);
+        AzureAPI.log(Locale.isNative() ? "子模块 - 铁轨机器 已启动" : "Submodule - RailsMachine has been enabled");
     }
     
     @EventHandler(priority = EventPriority.LOW, ignoreCancelled = true)

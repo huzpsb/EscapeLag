@@ -15,6 +15,7 @@ import org.bukkit.plugin.Plugin;
 import com.google.common.collect.Maps;
 import com.mcml.space.config.Optimizes;
 import com.mcml.space.util.AzureAPI;
+import com.mcml.space.util.Locale;
 import com.mcml.space.util.AzureAPI.ChunkCoord;
 
 public class FireSpreadSlacker implements Listener {
@@ -25,6 +26,7 @@ public class FireSpreadSlacker implements Listener {
         Bukkit.getPluginManager().registerEvents(new FireSpreadSlacker(), plugin);
         
         Bukkit.getScheduler().runTaskTimer(plugin, CHECKED_CHUNKS::clear, 0L, AzureAPI.toTicks(TimeUnit.SECONDS, 90));
+        AzureAPI.log(Locale.isNative() ? "子模块 - 火蔓延控制 已启动" : "Submodule - FireSpreadSlacker has been enabled");
     }
     
     @EventHandler(priority = EventPriority.LOW, ignoreCancelled = true)

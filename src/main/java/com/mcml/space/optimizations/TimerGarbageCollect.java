@@ -7,6 +7,7 @@ import org.bukkit.Bukkit;
 import org.bukkit.plugin.Plugin;
 import com.mcml.space.config.Optimizes;
 import com.mcml.space.util.AzureAPI;
+import com.mcml.space.util.Locale;
 
 import static com.mcml.space.config.Optimizes.TimerGcMessage;
 import static com.mcml.space.config.Optimizes.timerGC;
@@ -17,21 +18,18 @@ import static com.mcml.space.config.Optimizes.timerGC;
 public class TimerGarbageCollect {
     public static void init(Plugin plugin) {
         if(!timerGC) return;
-        
         long ticks = AzureAPI.toTicks(TimeUnit.SECONDS, Optimizes.TimerGcPeriod);
         Bukkit.getScheduler().runTaskTimer(plugin, () -> {
             long mark = System.currentTimeMillis();
             long released = collectGarbage();
             long duration = System.currentTimeMillis() - mark;
-            
             if(!StringUtils.isBlank(TimerGcMessage)) {
                 String message = StringUtils.replace(TimerGcMessage, "%gc_released_memory%", String.valueOf(released) + " MB");
                 message = StringUtils.replace(message, "%gc_cost_time%", String.valueOf(duration) + " ms");
                 AzureAPI.log(message);
             }
         }, ticks, ticks);
-        
-        AzureAPI.log("内存释放模块已启用");
+        AzureAPI.log(Locale.isNative() ? "子模块 - 内存释放 已启动" : "Submodule - TimerGarbageCollect has been enabled");
     }
     
     public static long collectGarbage() {

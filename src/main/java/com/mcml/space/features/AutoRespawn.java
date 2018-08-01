@@ -11,6 +11,7 @@ import org.bukkit.plugin.Plugin;
 import com.mcml.space.config.Features;
 import com.mcml.space.core.EscapeLag;
 import com.mcml.space.util.AzureAPI;
+import com.mcml.space.util.Locale;
 import com.mcml.space.util.VersionLevel;
 import com.mcml.space.util.VersionLevel.Version;
 
@@ -28,14 +29,14 @@ public class AutoRespawn implements Listener {
         if (!canAutoRespawn) return;
         
         if (!VersionLevel.isSpigot()) {
-            AzureAPI.warn("Auto respawn feature only works with servers which implemented Spigot API!");
+            AzureAPI.warn(Locale.isNative() ? "自动重生只支持Spigot系服务端使用!" : "Auto respawn feature only works with servers which implemented Spigot API!");
             Features.canAutoRespawn = false;
             EscapeLag.plugin.setupConfig(EscapeLag.CONFIG_FEATURES, Features.class);
             return;
         }
         
         Bukkit.getPluginManager().registerEvents(new AutoRespawn(), plugin);
-        AzureAPI.log("自动重生模块已启动");
+        AzureAPI.log(Locale.isNative() ? "子模块 - 自动重生 已启动" : "Submodule - AutoRespawn has been enabled");
     }
     
     @SuppressWarnings("deprecation")

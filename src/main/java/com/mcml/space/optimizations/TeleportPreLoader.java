@@ -15,6 +15,8 @@ import org.bukkit.util.Vector;
 import com.mcml.space.config.Optimizes;
 import com.mcml.space.core.EscapeLag;
 import com.mcml.space.util.AzureAPI.ChunkCoord;
+import com.mcml.space.util.AzureAPI;
+import com.mcml.space.util.Locale;
 import com.mcml.space.util.Utils;
 
 import static com.mcml.space.util.VersionLevel.modernApi;
@@ -120,6 +122,7 @@ public class TeleportPreLoader implements Listener {
                     nowint.remove(thistpid);
 				}, 10);
 			}
+			AzureAPI.log(Locale.isNative() ? "子模块 - 传送预加载 已启动" : "Submodule - TeleportPreLoader has been enabled");
 		}
 	}
 

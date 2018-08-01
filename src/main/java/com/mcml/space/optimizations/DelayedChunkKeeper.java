@@ -6,6 +6,7 @@ import static com.mcml.space.config.OptimizesChunk.delayedChunkKeeper_maxUnloadC
 import com.mcml.space.core.EscapeLag;
 import com.mcml.space.core.Ticker;
 import com.mcml.space.util.AzureAPI;
+import com.mcml.space.util.Locale;
 import com.mcml.space.util.AzureAPI.ChunkCoord;
 import static com.mcml.space.util.VersionLevel.isPaper;
 import java.util.Set;
@@ -27,6 +28,7 @@ public class DelayedChunkKeeper implements Listener {
         if (!OptimizesChunk.enableDelayedChunkKeeper
                 && (delayedChunkKeeper_maxUnloadChunksPerTick <= 0 || isPaper())) return;
         Bukkit.getPluginManager().registerEvents(new DelayedChunkKeeper(), plugin);
+        AzureAPI.log(Locale.isNative() ? "子模块 - 区块延时保持 已启动" : "Submodule - DelayedChunkKeeper has been enabled");
     }
     
     private int unloadedChunks;

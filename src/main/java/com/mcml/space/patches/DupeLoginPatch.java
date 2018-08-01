@@ -3,6 +3,8 @@ package com.mcml.space.patches;
 import com.mcml.space.config.Patches;
 import com.mcml.space.core.PlayerList;
 import com.mcml.space.util.AzureAPI;
+import com.mcml.space.util.Locale;
+
 import org.bukkit.Bukkit;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
@@ -18,7 +20,7 @@ public class DupeLoginPatch implements Listener {
         if (!Patches.fixDupeOnline) return;
 
         Bukkit.getPluginManager().registerEvents(new DupeLoginPatch(), plugin);
-        AzureAPI.log("多重在线修复模块已启用");
+        AzureAPI.log(Locale.isNative() ? "子模块 - 多重在线修复 已启动" : "Submodule - DupeLoginPatch has been enabled");
     }
 
     @EventHandler(priority = EventPriority.LOWEST)

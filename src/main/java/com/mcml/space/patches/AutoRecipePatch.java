@@ -11,6 +11,7 @@ import com.comphenix.protocol.ProtocolLibrary;
 import com.comphenix.protocol.events.PacketAdapter;
 import com.comphenix.protocol.events.PacketEvent;
 import com.mcml.space.util.AzureAPI;
+import com.mcml.space.util.Locale;
 import com.mcml.space.util.VersionLevel;
 import com.mcml.space.util.VersionLevel.CallerSensitive;
 
@@ -23,15 +24,13 @@ public class AutoRecipePatch implements Listener {
     @CallerSensitive(version = "1.12")
     public static void init(Plugin plugin) {
         if (!VersionLevel.rawVersion().contains("(MC: 1.12)")) return;
-        
         ProtocolLibrary.getProtocolManager().addPacketListener(new PacketAdapter(plugin, Play.Client.AUTO_RECIPE) {
             @Override
             public void onPacketReceiving(PacketEvent evt) {
                 RECIPE_KEEPERS.add(evt.getPlayer());
             }
         });
-        
-        AzureAPI.log("自动合成修复模块已启用");
+        AzureAPI.log(Locale.isNative() ? "子模块 - 自动合成修复 已启动" : "Submodule - AutoRecipePatch has been enabled");
     }
     
     @EventHandler(priority = EventPriority.MONITOR, ignoreCancelled = true)

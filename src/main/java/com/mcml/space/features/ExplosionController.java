@@ -12,6 +12,7 @@ import org.bukkit.event.block.BlockExplodeEvent;
 import org.bukkit.event.entity.EntityExplodeEvent;
 import org.bukkit.plugin.Plugin;
 import com.mcml.space.util.AzureAPI;
+import com.mcml.space.util.Locale;
 import com.mcml.space.util.VersionLevel;
 import com.mcml.space.util.VersionLevel.Version;
 
@@ -24,11 +25,9 @@ import static com.mcml.space.config.Features.explodeControlType;
 public class ExplosionController {
     public static void init(Plugin plugin) {
         if (!controlExplode) return;
-        
         Bukkit.getPluginManager().registerEvents(new EntityDetector(), plugin);
         if (VersionLevel.isHigherEquals(Version.MINECRAFT_1_8_R2)) Bukkit.getPluginManager().registerEvents(new BlockDetector(), plugin);
-        
-        AzureAPI.log("爆炸控制模块已启动");
+        AzureAPI.log(Locale.isNative() ? "子模块 - 可控爆炸 已启动" : "Submodule - ExplosionController has been enabled");
     }
     
     // since 1.8.3

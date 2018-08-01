@@ -9,6 +9,7 @@ import org.bukkit.event.block.Action;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.plugin.Plugin;
 import com.mcml.space.util.AzureAPI;
+import com.mcml.space.util.Locale;
 import com.mcml.space.util.Perms;
 
 import static com.mcml.space.config.Features.preventSpawnerModify;
@@ -24,7 +25,7 @@ public class SpawnerGuard implements Listener {
         if (!preventSpawnerModify) return;
         
         Bukkit.getPluginManager().registerEvents(new SpawnerGuard(), plugin);
-        AzureAPI.log("刷怪笼保护模块已启动");
+        AzureAPI.log(Locale.isNative() ? "子模块 - 刷怪箱保护 已启动" : "Submodule - SpawnerGuard has been enabled");
     }
     
     @EventHandler(priority = EventPriority.LOW, ignoreCancelled = true)

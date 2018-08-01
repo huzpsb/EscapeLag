@@ -68,7 +68,7 @@ public abstract class AzureAPI {
                 return (serverThread = t);
             }
         }
-        throw new AssertionError("NO SERVER THREAD!");
+        throw new AssertionError(Locale.isNative() ? "找不到服务器主线程!" : "NO SERVER THREAD!");
     }
 
     /**
@@ -475,7 +475,10 @@ public abstract class AzureAPI {
             file = createDirectories(file);
             file.createNewFile();
         } catch (IOException ex) {
-            AzureAPI.fatal("Cannot create file '" + file.getPath() + "', blocked?", EscapeLag.plugin);
+            AzureAPI.fatal(Locale.isNative() ?
+                    "无法创建文件 '" + file.getPath() + "', 已锁定?" :
+                    "Cannot create file '" + file.getPath() + "', blocked?"
+                    , EscapeLag.plugin);
             ex.printStackTrace();
         }
         return YamlConfiguration.loadConfiguration(file);
@@ -697,7 +700,7 @@ public abstract class AzureAPI {
     public static void dumpThread(ThreadInfo thread, Logger logger) {
         logger.log(Level.SEVERE, "------------------------------");
         //
-        logger.log(Level.SEVERE, "Current Thread: " + thread.getThreadName());
+        logger.log(Level.SEVERE, Locale.isNative() ? "当前线程: " : "Current Thread: " + thread.getThreadName());
         logger.log(Level.SEVERE, "\tPID: " + thread.getThreadId() + " | Suspended: " + thread.isSuspended() + " | Native: " + thread.isInNative() + " | State: " + thread.getThreadState());
         if (thread.getLockedMonitors().length != 0) {
             logger.log(Level.SEVERE, "\tThread is waiting on monitor(s):");

@@ -14,14 +14,13 @@ import com.mcml.space.features.CensoredChat;
 import com.mcml.space.features.ExplosionController;
 import com.mcml.space.features.FarmProtect;
 import com.mcml.space.features.SpawnerGuard;
-import com.mcml.space.features.UpgradeNotifier;
 import com.mcml.space.optimizations.AutoSave;
 import com.mcml.space.optimizations.DelayedChunkKeeper;
 import com.mcml.space.optimizations.EmptyRestart;
 import com.mcml.space.optimizations.FireSpreadSlacker;
 import com.mcml.space.optimizations.NoCrowdEntity;
 import com.mcml.space.optimizations.NoStyxChunks;
-import com.mcml.space.optimizations.OverloadRestart;
+import com.mcml.space.optimizations.OverloadResume;
 import com.mcml.space.optimizations.RedstoneSlacker;
 import com.mcml.space.optimizations.TeleportPreLoader;
 import com.mcml.space.optimizations.TickSleep;
@@ -136,9 +135,9 @@ public class EscapeLag extends JavaPlugin {
         // Reentrant binds
         // Core
         Ticker.init(this);
-        Network.init(this);
+        AutoUpgrade.init(this);
         PlayerList.init(this);
-        UpgradeNotifier.init(this);
+        UpgradeHelper.init(this);
         
         // Features
         CensoredChat.init(this);
@@ -169,7 +168,7 @@ public class EscapeLag extends JavaPlugin {
         // Optimizations
         TickSleep.init(this);
         EmptyRestart.init(this);
-        OverloadRestart.init(this);
+        OverloadResume.init(this);
         FireSpreadSlacker.init(this);
         RedstoneSlacker.init(this);
         DelayedChunkKeeper.init(this);

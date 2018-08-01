@@ -17,6 +17,7 @@ import com.google.common.collect.Maps;
 import com.mcml.space.config.Optimizes;
 import com.mcml.space.core.EscapeLag;
 import com.mcml.space.util.AzureAPI;
+import com.mcml.space.util.Locale;
 
 import static com.mcml.space.util.VersionLevel.modernApi;
 import static org.bukkit.Material.*;
@@ -27,11 +28,10 @@ public class RedstoneSlacker implements Listener {
     
     public static void init(Plugin plugin){
         if(!Optimizes.AntiRedstoneenable) return;
-        
         Bukkit.getScheduler().runTaskTimer(plugin, CHECKED_TIMES::clear, 0L, AzureAPI.toTicks(TimeUnit.SECONDS, Optimizes.AntiRedstoneTimes));
         maxCounts = Optimizes.AntiRedstoneTimes * 4;
-        
         Bukkit.getPluginManager().registerEvents(new RedstoneSlacker(), plugin);
+        AzureAPI.log(Locale.isNative() ? "子模块 - 中频红石 已启动" : "Submodule - RedstoneSlacker has been enabled");
     }
     
     private Location notifyLocation;

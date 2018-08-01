@@ -5,6 +5,8 @@ import com.mcml.space.config.Optimizes;
 import com.mcml.space.core.EscapeLag;
 import com.mcml.space.core.PlayerList;
 import com.mcml.space.util.AzureAPI;
+import com.mcml.space.util.Locale;
+
 import java.util.concurrent.TimeUnit;
 import org.bukkit.Bukkit;
 import org.bukkit.event.EventHandler;
@@ -21,7 +23,7 @@ public class EmptyRestart implements Listener {
         if (!Optimizes.emptyRestart) return;
         
         Bukkit.getPluginManager().registerEvents(new EmptyRestart(), plugin);
-        AzureAPI.log("无人重启模块已启动");
+        AzureAPI.log(Locale.isNative() ? "子模块 - 闲置重启 已启动" : "Submodule - EmptyRestart has been enabled");
     }
     
     private static int restartTaskId = -1;

@@ -3,6 +3,8 @@ package com.mcml.space.optimizations;
 import com.mcml.space.config.OptimizesChunk;
 import com.mcml.space.core.EscapeLag;
 import com.mcml.space.util.AzureAPI;
+import com.mcml.space.util.Locale;
+
 import static com.mcml.space.util.VersionLevel.isPaper;
 import java.util.concurrent.TimeUnit;
 import org.bukkit.Bukkit;
@@ -48,7 +50,7 @@ public class NoStyxChunks {
             Bukkit.getPluginManager().registerEvents(new ExitDetector(), plugin);
         }
 
-        AzureAPI.log("区块卸载系统现在运行...");
+        AzureAPI.log(Locale.isNative() ? "子模块 - 区块冥河 已启动" : "Submodule - NoStyxChunks has been enabled");
     }
 
     private static class TeleportDetector implements Listener {

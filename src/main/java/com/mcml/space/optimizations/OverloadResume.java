@@ -7,14 +7,15 @@ import com.mcml.space.config.Core;
 import com.mcml.space.config.Optimizes;
 import com.mcml.space.core.EscapeLag;
 import com.mcml.space.util.AzureAPI;
+import com.mcml.space.util.Locale;
 
 /**
  * @author Vlvxingze, SotrForgotten
  */
-public class OverloadRestart implements Runnable {
+public class OverloadResume implements Runnable {
     public static void init(Plugin plugin) {
-        Bukkit.getScheduler().runTaskTimer(plugin, new OverloadRestart(), 7 * 20, 7 * 20);
-        AzureAPI.log("超负荷控制模块已启动");
+        Bukkit.getScheduler().runTaskTimer(plugin, new OverloadResume(), 7 * 20, 7 * 20);
+        AzureAPI.log(Locale.isNative() ? "子模块 - 濒危抢救 已启动" : "Submodule - OverloadResume has been enabled");
     }
     
     @Override

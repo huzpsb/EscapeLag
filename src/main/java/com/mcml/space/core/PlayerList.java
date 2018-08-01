@@ -2,9 +2,10 @@ package com.mcml.space.core;
 
 import com.google.common.collect.Lists;
 import com.mcml.space.util.AzureAPI;
+import com.mcml.space.util.Locale;
+
 import io.akarin.collect.set.player.PlayerSets;
 import java.util.List;
-import java.util.Locale;
 import java.util.Set;
 import java.util.function.Consumer;
 
@@ -32,7 +33,7 @@ public class PlayerList implements Listener {
         for (World world : Bukkit.getWorlds()) {
             for (Player each : world.getPlayers()) PLAYERS.add(each);
         }
-        AzureAPI.log("核心模块 - 玩家列表已启用");
+        AzureAPI.log(Locale.isNative() ? "核心模块 - 玩家列表 已启用" : "Coremodule - PlayerList has been enabled");
     }
     
     public static void bind(PlayerJoinReactor reactor) {
@@ -70,7 +71,7 @@ public class PlayerList implements Listener {
     
     @SuppressWarnings("unlikely-arg-type")
     public static boolean contains(String username) {
-        return PLAYERS.contains(username.toLowerCase(Locale.ROOT)); // our library support this
+        return PLAYERS.contains(username.toLowerCase(java.util.Locale.ROOT)); // our library support this
     }
     
     public static boolean isEmpty() {

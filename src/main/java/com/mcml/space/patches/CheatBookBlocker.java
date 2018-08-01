@@ -10,6 +10,7 @@ import org.bukkit.inventory.ItemFlag;
 import org.bukkit.inventory.meta.BookMeta;
 import org.bukkit.plugin.Plugin;
 import com.mcml.space.util.AzureAPI;
+import com.mcml.space.util.Locale;
 
 import static com.mcml.space.config.Patches.noCheatBook;
 
@@ -26,7 +27,7 @@ public class CheatBookBlocker implements Listener {
         if (!noCheatBook) return;
         
         Bukkit.getPluginManager().registerEvents(new CheatBookBlocker(), plugin);
-        AzureAPI.log("书与笔修复模块已启用");
+        AzureAPI.log(Locale.isNative() ? "子模块 - 书与笔修复 已启动" : "Submodule - CheatBookBlocker has been enabled");
     }
     
     @EventHandler(priority = EventPriority.LOWEST, ignoreCancelled = true)

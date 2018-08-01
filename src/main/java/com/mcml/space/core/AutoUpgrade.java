@@ -14,16 +14,16 @@ import org.bukkit.plugin.Plugin;
 
 import com.mcml.space.config.Core;
 import com.mcml.space.util.AzureAPI;
+import com.mcml.space.util.Locale;
 
 /**
  * @author Vlvxingze
  */
-public class Network implements Runnable {
+public class AutoUpgrade implements Runnable {
     public static void init(Plugin plugin) {
         if (!Core.AutoUpdate) return;
-        
-        Bukkit.getScheduler().runTaskAsynchronously(plugin, new Network());
-        AzureAPI.log("核心模块 - 自动更新已启用");
+        Bukkit.getScheduler().runTaskAsynchronously(plugin, new AutoUpgrade());
+        AzureAPI.log(Locale.isNative() ? "核心模块 - 自动更新 已启用" : "Coremodule - AutoUpgrade has been enabled");
     }
 
     public static void CheckAndDownloadPlugin() {

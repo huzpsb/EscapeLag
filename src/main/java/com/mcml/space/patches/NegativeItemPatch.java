@@ -3,6 +3,8 @@ package com.mcml.space.patches;
 import com.mcml.space.config.PatchesDupeFixes;
 import com.mcml.space.core.PlayerList;
 import com.mcml.space.util.AzureAPI;
+import com.mcml.space.util.Locale;
+
 import javax.annotation.Nullable;
 import org.bukkit.Bukkit;
 import org.bukkit.World;
@@ -31,7 +33,7 @@ public class NegativeItemPatch implements Listener {
         }
 
         Bukkit.getPluginManager().registerEvents(new NegativeItemPatch(), plugin);
-        AzureAPI.log("负数物品修复模块已启用");
+        AzureAPI.log(Locale.isNative() ? "子模块 - 正数物品 已启动" : "Submodule - NegativeItemPatch has been enabled");
     }
 
     @EventHandler(priority = EventPriority.HIGHEST, ignoreCancelled = true)

@@ -180,7 +180,7 @@ public class VersionLevel {
             return Version.MINECRAFT_1_4_6;
         }
         
-        AzureAPI.warn("Cannot capture server version, set as future version.");
+        AzureAPI.warn(Locale.isNative() ? "由于无法识别到服务器版本, 设定为未来版本." : "Cannot capture server version, set as a future version.");
         return Version.MINECRAFT_FUTURE;
     }
     

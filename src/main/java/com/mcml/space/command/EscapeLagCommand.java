@@ -2,12 +2,12 @@ package com.mcml.space.command;
 
 import com.mcml.space.config.Core;
 import com.mcml.space.core.EscapeLag;
-import com.mcml.space.core.Network;
+import com.mcml.space.core.AutoUpgrade;
 import com.mcml.space.core.Ticker;
-import com.mcml.space.features.UpgradeNotifier;
+import com.mcml.space.core.UpgradeHelper;
 import com.mcml.space.optimizations.DelayedChunkKeeper;
 import com.mcml.space.optimizations.NoStyxChunks;
-import com.mcml.space.optimizations.OverloadRestart;
+import com.mcml.space.optimizations.OverloadResume;
 import com.mcml.space.optimizations.TimerGarbageCollect;
 import com.mcml.space.util.HeapDumper;
 import com.mcml.space.util.Perms;
@@ -35,7 +35,7 @@ public class EscapeLagCommand {
                     return true;
                 }
                 if (args[0].equalsIgnoreCase("iknown")) {
-                    UpgradeNotifier.setKnown(true);
+                    UpgradeHelper.setKnown(true);
                     return true;
                 }
                 if (args[0].equalsIgnoreCase("updateon")) {
@@ -65,7 +65,7 @@ public class EscapeLagCommand {
                     }
                     if (args[1].equalsIgnoreCase("download")) {
                         sender.sendMessage("§e操作开始执行中...");
-                        Bukkit.getScheduler().runTaskAsynchronously(EscapeLag.plugin, Network::DownloadAntiAttack);
+                        Bukkit.getScheduler().runTaskAsynchronously(EscapeLag.plugin, AutoUpgrade::DownloadAntiAttack);
                     }
                 }
 
@@ -111,7 +111,7 @@ public class EscapeLagCommand {
                         sender.sendMessage("§6内存清理完毕！");
                     }
                     if (args[1].equalsIgnoreCase("heapshut")) {
-                        Bukkit.getScheduler().runTask(EscapeLag.plugin, new OverloadRestart());
+                        Bukkit.getScheduler().runTask(EscapeLag.plugin, new OverloadResume());
                         sender.sendMessage("§6成功检测一次内存濒临重启！若未发出重启提醒则意味着内存仍然充足不至于崩溃！");
                     }
                     if (args[1].equalsIgnoreCase("chunkunloadlog")) {

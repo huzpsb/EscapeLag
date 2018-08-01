@@ -14,15 +14,17 @@ import org.bukkit.event.entity.EntityInteractEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.plugin.Plugin;
 import com.mcml.space.config.Features;
+import com.mcml.space.util.AzureAPI;
+import com.mcml.space.util.Locale;
 
 import static org.bukkit.Material.*;
 
 public class FarmProtect {
     public static void init(Plugin plugin) {
         if(!Features.ProtectFarmenable) return;
-        
         if (Features.ProtectFarmOnlyPlayer) Bukkit.getPluginManager().registerEvents(new EntityDetector(), plugin);
         Bukkit.getPluginManager().registerEvents(new PlayerDetector(), plugin);
+        AzureAPI.log(Locale.isNative() ? "核心模块 - 耕地保护 已启动" : "Submodule - FarmProtect has been enabled");
     }
     
     private static class EntityDetector implements Listener {

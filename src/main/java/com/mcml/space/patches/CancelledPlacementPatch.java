@@ -12,6 +12,9 @@ import org.bukkit.event.block.BlockPlaceEvent;
 import org.bukkit.plugin.Plugin;
 
 import com.mcml.space.config.PatchesDupeFixes;
+import com.mcml.space.util.AzureAPI;
+import com.mcml.space.util.Locale;
+
 import static com.mcml.space.config.PatchesDupeFixes.cancelledPlacementDupeFixes_clearsRadius;
 
 import static com.mcml.space.util.VersionLevel.modernApi;
@@ -23,6 +26,7 @@ public class CancelledPlacementPatch implements Listener {
     public static void init(Plugin plugin) {
         if (!PatchesDupeFixes.enableCancelledPlacementDupeFixes) return;
         Bukkit.getPluginManager().registerEvents(new CancelledPlacementPatch(), plugin);
+        AzureAPI.log(Locale.isNative() ? "子模块 - 取消放置修复 已启动" : "Submodule - CancelledPlacementPatch has been enabled");
     }
 	
     @EventHandler(priority = EventPriority.MONITOR, ignoreCancelled = false)

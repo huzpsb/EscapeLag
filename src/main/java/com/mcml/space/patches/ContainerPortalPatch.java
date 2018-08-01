@@ -15,11 +15,14 @@ import org.bukkit.plugin.Plugin;
 import com.google.common.collect.Sets;
 import com.mcml.space.config.PatchesDupeFixes;
 import com.mcml.space.core.EscapeLag;
+import com.mcml.space.util.AzureAPI;
+import com.mcml.space.util.Locale;
 
 public class ContainerPortalPatch implements Listener {
     public static void init(Plugin plugin) {
         if(!PatchesDupeFixes.enablePortalContainerDupeFixes) return;
         Bukkit.getPluginManager().registerEvents(new ContainerPortalPatch(), plugin);
+        AzureAPI.log(Locale.isNative() ? "子模块 - 容器传送 已启动" : "Submodule - ContainerPortalPatch has been enabled");
     }
     
     private final Set<InventoryHolder> containerInv = Sets.newSetFromMap(new java.util.IdentityHashMap<InventoryHolder, Boolean>(4));

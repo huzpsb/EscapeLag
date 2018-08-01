@@ -5,6 +5,7 @@ import java.util.Set;
 
 import com.google.common.collect.Sets;
 import com.mcml.space.util.Configurable;
+import com.mcml.space.util.Locale;
 
 public abstract class PatchesDupeFixes extends Configurable {
     @Node("config-version")
@@ -29,7 +30,8 @@ public abstract class PatchesDupeFixes extends Configurable {
     public static boolean enableNegativeItemDupeFixes = false;
     
     @Node("settings.negative-amount-item.notify-message")
-    public static String negativeItemDupeFixes_notifyMesssage = "&b发现 &f$player &b获取到负数物品, 已执行清理!";
+    public static String negativeItemDupeFixes_notifyMesssage = Locale.isNative() ?
+            "&b发现玩家 &f$player &b获取到负数物品, 已执行清理!" : "&bFound that player &f$player &bhas negative/infinite item(s), have been cleared!";
     
     @Node("settings.negative-amount-item.actions.removes-item.enable")
     public static boolean negativeItemDupeFixes_removesItem = false;

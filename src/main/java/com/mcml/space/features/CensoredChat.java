@@ -24,6 +24,7 @@ import com.mcml.space.config.Features;
 import com.mcml.space.core.EscapeLag;
 import com.mcml.space.core.PlayerList.PlayerQuitReactor;
 import com.mcml.space.util.AzureAPI;
+import com.mcml.space.util.Locale;
 import com.mcml.space.util.AzureAPI.Coord;
 import com.mcml.space.util.Perms;
 
@@ -31,6 +32,7 @@ public class CensoredChat {
     public static void init(Plugin plugin) {
         if (Features.AntiSpamenable) Bukkit.getPluginManager().registerEvents(new SpamDetector(), plugin);
         if (Features.enableAntiDirty) Bukkit.getPluginManager().registerEvents(new DirtyChatDetector(), plugin);
+        AzureAPI.log(Locale.isNative() ? "子模块 - 聊天审查 已启动" : "Submodule - CensoredChat has been enabled");
     }
     
     private static class SpamDetector implements Listener, PlayerQuitReactor {

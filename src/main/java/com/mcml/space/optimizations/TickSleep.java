@@ -3,6 +3,7 @@ package com.mcml.space.optimizations;
 import com.mcml.space.config.Optimizes;
 import com.mcml.space.core.PlayerList;
 import com.mcml.space.util.AzureAPI;
+import com.mcml.space.util.Locale;
 
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -33,6 +34,7 @@ public class TickSleep {
                     }
                 }
             }, 1, 1);
+            AzureAPI.log(Locale.isNative() ? "子模块 - 线程休眠 已启动" : "Submodule - TickSleep has been enabled");
         }
     }
 

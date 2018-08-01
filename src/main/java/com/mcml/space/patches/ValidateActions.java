@@ -18,6 +18,7 @@ import org.bukkit.plugin.Plugin;
 
 import com.mcml.space.config.Patches;
 import com.mcml.space.util.AzureAPI;
+import com.mcml.space.util.Locale;
 
 import io.akarin.collect.set.player.MarkablePlayerSet;
 import io.akarin.collect.set.player.PlayerSets;
@@ -25,9 +26,8 @@ import io.akarin.collect.set.player.PlayerSets;
 public class ValidateActions implements Listener {
     public static void init(Plugin plugin) {
         if (!Patches.enableVaildateActions) return;
-        
-        AzureAPI.log("动作效验模块已启用!");
         Bukkit.getPluginManager().registerEvents(new ValidateActions(), plugin);
+        AzureAPI.log(Locale.isNative() ? "子模块 - 动作效验 已启动" : "Submodule - ActionValidate has been enabled");
     }
     
     private final MarkablePlayerSet invKeepers = PlayerSets.newInstanceBitSet(); // Handle this by nms is nice

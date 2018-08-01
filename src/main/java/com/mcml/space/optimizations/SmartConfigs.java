@@ -6,6 +6,9 @@ import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.plugin.Plugin;
 import com.mcml.space.config.Optimizes;
 import com.mcml.space.core.EscapeLag;
+import com.mcml.space.util.AzureAPI;
+import com.mcml.space.util.Locale;
+
 import lombok.SneakyThrows;
 
 public class SmartConfigs { // Not ready for use now
@@ -24,6 +27,7 @@ public class SmartConfigs { // Not ready for use now
         
         Optimizes.AutoSaveenable = false;
         EscapeLag.plugin.setupConfig(EscapeLag.CONFIG_OPTIMIZES, Optimizes.class);
+        AzureAPI.log(Locale.isNative() ? "子模块 - 智能配置 已启动" : "Submodule - SmartConfigs has been enabled");
     }
     
     @SneakyThrows

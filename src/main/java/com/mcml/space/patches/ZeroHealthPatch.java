@@ -2,6 +2,8 @@ package com.mcml.space.patches;
 
 import com.mcml.space.config.Patches;
 import com.mcml.space.core.EscapeLag;
+import com.mcml.space.util.AzureAPI;
+import com.mcml.space.util.Locale;
 
 import org.bukkit.Bukkit;
 import org.bukkit.entity.EntityType;
@@ -17,6 +19,7 @@ public class ZeroHealthPatch implements Listener {
     public static void init(Plugin plugin) {
         if (!Patches.noFakedeath) return;
         Bukkit.getPluginManager().registerEvents(new ZeroHealthPatch(), plugin);
+        AzureAPI.log(Locale.isNative() ? "子模块 - 零血修复 已启动" : "Submodule - ZeroHealthPatch has been enabled");
     }
 
     public static void clearUndeadPlayer(Player player) {
