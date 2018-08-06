@@ -527,9 +527,6 @@ public abstract class AzureAPI {
      * @param message
      * @return Whether restarted smoothly
      */
-    public static boolean restartServer(String message) {
-        return restartServer(message, true);
-    }
 
     /**
      * Try to restart server, false if not supports and stopping server if force
@@ -537,16 +534,13 @@ public abstract class AzureAPI {
      * @param message
      * @return Whether restarted smoothly
      */
-    public static boolean restartServer(String message, boolean force) {
-        if (!VersionLevel.isSpigot()) {
-            if (force) {
-                Bukkit.shutdown();
-            }
-            return false;
-        }
+    public static void restartServer(String message) {
         PlayerList.forEach(player -> player.kickPlayer(prefix(loggerPrefix, message)));
-        org.spigotmc.RestartCommand.restart();
-        return true;
+        if (VersionLevel.isSpigot()) {
+            org.spigotmc.RestartCommand.restart();
+        }else{
+            Bukkit.shutdown();
+        }
     }
 
     /**

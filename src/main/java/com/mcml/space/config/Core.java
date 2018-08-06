@@ -15,7 +15,4 @@ public abstract class Core extends Configurable {
 
     @Node("language")
     public static String lang = "zh_cn";
-    
-    @Node("hook-restart-by-script")
-    public static boolean hookRestartByScript = false;
 }
