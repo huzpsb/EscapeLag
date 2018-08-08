@@ -1,7 +1,7 @@
 package com.mcml.space.util;
 
-import org.apache.commons.lang.StringUtils;
 import com.mcml.space.config.Core;
+import org.apache.commons.lang.StringUtils;
 
 /**
  * @author SotrForgotten
@@ -9,7 +9,7 @@ import com.mcml.space.config.Core;
 public class Locale {
     private static volatile Lang language = checkLang(Core.lang);
     
-    private static Lang checkLang(String i18n) {
+    public static Lang checkLang(String i18n) {
         if (i18n.equalsIgnoreCase("zh_cn") || i18n.equalsIgnoreCase("zh_sg")) {
             return Lang.CHINESE_SIMPLIFIED;
         }

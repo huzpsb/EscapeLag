@@ -30,7 +30,6 @@ import com.mcml.space.optimizations.WaterFlowLimitor;
 import com.mcml.space.patches.AntiBedExplode;
 import com.mcml.space.patches.AntiCrashSign;
 import com.mcml.space.patches.AntiDupeDropItem;
-import com.mcml.space.patches.ZeroHealthPatch;
 import com.mcml.space.patches.AntiLongStringCrash;
 import com.mcml.space.patches.AutoRecipePatch;
 import com.mcml.space.patches.BonemealDupePatch;
@@ -43,9 +42,11 @@ import com.mcml.space.patches.NegativeItemPatch;
 import com.mcml.space.patches.NetherHopperDupePatch;
 import com.mcml.space.patches.RailsMachine;
 import com.mcml.space.patches.ValidateActions;
+import com.mcml.space.patches.ZeroHealthPatch;
 import com.mcml.space.util.AzureAPI;
 import com.mcml.space.util.AzureAPI.Coord;
 import com.mcml.space.util.Configurable;
+import com.mcml.space.util.Locale;
 import com.mcml.space.util.Perms;
 import com.mcml.space.util.VersionLevel;
 import java.io.File;
@@ -63,45 +64,47 @@ import org.bukkit.event.HandlerList;
 import org.bukkit.plugin.java.JavaPlugin;
 
 public class EscapeLag extends JavaPlugin {
+
     public static EscapeLag plugin;
-    
+
     // Core
     public final static String CONFIG_CORE = "PluginMainConfig.yml";
-    
+
     // Features
     public final static String CONFIG_FEATURES = "DoEventConfig.yml";
-    
+
     // Pathches
     public final static String CONFIG_PATCHES = "AntiBugConfig.yml";
     public final static String CONFIG_PATCH_DUPE_FIXES = "patches/dupe_fixes.yml"; // The separator will be automatically fixed
-    
+
     // Optimizations
     public final static String CONFIG_OPTIMIZES = "ClearLagConfig.yml";
     public final static String CONFIG_OPTIMIZE_DUPE_FIXES = "optimizes/chunks.yml";
-    
+
     public final static Map<String, Coord<File, FileConfiguration>> configurations = Maps.newHashMap(); // File name as key
-    
+
     public final static String GLOBAL_PERMS = "escapelag.admin";
-    
+
     @Override
     public void onEnable() {
         plugin = this;
-        
+
         setupConfigs();
-        
+        Locale.checkLang(Core.lang);
+
         // Non-task only once binds
         Perms.bind(GLOBAL_PERMS);
         EscapeLag.AutoSetServer(false);
-        
+
         AzureAPI.log("EscapeLag —— 新一代的优化/稳定插件");
         AzureAPI.log("~(@^_^@)~ 玩的开心！~");
-        
+
         AzureAPI.log("Version " + getDescription().getVersion() + " is ready for installation \n");
         AzureAPI.log("Server: " + Bukkit.getServer().getVersion());
         AzureAPI.log("Bukkit: " + Bukkit.getServer().getBukkitVersion());
         AzureAPI.log("Level: " + VersionLevel.get() + "\n");
         bindModules();
-        
+
         AzureAPI.log("EscapeLag has been installed successfully!");
         AzureAPI.log("乐乐感谢您的使用——有建议务必反馈，QQ1207223090");
         AzureAPI.log("您可以在插件根目录找到本插件的说明文档 说明文档.txt");
@@ -109,27 +112,27 @@ public class EscapeLag extends JavaPlugin {
         AzureAPI.log("|||" + devs.get(0) + "/EscapeLag 合作作品.|||");
         AzureAPI.log("|||" + AzureAPI.concatsBetween(devs, 1, ", ") + " 合作开发.|||");
         AzureAPI.log("§a您正在使用EscapeLag构建号 " + Core.internalVersion);
-        
+
         TimerGarbageCollect.collectGarbage();
     }
-    
+
     @Override
     public void onDisable() {
         clearModules(); // Not every disable is server stopping
-        
+
         AzureAPI.log("Plugin has been disabled.");
         AzureAPI.log("Thanks for using!");
     }
-    
+
     public void clearModules() {
         AzureAPI.log("Uninstall modules..");
         HandlerList.unregisterAll(this);
         Bukkit.getScheduler().cancelTasks(this);
-        
+
         TimerGarbageCollect.collectGarbage();
         AzureAPI.log("All modules have been cleared!");
     }
-    
+
     public void bindModules() {
         AzureAPI.log("Setup modules..");
         // Reentrant binds
@@ -138,14 +141,14 @@ public class EscapeLag extends JavaPlugin {
         AutoUpgrade.init(this);
         PlayerList.init(this);
         UpgradeHelper.init(this);
-        
+
         // Features
         CensoredChat.init(this);
         ExplosionController.init(this);
         SpawnerGuard.init(this);
         FarmProtect.init(this);
         AutoRespawn.init(this);
-        
+
         // Pathces
         ContainerPortalPatch.init(this);
         NetherHopperDupePatch.init(this);
@@ -158,13 +161,15 @@ public class EscapeLag extends JavaPlugin {
         CalculationAbusePatch.init(this);
         ZeroHealthPatch.init(this);
         ValidateActions.init(this);
-        
+
         Bukkit.getPluginManager().registerEvents(new AntiCrashSign(), this);
         Bukkit.getPluginManager().registerEvents(new CancelledPlacementPatch(), this);
         Bukkit.getPluginManager().registerEvents(new AntiBedExplode(), this);
         Bukkit.getPluginManager().registerEvents(new AntiLongStringCrash(), this);
-        if (canAccessPackets()) AutoRecipePatch.init(this);
-        
+        if (canAccessPackets()) {
+            AutoRecipePatch.init(this);
+        }
+
         // Optimizations
         TickSleep.init(this);
         EmptyRestart.init(this);
@@ -174,24 +179,24 @@ public class EscapeLag extends JavaPlugin {
         DelayedChunkKeeper.init(this);
         TimerGarbageCollect.init(this);
         NoStyxChunks.init(this);
-        
+
         Bukkit.getPluginManager().registerEvents(new UnloadClear(), this);
         Bukkit.getPluginManager().registerEvents(new AutoSave(), this);
         Bukkit.getPluginManager().registerEvents(new WaterFlowLimitor(), this);
         Bukkit.getPluginManager().registerEvents(new TeleportPreLoader(), this);
         Bukkit.getPluginManager().registerEvents(new NoCrowdEntity(), this);
-        
+
         AzureAPI.log("All modules have been installed!");
     }
-    
+
     public static boolean canAccessPackets() {
         return Bukkit.getPluginManager().isPluginEnabled("ProtocolLib");
     }
-    
+
     public static File getPluginFile() {
         return EscapeLag.plugin.getFile();
     }
-    
+
     @Override
     public boolean onCommand(CommandSender sender, Command cmd, String label, String[] args) {
         if (label.equalsIgnoreCase("EL")) {
@@ -199,38 +204,40 @@ public class EscapeLag extends JavaPlugin {
         }
         return false;
     }
-    
+
     private Coord<File, FileConfiguration> configsFile(String name) {
         File configFile = new File(this.getDataFolder(), name);
         Coord<File, FileConfiguration> coord = AzureAPI.<File, FileConfiguration>wrapCoord(configFile, AzureAPI.loadOrCreateConfiguration(configFile));
         configurations.put(name, coord);
         return coord;
     }
-    
+
     public void setupConfigs() {
         String locale = "english";
-        if (StringUtils.startsWithIgnoreCase(Core.lang, "zh_")) locale = "中文";
+        if (StringUtils.startsWithIgnoreCase(Core.lang, "zh_")) {
+            locale = "中文";
+        }
         EscapeLag.plugin.saveResource("documents" + File.separator + "Guide-" + locale + ".txt", true);
-        
+
         // Core
         setupConfig(CONFIG_CORE, Core.class);
-        
+
         // Features
         setupConfig(CONFIG_FEATURES, Features.class);
-        
+
         // Patches
         setupConfig(CONFIG_PATCHES, Patches.class);
         setupConfig(CONFIG_PATCH_DUPE_FIXES, PatchesDupeFixes.class);
-        
+
         // Optimizations
         setupConfig(CONFIG_OPTIMIZES, Optimizes.class);
         setupConfig(CONFIG_OPTIMIZE_DUPE_FIXES, OptimizesChunk.class);
     }
-    
+
     public boolean setupConfig(String configIdentifier, Class<? extends Configurable> provider) {
         configurations.remove(configIdentifier);
         Coord<File, FileConfiguration> configCoord = configsFile(configIdentifier);
-        
+
         try {
             Configurable.restoreNodes(configCoord, provider);
         } catch (IllegalArgumentException | IllegalAccessException illegal) {
@@ -242,18 +249,20 @@ public class EscapeLag extends JavaPlugin {
             io.printStackTrace();
             return false;
         }
-        
+
         if (configIdentifier.equals(CONFIG_CORE)) {
             AzureAPI.setPrefix(Core.PluginPrefix + ChatColor.RESET + " > ");
             LocalizedHelper.init();
         }
         return true;
     }
-    
+
     @SneakyThrows
     public static void AutoSetServer(boolean force) {
-        if (!force && !Optimizes.AutoSetenable) return;
-        
+        if (!force && !Optimizes.AutoSetenable) {
+            return;
+        }
+
         long heapmb = Runtime.getRuntime().maxMemory() / 1024 / 1024;
         File BukkitFile = new File("bukkit.yml");
         if (BukkitFile.exists()) {
