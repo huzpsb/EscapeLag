@@ -475,10 +475,10 @@ public abstract class AzureAPI {
             file = createDirectories(file);
             file.createNewFile();
         } catch (IOException ex) {
-            AzureAPI.fatal(Locale.isNative() ?
-                    "无法创建文件 '" + file.getPath() + "', 已锁定?" :
-                    "Cannot create file '" + file.getPath() + "', blocked?"
-                    , EscapeLag.plugin);
+            AzureAPI.fatal(Locale.isNative()
+                    ? "无法创建文件 '" + file.getPath() + "', 已锁定?"
+                    : "Cannot create file '" + file.getPath() + "', blocked?",
+                     EscapeLag.plugin);
             ex.printStackTrace();
         }
         return YamlConfiguration.loadConfiguration(file);
@@ -527,7 +527,6 @@ public abstract class AzureAPI {
      * @param message
      * @return Whether restarted smoothly
      */
-
     /**
      * Try to restart server, false if not supports and stopping server if force
      *
@@ -536,11 +535,7 @@ public abstract class AzureAPI {
      */
     public static void restartServer(String message) {
         PlayerList.forEach(player -> player.kickPlayer(prefix(loggerPrefix, message)));
-        if (VersionLevel.isSpigot()) {
-            org.spigotmc.RestartCommand.restart();
-        }else{
-            Bukkit.shutdown();
-        }
+        Bukkit.shutdown();
     }
 
     /**
