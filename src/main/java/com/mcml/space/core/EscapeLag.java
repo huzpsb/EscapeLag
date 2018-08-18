@@ -128,6 +128,7 @@ public class EscapeLag extends JavaPlugin {
         AzureAPI.log("Uninstall modules..");
         HandlerList.unregisterAll(this);
         Bukkit.getScheduler().cancelTasks(this);
+        Ticker.close();
 
         TimerGarbageCollect.collectGarbage();
         AzureAPI.log("All modules have been cleared!");
@@ -137,7 +138,7 @@ public class EscapeLag extends JavaPlugin {
         AzureAPI.log("Setup modules..");
         // Reentrant binds
         // Core
-        Ticker.init(this);
+        Ticker.init();
         AutoUpgrade.init(this);
         PlayerList.init(this);
         UpgradeHelper.init(this);

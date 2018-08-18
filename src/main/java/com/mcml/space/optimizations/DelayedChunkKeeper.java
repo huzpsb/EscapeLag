@@ -6,8 +6,8 @@ import static com.mcml.space.config.OptimizesChunk.delayedChunkKeeper_maxUnloadC
 import com.mcml.space.core.EscapeLag;
 import com.mcml.space.core.Ticker;
 import com.mcml.space.util.AzureAPI;
-import com.mcml.space.util.Locale;
 import com.mcml.space.util.AzureAPI.ChunkCoord;
+import com.mcml.space.util.Locale;
 import static com.mcml.space.util.VersionLevel.isPaper;
 import java.util.Set;
 import java.util.concurrent.TimeUnit;
@@ -41,7 +41,7 @@ public class DelayedChunkKeeper implements Listener {
         ChunkCoord coord = AzureAPI.wrapCoord(chunk.getX(), chunk.getZ());
         
         if (delayedChunkKeeper_maxUnloadChunksPerTick <= 0) {
-            if (currentTick == Ticker.currentTick()) {
+            if (currentTick == Ticker.currentTick) {
                 if (++unloadedChunks > delayedChunkKeeper_maxUnloadChunksPerTick
                         && (isPaper() && !DEALYED_CHUNKS.contains(coord))) {
                     int skipTicks = OptimizesChunk.delayedChunkKeeper_postSkipTicks - 1;
@@ -53,7 +53,7 @@ public class DelayedChunkKeeper implements Listener {
                 }
             } else {
                 unloadedChunks = 1;
-                currentTick = Ticker.currentTick();
+                currentTick = Ticker.currentTick;
             }
         }
         

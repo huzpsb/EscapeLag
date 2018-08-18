@@ -1,8 +1,8 @@
 package com.mcml.space.command;
 
 import com.mcml.space.config.Core;
-import com.mcml.space.core.EscapeLag;
 import com.mcml.space.core.AutoUpgrade;
+import com.mcml.space.core.EscapeLag;
 import com.mcml.space.core.Ticker;
 import com.mcml.space.core.UpgradeHelper;
 import com.mcml.space.optimizations.DelayedChunkKeeper;
@@ -160,7 +160,7 @@ public class EscapeLagCommand {
                         }
                     }
                     if (args[1].equalsIgnoreCase("tps")) {
-                        sender.sendMessage("§e实时TPS: " + Ticker.getRealTimeTPS());
+                        sender.sendMessage("§e实时TPS: " + Ticker.TPS);
                     }
                 }
                 if (args[0].equalsIgnoreCase("reload")) {
