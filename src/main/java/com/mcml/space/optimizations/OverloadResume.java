@@ -22,7 +22,6 @@ public class OverloadResume implements Runnable {
         if (Optimizes.OverLoadMemoryRestartenable && isMemoryOverload()) {
             AzureAPI.bc(Optimizes.OverLoadMemoryRestartWarnMessage);
             Bukkit.getServer().getScheduler().runTaskLater(EscapeLag.plugin, () -> {
-                TimerGarbageCollect.collectGarbage();
                 AzureAPI.restartServer(Optimizes.OverLoadMemoryRestartKickMessage);
             }, Optimizes.OverLoadMemoryRestartDelayTime * 20);
         }

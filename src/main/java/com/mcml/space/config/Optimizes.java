@@ -2,7 +2,6 @@ package com.mcml.space.config;
 
 import com.mcml.space.util.Configurable;
 import com.mcml.space.util.Locale;
-
 import java.util.Set;
 
 public abstract class Optimizes extends Configurable {
@@ -58,17 +57,8 @@ public abstract class Optimizes extends Configurable {
     @Node("FireLimitor.Period")
     public static long FireLimitorPeriod = 3000L;
 
-    @Node("TimerGc.enable")
-    public static boolean timerGC = false;
-
     @Node("TeleportPreLoader.enable")
     public static boolean TeleportPreLoaderenable = false;
-
-    @Node("TimerGc.Message")
-    public static String TimerGcMessage = Locale.isNative() ? "§e服务器清理内存中... ԅ(¯ㅂ¯ԅ)" : "§eCollecting server garbage... ԅ(¯ㅂ¯ԅ)";
-
-    @Node("TimerGc.Period")
-    public static long TimerGcPeriod = 600;
 
     @Node("UnloadClear.DROPPED_ITEM.NoCleatDeath")
     public static boolean UnloadClearDROPPED_ITEMNoCleatDeath = true;

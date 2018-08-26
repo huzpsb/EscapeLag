@@ -24,7 +24,6 @@ import com.mcml.space.optimizations.OverloadResume;
 import com.mcml.space.optimizations.RedstoneSlacker;
 import com.mcml.space.optimizations.TeleportPreLoader;
 import com.mcml.space.optimizations.TickSleep;
-import com.mcml.space.optimizations.TimerGarbageCollect;
 import com.mcml.space.optimizations.UnloadClear;
 import com.mcml.space.optimizations.WaterFlowLimitor;
 import com.mcml.space.patches.AntiBedExplode;
@@ -112,8 +111,6 @@ public class EscapeLag extends JavaPlugin {
         AzureAPI.log("|||" + devs.get(0) + "/EscapeLag 合作作品.|||");
         AzureAPI.log("|||" + AzureAPI.concatsBetween(devs, 1, ", ") + " 合作开发.|||");
         AzureAPI.log("§a您正在使用EscapeLag构建号 " + Core.internalVersion);
-
-        TimerGarbageCollect.collectGarbage();
     }
 
     @Override
@@ -130,7 +127,6 @@ public class EscapeLag extends JavaPlugin {
         Bukkit.getScheduler().cancelTasks(this);
         Ticker.close();
 
-        TimerGarbageCollect.collectGarbage();
         AzureAPI.log("All modules have been cleared!");
     }
 
@@ -178,7 +174,6 @@ public class EscapeLag extends JavaPlugin {
         FireSpreadSlacker.init(this);
         RedstoneSlacker.init(this);
         DelayedChunkKeeper.init(this);
-        TimerGarbageCollect.init(this);
         NoStyxChunks.init(this);
 
         Bukkit.getPluginManager().registerEvents(new UnloadClear(), this);
