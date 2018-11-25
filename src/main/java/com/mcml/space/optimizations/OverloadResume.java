@@ -29,6 +29,6 @@ public class OverloadResume implements Runnable {
 
     public static boolean isMemoryOverload() {
         Runtime run = Runtime.getRuntime();
-        return run.maxMemory() - run.totalMemory() + run.freeMemory() < Optimizes.OverLoadMemoryRestartHeapMBLefted;
+        return (run.maxMemory() - run.totalMemory() + run.freeMemory()) / 1024 / 1024 < Optimizes.OverLoadMemoryRestartHeapMBLefted;
     }
 }
