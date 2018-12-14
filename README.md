@@ -14,9 +14,7 @@ _一个优化和修复集合，也提供其他实用功能。_
 * Java 8 (or above)
 
 ##Open Source Here!
-<a href="http://www.wtfpl.net/"> <img
-       SRC = “http://www.wtfpl.net/wp-content/uploads/2012/12/wtfpl-badge-4.png”
-       width =“80”height =“15”alt =“WTFPL”/> </a>
+[![WTFPL](http://www.wtfpl.net/wp-content/uploads/2012/12/wtfpl-badge-4.png)]
        
 WTFPL开源！
 这意味着什么呢？
