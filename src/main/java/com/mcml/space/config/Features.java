@@ -2,7 +2,6 @@ package com.mcml.space.config;
 
 import com.mcml.space.util.Configurable;
 import com.mcml.space.util.Locale;
-
 import java.util.Map;
 import java.util.Set;
 
@@ -11,8 +10,8 @@ public abstract class Features extends Configurable {
     @Node("Monitor.enable")
     public static volatile boolean Monitorenable = true;
 
-    @Node("Monitor.ThreadLagWarning.enable")
-    public static volatile boolean MonitorThreadLagWarning = true;
+    @Node("Monitor.ThreadLag.Warning.enable")
+    public static volatile boolean MonitorThreadLagWarning = false;
     
     @Node("Monitor.ThreadLag.Period")
     public static long MonitorThreadLagPeriod = 2000L;

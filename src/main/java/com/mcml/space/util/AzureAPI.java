@@ -6,8 +6,9 @@ import com.mcml.space.core.PlayerList;
 import java.io.File;
 import static java.io.File.separator;
 import java.io.IOException;
-import java.lang.management.MonitorInfo;
 import java.lang.management.ThreadInfo;
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
 import java.util.List;
 import java.util.Set;
 import java.util.concurrent.TimeUnit;
@@ -27,6 +28,7 @@ import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.entity.Player;
 import org.bukkit.permissions.Permission;
 import org.bukkit.plugin.java.JavaPlugin;
+import org.spigotmc.WatchdogThread;
 
 /**
  * @author SotrForgotten, Vlvxingze
@@ -478,7 +480,7 @@ public abstract class AzureAPI {
             AzureAPI.fatal(Locale.isNative()
                     ? "无法创建文件 '" + file.getPath() + "', 已锁定?"
                     : "Cannot create file '" + file.getPath() + "', blocked?",
-                     EscapeLag.plugin);
+                    EscapeLag.plugin);
             ex.printStackTrace();
         }
         return YamlConfiguration.loadConfiguration(file);
@@ -680,27 +682,16 @@ public abstract class AzureAPI {
     }
 
     /*
-     * The following codes are from Spigot and released under GNU General Public License version 3 license.
-     * Related contributor(s): Michael (md_5)
-     * 
-     * The license document of GNU General Public License version 3 is provided here:
-     * https://www.gnu.org/licenses/gpl-3.0.html
+     * 为了开源，直接日WatchDog
      */
     public static void dumpThread(ThreadInfo thread, Logger logger) {
-        logger.log(Level.SEVERE, "------------------------------");
-        //
-        logger.log(Level.SEVERE, Locale.isNative() ? "当前线程: " : "Current Thread: " + thread.getThreadName());
-        logger.log(Level.SEVERE, "\tPID: " + thread.getThreadId() + " | Suspended: " + thread.isSuspended() + " | Native: " + thread.isInNative() + " | State: " + thread.getThreadState());
-        if (thread.getLockedMonitors().length != 0) {
-            logger.log(Level.SEVERE, "\tThread is waiting on monitor(s):");
-            for (MonitorInfo monitor : thread.getLockedMonitors()) {
-                logger.log(Level.SEVERE, "\t\tLocked on:" + monitor.getLockedStackFrame());
-            }
-        }
-        logger.log(Level.SEVERE, "\tStack:");
-        //
-        for (StackTraceElement stack : thread.getStackTrace()) {
-            logger.log(Level.SEVERE, "\t\t" + stack);
+        try {
+            Class<WatchdogThread> wdt = WatchdogThread.class;
+            Method dumpthreadmd = wdt.getMethod("dumpThread", ThreadInfo.class, Logger.class);
+            dumpthreadmd.setAccessible(true);
+            dumpthreadmd.invoke(null, thread, logger);
+        } catch (NoSuchMethodException | SecurityException | IllegalAccessException | IllegalArgumentException | InvocationTargetException ex) {
+            Logger.getLogger(AzureAPI.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 }

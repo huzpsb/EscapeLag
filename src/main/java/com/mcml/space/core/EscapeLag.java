@@ -28,7 +28,7 @@ import com.mcml.space.optimizations.UnloadClear;
 import com.mcml.space.optimizations.WaterFlowLimitor;
 import com.mcml.space.patches.AntiBedExplode;
 import com.mcml.space.patches.AntiCrashSign;
-import com.mcml.space.patches.AntiDupeDropItem;
+import com.mcml.space.patches.AntiDeadDrop;
 import com.mcml.space.patches.AntiLongStringCrash;
 import com.mcml.space.patches.AutoRecipePatch;
 import com.mcml.space.patches.BonemealDupePatch;
@@ -152,7 +152,7 @@ public class EscapeLag extends JavaPlugin {
         NegativeItemPatch.init(this);
         RailsMachine.init(this);
         DupeLoginPatch.init(this);
-        AntiDupeDropItem.init(this);
+        AntiDeadDrop.init();
         BonemealDupePatch.init(this);
         CheatBookBlocker.init(this);
         CalculationAbusePatch.init(this);
