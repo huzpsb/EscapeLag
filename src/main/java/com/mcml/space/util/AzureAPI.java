@@ -685,13 +685,15 @@ public abstract class AzureAPI {
      * 为了开源，直接日WatchDog
      */
     public static void dumpThread(ThreadInfo thread, Logger logger) {
-        try {
-            Class<WatchdogThread> wdt = WatchdogThread.class;
-            Method dumpthreadmd = wdt.getMethod("dumpThread", ThreadInfo.class, Logger.class);
-            dumpthreadmd.setAccessible(true);
-            dumpthreadmd.invoke(null, thread, logger);
-        } catch (NoSuchMethodException | SecurityException | IllegalAccessException | IllegalArgumentException | InvocationTargetException ex) {
-            Logger.getLogger(AzureAPI.class.getName()).log(Level.SEVERE, null, ex);
+        if (VersionLevel.isSpigot()) {
+            try {
+                Class<WatchdogThread> wdt = WatchdogThread.class;
+                Method dumpthreadmd = wdt.getDeclaredMethod("dumpThread", ThreadInfo.class, Logger.class);
+                dumpthreadmd.setAccessible(true);
+                dumpthreadmd.invoke(null, thread, logger);
+            } catch (NoSuchMethodException | SecurityException | IllegalAccessException | IllegalArgumentException | InvocationTargetException ex) {
+                Logger.getLogger(AzureAPI.class.getName()).log(Level.SEVERE, null, ex);
+            }
         }
     }
 }

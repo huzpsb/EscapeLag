@@ -1,11 +1,10 @@
 package com.mcml.space.config;
 
-import org.bukkit.Bukkit;
-
 import com.mcml.space.util.Configurable;
 import com.mcml.space.util.Locale;
 import com.mcml.space.util.VersionLevel;
 import com.mcml.space.util.VersionLevel.Version;
+import org.bukkit.Bukkit;
 
 public abstract class Patches extends Configurable {
 	@Node("AntiWEcalc.WarnMessage")
@@ -13,6 +12,12 @@ public abstract class Patches extends Configurable {
 
     @Node("AntiLongStringCrash.enable")
     public static boolean AntiLongStringCrashenable = true;
+    
+    @Node("AntiCrashOP.enable")
+    public static boolean AntiCrashOPenable = true;
+    
+    @Node("AntiCrashOP.WarnMessage")
+    public static String AntiCrashOPWarnMessage = "§c你貌似卡OP了,已将OP去除!";
 
     @Node("AntiLongStringCrash.WarnMessage")
     public static String AntiLongStringCrashWarnMessage = Locale.isNative() ? "§c警告！严禁利用长字符串来导致服务器崩溃！" : "§cSorry but abuse long string to trigger a crash is forbidden!";

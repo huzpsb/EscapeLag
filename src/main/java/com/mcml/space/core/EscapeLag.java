@@ -27,8 +27,10 @@ import com.mcml.space.optimizations.TickSleep;
 import com.mcml.space.optimizations.UnloadClear;
 import com.mcml.space.optimizations.WaterFlowLimitor;
 import com.mcml.space.patches.AntiBedExplode;
+import com.mcml.space.patches.AntiCrashOP;
 import com.mcml.space.patches.AntiCrashSign;
 import com.mcml.space.patches.AntiDeadDrop;
+import com.mcml.space.patches.AntiDestoryUsingChest;
 import com.mcml.space.patches.AntiLongStringCrash;
 import com.mcml.space.patches.AutoRecipePatch;
 import com.mcml.space.patches.BonemealDupePatch;
@@ -67,17 +69,17 @@ public class EscapeLag extends JavaPlugin {
     public static EscapeLag plugin;
 
     // Core
-    public final static String CONFIG_CORE = "PluginMainConfig.yml";
+    public final static String CONFIG_CORE = "CoreConfig.yml";
 
     // Features
-    public final static String CONFIG_FEATURES = "DoEventConfig.yml";
+    public final static String CONFIG_FEATURES = "FeaturesConfig.yml";
 
     // Pathches
-    public final static String CONFIG_PATCHES = "AntiBugConfig.yml";
+    public final static String CONFIG_PATCHES = "BugPatchesConfig.yml";
     public final static String CONFIG_PATCH_DUPE_FIXES = "patches/dupe_fixes.yml"; // The separator will be automatically fixed
 
     // Optimizations
-    public final static String CONFIG_OPTIMIZES = "ClearLagConfig.yml";
+    public final static String CONFIG_OPTIMIZES = "OptimizeConfig.yml";
     public final static String CONFIG_OPTIMIZE_DUPE_FIXES = "optimizes/chunks.yml";
 
     public final static Map<String, Coord<File, FileConfiguration>> configurations = Maps.newHashMap(); // File name as key
@@ -90,6 +92,7 @@ public class EscapeLag extends JavaPlugin {
 
         setupConfigs();
         Locale.checkLang(Core.lang);
+        DataManager.init();
 
         // Non-task only once binds
         Perms.bind(GLOBAL_PERMS);
@@ -116,7 +119,8 @@ public class EscapeLag extends JavaPlugin {
     @Override
     public void onDisable() {
         clearModules(); // Not every disable is server stopping
-
+        AntiCrashOP.save();
+        DataManager.save();
         AzureAPI.log("Plugin has been disabled.");
         AzureAPI.log("Thanks for using!");
     }
@@ -158,6 +162,8 @@ public class EscapeLag extends JavaPlugin {
         CalculationAbusePatch.init(this);
         ZeroHealthPatch.init(this);
         ValidateActions.init(this);
+        AntiDestoryUsingChest.init();
+        AntiCrashOP.init();
 
         Bukkit.getPluginManager().registerEvents(new AntiCrashSign(), this);
         Bukkit.getPluginManager().registerEvents(new CancelledPlacementPatch(), this);
@@ -195,10 +201,7 @@ public class EscapeLag extends JavaPlugin {
 
     @Override
     public boolean onCommand(CommandSender sender, Command cmd, String label, String[] args) {
-        if (label.equalsIgnoreCase("EL")) {
-            return EscapeLagCommand.processCommand(sender, cmd, label, args);
-        }
-        return false;
+        return EscapeLagCommand.processCommand(sender, cmd, label, args);
     }
 
     private Coord<File, FileConfiguration> configsFile(String name) {

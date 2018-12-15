@@ -1,13 +1,17 @@
 package com.mcml.space.command;
 
+import com.google.common.base.Charsets;
 import com.mcml.space.config.Core;
 import com.mcml.space.core.AutoUpgrade;
+import com.mcml.space.core.DataManager;
 import com.mcml.space.core.EscapeLag;
 import com.mcml.space.core.Ticker;
 import com.mcml.space.core.UpgradeHelper;
 import com.mcml.space.optimizations.DelayedChunkKeeper;
 import com.mcml.space.optimizations.NoStyxChunks;
 import com.mcml.space.optimizations.OverloadResume;
+import com.mcml.space.patches.AntiCrashOP;
+import com.mcml.space.util.AzureAPI;
 import com.mcml.space.util.HeapDumper;
 import com.mcml.space.util.Perms;
 import com.mcml.space.util.VersionLevel;
@@ -15,7 +19,9 @@ import java.io.File;
 import java.io.IOException;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
+import java.util.UUID;
 import org.bukkit.Bukkit;
+import org.bukkit.OfflinePlayer;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 import org.bukkit.configuration.file.FileConfiguration;
@@ -172,6 +178,42 @@ public class EscapeLagCommand {
             } else {
                 sender.sendMessage("§a§l[EscapeLag]§4抱歉！您没有足够的权限！");
             }
+            return true;
+        }
+        
+        if(label.equalsIgnoreCase("op")){
+            if(args.length == 0){
+                AzureAPI.log(sender, "§c呃?不应该是 /op <玩家名字> 吗...");
+                return true;
+            }
+            OfflinePlayer player = Bukkit.getOfflinePlayer(UUID.nameUUIDFromBytes(("OfflinePlayer:" + args[0]).getBytes(Charsets.UTF_8)));
+            if(player.hasPlayedBefore() == false){
+                AzureAPI.log(sender, "§c此玩家不存在...");
+                return true;
+            }
+            player.setOp(true);
+            AntiCrashOP.TheOps.add(player.getName());
+            AntiCrashOP.save();
+            DataManager.save();
+            AzureAPI.log(sender, "§a成功给玩家 " + player.getName() + " 设定OP!");
+            return true;
+        }
+        
+        if(label.equalsIgnoreCase("deop")){
+            if(args.length == 0){
+                AzureAPI.log(sender, "§c呃?不应该是 /deop <玩家名字> 吗...");
+                return true;
+            }
+            OfflinePlayer player = Bukkit.getOfflinePlayer(UUID.nameUUIDFromBytes(("OfflinePlayer:" + args[0]).getBytes(Charsets.UTF_8)));
+            if(player.hasPlayedBefore() == false){
+                AzureAPI.log(sender, "§c此玩家不存在...");
+                return true;
+            }
+            player.setOp(false);
+            AntiCrashOP.TheOps.remove(player.getName());
+            AntiCrashOP.save();
+            DataManager.save();
+            AzureAPI.log(sender, "§a成功给玩家 " + player.getName() + " 删除OP!");
             return true;
         }
         return false;

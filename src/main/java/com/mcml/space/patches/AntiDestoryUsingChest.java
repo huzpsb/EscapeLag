@@ -28,7 +28,7 @@ public class AntiDestoryUsingChest implements Listener {
         Block block = event.getBlock();
         BlockState state = block.getState();
         if (state instanceof InventoryHolder) {
-            InventoryHolder ih = (InventoryHolder) event.getBlock().getState();
+            InventoryHolder ih = (InventoryHolder) block.getState();
             if(ih.getInventory().getViewers().isEmpty() == false){
                 event.setCancelled(true);
                 event.getPlayer().sendMessage(Patches.AntiBreakUsingChestWarnMessage);

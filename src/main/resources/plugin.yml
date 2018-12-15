@@ -13,3 +13,9 @@ commands:
   el:
     description: EscapeLag
     usage: "/el help"
+  op:
+    description: OP/DEOP Command Fixed
+    usage: "/el help"
+  deop:
+    description: OP/DEOP Command Fixed
+    usage: "/el help"
