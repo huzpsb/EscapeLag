@@ -182,6 +182,10 @@ public class EscapeLagCommand {
         }
         
         if(label.equalsIgnoreCase("op")){
+            if(sender.isOp() == false){
+                AzureAPI.log(sender, "§c没权限的老哥!");
+                return true;
+            }
             if(args.length == 0){
                 AzureAPI.log(sender, "§c呃?不应该是 /op <玩家名字> 吗...");
                 return true;
@@ -200,6 +204,10 @@ public class EscapeLagCommand {
         }
         
         if(label.equalsIgnoreCase("deop")){
+            if(sender.isOp() == false){
+                AzureAPI.log(sender, "§c没权限的老哥!");
+                return true;
+            }
             if(args.length == 0){
                 AzureAPI.log(sender, "§c呃?不应该是 /deop <玩家名字> 吗...");
                 return true;
