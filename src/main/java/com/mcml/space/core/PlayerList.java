@@ -3,12 +3,10 @@ package com.mcml.space.core;
 import com.google.common.collect.Lists;
 import com.mcml.space.util.AzureAPI;
 import com.mcml.space.util.Locale;
-
-import io.akarin.collect.set.player.PlayerSets;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 import java.util.function.Consumer;
-
 import org.bukkit.Bukkit;
 import org.bukkit.World;
 import org.bukkit.entity.Player;
@@ -23,7 +21,7 @@ import org.bukkit.plugin.Plugin;
  * @author Vlvxingze, SotrForgotten
  */
 public class PlayerList implements Listener {
-    private final static Set<Player> PLAYERS = PlayerSets.newUsernameInsensitiveBitSet();
+    private final static Set<Player> PLAYERS = new HashSet();
     
     private final static List<PlayerJoinReactor> JOIN_REACTORS = Lists.newArrayList();
     private final static List<PlayerQuitReactor> QUIT_REACTORS = Lists.newArrayList();
@@ -66,12 +64,17 @@ public class PlayerList implements Listener {
     }
     
     public static boolean contains(Player player) {
+        Bukkit.broadcastMessage("列表内" + PLAYERS);
         return PLAYERS.contains(player);
     }
     
-    @SuppressWarnings("unlikely-arg-type")
-    public static boolean contains(String username) {
-        return PLAYERS.contains(username.toLowerCase(java.util.Locale.ROOT)); // our library support this
+    public static boolean contains(String pn) {
+        for(Player player:PLAYERS){
+            if(player.getName().equals(pn)){
+                return true;
+            }
+        }
+        return false;
     }
     
     public static boolean isEmpty() {
