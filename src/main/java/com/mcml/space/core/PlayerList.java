@@ -64,7 +64,6 @@ public class PlayerList implements Listener {
     }
     
     public static boolean contains(Player player) {
-        Bukkit.broadcastMessage("列表内" + PLAYERS);
         return PLAYERS.contains(player);
     }
     
