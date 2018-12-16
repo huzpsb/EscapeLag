@@ -1,196 +1,185 @@
-Use of instructions:
-The option to select language is provided in the configuration file, but if you modify it to English, you just modify the plug-in command to English.
-The prompt information that can be adjusted in the configuration file is still in Chinese.
-You can refer to this manual to manually change all the hints to English.
-
 Welcome to the configuration guide!
-Thank you for using the EscapeLag plug-in.
-The plug-in is a technically-optimized plug-in that integrates optimization, fixing bugs, restricting actions, and high algorithmic efficiency.
+First of all, thank you for using the EscapeLag plugin.
+The plugin is a technically optimized plug-in that integrates optimization, fixes vulnerabilities, limits actions, and is highly efficient.
 
-Check this guide to configure your Config.yml file correctly.
-If you have questions or bug feedback during configuration or use, please contact QQ 1207223090 for help.
+Check out this guide to configure your Config.yml file correctly.
+If you have questions or bug feedback during configuration or use, please contact QQ 1207223090 for assistance.
 
-It should be noted that the first time the plugin is put into the server, it may restart your server once.
-This is not a plug-in that causes the server to crash. Instead, the plug-in restarts to apply the saved value of the plug-in.
+It should be noted that this plugin may be restarted once for the first time in the server.
+This is not a plugin that causes the server to crash, but rather a value that the plugin restarts to apply the plugin to save.
 
 I wish you a happy time~
 
 1. Prepare the server
-This plug-in is different from other plug-ins, this plug-in will automatically match the server code to generate the configuration.
-Don't worry about garbled issues, your editors also follow the rules for configuring encoding.
-In order to achieve automatic restart of the server, set up an automatic restart script for your server.
-If your server is a web page panel manipulation server, there is no need to worry about this.
-If your server is a VPS, add a self-restart script to the startup server script.
-If you don't add a self-restart script, please refer to the post: XXXXXXXXXX
-Tip: If you have entered "" or '' (blank but need to keep quotation marks) in your message, then you have closed this message.
+This plugin is different from other plugins, which will automatically match the server code to generate the configuration.
+Don't worry about garbled issues, your editors should follow the configuration coding rules.
+In order to auto-restart the server, set up an automatic restart script for your own server.
+If your server is a web panel manipulation server, don't worry about this.
+If your server is a VPS, add a self-restart script to the server-side script.
+If you don't include a self-starting script, please refer to the post: http://www.relatev.com/forum.php?mod=viewthread&tid=128
+Tip: If your prompt information option has "" or '' (left blank but needs to keep quotes), it means you have turned off this prompt.
 
-2.PluginMainConfig - the main work for the plug-in
-PluginPrefix: '&3EscapeLag' # plug-in display prefix
-AutoUpdate: false # whether to enable automatic update, recommended open
-Internal-version: build-308 #plugin working version
-Language: en the language setting for the # plugin, currently supported: en zh_cn Chinese, en_GB English
+2.CoreConfig - the core configuration for the plugin
+PluginPrefix: '&3EscapeLag' #Prefix for plugin display
+AutoUpdate: true # Whether to enable automatic update, recommended to open, can automatically update when there is a BUG
+Internal-version: build-308 #Working version of the plugin, do not modify
+Language: zh_cn #plugin language settings, currently supported: zh_cn中文,en_GB English
 
-3.ClearLagConfig - Optimized module configuration for the plugin
-EntityClear: # Entity Timer Cleaning System
-  Enable: true # whether to enable
-  CheckInterval: 600 # check interval, second
-  LimitCount: 1200 # Clean up if the entity exceeds this amount
-  ClearEntityType: #cleaned entity type. If you write * in it, then no matter what type of entity is cleaned up.
-  - ZOMBIE
-  - SKELETON
-  - SPIDER
+3.OptimizeConfig - configure the optimization module for the plugin
+TPSSleep: #sleep reduction system
+  NoOneFreeze: #Do you sleep when the server is offline?
+    Enable: true
+  SleepMode: NoUse #TPS limit (just like the frame limit), write "NoUse" or number, if writing a number, means limiting the maximum TPS
+EntityClear: #Clean up the entity
+  Enable: true # Whether to enable
+  CheckInterval: 600 #Check every time
+  LimitCount: 1200 #When checking, if the number of entities exceeds this number, it starts to clean up.
+  ClearEntityType: #List of entities being cleaned up
   - CREEPER
-  - SHEEP
-  - PIG
+  - ZOMBIE
   - CHICKEN
-  ClearMessage: §a successfully cleared too many entities~~(@^_^@)~ #tips for cleanup
-NooneRestart: # Nobody restarts the system
+  - SHEEP
+  - SPIDER
+  - SKELETON
+  - PIG
+  ClearMessage: §a successfully cleared too many entities ~~(@^_^@)~ #Retained information after successful cleaning
+NooneRestart: # Whether to restart when the server is not online, release the memory
   Enable: true
-  TimeLong: 1200 # duration no one restarts
-OverLoadMemoryRestart: # memory overflow to restart the system, has a significant effect on the lack of memory and server back to the server
+  TimeLong: 1200 #How long does it take to restart online?
+OverLoadMemoryRestart: # Whether to restart when the server memory is about to overflow
   Enable: true
-  HeapMBLefted: 130 # How much memory left (MB),it will restart server.
-  KickMessage: Sorry! Due to server memory overload, need to restart the server! # When the player needs to be requested from the server due to restart
-  WarnMessage: The server will restart after 15 seconds. Please do not play the game and wait patiently! ╮(╯_╰)╭ #Warning restart information
-  DelayTime: 15 How long to restart after # prompt
-ChunkUnloader: #Block Cleaning System
-  Interval: 30 # interval, second
+  HeapMBLefted: 130 # Restart when there is still enough memory left
+  KickMessage: Sorry! Due to server memory overload, you need to restart the server! #玩家 is prompted to restart information
+  WarnMessage: The server will restart after 15 seconds, please don't play the game, wait patiently! ╮(╯_╰)╭ # Announcement information sent for a period of time before restarting
+  DelayTime: 15 # How long does it take to restart after the announcement?
+WaterFlowLimitor: #水流限
   Enable: true
-WaterFlowLimitor: # whether to limit the water flow, this is not to limit the height, but a better algorithm
+  PerChunkTimes: 2 #Number of blocks allowed
+AntiRedstone: #反高频红石
   Enable: true
-  PerChunkTimes: 2 # How much water flow is allowed in each block at the same time
-AntiRedstone: #defense high frequency redstone
-  Enable: true
-  Times: How many redstones were cleaned in 5 #7 seconds
-  Message: §c detected high frequency redstone at %location% , the plugin has cleared it and is not allowed to play! (╰_╯)#
-  RemoveBlockList: # type to be cleaned, if you need to add other blocks, such as comparators, write names
+  Drop-item: true # Whether to drop the item after cleaning the high-frequency red stone
+  Times: 5 # Allow several redstones to go out/light up every 7 seconds?
+  Message: §c detected high frequency redstone near %location%, the plugin has cleared it, not allowed to play! (╰_╯)# #When the player is found to use high frequency redstone
+  RemoveBlockList: #When clearing high frequency redstone, which squares will be cleaned up?
   - REDSTONE_WIRE
-  - DIODE_BLOCK_ON
-  - DIODE_BLOCK_OFF
   - REDSTONE_TORCH_ON
-  - REDSTONE_TORCH_OFF
   - REDSTONE_BLOCK
-FireLimitor: # Fire Spread Limit
+  - DIODE_BLOCK_ON
+  - REDSTONE_TORCH_OFF
+  - DIODE_BLOCK_OFF
+FireLimitor: #火焰限制, every time a flame spread is allowed
   Enable: true
-  Period: 3000 # interval of the same block
-TimerGc: # Regular GC forcibly clears the memory. It is not recommended to turn it on. It may result in a transient card.
+  Period: 3000 #(ms)
+TeleportPreLoader: #Transfer preload (black technology): Multi-TICK load block before the player transmits, effectively reducing the jam caused by the transfer load, but other problems
   Enable: false
-  Message: §e server cleans memory... ԅ( ̄ᄇ ̄ԅ)
-  Period: 600
-TeleportPreLoader: #Transfer preload! It can greatly improve the server's transmission performance. If your server often sends the card, it must be turned on, but there may be unpredicted incompatibility with other plug-ins.
-  Enable: false
-ClearItem: # sweeping aunt, better algorithm
-  NoCleatDeath: true #Don't clean up dead items
-  NoClearTeleport: false # Do not clear delivery items
+UnloadClear: #Do you sweep the floor when the block is unloaded?
+  DROPPED_ITEM:
+    Enable: true #Do you want to clean up the falling objects?
+    NoCleatDeath: true #Does the player's death drop not be cleaned up?
+    NoClearTeleport: false #Items dropped by the player are not cleaned up?
   Enable: true
-NoCrowdedEntity: #Dense entity limit. If you write * in it, then no matter what type of entity is cleaned up.
-  Enable: true
-  TypeList:
-  - ZOMBIE
-  - SKELETON
-  - SPIDER
+  Type: #Other types to be cleaned up
   - CREEPER
-  - SHEEP
-  - PIG
+  - ZOMBIE
+  - SPIDER
+  - SKELETON
+NoCrowdedEntity: #Do you want to prohibit dense entities?
+  Enable: true
+  TypeList: #List of entities to be recognized
+  - CREEPER
+  - ZOMBIE
   - CHICKEN
-  PerChunkLimit: 30 # How many entities per block are allowed
-AutoSave: #Automatically save the optimized version
-  Interval: 15 # how many seconds to save once, this automatic save system is extremely low in performance consumption, no need to worry about card service
+  - SHEEP
+  - SPIDER
+  - SKELETON
+  - PIG
+  PerChunkLimit: 30 #How many entities are allowed per block? The excess will be removed
+AutoSave: # Whether to use a better automatic save algorithm
+  Interval: 15 #Save every few seconds
+  Enable: true # Whether to start automatic save
+AutoSet: #Do you automatically configure the server to optimize performance?
   Enable: true
-AutoSet: #Automatically, this will modify your Spigot.yml, bukkit.yml, paper.yml files. If you don't want the plugin to lock these files, close it.
-  Enable: true
-ChunkKeeper: #Block Holder, Significant Help for Server Block Optimization
-  Enable: true
-NoSpawnChunks: #Cancel birth block, reduce memory usage
-  Enable: true
-TPSSleep: #TPS pause
-  NoOneFreeze: # Whether to let the server sleep to reduce power consumption when the server is not available
-    Enable: true
-  SleepMode: AutoSleep #AutoSleep: Smoothing, NoUse: Do not turn this feature on, fill in numbers: Forces sleep to specify milliseconds
 
-4.AntiBugConfig - to repair the vulnerability (including MC vulnerabilities and some plug-in vulnerabilities) configuration file \
-AntiCrashChat:
-  Enable: true # whether to defend against the collapse of the code
-  SpecialStringWarnMessage: §c Strictly forbid to use the crash code! # Tips when player is intercepted
-  ColorChatWarnMessage: §c Sorry! In order to prevent the server from being damaged, the server prohibits the use of color code. # When the player is prohibited to use the ESS color characters prompt message
-AntiBoneBug:
-  Enable: true # whether to prevent BUG sapling BUG (top off brand / bonewashing items)
-  WarnMessage: §c forcing the sapling to ripen BUG! #tip message when player is blocked
-AntiFakeDeath:
-  KickMessage: §c Strictly forbids card suspended animation! # When the player is kicked out of the game
-  Enable: true # whether to enable anti-dead death
-AntiInfItem: #anti-count items
-  Enable: true # whether to prohibit the generation and use of negative items
-AntiPortalInfItem: # Hell Gate Transfer Brush Item
-  Enable: true # whether to forbid minecars to pass Hell Gate
-AntiNetherHopperInfItem: # Hell Hole Swipe Item
-  Enable: true # whether to prohibit the operation of the funnel in hell
-AntiRPGITEM: #RPGITEM Brush Item BUG
-  Enable: true # If your server has RPGITEM installed, please enable this setting
-AntiCrashSign: #breaking wooden sign
-  Enable: true # whether to fight against wooden signs BUG
-AntiSkullCrash: #breaking skull
-  Enable: true # whether to forbid the piston or other make the skull move
-NoDoubleOnline: #size login repair
-  Enable: true # whether to forbid the same case of the same ID to login to the game
-  KickMessage: "Sorry, you are online on the server." (ԅ ̄ԅ ̄ԅ)"
-AntiDupeDropItem: #Fake brush item
-  Enable: true # whether to prevent false death brush items
-AntiDoorInfItem: # Sugar cane door BUG
-  Enable: true # whether to defend the cane door brush sugarcane, cactus BUG
-AntiCheatBook: # Anti-Book & Pen Bug
-  Enable: true #Defend the book and pen BUG
-  WarnMessage: "§c prohibits the use of Superbook Bug!"
-AntiBedExplode: #Prevents the destruction of the territories caused by the bed in hell and the explosion
-  Enable: true # whether to forbid the bed in hell, end interaction
-AntiBreakUseingChest: # Entity card into a virtual BUG
-  Enable: true # whether to prevent the player from destroying a container that is being used
-AntiInfRail: # Infinite Rail BUG
-  Enable: true # whether to defend against infinite rail BUG
-
-5.DoEventConfig.yml - to limit the action module configuration
-Monitor: # Plug-in performance statistics system, start on the server has a certain performance consumption, unless you want to start checking which plug-in eat your performance, otherwise do not open
-  Enable: false # This parameter is not completely off, but refers to whether the statistics are executed immediately after the server is started. You can use the /el monitor enable to open the statistics system at any time.
-  ThreadLagWarning: true # Remind when the thread is stuck
-  PluginLagWarning: #Warning when a plugin is stuck for a while
-    Enable: true
-    Period: 1000
-PluginErrorMessageBlocker: #masking plug-in error message
+4.BugPatchesConfig - vulnerability repair system (including MC vulnerability and some plug-in vulnerabilities)
+AntiWEcalc: #Do you want to disable WorldEdit's BUG
+  WarnMessage: §c prohibits the use of WE bugs! =.=
+AntiLongStringCrash: #Do you want to send long chat messages to the service?
   Enable: true
-  Message: # Enter the name of the plugin or some text in the error message. These brush errors will be blocked.
-  - ErrorPluginName
-  - ErrorPluginMessage
-PluginErrorMessageLogger: # Whether to record the wrong information, save it as txt
+  WarnMessage: §c warning! It is strictly forbidden to use long strings to cause the server to crash!
+AntiCrashOP: #Do you fix the crash server probability? Player OP's bug
+  Enable: true
+  WarnMessage: §c you look like a card OP, has removed the OP!
+AntiFakeDeath: #假死Bug Brush Item
+  KickMessage: §c prohibits card fake BUG!
+  Enable: true
+NoDoubleOnline: #Do you want to prohibit multiple online brush items?
+  Enable: true
+  KickMessage: Sorry, you are already online in the server. ԅ( ̄ᄇ ̄ԅ)
+AntiBedExplode: #Forbid the explosion of the bed, because this explosion can destroy the squares of the territory, etc.
+  Enable: true
+  TipMessage: §r you can't sleep here
+AntiBreakUseingChest: # Whether to defend the box drop brush items BUG
+  Enable: true
+  WarnMessage: §c Sorry! You can't destroy a container that is being used
+AntiCheatBook: #不防书与笔NBT Bug
+  Enable: true
+AntiCrashSign: #是防牌牌炸服
+  Enable: true
+  WarnMessage: §c The content you entered is too long!
+AntiDupeDropItem: # Whether to defend against throwing items and brush things
+  Enable: true
+Patches:
+  Vaildate-actions: #反隐隐Bug
+    Enable: true
+AntiSkullCrash: #Bury Skull Blast
+  Enable: true
+AntiCrashChat: #Do you want to defend against bugs in the collapse code?
+  Enable: true
+  SpecialStringWarnMessage: §c is strictly prohibited to use the collapse code to blow up!
+  ColorChatWarnMessage: §c Sorry! To prevent the server from being corrupted, the server prohibits the use of color codes. #EssentialsIn some versions, there are bugs that use color code to blow up.
+
+
+5.FeaturesConfig.yml - Functional Profile
+Monitor: #Thread Caton Detector
+  Enable: true # whether to enable
+  ThreadLag:
+    Warning:
+      Enable: false # Whether to warn in the background when the server is stuck
+    Period: 2000 #When the card is stuck for a long time, a warning message is issued.
+    DumpStack: false #Whether it is doing what the server is doing when it is stuck, it is very useful for diagnosis.
+AntiSpam: #反刷屏/Dirty words
+  Enable: false # Whether to start
+  Period: # frequent statement prohibited
+    Period: 1.5 #When the speaking frequency exceeds the number of seconds, it is forbidden.
+    Period-Command: 0.5 #When the command transmission frequency exceeds the number of seconds, it is forbidden.
+    WarnMessage: §c Please slow down, don't be excited! _(:з"∠)_ #Prohibited message
+  Dirty: #Do you want to swear?
+    Enable: false
+    List: #dirty list
+    - Garbage service*
+    - mad dog
+    - RM
+    White-list: #whitelist
+    - Family bucket
+    - Family portrait
+    WarnMessage: §c Anything exciting, you want to swear? #禁禁的话话提示信息
+NoEggChangeSpawner: #Do you want to ban monsters to modify the monster cage category?
+  Enable: true
+ProtectFarm: #Do you want to protect the cultivated land from being trampled?
+  Enable: true
+AutoRespawn: #Automatically resurrect the player when the player dies
   Enable: false
-AntiSpam: #Brush Screen
-  Enable: true
-  Period:
-    Period: 1.5
-    WarnMessage: §c Please speak slowly, don't be excited! _(:з"∠)_
-  Dirty: #Anti-Swearing
-    Enable: true
-    List:
-    - Mental retardation
-    - Silly
-    - Mother force
-    WarnMessage: §c What are you excited about?
-NoEggChangeSpawner: # Forbidden to use the brush
-  Enable: true
-  TipMessage: '&c sorry, forbid the use of brush strange eggs to modify the brush strange cage'
-ProtectFarm: # Protect farmland from being trampled
-  Enable: true
-AutoRespawn: #auto-resurrection system, not valid for some servers
-  Enable: true
-  RespawnTitle:
+  RespawnTitle: # Send a big headline to the player during the resurrection?
     Enable: false
     MainMessage: §e you are dead!
     MiniMessage: §c has been automatically revived for you!
-NoExplode: # limit explosion
+NoExplode: #Do you want to ban the explosion?
   Enable: true
-  Type: NoBlockBreak #NoUse - Invalid, NoExplode - Forbidden Explosion, NoBlockBreak - Explosion Does Not Break Blocks
+  Type: NoBlockBreak #NoExplode: No explosions are allowed NoBlockBreal: Can explode, but will not break the block NoUse: Do not deal with the explosion
 
-Thank you for your support for the EscapeLag plugin. This plugin was developed by Lele, IZ, and Sotr.
-You can always check out this plugin's post in Grandi:
+
+Thank you for your support of the EscapeLag plugin, which was developed by Lele, IZ, Sotr.
+You can check out the post of this plugin at any time in Granti:
 Https://www.relatev.com/forum.php?mod=viewthread&tid=19
 
 Have A Good Time! XD!

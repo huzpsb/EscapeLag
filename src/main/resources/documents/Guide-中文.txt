@@ -16,178 +16,170 @@
 为了给服务器实现自动重启，请给自己的服务器设立自动重启脚本。
 如果您的服务器是网页面板操控服务器，则无需担心这一点。
 如果您的服务器是VPS，则在启动服务端脚本中加入自重启脚本。
-如果您不会加入自重启脚本，请参考帖子：XXXXXXXXXX
+如果您不会加入自重启脚本，请参考帖子：http://www.relatev.com/forum.php?mod=viewthread&tid=128
 提示：如果你的提示信息选项输入了“”或 '' (留空但需要保持引号)，那么意味着你关闭了这个提示信息。
 
-2.PluginMainConfig —— 为插件的主要工作
+2.CoreConfig —— 为插件的核心配置
 PluginPrefix: '&3EscapeLag' #插件显示的前缀
-AutoUpdate: false #是否开启自动更新，推荐开启
-internal-version: build-308 #插件的工作版本
+AutoUpdate: true #是否开启自动更新，推荐开启，有BUG的时候可以自动更新
+internal-version: build-308 #插件的工作版本，不要修改
 language: zh_cn #插件的语言设定，目前支持: zh_cn中文,en_GB英文
 
-3.ClearLagConfig —— 为插件的优化模块配置
-EntityClear: #实体计时器清理系统
+3.OptimizeConfig —— 为插件的优化模块配置
+TPSSleep: #休眠降耗系统
+  NoOneFreeze: #是否当服务器无人在线时休眠自身
+    enable: true
+  SleepMode: NoUse #TPS限制（就像帧数限制一样），写入"NoUse"或者数字，如果写入数字，意味着限制了最大TPS
+EntityClear: #清理实体
   enable: true #是否开启
-  CheckInterval: 600 #检查间隔时间，秒
-  LimitCount: 1200 #如果实体超过这个数量，则进行清理
-  ClearEntityType: #清理的实体类型，如果你在里面写入了 * ，那么不管什么类型实体都会清理。
-  - ZOMBIE
-  - SKELETON
-  - SPIDER
+  CheckInterval: 600 #每隔多长时间检查一次
+  LimitCount: 1200 #检查时，如果实体数超过此数字，则开始清理
+  ClearEntityType: #被清理的实体列表
   - CREEPER
-  - SHEEP
-  - PIG
+  - ZOMBIE
   - CHICKEN
-  ClearMessage: §a成功清除了过多的实体~~(@^_^@)~ #清理时的提示信息
-NooneRestart: #无人重启系统
+  - SHEEP
+  - SPIDER
+  - SKELETON
+  - PIG
+  ClearMessage: §a成功清除了过多的实体 ~~(@^_^@)~ #清理成功后保留的信息
+NooneRestart: #是否在服务器无人在线时重启，释放内存
   enable: true
-  TimeLong: 1200 #持续时间无人重启
-OverLoadMemoryRestart: #内存溢出重启系统，对内存不足服务器和回档服务器有显著效果
+  TimeLong: 1200 #多长时间没人在线就重启
+OverLoadMemoryRestart: #是否在服务器内存即将溢出的时候重启
   enable: true
-  HeapMBLeft: 130 #当内存还剩下多少MB的时候重启
-  KickMessage: 抱歉！由于服务器内存过载，需要重启服务器！ #当玩家因为重启时需要被请出服务器的信息
-  WarnMessage: 服务器会在15秒后重启，请玩家不要游戏，耐心等待！ ╮(╯_╰)╭ #警告重启信息
-  DelayTime: 15 #提示后多长时间执行重启
-ChunkUnloader: #区块清理系统
-  Interval: 30 #间隔，秒
+  HeapMBLefted: 130 #当还剩多少内存的时候重启
+  KickMessage: 抱歉！由于服务器内存过载，需要重启服务器！ #玩家被提示重启的信息
+  WarnMessage: 服务器会在15秒后重启，请玩家不要游戏，耐心等待！ ╮(╯_╰)╭ #在重启之前的一段时间发送的公告信息
+  DelayTime: 15 #在公告发出后多久开始重启？
+WaterFlowLimitor: #水流限制
   enable: true
-WaterFlowLimitor: #是否限制水流，这并非限制高度，而是更好的算法
+  PerChunkTimes: 2 #每个区块允许的数量
+AntiRedstone: #反高频红石
   enable: true
-  PerChunkTimes: 2 #每个区块同时允许多少水流方向流动
-AntiRedstone: #防御高频红石
-  enable: true
-  Times: 5 #7秒内多少次红石被清理
-  Message: §c检测到高频红石在 %location% ，插件已经将其清除，不许玩了！ (╰_╯)#
-  RemoveBlockList: #会被清理的类型，如果你需要加入其他方块，比如比较器，写入名字
+  drop-item: true #是否在清理高频红石后把物品丢下
+  Times: 5 #每7秒允许几次红石熄灭/亮起？
+  Message: §c检测到高频红石在 %location% 附近，插件已经将其清除，不许玩了！ (╰_╯)# #当玩家被发现使用高频红石时的提示信息
+  RemoveBlockList: #清理高频红石时哪些方块会被清理？
   - REDSTONE_WIRE
-  - DIODE_BLOCK_ON
-  - DIODE_BLOCK_OFF
   - REDSTONE_TORCH_ON
-  - REDSTONE_TORCH_OFF
   - REDSTONE_BLOCK
-FireLimitor: #火焰蔓延限制
+  - DIODE_BLOCK_ON
+  - REDSTONE_TORCH_OFF
+  - DIODE_BLOCK_OFF
+FireLimitor: #火焰限制，每隔多长时间允许一次火焰蔓延
   enable: true
-  Period: 3000 #同一区块的间隔
-TimerGc: #定期GC强制清理内存，不建议开启，开启或会导致瞬卡
+  Period: 3000 #(ms)
+TeleportPreLoader: #传送预加载（黑科技）：在玩家传送前分多TICK加载区块，有效减少传送加载导致的卡顿，但或出现其他问题
   enable: false
-  Message: §e服务器清理内存中... ԅ(¯ㅂ¯ԅ)
-  Period: 600
-TeleportPreLoader: #传送预加载！对服务器的传送性能提升有极大帮助，如果你的服务器经常传送时卡，务必打开，但是或许有未预知不兼容其他插件的情况
-  enable: false
-ClearItem: #扫地大妈，更好的算法
-  NoCleatDeath: true #不清理死亡掉落物品
-  NoClearTeleport: false #不清理传送物品
+UnloadClear: #是否在区块被卸载的时候扫地？
+  DROPPED_ITEM:
+    enable: true #是否清理掉落物？
+    NoCleatDeath: true #玩家死亡掉落的物品不清理吗？
+    NoClearTeleport: false #玩家传送到的位置掉落的物品不清理吗？
   enable: true
-NoCrowdedEntity: #密集实体限制，如果你在里面写入了 * ，那么不管什么类型实体都会清理。
-  enable: true
-  TypeList:
-  - ZOMBIE
-  - SKELETON
-  - SPIDER
+  type: #其他要清理的种类
   - CREEPER
-  - SHEEP
-  - PIG
+  - ZOMBIE
+  - SPIDER
+  - SKELETON
+NoCrowdedEntity: #是否禁止密集实体
+  enable: true
+  TypeList: #会被识别的实体列表
+  - CREEPER
+  - ZOMBIE
   - CHICKEN
-  PerChunkLimit: 30 #每个区块允许多少个实体
-AutoSave: #自动保存优化版
-  Interval: 15 #多少秒保存一次，该自动保存系统对性能消耗极低，无需担心卡服
+  - SHEEP
+  - SPIDER
+  - SKELETON
+  - PIG
+  PerChunkLimit: 30 #每个区块最多允许多少个实体？超出的部分会被移除
+AutoSave: #是否采用更好的自动保存算法
+  Interval: 15 #每隔多少秒保存一次
+  enable: true #是否启动自动保存
+AutoSet: #是否自动配置服务端来优化性能
   enable: true
-AutoSet: #自动配端，这会修改你的Spigot.yml、bukkit.yml、paper.yml文件，如果你不想让插件锁定这些文件，关闭它
-  enable: true
-ChunkKeeper: #区块保持者，对服务器的区块优化有显著帮助
-  enable: true
-NoSpawnChunks: #取消出生区块，降低内存占用
-  enable: true
-TPSSleep: #TPS停顿
-  NoOneFreeze: #是否在服务器没人的时候让服务器休眠降低功耗
-    enable: true
-  SleepMode: AutoSleep #AutoSleep:平滑卡顿，NoUse:不开启这个功能，填写数字:强制休眠指定毫秒
 
-4.AntiBugConfig —— 为修复漏洞（包括MC漏洞和部分插件漏洞）配置文件\
-AntiCrashChat:
-  enable: true #是否防御崩服代码
-  SpecialStringWarnMessage: §c严禁使用崩服代码炸服！ #当玩家被拦截的时候的提示信息
-  ColorChatWarnMessage: §c抱歉！为了防止服务器被破坏，服务器禁止使用颜色代码. #当玩家被禁止使用ESS颜色字符时的提示信息
-AntiBoneBug:
-  enable: true #是否防御骨粉树苗BUG（顶掉牌子/骨粉刷物品）
-  WarnMessage: §c严禁卡树苗催熟BUG！ #当玩家被阻止时的提示信息
-AntiFakeDeath:
-  KickMessage: §c严禁卡假死BUG！ #当玩家被反假死踢出游戏的信息
-  enable: true #是否开启反假死
-AntiInfItem: #反负数物品
-  enable: true #是否禁止负数物品的产生和使用
-AntiPortalInfItem: #地狱门传送刷物品
-  enable: true #是否禁止矿车们通过地狱门
-AntiNetherHopperInfItem: #地狱漏洞刷物品
-  enable: true #是否禁止漏斗在地狱的运行
-AntiRPGITEM: #RPGITEM刷物品BUG
-  enable: true #如果您的服务器安装了RPGITEM，请开启本设定
-AntiCrashSign: #崩服木牌
-  enable: true #是否防御崩服木牌BUG
-AntiSkullCrash: #崩服头颅
-  enable: true #是否禁止活塞或其他使得头颅移动崩服
-NoDoubleOnline: #大小号登入修复
-  enable: true #是否禁止同一个ID的不同大小写登入游戏
-  KickMessage: "抱歉，服务器中您已经在线了。ԅ(¯ㅂ¯ԅ)"
-AntiDupeDropItem: #假死刷物品
-  enable: true #是否防御假死刷物品
-AntiDoorInfItem: #甘蔗门BUG
-  enable: true #是否防御甘蔗门刷甘蔗、仙人掌BUG
-AntiCheatBook: #反书与笔无敌BUG
-  enable: true #是否防御书与笔BUG
-  WarnMessage: "§c严禁利用超级书Bug！"
-AntiBedExplode: #防止床在地狱、末地爆炸导致的领地破坏
-  enable: true #是否禁止床在地狱、末地交互
-AntiBreakUseingChest: #实体卡成虚体BUG
-  enable: true #是否禁止玩家破坏一个正在使用的容器
-AntiInfRail: #无限铁轨BUG
-  enable: true #是否防御无限铁轨BUG
-
-5.DoEventConfig.yml —— 为限制动作模块配置
-Monitor: #插件性能统计系统，开启对服务器有一定性能消耗，除非你想开始检查一下是哪个插件吃你的性能，否则不要打开
-  enable: false #这个参数不是彻底关闭，而是指的是是否在服务器开启后立即执行统计，你可以随时使用/el monitor enable 打开统计系统
-  ThreadLagWarning: true #当线程卡住就提醒
-  PluginLagWarning: #当某个插件一次性卡了多长时间就警告
-    enable: true
-    Period: 1000
-PluginErrorMessageBlocker: #屏蔽插件刷错信息
+4.BugPatchesConfig —— 漏洞修复系统（包括MC漏洞和部分插件漏洞）
+AntiWEcalc: #是否禁止WorldEdit的BUG炸服
+  WarnMessage: §c禁止利用WE bug炸服! =.=
+AntiLongStringCrash: #是否禁止发送过长的聊天信息炸服
   enable: true
-  Message: #输入插件名字或者刷错信息中的部分文字，这些刷错会被屏蔽
-  - ErrorPluginName
-  - ErrorPluginMessage
-PluginErrorMessageLogger: #是否记录刷错信息，保存为txt
+  WarnMessage: §c警告！严禁利用长字符串来导致服务器崩溃！
+AntiCrashOP: #是否修复崩溃服务器几率出现玩家OP的Bug
+  enable: true
+  WarnMessage: §c你貌似卡OP了,已将OP去除!
+AntiFakeDeath: #假死Bug刷物品
+  KickMessage: §c严禁卡假死BUG！
+  enable: true
+NoDoubleOnline: #是否禁止多重在线刷物品
+  enable: true
+  KickMessage: 抱歉，服务器中您已经在线了。ԅ(¯ㅂ¯ԅ)
+AntiBedExplode: #禁止床的爆炸，因为这种爆炸可以破坏领地等的方块
+  enable: true
+  TipMessage: §r你不能在这里睡觉
+AntiBreakUseingChest: #是否防御箱子掉落刷物品BUG
+  enable: true
+  WarnMessage: §c抱歉！您不可以破坏一个正在被使用的容器
+AntiCheatBook: #是否防御书与笔NBT Bug
+  enable: true
+AntiCrashSign: #是否防御牌子炸服
+  enable: true
+  WarnMessage: §c您输入的内容太长了！
+AntiDupeDropItem: #是否防御丢物品刷东西
+  enable: true
+patches:
+  vaildate-actions: #反隐形Bug
+    enable: true
+AntiSkullCrash: #防御头颅炸服的Bug
+  enable: true
+AntiCrashChat: #是否防御崩服代码的Bug？
+  enable: true
+  SpecialStringWarnMessage: §c严禁使用崩服代码炸服！
+  ColorChatWarnMessage: §c抱歉！为了防止服务器被破坏，服务器禁止使用颜色代码. #Essentials在某些版本存在使用颜色代码炸服的Bug
+
+
+5.FeaturesConfig.yml —— 功能性配置文件
+Monitor: #线程卡顿侦测器
+  enable: true #是否启用
+  ThreadLag:
+    Warning:
+      enable: false #是否在服务器卡住的时候在后台警告
+    Period: 2000 #当卡住多久的时候发出警告信息
+    DumpStack: false #是否在卡住的时候输出服务器这一刻在干什么，对诊断极为有益
+AntiSpam: #反刷屏/脏话
+  enable: false #是否启动
+  Period: #频繁发言禁止
+    Period: 1.5 #当发言频率超过多少秒的时候禁止
+    Period-Command: 0.5 #当命令发送频率超过多少秒的时候禁止
+    WarnMessage: §c请慢一点，别激动嘛！ _(:з」∠)_ #被禁止发言的提示信息
+  Dirty: #是否禁止说脏话
+    enable: false
+    List: #脏话列表
+    - 垃圾服*
+    - 疯狗
+    - 马币
+    white-list: #白名单列表
+    - 全家桶
+    - 全家福
+    WarnMessage: §c什么事情激动得你都想骂人啦？ #被禁止说脏话的提示信息
+NoEggChangeSpawner: #是否禁止刷怪蛋修改刷怪笼怪物类别？
+  enable: true
+ProtectFarm: #是否保护耕地不被踩坏
+  enable: true
+AutoRespawn: #是否自动复活玩家在玩家死亡的时候
   enable: false
-AntiSpam: #反刷屏
-  enable: true
-  Period:
-    Period: 1.5
-    WarnMessage: §c请慢点说话，别激动嘛！ _(:з」∠)_
-  Dirty: #反脏话
-    enable: true
-    List:
-    - 智障
-    - 傻逼
-    - 妈逼
-    WarnMessage: §c什么事情激动得你都想骂人啦？
-NoEggChangeSpawner: #禁止刷怪笼被使用刷怪蛋修改类型
-  enable: true
-  TipMessage: '&c抱歉，禁止使用刷怪蛋修改刷怪笼'
-ProtectFarm: #保护农田不被踩踏
-  enable: true
-AutoRespawn: #自动复活系统，对部分服务端无效
-  enable: true
-  RespawnTitle:
+  RespawnTitle: #在复活的时候给玩家发送大标题？
     enable: false
     MainMessage: §e你死了！
     MiniMessage: §c已为您自动复活！
-NoExplode: #限制爆炸
+NoExplode: #是否禁止爆炸？
   enable: true
-  Type: NoBlockBreak #NoUse——无效、NoExplode——禁止爆炸、NoBlockBreak——爆炸不破坏方块
+  Type: NoBlockBreak #NoExplode：禁止任何爆炸 NoBlockBreal：可以爆炸，但不会破坏方块 NoUse：不对爆炸做任何处理
+
 
 感谢您对 EscapeLag 插件的支持，本插件由乐乐、IZ、Sotr开发。
-感谢您在我被MCBBS和jiongjionger诬陷请水军，被jiongjionger各种攻击的时候，
-以及进行暗中操作对我处罚和各种不公平待遇的时候，仍然支持着我，乐乐。
-您可以随时查阅本插件的发布帖子在格兰蒂：
+您可以在格兰蒂随时查阅本插件的发布帖子：
 https://www.relatev.com/forum.php?mod=viewthread&tid=19
 
 Have A Good Time! XD!

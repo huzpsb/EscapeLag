@@ -109,7 +109,7 @@ public class EscapeLag extends JavaPlugin {
 
         AzureAPI.log("EscapeLag has been installed successfully!");
         AzureAPI.log("乐乐感谢您的使用——有建议务必反馈，QQ1207223090");
-        AzureAPI.log("您可以在插件根目录找到本插件的说明文档 说明文档.txt");
+        AzureAPI.log("您可以在插件文件夹内的documents文件夹找到本插件的说明文档 说明文档.txt");
         List<String> devs = getDescription().getAuthors();
         AzureAPI.log("|||" + devs.get(0) + "/EscapeLag 合作作品.|||");
         AzureAPI.log("|||" + AzureAPI.concatsBetween(devs, 1, ", ") + " 合作开发.|||");
@@ -216,6 +216,7 @@ public class EscapeLag extends JavaPlugin {
         if (StringUtils.startsWithIgnoreCase(Core.lang, "zh_")) {
             locale = "中文";
         }
+        EscapeLag.plugin.saveResource("documents" + File.separator + "Guide-english.txt", true); //当然可以区分语言,但是英文版必须生成一份
         EscapeLag.plugin.saveResource("documents" + File.separator + "Guide-" + locale + ".txt", true);
 
         // Core

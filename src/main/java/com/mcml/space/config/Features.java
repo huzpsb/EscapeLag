@@ -20,7 +20,7 @@ public abstract class Features extends Configurable {
     public static volatile boolean MonitorThreadLagDumpStack = false;
 
     @Node("AntiSpam.enable")
-    public static boolean AntiSpamenable = true;
+    public static boolean AntiSpamenable = false;
 
     @Node("AntiSpam.Period.Period")
     public static double AntiSpamPeriodPeriod = 1.5;
@@ -32,7 +32,7 @@ public abstract class Features extends Configurable {
     public static String AntiSpamPeriodWarnMessage = Locale.isNative() ? "§c请慢一点，别激动嘛！ _(:з」∠)_" : "§cBe slow, have an coffee! _(:з」∠)_";
 
     @Node("AntiSpam.Dirty.enable")
-    public static boolean enableAntiDirty = true;
+    public static boolean enableAntiDirty = false;
 
     @Node("AntiSpam.Dirty.List")
     public static Map<String, Boolean> AntiSpamDirtyList = DefaultOptions.spamMessages();
@@ -43,8 +43,8 @@ public abstract class Features extends Configurable {
     @Node("NoEggChangeSpawner.enable")
     public static boolean preventSpawnerModify = true;
 
-    @Node("ProtectFarmOnlyPlayer.enable")
-    public static boolean ProtectFarmOnlyPlayerenable = false;
+    @Node("ProtectFarm.enable")
+    public static boolean ProtectFarmenable = false;
 
     @Node("AntiSpam.Dirty.WarnMessage")
     public static String AntiSpamDirtyWarnMessage = Locale.isNative() ? "§c什么事情激动得你都想骂人啦？" : "§cWhat makes you so angry?";
