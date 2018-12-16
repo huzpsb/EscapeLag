@@ -296,12 +296,10 @@ public class EscapeLag extends JavaPlugin {
                 if (heapmb >= 6000) {
                     spigot.set("settings.user-cache-size", 5000);
                 }
-                if (heapmb >= 8000) {
+                if (heapmb >= 4000) {
                     spigot.set("world-settings.default.view-distance", 4);
-                } else if (heapmb >= 4000) {
-                    spigot.set("world-settings.default.view-distance", 3);
                 } else {
-                    spigot.set("world-settings.default.view-distance", 2);
+                    spigot.set("world-settings.default.view-distance", 3);
                 }
                 if (heapmb <= 4000) {
                     spigot.set("world-settings.default.chunks-per-tick", 150);
@@ -316,8 +314,8 @@ public class EscapeLag extends JavaPlugin {
                     spigot.set("world-settings.default.max-tick-time.entity", 30);
                 }
                 spigot.set("world-settings.default.entity-activation-range.animals", 12);
-                spigot.set("world-settings.default.entity-activation-range.monsters", 24);
-                spigot.set("world-settings.default.entity-activation-range.misc", 2);
+                spigot.set("world-settings.default.entity-activation-range.monsters", 32);
+                spigot.set("world-settings.default.entity-activation-range.misc", 12);
                 spigot.set("world-settings.default.entity-tracking-range.other", 48);
                 spigot.set("world-settings.default.random-light-updates", false);
                 if (heapmb <= 4000) {

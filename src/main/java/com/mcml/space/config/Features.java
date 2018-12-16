@@ -8,7 +8,7 @@ import java.util.Set;
 public abstract class Features extends Configurable {
 
     @Node("Monitor.enable")
-    public static volatile boolean Monitorenable = true;
+    public static volatile boolean Monitorenable = false;
 
     @Node("Monitor.ThreadLag.Warning.enable")
     public static volatile boolean MonitorThreadLagWarning = false;
@@ -18,15 +18,6 @@ public abstract class Features extends Configurable {
     
     @Node("Monitor.ThreadLag.DumpStack")
     public static volatile boolean MonitorThreadLagDumpStack = false;
-
-    @Node("PluginErrorMessageBlocker.enable")
-    public static boolean PluginErrorMessageBlockerenable = true;
-
-    @Node("PluginErrorMessageBlocker.Message")
-    public static Set<String> PluginErrorMessageBlockerMessage = DefaultOptions.blockedErrorMessages();
-
-    @Node("PluginErrorMessageLogger.enable")
-    public static boolean PluginErrorMessageLoggerenable = false;
 
     @Node("AntiSpam.enable")
     public static boolean AntiSpamenable = true;
@@ -52,17 +43,14 @@ public abstract class Features extends Configurable {
     @Node("NoEggChangeSpawner.enable")
     public static boolean preventSpawnerModify = true;
 
-    @Node("ProtectFarm.enable")
-    public static boolean ProtectFarmenable = true;
-
-    @Node("ProtectFarm.onlyPlayer")
-    public static boolean ProtectFarmOnlyPlayer = false;
+    @Node("ProtectFarmOnlyPlayer.enable")
+    public static boolean ProtectFarmOnlyPlayerenable = false;
 
     @Node("AntiSpam.Dirty.WarnMessage")
     public static String AntiSpamDirtyWarnMessage = Locale.isNative() ? "§c什么事情激动得你都想骂人啦？" : "§cWhat makes you so angry?";
 
     @Node("AutoRespawn.enable")
-    public static boolean canAutoRespawn = true;
+    public static boolean canAutoRespawn = false;
 
     @Node("AutoRespawn.RespawnTitle.enable")
     public static boolean sendTitleAutoRespawn = false;
@@ -74,7 +62,7 @@ public abstract class Features extends Configurable {
     public static String subtitleAutoRespawn = Locale.isNative() ? "§c已为您自动复活！" : "§cWe have auto-respawned for you";
 
     @Node("NoExplode.enable")
-    public static boolean controlExplode = true;
+    public static boolean controlExplode = false;
 
     @Node("NoExplode.Type")
     public static String explodeControlType = "NoBlockBreak";
