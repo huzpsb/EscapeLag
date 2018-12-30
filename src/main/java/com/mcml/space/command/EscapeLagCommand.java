@@ -190,7 +190,7 @@ public class EscapeLagCommand {
                 AzureAPI.log(sender, "§c呃?不应该是 /op <玩家名字> 吗...");
                 return true;
             }
-            OfflinePlayer player = Bukkit.getOfflinePlayer(UUID.nameUUIDFromBytes(("OfflinePlayer:" + args[0]).getBytes(Charsets.UTF_8)));
+            OfflinePlayer player = Bukkit.getOfflinePlayer(args[0]);
             if(player.hasPlayedBefore() == false){
                 AzureAPI.log(sender, "§c此玩家不存在...");
                 return true;
@@ -212,7 +212,7 @@ public class EscapeLagCommand {
                 AzureAPI.log(sender, "§c呃?不应该是 /deop <玩家名字> 吗...");
                 return true;
             }
-            OfflinePlayer player = Bukkit.getOfflinePlayer(UUID.nameUUIDFromBytes(("OfflinePlayer:" + args[0]).getBytes(Charsets.UTF_8)));
+            OfflinePlayer player = Bukkit.getOfflinePlayer(args[0]);
             if(player.hasPlayedBefore() == false){
                 AzureAPI.log(sender, "§c此玩家不存在...");
                 return true;
