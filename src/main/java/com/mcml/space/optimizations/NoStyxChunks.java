@@ -24,33 +24,33 @@ public class NoStyxChunks {
     public static long totalUnloadedChunks;
 
     public static void init(Plugin plugin) {
-        if (!OptimizesChunk.enableNoStyxChunks) {
-            return;
-        }
-
-        if (OptimizesChunk.noStyxChunks_chancesInterval_enable) {
-            Bukkit.getScheduler().runTaskTimer(plugin, () -> {
-                for (World world : Bukkit.getWorlds()) {
-                    for (Chunk chunk : world.getLoadedChunks()) {
-                        if (!world.isChunkInUse(chunk.getX(), chunk.getZ())
-                                && (isPaper() || !DelayedChunkKeeper.DEALYED_CHUNKS.contains(AzureAPI.wrapCoord(chunk.getX(), chunk.getZ())))) { // Respect dealy
-                            if (chunk.unload(true)) {
-                                totalUnloadedChunks++;
-                            }
-                        }
-                    }
-                }
-            }, 60, AzureAPI.toTicks(TimeUnit.MINUTES, OptimizesChunk.noStyxChunks_chancesInterval_periods));
-        }
-
-        if (OptimizesChunk.noStyxChunks_chancesTeleport) {
-            Bukkit.getPluginManager().registerEvents(new TeleportDetector(), plugin);
-        }
-        if (OptimizesChunk.noStyxChunks_chancesExit) {
-            Bukkit.getPluginManager().registerEvents(new ExitDetector(), plugin);
-        }
-
-        AzureAPI.log(Locale.isNative() ? "子模块 - 区块冥河 已启动" : "Submodule - NoStyxChunks has been enabled");
+//        if (!OptimizesChunk.enableNoStyxChunks) {
+//            return;
+//        }
+//
+//        if (OptimizesChunk.noStyxChunks_chancesInterval_enable) {
+//            Bukkit.getScheduler().runTaskTimer(plugin, () -> {
+//                for (World world : Bukkit.getWorlds()) {
+//                    for (Chunk chunk : world.getLoadedChunks()) {
+//                        if (!world.isChunkInUse(chunk.getX(), chunk.getZ())
+//                                && (isPaper() || !DelayedChunkKeeper.DEALYED_CHUNKS.contains(AzureAPI.wrapCoord(chunk.getX(), chunk.getZ())))) { // Respect dealy
+//                            if (chunk.unload(true)) {
+//                                totalUnloadedChunks++;
+//                            }
+//                        }
+//                    }
+//                }
+//            }, 60, AzureAPI.toTicks(TimeUnit.MINUTES, OptimizesChunk.noStyxChunks_chancesInterval_periods));
+//        }
+//
+//        if (OptimizesChunk.noStyxChunks_chancesTeleport) {
+//            Bukkit.getPluginManager().registerEvents(new TeleportDetector(), plugin);
+//        }
+//        if (OptimizesChunk.noStyxChunks_chancesExit) {
+//            Bukkit.getPluginManager().registerEvents(new ExitDetector(), plugin);
+//        }
+//
+//        AzureAPI.log(Locale.isNative() ? "子模块 - 区块冥河 已启动" : "Submodule - NoStyxChunks has been enabled");
     }
 
     private static class TeleportDetector implements Listener {

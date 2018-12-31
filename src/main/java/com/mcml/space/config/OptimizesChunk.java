@@ -8,7 +8,7 @@ public abstract class OptimizesChunk extends Configurable {
     
     // No styx chunks
     @Node("settings.no-styx-chunks.enable")
-    public static boolean enableNoStyxChunks = true;
+    public static boolean enableNoStyxChunks = false;
     
     @Node("settings.no-styx-chunks.chances.player-teleport")
     public static boolean noStyxChunks_chancesTeleport = true;
@@ -24,7 +24,7 @@ public abstract class OptimizesChunk extends Configurable {
     
     // Dealyed chunk keeper
     @Node("settings.delayed-chunk-keeper.enable")
-    public static boolean enableDelayedChunkKeeper = true;
+    public static boolean enableDelayedChunkKeeper = false;
     
     @Node("settings.delayed-chunk-keeper.delay-in-seconds")
     public static int delayedChunkKeeper_delayInSeconds = 10;
