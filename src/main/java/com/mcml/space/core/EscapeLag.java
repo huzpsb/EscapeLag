@@ -9,7 +9,6 @@ import com.mcml.space.config.Optimizes;
 import com.mcml.space.config.OptimizesChunk;
 import com.mcml.space.config.Patches;
 import com.mcml.space.config.PatchesDupeFixes;
-import com.mcml.space.features.AutoRespawn;
 import com.mcml.space.features.CensoredChat;
 import com.mcml.space.features.ExplosionController;
 import com.mcml.space.features.FarmProtect;
@@ -27,12 +26,12 @@ import com.mcml.space.optimizations.TickSleep;
 import com.mcml.space.optimizations.UnloadClear;
 import com.mcml.space.optimizations.WaterFlowLimitor;
 import com.mcml.space.patches.AntiBedExplode;
+import com.mcml.space.patches.AntiCrashChat;
 import com.mcml.space.patches.AntiCrashOP;
 import com.mcml.space.patches.AntiCrashSign;
 import com.mcml.space.patches.AntiDeadDrop;
 import com.mcml.space.patches.AntiDestoryUsingChest;
 import com.mcml.space.patches.AntiLongStringCrash;
-import com.mcml.space.patches.AutoRecipePatch;
 import com.mcml.space.patches.BonemealDupePatch;
 import com.mcml.space.patches.CalculationAbusePatch;
 import com.mcml.space.patches.CancelledPlacementPatch;
@@ -148,7 +147,6 @@ public class EscapeLag extends JavaPlugin {
         ExplosionController.init(this);
         SpawnerGuard.init(this);
         FarmProtect.init(this);
-        AutoRespawn.init(this);
 
         // Pathces
         ContainerPortalPatch.init(this);
@@ -164,14 +162,12 @@ public class EscapeLag extends JavaPlugin {
         ValidateActions.init(this);
         AntiDestoryUsingChest.init();
         AntiCrashOP.init();
+        AntiCrashChat.init();
 
         Bukkit.getPluginManager().registerEvents(new AntiCrashSign(), this);
         Bukkit.getPluginManager().registerEvents(new CancelledPlacementPatch(), this);
         Bukkit.getPluginManager().registerEvents(new AntiBedExplode(), this);
         Bukkit.getPluginManager().registerEvents(new AntiLongStringCrash(), this);
-        if (canAccessPackets()) {
-            AutoRecipePatch.init(this);
-        }
 
         // Optimizations
         TickSleep.init(this);

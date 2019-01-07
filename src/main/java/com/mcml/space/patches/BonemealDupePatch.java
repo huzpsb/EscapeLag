@@ -18,21 +18,26 @@ import com.mcml.space.util.VersionLevel;
 import com.mcml.space.util.VersionLevel.Version;
 
 public class BonemealDupePatch implements Listener {
-	public static void init(Plugin plugin) {
-	    if (VersionLevel.isLowerThan(Version.MINECRAFT_1_6_R3) || VersionLevel.isHigherThan(Version.MINECRAFT_1_7_R4)) return;
-		Bukkit.getPluginManager().registerEvents(new BonemealDupePatch(), plugin);
-		AzureAPI.log(Locale.isNative() ? "子模块 - 骨粉修复 已启动" : "Submodule - BonemealDupePatch has been enabled");
-	}
-	
+
+    public static void init(Plugin plugin) {
+        if (VersionLevel.isLowerThan(Version.MINECRAFT_1_6_R3) || VersionLevel.isHigherThan(Version.MINECRAFT_1_7_R4)) {
+            return;
+        }
+        Bukkit.getPluginManager().registerEvents(new BonemealDupePatch(), plugin);
+        AzureAPI.log(Locale.isNative() ? "子模块 - 骨粉修复 已启动" : "Submodule - BonemealDupePatch has been enabled");
+    }
+
     @EventHandler(priority = EventPriority.LOWEST, ignoreCancelled = true)
     public void onGrow(StructureGrowEvent evt) {
-        if (!evt.isFromBonemeal()) return;
-        
+        if (!evt.isFromBonemeal()) {
+            return;
+        }
+
         for (BlockState state : evt.getBlocks()) {
             Material material = state.getBlock().getType();
-            if (modernApi() ?
-                    material != LEGACY_AIR && material != LEGACY_SAPLING :
-                    material != AIR && material != SAPLING) {
+            if (modernApi()
+                    ? material != LEGACY_AIR && material != LEGACY_SAPLING
+                    : material != AIR && material != SAPLING) {
                 evt.setCancelled(true);
             }
         }

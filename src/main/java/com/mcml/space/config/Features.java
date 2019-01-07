@@ -49,18 +49,6 @@ public abstract class Features extends Configurable {
     @Node("AntiSpam.Dirty.WarnMessage")
     public static String AntiSpamDirtyWarnMessage = Locale.isNative() ? "§c什么事情激动得你都想骂人啦？" : "§cWhat makes you so angry?";
 
-    @Node("AutoRespawn.enable")
-    public static boolean canAutoRespawn = false;
-
-    @Node("AutoRespawn.RespawnTitle.enable")
-    public static boolean sendTitleAutoRespawn = false;
-
-    @Node("AutoRespawn.RespawnTitle.MainMessage")
-    public static String titleAutoRespawn = Locale.isNative() ? "§e你死了！" : "§eYou are died!";
-
-    @Node("AutoRespawn.RespawnTitle.MiniMessage")
-    public static String subtitleAutoRespawn = Locale.isNative() ? "§c已为您自动复活！" : "§cWe have auto-respawned for you";
-
     @Node("NoExplode.enable")
     public static boolean controlExplode = false;
 

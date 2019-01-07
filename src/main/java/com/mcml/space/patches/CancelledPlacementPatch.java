@@ -23,27 +23,36 @@ import static org.bukkit.Material.*;
 import java.util.Map;
 
 public class CancelledPlacementPatch implements Listener {
+
     public static void init(Plugin plugin) {
-        if (!PatchesDupeFixes.enableCancelledPlacementDupeFixes) return;
+        if (!PatchesDupeFixes.enableCancelledPlacementDupeFixes) {
+            return;
+        }
         Bukkit.getPluginManager().registerEvents(new CancelledPlacementPatch(), plugin);
         AzureAPI.log(Locale.isNative() ? "子模块 - 取消放置 已启动" : "Submodule - CancelledPlacementPatch has been enabled");
     }
-	
+
     @EventHandler(priority = EventPriority.MONITOR, ignoreCancelled = false)
     public void place(BlockPlaceEvent evt) { // Not only door can trigger this!
-        if (!evt.isCancelled()) return;
-        
+        if (!evt.isCancelled()) {
+            return;
+        }
+
         Player player = evt.getPlayer();
         Map<String, String> radius = cancelledPlacementDupeFixes_clearsRadius;
         for (Entity drop : player.getNearbyEntities(Integer.valueOf(radius.get("x")), Integer.valueOf(radius.get("y")), Integer.valueOf(radius.get("z")))) {
-            if (drop.getType() != EntityType.DROPPED_ITEM) continue;
-            
+            if (drop.getType() != EntityType.DROPPED_ITEM) {
+                continue;
+            }
+
             org.bukkit.entity.Item item = (org.bukkit.entity.Item) drop;
             Material material = item.getItemStack().getType();
-            
-            if (modernApi() ?
-                    material == LEGACY_SUGAR_CANE || material == LEGACY_CACTUS :
-                    material == SUGAR_CANE || material == CACTUS) drop.remove();
+
+            if (modernApi()
+                    ? material == LEGACY_SUGAR_CANE || material == LEGACY_CACTUS
+                    : material == SUGAR_CANE || material == CACTUS) {
+                drop.remove();
+            }
         }
     }
 }
