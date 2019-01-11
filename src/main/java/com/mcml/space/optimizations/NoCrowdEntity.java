@@ -12,43 +12,23 @@ import com.mcml.space.config.Optimizes;
 
 public class NoCrowdEntity implements Listener {
 
-	@EventHandler
-	public void CheckCrowd(ChunkLoadEvent evt) {
-		if (Optimizes.NoCrowdedEntityenable) {
-			Chunk chunk = evt.getChunk();
-			Entity[] entities = chunk.getEntities();
+    @EventHandler
+    public void onChunkLoad(ChunkLoadEvent evt) {
+        if (Optimizes.NoCrowdedEntityenable) {
+            Chunk chunk = evt.getChunk();
+            Entity[] entities = chunk.getEntities();
 
-			for (Entity e : entities) {
-				EntityType type = e.getType();
-				int count = 0;
-				if (Optimizes.NoCrowdedEntityTypeList.contains("*")
-						|| Optimizes.NoCrowdedEntityTypeList.contains(type.name())) {
-					count++;
-					if (count > Optimizes.NoCrowdedEntityPerChunkLimit && e.getType() != EntityType.PLAYER) {
-						e.remove();
-					}
-				}
-			}
-		}
-	}
-
-	@EventHandler
-	public void onSpawn(CreatureSpawnEvent event) {
-		if (Optimizes.NoCrowdedEntityenable) {
-			Chunk chunk = event.getEntity().getLocation().getChunk();
-			Entity[] entities = chunk.getEntities();
-
-			for (Entity e : entities) {
-				EntityType type = e.getType();
-				int count = 0;
-				if (Optimizes.NoCrowdedEntityTypeList.contains("*")
-						|| Optimizes.NoCrowdedEntityTypeList.contains(type.name())) {
-					count++;
-					if (count > Optimizes.NoCrowdedEntityPerChunkLimit && e.getType() != EntityType.PLAYER) {
-						e.remove();
-					}
-				}
-			}
-		}
-	}
+            for (Entity e : entities) {
+                EntityType type = e.getType();
+                int count = 0;
+                if (Optimizes.NoCrowdedEntityTypeList.contains("*")
+                        || Optimizes.NoCrowdedEntityTypeList.contains(type.name())) {
+                    count++;
+                    if (count > Optimizes.NoCrowdedEntityPerChunkLimit && e.getType() != EntityType.PLAYER) {
+                        e.remove();
+                    }
+                }
+            }
+        }
+    }
 }
