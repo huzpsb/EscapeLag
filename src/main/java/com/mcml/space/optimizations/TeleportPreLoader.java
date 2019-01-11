@@ -21,6 +21,7 @@ import com.mcml.space.util.Utils;
 
 import static com.mcml.space.util.VersionLevel.modernApi;
 import static org.bukkit.Material.*;
+import org.bukkit.event.EventPriority;
 
 public class TeleportPreLoader implements Listener {
 
@@ -28,7 +29,7 @@ public class TeleportPreLoader implements Listener {
     private int nowteleportid = 0;
     private HashMap<Integer, Integer> nowint = new HashMap<Integer, Integer>();
 
-    @EventHandler
+    @EventHandler(priority = EventPriority.LOWEST)
     public void TeleportLoader(final PlayerTeleportEvent event) {
         if (Optimizes.TeleportPreLoaderenable == true) {
             final Player player = event.getPlayer();
