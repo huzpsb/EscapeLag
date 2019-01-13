@@ -34,7 +34,7 @@ public class TeleportPreLoader implements Listener {
         if (Optimizes.TeleportPreLoaderenable == true) {
             final Player player = event.getPlayer();
             if (shouldReload(event.getFrom(), event.getTo(), player) == false) {
-                event.setCancelled(true);
+                return;
             }
             if (player.getVehicle() != null) {
                 return;
