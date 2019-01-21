@@ -53,7 +53,7 @@ public class RedstoneSlacker implements Listener {
                 if (Optimizes.dropRedstone) {
                     block.breakNaturally();
                 } else {
-                    block.setType(modernApi() ? LEGACY_AIR : AIR);
+                    block.setType(AIR);
                 }
             });
             

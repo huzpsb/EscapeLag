@@ -35,9 +35,7 @@ public class BonemealDupePatch implements Listener {
 
         for (BlockState state : evt.getBlocks()) {
             Material material = state.getBlock().getType();
-            if (modernApi()
-                    ? material != LEGACY_AIR && material != LEGACY_SAPLING
-                    : material != AIR && material != SAPLING) {
+            if (material != AIR && material != SAPLING) {
                 evt.setCancelled(true);
             }
         }

@@ -39,7 +39,7 @@ public class TeleportPreLoader implements Listener {
             if (player.getVehicle() != null) {
                 return;
             }
-            if (event.getFrom().getBlock().getType() == (modernApi() ? LEGACY_ENDER_PORTAL : ENDER_PORTAL)) {
+            if (event.getFrom().getBlock().getType() == ENDER_PORTAL) {
                 return;
             }
             nowteleportid++;

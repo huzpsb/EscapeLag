@@ -50,7 +50,7 @@ public class FarmProtect {
     }
 
     private static void handleInteract(Cancellable evt, Material material) {
-        if (material == (modernApi() ? LEGACY_SOIL : SOIL)) {
+        if (material == Material.SOIL) {
             evt.setCancelled(true);
         }
     }

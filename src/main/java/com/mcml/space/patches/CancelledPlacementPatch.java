@@ -48,9 +48,7 @@ public class CancelledPlacementPatch implements Listener {
             org.bukkit.entity.Item item = (org.bukkit.entity.Item) drop;
             Material material = item.getItemStack().getType();
 
-            if (modernApi()
-                    ? material == LEGACY_SUGAR_CANE || material == LEGACY_CACTUS
-                    : material == SUGAR_CANE || material == CACTUS) {
+            if (material == SUGAR_CANE || material == CACTUS) {
                 drop.remove();
             }
         }
