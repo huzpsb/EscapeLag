@@ -80,10 +80,6 @@ public abstract class AzureAPI {
     @EqualsAndHashCode
     @AllArgsConstructor
     public static class ChunkCoord {
-        public ChunkCoord(int cx,int cz){
-            chunkX = cx;
-            chunkZ = cz;
-        }
 
         final int chunkX;
         final int chunkZ;
