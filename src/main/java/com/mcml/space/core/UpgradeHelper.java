@@ -21,13 +21,22 @@ public class UpgradeHelper implements Listener {
 
     @Setter
     private static boolean isKnown;
+    private static TextComponent component;
 
     public static void init(Plugin plugin) {
         if (Core.AutoUpdate) {
             return;
         }
-        Bukkit.getPluginManager().registerEvents(new UpgradeHelper(), plugin);
-        AzureAPI.log(Locale.isNative() ? "核心模块 - 升级助手 已启动" : "Coremodule - UpgradeHelper has been enabled");
+        if (VersionLevel.isHigherEquals(VersionLevel.Version.MINECRAFT_1_8_R1)) {
+            component = new TextComponent(Locale.isNative()
+                    ? "§3§lE§b§lL §b> §f输入 §3/el updateon §f开启自动更新, 永远保持高效运作! "
+                    : "§3§lE§b§lL §b> §fType §3/el updateon §fto enable auto-update, always keep running efficiently! ");
+            TextComponent knownOption = new TextComponent("§b".concat(Locale.isNative() ? "我知道了" : "Got it"));
+            knownOption.setClickEvent(new ClickEvent(ClickEvent.Action.RUN_COMMAND, "/el iknown"));
+            component.addExtra(knownOption);
+            Bukkit.getPluginManager().registerEvents(new UpgradeHelper(), plugin);
+            AzureAPI.log(Locale.isNative() ? "核心模块 - 升级助手 已启动" : "Coremodule - UpgradeHelper has been enabled");
+        }
     }
 
     @EventHandler
@@ -37,7 +46,7 @@ public class UpgradeHelper implements Listener {
         }
         Player player = evt.getPlayer();
         if (Perms.has(player)) {
-            player.sendMessage("§3§lE§b§lL §b> §f输入 §3/el updateon §f开启自动更新, 永远保持高效运作! ");
+            player.sendMessage(component);
         }
     }
 }
