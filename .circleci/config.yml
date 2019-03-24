@@ -16,3 +16,5 @@ jobs:
     - run: git config --global user.name "CircleCI"
     - run: chmod +x scripts/build.sh
     - run: ./scripts/build.sh
+    - run: mkdir $CIRCLE_ARTIFACTS
+    - run: yes|mv -f ./target/EscapeLag-*.jar $CIRCLE_ARTIFACTS/EscapeLag-$CIRCLE_BUILD_NUM.jar
