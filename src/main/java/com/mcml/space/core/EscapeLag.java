@@ -215,7 +215,7 @@ public class EscapeLag extends JavaPlugin {
             locale = "中文";
         }
         EscapeLag.plugin.saveResource("documents" + File.separator + "Guide-english.txt", true); //当然可以区分语言,但是英文版必须生成一份
-        EscapeLag.plugin.saveResource("documents" + File.separator + "Guide-" + locale + ".txt", true);
+        EscapeLag.plugin.saveResource("documents" + File.separator + "Guide-chinese.txt", true);
 
         // Core
         setupConfig(CONFIG_CORE, Core.class);
