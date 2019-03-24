@@ -5,16 +5,21 @@ jobs:
     parallelism: 1
     shell: /bin/bash --login
     environment:
-      CIRCLE_ARTIFACTS: /tmp/circleci-artifacts
-      CIRCLE_TEST_REPORTS: /tmp/circleci-test-results
+      CIRCLE_ARTIFACTS: /dist/circleci-artifacts
+      CIRCLE_TEST_REPORTS: /dist/circleci-test-results
     docker:
     - image: circleci/build-image:ubuntu-14.04-XXL-upstart-1189-5614f37
       command: /sbin/init
     steps:
     - checkout
+    - run: mkdir $CIRCLE_ARTIFACTS
+    - run: mkdir $CIRCLE_TEST_REPORTS
     - run: git config --global user.email "circle@circleci.com"
     - run: git config --global user.name "CircleCI"
     - run: chmod +x scripts/build.sh
     - run: ./scripts/build.sh
-    - run: mkdir $CIRCLE_ARTIFACTS
     - run: yes|mv -f ./target/EscapeLag-*.jar $CIRCLE_ARTIFACTS/EscapeLag-$CIRCLE_BUILD_NUM.jar
+    - store_test_results:
+        path: $CIRCLE_TEST_REPORTS 
+    - store_artifacts:
+        path: $CIRCLE_ARTIFACTS
