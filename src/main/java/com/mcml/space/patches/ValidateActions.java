@@ -43,11 +43,6 @@ public class ValidateActions implements Listener {
     }
     
     @EventHandler(priority = EventPriority.LOWEST, ignoreCancelled = true)
-    public void onQuit(PlayerQuitEvent evt) {
-        evt.getPlayer().closeInventory();
-    }
-    
-    @EventHandler(priority = EventPriority.LOWEST, ignoreCancelled = true)
     public void onInteractBlock(PlayerInteractEvent evt) {
         handlePlayerAction(evt.getPlayer(), evt);
     }
