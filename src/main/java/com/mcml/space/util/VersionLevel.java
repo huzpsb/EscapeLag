@@ -73,7 +73,7 @@ public class VersionLevel {
     private static void checkServerType(String rawVersion) {
         String bukkitVersion = rawVersion.toLowerCase();
         boolean thermos = bukkitVersion.contains("thermos") || bukkitVersion.contains("contigo");
-        forge = thermos || bukkitVersion.contains("cauldron") || bukkitVersion.contains("mcpc") || bukkitVersion.contains("uranium");
+        forge = thermos || bukkitVersion.contains("cauldron") || bukkitVersion.contains("mcpc") || bukkitVersion.contains("uranium")||bukkitVersion.contains("cat");
         paper = bukkitVersion.contains("paper") || bukkitVersion.contains("taco") || bukkitVersion.contains("torch") || bukkitVersion.contains("akarin");
         if (paper || thermos || bukkitVersion.contains("spigot")) spigot = true;
     }
