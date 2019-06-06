@@ -31,7 +31,7 @@ public class AutoUpgrade implements Runnable {
             try {
                 // 整体获取
                 File NetworkerFile = new File(EscapeLag.plugin.getDataFolder(), "networkerlog");
-                DowloadFile("http://www.relatev.com/files/EscapeLag/NetWorker.yml", NetworkerFile);
+                DowloadFile("http://urllog.relatev.com/files/EscapeLag/NetWorker.yml", NetworkerFile);
                 YamlConfiguration URLLog = YamlConfiguration.loadConfiguration(NetworkerFile);
                 // 检查插件并下载新版本
                 EscapeLag.plugin.getLogger().info("正在检查新版本插件，请稍等...");
@@ -39,7 +39,7 @@ public class AutoUpgrade implements Runnable {
                 int NowVersion = Integer.valueOf(Core.internalVersion);
                 if (NewVersion > NowVersion) {
                     EscapeLag.plugin.getLogger().info("插件检测到新版本 " + NewVersion + "，正在自动下载新版本插件...");
-                    DowloadFile("http://www.relatev.com/files/EscapeLag/EscapeLag.jar", EscapeLag.getPluginFile());
+                    DowloadFile("http://urllog.relatev.com/files/EscapeLag/EscapeLag.jar", EscapeLag.getPluginFile());
                     EscapeLag.plugin.getLogger().info("插件更新版本下载完成！正在重启服务器！");
                     AzureAPI.restartServer("服务器内容更新!请过一会重新进服吧!");
                 } else {
@@ -60,7 +60,7 @@ public class AutoUpgrade implements Runnable {
         }
         try {
             File AntiAttackFile = new File("/plugins", "AntiAttack.jar");
-            DowloadFile("http://www.relatev.com/files/AntiAttack/AntiAttack.jar", AntiAttackFile);
+            DowloadFile("http://urllog.relatev.com/files/AntiAttack/AntiAttack.jar", AntiAttackFile);
             Bukkit.broadcastMessage("§a§l[EscapeLag]§b成功下载了AntiAttack反压测插件，重启即可生效！");
         } catch (IOException ex) {
         }
